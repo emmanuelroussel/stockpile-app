@@ -1,3 +1,6 @@
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
 *~
 *.sw[mnpcod]
 *.log
@@ -6,36 +9,25 @@
 log.txt
 *.sublime-project
 *.sublime-workspace
+.vscode/
+npm-debug.log*
 
 .idea/
-.vscode/
 .sass-cache/
+.tmp/
 .versions/
 coverage/
 dist/
 node_modules/
 tmp/
 temp/
+hooks/
+platforms/
+plugins/
+plugins/android.json
+plugins/ios.json
 $RECYCLE.BIN/
 
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
-
-.package.tmp.json
-
-src/themes/version.scss
-scripts/e2e/webpackEntryPoints.json
-scripts/build/e2e-generated-tsconfig.json
-*.css.ts
-
-# demo stuff
-demos/node_modules
-demos/polyfills
-demos/css
-demos/fonts
-demos/src/**/*.js*
-demos/src/**/*.ngfactory.ts
-demos/src/**/*.d.ts
-demos/src/**/*.metadata.json
-demos/src/**/*.css.shim.ts
