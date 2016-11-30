@@ -1,5 +1,4 @@
 # Stockpile App
----
 Front end for Stockpile, an app that manages stuff for organizations.
 
 ## Getting Started
