@@ -2,7 +2,7 @@
 // Generated on Tue Jan 24 2017 12:22:50 GMT-0500 (EST)
 
 module.exports = function(config) {
-  config.set({
+  var configuration = {
     basePath: '',
     frameworks: ['jasmine', 'angular-cli'],
     plugins: [
@@ -20,6 +20,12 @@ module.exports = function(config) {
     },
     mime: {
       'text/x-typescript': ['ts','tsx']
+    },
+    customLaunchers: {
+      Chrome_travis_ci: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
     },
     remapIstanbulReporter: {
       reports: {
@@ -40,5 +46,11 @@ module.exports = function(config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false
-  })
+  };
+
+  if(process.env.TRAVIS){
+    configuration.browsers = ['Chrome_travis_ci'];
+  }
+
+  config.set(configuration);
 }
