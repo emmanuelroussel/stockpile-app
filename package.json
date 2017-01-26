@@ -35,6 +35,7 @@
     "angular-cli": "^1.0.0-beta.26",
     "codeclimate-test-reporter": "^0.4.0",
     "codecov": "^1.0.1",
+    "coveralls": "^2.11.15",
     "jasmine-core": "^2.5.2",
     "jasmine-spec-reporter": "^3.2.0",
     "karma": "^1.4.0",
