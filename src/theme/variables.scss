@@ -30,6 +30,12 @@ $colors: (
 // http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
 
 $background-color: #b1ede8;
+$tabs-background: color($colors, primary);
+$toolbar-background: color($colors, primary);
+
+$text-color: color($colors, dark);
+$tabs-tab-color-active: color($colors, light);
+$tabs-tab-color-inactive: color($colors, light);
 
 
 // App iOS Variables
@@ -41,7 +47,7 @@ $background-color: #b1ede8;
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-
+$tabs-md-tab-color-inactive: color($colors, light);
 
 
 // App Windows Variables
