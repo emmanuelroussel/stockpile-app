@@ -35,7 +35,7 @@ describe('Root Component', () => {
     expect(comp).toBeTruthy();
   });
 
-  it('initialises with a root page of TabsPage', () => {
+  it('initialises with a root page of LoginPage', () => {
     expect(comp['rootPage']).toBe(LoginPage);
   });
 });
