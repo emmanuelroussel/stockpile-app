@@ -1,41 +1,22 @@
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { ComponentFixture, async } from '@angular/core/testing';
+import { PlatformMock } from '../mocks';
 import { IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 
-let comp: MyApp;
-let fixture: ComponentFixture<MyApp>;
+let instance: any = null;
 
 describe('Root Component', () => {
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [MyApp],
-      providers: [
-
-      ],
-      imports: [
-        IonicModule.forRoot(MyApp)
-      ]
-    }).compileComponents();
-  }));
-
   beforeEach(() => {
-    fixture = TestBed.createComponent(MyApp);
-    comp = fixture.componentInstance;
-  });
-
-  afterEach(() => {
-    fixture.destroy();
-    comp = null;
+    instance = new MyApp((<any> new PlatformMock));
   });
 
   it('is created', () => {
-    expect(fixture).toBeTruthy();
-    expect(comp).toBeTruthy();
+    expect(instance).toBeTruthy();
   });
 
   it('initialises with a root page of LoginPage', () => {
-    expect(comp['rootPage']).toBe(LoginPage);
+    expect(instance['rootPage']).toBe(LoginPage);
   });
 });

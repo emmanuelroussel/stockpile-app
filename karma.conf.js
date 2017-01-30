@@ -1,8 +1,8 @@
-// Karma configuration
-// Generated on Tue Jan 24 2017 12:22:50 GMT-0500 (EST)
+// Karma configuration file, see link for more information
+// https://karma-runner.github.io/0.13/config/configuration-file.html
 
-module.exports = function(config) {
-  var configuration = {
+module.exports = function (config) {
+  config.set({
     basePath: '',
     frameworks: ['jasmine', 'angular-cli'],
     plugins: [
@@ -20,12 +20,6 @@ module.exports = function(config) {
     },
     mime: {
       'text/x-typescript': ['ts','tsx']
-    },
-    customLaunchers: {
-      Chrome_travis_ci: {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
     },
     remapIstanbulReporter: {
       reports: {
@@ -45,12 +39,6 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
-    singleRun: true
-  };
-
-  if(process.env.TRAVIS){
-    configuration.browsers = ['Chrome_travis_ci'];
-  }
-
-  config.set(configuration);
-}
+    singleRun: false
+  });
+};

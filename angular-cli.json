@@ -27,8 +27,11 @@
       }
     }
   ],
-  "addons": [],
-  "packages": [],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
   "test": {
     "karma": {
       "config": "./karma.conf.js"
