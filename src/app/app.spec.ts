@@ -6,7 +6,7 @@ import { LoginPage } from '../pages/login/login';
 let comp: MyApp;
 let fixture: ComponentFixture<MyApp>;
 
-describe('Component: Root Component', () => {
+describe('Root Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
