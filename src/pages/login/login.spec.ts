@@ -1,7 +1,6 @@
 import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { LoginPage } from './login';
-import { TabsPage } from '../tabs/tabs';
 
 let fixture: ComponentFixture<LoginPage> = null;
 let instance: any = null;
