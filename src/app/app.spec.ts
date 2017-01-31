@@ -1,6 +1,4 @@
-import { ComponentFixture, async } from '@angular/core/testing';
 import { PlatformMock } from '../mocks';
-import { IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 
