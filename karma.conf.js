@@ -22,6 +22,9 @@ module.exports = function (config) {
       'text/x-typescript': ['ts','tsx']
     },
     remapIstanbulReporter: {
+      remapOptions: {
+        exclude: /src\/(mocks.ts|test.ts|polyfills.ts)/
+      },
       reports: {
         html: 'coverage',
         lcovonly: './coverage/coverage.lcov'
