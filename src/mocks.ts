@@ -1,4 +1,6 @@
 /* tslint:disable */
+// This file contains all the mocks of ionic components required for testing
+
 // IONIC:
 
 export class ConfigMock {
