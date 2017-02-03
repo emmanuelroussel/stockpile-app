@@ -8,6 +8,9 @@ notifications:
   slack:
     # Tell Travis CI to send a notification about the build status to our slack channel (encrypted to prevent other people to send notification with the token)
     secure: "JixoZ73+2QvMT0Q1SzlaeXXXNWyjZVw6n6rYHPdd3DWKnvj+4utjqshBn8/bI1l8lEF5E08CFBqe/Diil49/VYLwt6YjfEv23axMjwFXAZSr8A+UgGjkyuZDOdmMBDZvQWEsXjWlGJB/FA650QHzt0ma5IYL0BZOa4kDpKUDec98EDtxritmL17D/DeuvMDIBYwYhDvvj2yMXD7ZlC/GRMY3UZzZXtqEAHy3gYFWsEE99m2hnyebs1mmYFNapUJ4eH88SHpACLuDpS2W4Mb+hgXqbknjEhndRHPEg/+YRpDAajBZDFCq9LPne9uL1eM9QbPfbV5Dg/Xf7NoiVQlJX63W6SlIOjTi1cCJ+EE9fqMV4P3r1IV+d0GD+C4TSlm80gseHZ1icQAhSFu9AyLpZIkcJNAVYVHUZd5rAvDHvw4gSJqQG+zMU9lIepuZYHzjufWE98gZvb4Zo2yr3kmbWbaXlxea/Cu9LBnFP4td6M+X/ff/pqzH09huher7N9ljPMKTeKeg/EfCXmojkIOXYET4hoXBedisJW5GBZ+447aFGqzucr075e4H0kcgVoHxQ7Ekwr1OTdw4Nlib1AJsb39jdMwOzhGCGhRBhHQ+292enMoAQwejpHULW1Q5OUoN3dYZKf80pSME2zuYAWOJTtA8C3r9brfgwVZMUY8UrFs="
+  email:
+    on_success: never
+    on_failure: always
 before_install:
   # Tell Travis CI that we are testing on Chrome
   - export CHROME_BIN=/usr/bin/google-chrome
