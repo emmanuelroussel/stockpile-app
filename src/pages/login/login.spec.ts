@@ -1,4 +1,5 @@
 import { ComponentFixture, async } from '@angular/core/testing';
+
 import { TestUtils } from '../../test';
 import { LoginPage } from './login';
 import { TabsPage } from '../tabs/tabs';
@@ -22,9 +23,17 @@ describe('Login Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('changes root nav to TabsPage on login()', () => {
+  it('calls onLogin() on click', () => {
+    spyOn(instance, 'onLogin');
+    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
+    expect(instance.onLogin).toHaveBeenCalled();
+  });
+
+  it('changes root nav to TabsPage onLogin() if form is valid', () => {
+    instance.login.email = 'me@me.com';
+    instance.login.password = 'monkey';
     spyOn(instance.navCtrl, 'setRoot');
-    instance.login();
+    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
     expect(instance.navCtrl.setRoot).toHaveBeenCalledWith(TabsPage);
   });
 });
