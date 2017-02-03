@@ -7,13 +7,16 @@
 		<ion-list>
 			<ion-item>
 				<ion-label floating color="dark">Email</ion-label>
-				<ion-input [(ngModel)]="login.email" name="email" type="email" #username="ngModel" spellcheck="false" autocapitalize="off" required>
+				<ion-input [(ngModel)]="login.email" name="email" type="email"
+          #username="ngModel" spellcheck="false" autocapitalize="off" required
+          pattern="^[a-zA-Z0–9_.+-]+@[a-zA-Z0–9-]+\.[a-zA-Z0-9-.]+$"  minlength="4" >
 				</ion-input>
 			</ion-item>
 
 			<ion-item>
 				<ion-label floating color="dark">Password</ion-label>
-				<ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
+				<ion-input [(ngModel)]="login.password" name="password" type="password"
+          #password="ngModel" minlength="4" required>
 				</ion-input>
 			</ion-item>
 		</ion-list>
