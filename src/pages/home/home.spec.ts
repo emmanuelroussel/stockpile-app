@@ -20,4 +20,14 @@ describe('Home Page', () => {
     expect(instance).toBeTruthy();
     expect(fixture).toBeTruthy();
   });
+
+  it('initializes with a segment of Rent', () => {
+    expect(instance.segment).toEqual('Rent');
+  });
+
+  it('calls onNext() on click', () => {
+    spyOn(instance, 'onNext');
+    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
+    expect(instance.onNext).toHaveBeenCalled();
+  });
 });

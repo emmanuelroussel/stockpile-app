@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { NavController } from 'ionic-angular';
 
@@ -8,8 +9,17 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  segment: string = 'Rent';
+  tag: {tag?: string} = {};
+  submitted = false;
 
+  constructor(public navCtrl: NavController) { }
+
+  onNext(form: NgForm) {
+    this.submitted = true;
+
+    if (form.valid) {
+      console.log('hello');
+    }
   }
-
 }
