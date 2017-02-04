@@ -91,4 +91,10 @@ export class MenuMock {
   }
 }
 
+export class NavParamsMock {
+  public get(key): any {
+    return String(key);
+  }
+}
+
 /* tslint:enable */

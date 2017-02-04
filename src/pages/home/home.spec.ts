@@ -1,5 +1,7 @@
 import { ComponentFixture, async } from '@angular/core/testing';
+import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
+import { AddItemPage } from '../add-item/add-item';
 import { HomePage } from './home';
 
 let fixture: ComponentFixture<HomePage> = null;
@@ -30,4 +32,17 @@ describe('Home Page', () => {
     TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
     expect(instance.onNext).toHaveBeenCalled();
   });
+
+  it('calls this.navCtrl.push when onNext() is called and pass on tag in NavParams', async(() => {
+    instance.segment = 'Add';
+    instance.value.tag = 'banana'
+    spyOn(instance.navCtrl, 'push');
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
+      instance.onNext(form);
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(AddItemPage, {tag: 'banana'});
+    });
+  }));
 });

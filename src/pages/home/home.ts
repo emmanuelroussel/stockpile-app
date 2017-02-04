@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { NavController } from 'ionic-angular';
+import { AddItemPage } from '../add-item/add-item';
 
 @Component({
   selector: 'page-home',
@@ -10,7 +11,7 @@ import { NavController } from 'ionic-angular';
 export class HomePage {
 
   segment: string = 'Rent';
-  tag: {tag?: string} = {};
+  value: {tag?: string} = {};
   submitted = false;
 
   constructor(public navCtrl: NavController) { }
@@ -19,7 +20,27 @@ export class HomePage {
     this.submitted = true;
 
     if (form.valid) {
-      console.log('hello');
+
+      switch(this.segment) {
+        case 'Rent': {
+          console.log('Rent');
+          break;
+        }
+        case 'Return': {
+          console.log('Return');
+          break;
+        }
+        case 'Edit': {
+          console.log('Edit');
+          break;
+        }
+        case 'Add': {
+          this.navCtrl.push(AddItemPage, {
+            tag: this.value.tag
+          });
+          break;
+        }
+      }
     }
   }
 }
