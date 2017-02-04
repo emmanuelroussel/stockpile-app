@@ -91,4 +91,12 @@ export class MenuMock {
   }
 }
 
+export class UserDataMock {
+  public login(): any {
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
+}
+
 /* tslint:enable */

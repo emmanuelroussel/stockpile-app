@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
+import { UserData } from '../../providers/user-data';
 
 @Component({
   selector: 'page-login',
@@ -12,14 +12,15 @@ export class LoginPage {
   login: {email?: string, password?: string} = {};
   submitted = false;
 
-  constructor(public navCtrl: NavController) { }
+  constructor(public navCtrl: NavController, public userData: UserData) { }
 
   onLogin(form: NgForm) {
     this.submitted = true;
 
     if (form.valid) {
-      this.navCtrl.setRoot(TabsPage);
+      this.userData.login(this.login.email, this.login.password).then(
+        (success) => this.navCtrl.setRoot(TabsPage),
+        (err) => console.error(err));
     }
   }
-
 }
