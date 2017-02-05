@@ -35,7 +35,7 @@ describe('Home Page', () => {
 
   it('calls this.navCtrl.push when onNext() is called and pass on tag in NavParams', async(() => {
     instance.segment = 'Add';
-    instance.value.tag = 'banana'
+    instance.value.tag = 'banana';
     spyOn(instance.navCtrl, 'push');
     fixture.detectChanges();
     fixture.whenStable().then(() => {

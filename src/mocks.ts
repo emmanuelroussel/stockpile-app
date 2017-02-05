@@ -97,4 +97,12 @@ export class NavParamsMock {
   }
 }
 
+export class InventoryDataMock {
+  public addItem(): any {
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
+}
+
 /* tslint:enable */

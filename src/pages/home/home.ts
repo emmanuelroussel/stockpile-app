@@ -21,7 +21,7 @@ export class HomePage {
 
     if (form.valid) {
 
-      switch(this.segment) {
+      switch (this.segment) {
         case 'Rent': {
           console.log('Rent');
           break;

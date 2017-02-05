@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { InventoryPage } from '../pages/inventory/inventory';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
+import { InventoryData } from '../providers/inventory-data';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -36,6 +37,6 @@ const cloudSettings: CloudSettings = {
     LoginPage,
     TabsPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, InventoryData]
 })
 export class AppModule {}
