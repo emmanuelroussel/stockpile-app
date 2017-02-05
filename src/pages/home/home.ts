@@ -11,16 +11,12 @@ import { AddItemPage } from '../add-item/add-item';
 export class HomePage {
 
   segment: string = 'Rent';
-  value: {tag?: string} = {};
-  submitted = false;
+  tag: string = '';
 
   constructor(public navCtrl: NavController) { }
 
-  onNext(form: NgForm) {
-    this.submitted = true;
-
-    if (form.valid) {
-
+  onNext() {
+    if (this.tag) {
       switch (this.segment) {
         case 'Rent': {
           console.log('Rent');
@@ -36,11 +32,14 @@ export class HomePage {
         }
         case 'Add': {
           this.navCtrl.push(AddItemPage, {
-            tag: this.value.tag
+            tag: this.tag
           });
           break;
         }
       }
+
+      this.segment = 'Rent';
+      this.tag = '';
     }
   }
 }

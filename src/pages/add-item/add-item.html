@@ -12,18 +12,12 @@
 				<ion-input [(ngModel)]="item.brand" name="brand" type="text" #brand="ngModel" required>
 				</ion-input>
 			</ion-item>
-			<p ion-text [hidden]="!brand.valid || submitted == false" color="danger" padding-left>
-				Brand is required
-			</p>
 
 			<ion-item>
 				<ion-label floating color="primary">Model</ion-label>
 				<ion-input [(ngModel)]="item.model" name="model" type="text" #model="ngModel" required>
 				</ion-input>
 			</ion-item>
-			<p ion-text [hidden]="!model.valid || submitted == false" color="danger" padding-left>
-				Model is required
-			</p>
 
       <ion-item>
 				<ion-label floating color="primary">Category</ion-label>

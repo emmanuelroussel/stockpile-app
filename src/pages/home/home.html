@@ -24,15 +24,12 @@
     </ion-segment-button>
   </ion-segment>
 
-  <form #tagForm="ngForm" novalidate>
-		<ion-item>
-			<ion-input [(ngModel)]="value.tag" name="tag" type="text" placeholder="Tag"
-        #tag="ngModel" spellcheck="false" autocapitalize="off" required>
-			</ion-input>
-		</ion-item>
+	<ion-item>
+		<ion-input [(ngModel)]="tag" name="tag" type="text" placeholder="Tag">
+		</ion-input>
+	</ion-item>
 
-		<button ion-button class="submit-button" (click)="onNext(tagForm)" type="submit" block [disabled]="!tagForm.valid">
-      {{segment}}
-    </button>
-	</form>
+	<button ion-button class="submit-button" (click)="onNext()" type="submit" block [disabled]="!tag">
+    {{segment}}
+  </button>
 </ion-content>

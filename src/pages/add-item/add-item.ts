@@ -13,7 +13,6 @@ export class AddItemPage {
   item: {brand?: string, model?: string, category?: string, cost?: string, condition?: string} = {};
   conditions: Array<string> = ['Good', 'Broken', 'Getting Fixed'];
   categories: Array<string> = ['Camera', 'Stand', 'Cable'];
-  submitted: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -25,8 +24,6 @@ export class AddItemPage {
   }
 
   onSave(form: NgForm) {
-    this.submitted = true;
-
     if (form.valid) {
       this.inventoryData.addItem(this.item, this.tag).then(
         (success) => this.navCtrl.pop(),
