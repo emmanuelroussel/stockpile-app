@@ -1,4 +1,4 @@
-import { ComponentFixture, async } from '@angular/core/testing';
+import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
 import { UserDataMock } from '../../mocks';
@@ -31,7 +31,7 @@ describe('Login Page', () => {
     expect(instance.onLogin).toHaveBeenCalled();
   });
 
-  it('changes root nav to TabsPage onLogin() if form is valid', () => {
+  it('changes root nav to TabsPage onLogin() if form is valid', fakeAsync(() => {
     instance.login.email = 'me@me.com';
     instance.login.password = 'monkey';
     spyOn(instance.navCtrl, 'setRoot');
@@ -40,9 +40,10 @@ describe('Login Page', () => {
       fixture.detectChanges();
       let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
       instance.onLogin(form);
+      tick();
       expect(instance.navCtrl.setRoot).toHaveBeenCalledWith(TabsPage);
     });
-  });
+  }));
 
   it('disables login button initially', async(() => {
     fixture.detectChanges();
