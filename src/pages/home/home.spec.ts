@@ -1,5 +1,5 @@
 import { ComponentFixture, async } from '@angular/core/testing';
-import { NgForm } from '@angular/forms';
+
 import { TestUtils } from '../../test';
 import { AddItemPage } from '../add-item/add-item';
 import { HomePage } from './home';
@@ -40,8 +40,7 @@ describe('Home Page', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
-      instance.onNext(form);
+      instance.onNext();
       expect(instance.navCtrl.push).toHaveBeenCalledWith(AddItemPage, {tag: 'banana'});
     });
   }));
