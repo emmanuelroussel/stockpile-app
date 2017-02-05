@@ -1,4 +1,4 @@
-import { ComponentFixture, async } from '@angular/core/testing';
+import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
 import { AddItemPage } from './add-item';
@@ -38,7 +38,7 @@ describe('Add Item Page', () => {
     expect(instance.onSave).toHaveBeenCalled();
   });
 
-  it('pops nav onSave() if form is valid', () => {
+  it('pops nav onSave() if form is valid', fakeAsync(() => {
     instance.item.brand = 'Canon';
     instance.item.model = 'Rebel T5I';
     instance.item.category = 'Camera';
@@ -50,7 +50,8 @@ describe('Add Item Page', () => {
       fixture.detectChanges();
       let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
       instance.onSave(form);
+      tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
     });
-  });
+  }));
 });
