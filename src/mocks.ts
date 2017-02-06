@@ -91,8 +91,22 @@ export class MenuMock {
   }
 }
 
+export class NavParamsMock {
+  public get(key): any {
+    return String(key);
+  }
+}
+
 export class UserDataMock {
   public login(): any {
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
+}
+
+export class InventoryDataMock {
+  public addItem(): any {
     return new Promise((resolve, reject) => {
       resolve();
     });

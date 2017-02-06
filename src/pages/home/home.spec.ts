@@ -1,5 +1,7 @@
 import { ComponentFixture, async } from '@angular/core/testing';
+
 import { TestUtils } from '../../test';
+import { AddItemPage } from '../add-item/add-item';
 import { HomePage } from './home';
 
 let fixture: ComponentFixture<HomePage> = null;
@@ -20,4 +22,26 @@ describe('Home Page', () => {
     expect(instance).toBeTruthy();
     expect(fixture).toBeTruthy();
   });
+
+  it('initializes with a segment of Rent', () => {
+    expect(instance.segment).toEqual('Rent');
+  });
+
+  it('calls onNext() on click', () => {
+    spyOn(instance, 'onNext');
+    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
+    expect(instance.onNext).toHaveBeenCalled();
+  });
+
+  it('calls this.navCtrl.push when onNext() is called and pass on tag in NavParams', async(() => {
+    instance.segment = 'Add';
+    instance.tag = 'banana';
+    spyOn(instance.navCtrl, 'push');
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      instance.onNext();
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(AddItemPage, {tag: 'banana'});
+    });
+  }));
 });

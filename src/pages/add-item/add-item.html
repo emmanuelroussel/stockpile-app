@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Add item</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form #itemForm="ngForm" novalidate>
+		<ion-list>
+			<ion-item>
+				<ion-label floating color="primary">Brand</ion-label>
+				<ion-input [(ngModel)]="item.brand" name="brand" type="text" #brand="ngModel" required>
+				</ion-input>
+			</ion-item>
+
+			<ion-item>
+				<ion-label floating color="primary">Model</ion-label>
+				<ion-input [(ngModel)]="item.model" name="model" type="text" #model="ngModel" required>
+				</ion-input>
+			</ion-item>
+
+      <ion-item>
+				<ion-label floating color="primary">Category</ion-label>
+				<ion-select [(ngModel)]="item.category" name="category">
+          <ion-option *ngFor="let category of categories" value="{{category}}">{{category}}</ion-option>
+        </ion-select>
+			</ion-item>
+
+      <ion-item>
+				<ion-label floating color="primary">Cost</ion-label>
+				<ion-input [(ngModel)]="item.cost" name="cost" type="currency" #cost="ngModel">
+				</ion-input>
+			</ion-item>
+
+      <ion-item>
+				<ion-label floating color="primary">Condition</ion-label>
+				<ion-select [(ngModel)]="item.condition" name="condition">
+          <ion-option *ngFor="let condition of conditions" value="{{condition}}">{{condition}}</ion-option>
+        </ion-select>
+			</ion-item>
+		</ion-list>
+
+		<button ion-button (click)="onSave(itemForm)" type="submit" block>Save</button>
+	</form>
+</ion-content>

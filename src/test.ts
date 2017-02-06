@@ -12,9 +12,10 @@ import 'zone.js/dist/fake-async-test';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, GestureController } from 'ionic-angular';
+import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, GestureController, NavParams } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
-import { ConfigMock, PlatformMock, NavMock } from './mocks';
+import { ConfigMock, PlatformMock, NavMock, NavParamsMock } from './mocks';
+import { InventoryData } from './providers/inventory-data';
 import { UserData } from './providers/user-data';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
@@ -57,10 +58,11 @@ export class TestUtils {
         ...components,
       ],
       providers: [
-        App, Form, Keyboard, DomController, MenuController, GestureController, UserData, NgForm,
+        App, Form, Keyboard, DomController, MenuController, GestureController, NgForm, InventoryData, UserData,
         {provide: Platform, useClass: PlatformMock},
         {provide: Config, useClass: ConfigMock},
-        {provide: NavController, useClass: NavMock}
+        {provide: NavController, useClass: NavMock},
+        {provide: NavParams, useClass: NavParamsMock}
       ],
       imports: [
         FormsModule,
