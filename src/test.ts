@@ -16,6 +16,7 @@ import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController
 import { NgForm } from '@angular/forms';
 import { ConfigMock, PlatformMock, NavMock, NavParamsMock } from './mocks';
 import { InventoryData } from './providers/inventory-data';
+import { UserData } from './providers/user-data';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare var __karma__: any;
@@ -57,7 +58,7 @@ export class TestUtils {
         ...components,
       ],
       providers: [
-        App, Form, Keyboard, DomController, MenuController, GestureController, NgForm, InventoryData,
+        App, Form, Keyboard, DomController, MenuController, GestureController, NgForm, InventoryData, UserData,
         {provide: Platform, useClass: PlatformMock},
         {provide: Config, useClass: ConfigMock},
         {provide: NavController, useClass: NavMock},
