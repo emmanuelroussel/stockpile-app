@@ -5,6 +5,8 @@ Front end for Stockpile, an app that manages stuff for organizations.
 
 Built with [Ionic 2](https://github.com/driftyco/ionic).
 
+See [Stockpile API](https://github.com/AdamVig/stockpile-api) for the Restful API consumed by this app.
+
 ## Getting Started
 - Clone this repo
 - Make sure you have the latest version of Ionic and Cordova installed `npm install -g ionic cordova`
