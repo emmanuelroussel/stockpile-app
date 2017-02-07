@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
+    "docs": "typedoc --out ./docs/ --target ES6 --tsconfig ./tsconfig.json --exclude node_modules --ignoreCompilerErrors src/",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
     "test": "ng test --single-run --code-coverage"
@@ -48,6 +49,7 @@
     "tslint": "^4.3.1",
     "tslint-eslint-rules": "^3.2.3",
     "tslint-ionic-rules": "0.0.8",
+    "typedoc": "^0.5.5",
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [
