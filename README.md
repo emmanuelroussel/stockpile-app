@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/emmanuelroussel/stockpile-app.svg?branch=master)](https://travis-ci.org/emmanuelroussel/stockpile-app)
-
+[![Coverage Status](https://coveralls.io/repos/github/emmanuelroussel/stockpile-app/badge.svg)](https://coveralls.io/github/emmanuelroussel/stockpile-app)
 # Stockpile App
 Front end for Stockpile, an app that manages stuff for organizations.
 
