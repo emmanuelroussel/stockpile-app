@@ -22,9 +22,7 @@ before_install:
   - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   - sudo dpkg -i google-chrome*.deb
 after_success:
-  # Send test coverage data to code climate and coveralls
-  # CODECLIMATE_TEST_REPORTER_TOKEN is an environment variable set in Travis CI to keep token secret
-  - CODECLIMATE_REPO_TOKEN=CODECLIMATE_TEST_REPORTER_TOKEN codeclimate-test-reporter < ./coverage/coverage.lcov
+  # Send test coverage data to coveralls
   - ./node_modules/coveralls/bin/coveralls.js < ./coverage/coverage.lcov
 cache:
   directories:
