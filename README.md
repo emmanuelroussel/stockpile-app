@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/emmanuelroussel/stockpile-app.svg?branch=master)](https://travis-ci.org/emmanuelroussel/stockpile-app)
 [![Coverage Status](https://coveralls.io/repos/github/emmanuelroussel/stockpile-app/badge.svg)](https://coveralls.io/github/emmanuelroussel/stockpile-app)
+
 # Stockpile App
 Front end for Stockpile, an app that manages stuff for organizations.
 
@@ -19,7 +20,7 @@ See [Stockpile API](https://github.com/AdamVig/stockpile-api) for the Restful AP
 ## Tests
 App tested with Jasmine and Karma on Chrome.
 
-Unit tests located with every testable `.ts` file (unit test files end with `.spec.ts`).
+Unit tests located with every testable `.ts` file in `src/pages/` and `src/app/` (unit test files end with `.spec.ts`).
 
 To run the tests: `npm test`.
 
