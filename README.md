@@ -22,8 +22,6 @@ To run the tests: `npm test`.
 ## Docs
 Documentation generated with [TypeDoc](https://github.com/TypeStrong/typedoc).
 
-To update it:
-- Install TypeDoc with `sudo npm install -g typedoc`
-- Run from the project root `typedoc --out ./docs/ --target ES6 --tsconfig ./tsconfig.json --exclude node_modules --ignoreCompilerErrors src/`
+To update the docs: `npm run docs`.
 
-**Note:** The command to generate the docs is currently ugly because TypeDoc has [a known issue with promises](https://github.com/TypeStrong/typedoc/issues/327) . The workaround is to ignore compile errors.
+**Note:** The script to generate the docs is currently ugly because TypeDoc has [a known issue with promises](https://github.com/TypeStrong/typedoc/issues/327) . The workaround is to ignore compile errors.
