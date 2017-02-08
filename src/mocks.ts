@@ -92,8 +92,10 @@ export class MenuMock {
 }
 
 export class NavParamsMock {
-  public get(key): any {
-    return String(key);
+  param: string = '';
+
+  public get(): any {
+    return String(this.param);
   }
 }
 
@@ -106,6 +108,8 @@ export class UserDataMock {
 }
 
 export class InventoryDataMock {
+  item: {brand?: string, model?: string, category?: string, cost?: string, condition?: string} = {brand: 'Canon', model: 'Rebel T5i', category: 'Camera', cost: '750', condition: 'Good'};
+
   public addItem(): any {
     return new Promise((resolve, reject) => {
       resolve();
@@ -114,7 +118,7 @@ export class InventoryDataMock {
 
   public getItem(): any {
     return new Promise((resolve, reject) => {
-      resolve();
+      resolve(this.item);
     });
   }
 

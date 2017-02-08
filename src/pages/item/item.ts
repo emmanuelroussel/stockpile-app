@@ -19,15 +19,19 @@ export class ItemPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public inventoryData: InventoryData
-  ) {
+  ) { }
+
+  ngOnInit() {
+    this.item.condition = 'Good';
     this.tag = this.navParams.get('tag');
     this.action = this.navParams.get('action');
-    this.item.condition = 'Good';
 
-    this.inventoryData.getItem(this.tag).then(
-      item => this.item = item,
-      err => console.error(err)
-    );
+    if (this.action === 'Edit') {
+      this.inventoryData.getItem(this.tag).then(
+        item => this.item = item,
+        err => console.error(err)
+      );
+    }
   }
 
   onSave(form: NgForm) {
