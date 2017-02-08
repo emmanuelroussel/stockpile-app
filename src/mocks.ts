@@ -111,6 +111,24 @@ export class InventoryDataMock {
       resolve();
     });
   }
+
+  public getItem(): any {
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
+
+  public editItem(): any {
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
+
+  public deleteItem(): any {
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
 }
 
 /* tslint:enable */

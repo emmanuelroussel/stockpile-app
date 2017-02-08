@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
-import { AddItemPage } from '../add-item/add-item';
+import { ItemPage } from '../item/item';
 
 @Component({
   selector: 'page-home',
@@ -26,12 +26,16 @@ export class HomePage {
           break;
         }
         case 'Edit': {
-          console.log('Edit');
+          this.navCtrl.push(ItemPage, {
+            tag: this.tag,
+            action: 'Edit'
+          });
           break;
         }
         case 'Add': {
-          this.navCtrl.push(AddItemPage, {
-            tag: this.tag
+          this.navCtrl.push(ItemPage, {
+            tag: this.tag,
+            action: 'Add'
           });
           break;
         }

@@ -2,7 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { MyApp } from './app.component';
-import { AddItemPage } from '../pages/add-item/add-item';
+import { ItemPage } from '../pages/item/item';
 import { HomePage } from '../pages/home/home';
 import { InventoryPage } from '../pages/inventory/inventory';
 import { LoginPage } from '../pages/login/login';
@@ -19,9 +19,9 @@ const cloudSettings: CloudSettings = {
 @NgModule({
   declarations: [
     MyApp,
-    AddItemPage,
     HomePage,
     InventoryPage,
+    ItemPage,
     LoginPage,
     TabsPage
   ],
@@ -32,9 +32,9 @@ const cloudSettings: CloudSettings = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AddItemPage,
-    InventoryPage,
     HomePage,
+    InventoryPage,
+    ItemPage,
     LoginPage,
     TabsPage
   ],

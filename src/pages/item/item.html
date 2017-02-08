@@ -1,6 +1,11 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Add item</ion-title>
+    <ion-title>{{action}} item</ion-title>
+    <ion-buttons *ngIf="action === 'Edit'" end>
+      <button ion-button icon-only (click)="deleteItem()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
