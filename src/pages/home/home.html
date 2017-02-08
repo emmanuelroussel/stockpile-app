@@ -10,17 +10,17 @@
   </div>
 
   <ion-segment [(ngModel)]="segment">
-    <ion-segment-button value="Rent">
-      Rent
+    <ion-segment-button value="{{actions.rent}}">
+      {{actions.rent}}
     </ion-segment-button>
-    <ion-segment-button value="Return">
-      Return
+    <ion-segment-button value="{{actions.return}}">
+      {{actions.return}}
     </ion-segment-button>
-    <ion-segment-button value="Edit">
-      Edit
+    <ion-segment-button value="{{actions.edit}}">
+      {{actions.edit}}
     </ion-segment-button>
-    <ion-segment-button value="Add">
-      Add
+    <ion-segment-button value="{{actions.add}}">
+      {{actions.add}}
     </ion-segment-button>
   </ion-segment>
 

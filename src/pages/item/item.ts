@@ -3,14 +3,16 @@ import { NgForm } from '@angular/forms';
 
 import { NavController, NavParams } from 'ionic-angular';
 import { InventoryData } from '../../providers/inventory-data';
+import { Actions } from '../../constants';
 
 @Component({
   selector: 'page-item',
   templateUrl: 'item.html'
 })
 export class ItemPage {
+  actions = Actions;
   tag: string = '';
-  action: string = '';
+  action: Actions = '';
   item: {brand?: string, model?: string, category?: string, cost?: string, condition?: string} = {};
   conditions: Array<string> = ['Good', 'Broken', 'Getting Fixed'];
   categories: Array<string> = ['Camera', 'Stand', 'Cable'];
@@ -26,7 +28,7 @@ export class ItemPage {
     this.tag = this.navParams.get('tag');
     this.action = this.navParams.get('action');
 
-    if (this.action === 'Edit') {
+    if (this.action === this.actions.edit) {
       this.inventoryData.getItem(this.tag).then(
         item => this.item = item,
         err => console.error(err)
@@ -36,12 +38,12 @@ export class ItemPage {
 
   onSave(form: NgForm) {
     if (form.valid) {
-      if (this.action === 'Add') {
+      if (this.action === this.actions.add) {
         this.inventoryData.addItem(this.item, this.tag).then(
           success => this.navCtrl.pop(),
           err => console.error(err)
         );
-      } else if (this.action === 'Edit') {
+      } else if (this.action === this.actions.edit) {
         this.inventoryData.editItem(this.item, this.tag).then(
           success => this.navCtrl.pop(),
           err => console.error(err)

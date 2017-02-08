@@ -2,7 +2,7 @@ import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing'
 import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
 import { ItemPage } from './item';
-import { InventoryDataMock } from '../../mocks';
+import { Actions } from '../../constants';
 
 let fixture: ComponentFixture<ItemPage> = null;
 let instance: any = null;
@@ -30,9 +30,9 @@ describe('Item Page', () => {
   });
 
   it('gets navParam action', () => {
-    instance.navParams.param = 'Edit';
+    instance.navParams.param = Actions.edit;
     instance.ngOnInit();
-    expect(instance.tag).toEqual('Edit');
+    expect(instance.tag).toEqual(Actions.edit);
   });
 
   it('initializes with \'Good\' as condition default value', () => {
@@ -43,14 +43,14 @@ describe('Item Page', () => {
   it('gets item if action === \'Edit\'', fakeAsync(() => {
     let item = { brand: 'Canon', model: 'Rebel T5i', category: 'Camera', cost: '750', condition: 'Good' };
     instance.inventoryData.item = item;
-    instance.navParams.param = 'Edit';
+    instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     tick();
     expect(instance.item).toEqual(item);
   }));
 
   it('does not get item if action !== \'Edit\'', fakeAsync(() => {
-    instance.navParams.param = 'Add';
+    instance.navParams.param = Actions.add;
     instance.ngOnInit();
     tick();
     expect(instance.item).toEqual({ condition: 'Good' });
@@ -69,7 +69,7 @@ describe('Item Page', () => {
     instance.item.cost = '750';
     instance.item.condition = 'Good';
 
-    instance.navParams.param = 'Add';
+    instance.navParams.param = Actions.add;
     instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
     fixture.detectChanges();
@@ -88,7 +88,7 @@ describe('Item Page', () => {
     instance.item.category = 'Camera';
     instance.item.cost = '750';
     instance.item.condition = 'Good';
-    instance.navParams.param = 'Edit';
+    instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
     fixture.detectChanges();
@@ -102,7 +102,7 @@ describe('Item Page', () => {
   }));
 
   it('pops nav onDelete()', fakeAsync(() => {
-    instance.action = 'Edit';
+    instance.action = Actions.edit;
     spyOn(instance.navCtrl, 'pop');
     fixture.detectChanges();
     fixture.whenStable().then(() => {

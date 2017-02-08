@@ -3,6 +3,7 @@ import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { ItemPage } from '../item/item';
 import { HomePage } from './home';
+import { Actions } from '../../constants';
 
 let fixture: ComponentFixture<HomePage> = null;
 let instance: any = null;
@@ -34,26 +35,26 @@ describe('Home Page', () => {
   });
 
   it('pushes item page onNext() with \'Add\'', async(() => {
-    instance.segment = 'Add';
+    instance.segment = Actions.add;
     instance.tag = 'banana';
     spyOn(instance.navCtrl, 'push');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onNext();
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, {tag: 'banana', action: 'Add'});
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, {tag: 'banana', action: Actions.add});
     });
   }));
 
   it('pushes item page onNext() with \'Edit\'', async(() => {
-    instance.segment = 'Edit';
+    instance.segment = Actions.edit;
     instance.tag = 'banana';
     spyOn(instance.navCtrl, 'push');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onNext();
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, {tag: 'banana', action: 'Edit'});
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, {tag: 'banana', action: Actions.edit});
     });
   }));
 });
