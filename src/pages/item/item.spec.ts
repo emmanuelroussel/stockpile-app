@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
 import { ItemPage } from './item';
 import { Actions } from '../../constants';
+import { TestData } from '../../test-data';
 
 let fixture: ComponentFixture<ItemPage> = null;
 let instance: any = null;
@@ -41,12 +42,11 @@ describe('Item Page', () => {
   });
 
   it('gets item if action === \'Edit\'', fakeAsync(() => {
-    let item = { brand: 'Canon', model: 'Rebel T5i', category: 'Camera', cost: '750', condition: 'Good' };
-    instance.inventoryData.item = item;
+    instance.inventoryData.item = TestData.item;
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     tick();
-    expect(instance.item).toEqual(item);
+    expect(instance.item).toEqual(TestData.item);
   }));
 
   it('does not get item if action !== \'Edit\'', fakeAsync(() => {
@@ -63,12 +63,7 @@ describe('Item Page', () => {
   });
 
   it('pops nav onSave() if form is valid and action is add', fakeAsync(() => {
-    instance.item.brand = 'Canon';
-    instance.item.model = 'Rebel T5I';
-    instance.item.category = 'Camera';
-    instance.item.cost = '750';
-    instance.item.condition = 'Good';
-
+    instance.item = TestData.item;
     instance.navParams.param = Actions.add;
     instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
@@ -83,11 +78,7 @@ describe('Item Page', () => {
   }));
 
   it('pops nav onSave() if form is valid and action is edit', fakeAsync(() => {
-    instance.item.brand = 'Canon';
-    instance.item.model = 'Rebel T5I';
-    instance.item.category = 'Camera';
-    instance.item.cost = '750';
-    instance.item.condition = 'Good';
+    instance.item = TestData.item;
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');

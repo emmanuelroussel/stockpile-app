@@ -23,7 +23,7 @@ module.exports = function (config) {
     },
     remapIstanbulReporter: {
       remapOptions: {
-        exclude: /src\/(mocks.ts|test.ts|polyfills.ts)/
+        exclude: /src\/(mocks.ts|test.ts|polyfills.ts|constants.ts|test-data.ts)/
       },
       reports: {
         html: 'coverage',
