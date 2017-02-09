@@ -5,11 +5,11 @@ import { Navigator, HalDocument } from 'ng-hal';
 export class StockpileData {
   hal: HalDocument;
 
-  constructor(private navigator: Navigator) { }
+  constructor(public navigator: Navigator) { }
 
   initHal() {
     this.navigator
       .get('https://stockpile.adamvig.com/api')
-      .subscribe((doc: HalDocument) => console.log(doc));
+      .subscribe((doc: HalDocument) => this.hal = doc);
   }
 }

@@ -3,6 +3,9 @@
 
 // IONIC:
 
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/Rx';
+
 export class ConfigMock {
 
   public get(): any {
@@ -94,6 +97,18 @@ export class MenuMock {
 export class NavParamsMock {
   public get(key): any {
     return String(key);
+  }
+}
+
+export class NavigatorMock {
+  hal = {};
+
+  public get(): any {
+    let promise = new Promise((resolve, reject) => {
+      resolve(this.hal);
+    });
+
+    return Observable.fromPromise(promise);
   }
 }
 
