@@ -58,7 +58,8 @@ export class TestUtils {
         ...components,
       ],
       providers: [
-        App, Form, Keyboard, DomController, MenuController, GestureController, NgForm, InventoryData, UserData,
+        App, Form, Keyboard, DomController, MenuController, GestureController,
+        NgForm, InventoryData, UserData,
         {provide: Platform, useClass: PlatformMock},
         {provide: Config, useClass: ConfigMock},
         {provide: NavController, useClass: NavMock},

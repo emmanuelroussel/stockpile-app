@@ -3,6 +3,9 @@
 
 // IONIC:
 
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/Rx';
+
 export class ConfigMock {
 
   public get(): any {
@@ -99,11 +102,15 @@ export class NavParamsMock {
   }
 }
 
-export class UserDataMock {
-  public login(): any {
-    return new Promise((resolve, reject) => {
-      resolve();
+export class NavigatorMock {
+  hal = {};
+
+  public get(): any {
+    let promise = new Promise((resolve, reject) => {
+      resolve(this.hal);
     });
+
+    return Observable.fromPromise(promise);
   }
 }
 
@@ -129,6 +136,18 @@ export class InventoryDataMock {
   }
 
   public deleteItem(): any {
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
+}
+
+export class StockpileDataMock {
+  public initHal(): any { }
+}
+
+export class UserDataMock {
+  public login(): any {
     return new Promise((resolve, reject) => {
       resolve();
     });
