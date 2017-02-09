@@ -13,6 +13,7 @@ module.exports = function (config) {
       require('angular-cli/plugins/karma')
     ],
     files: [
+      './src/extends-script.js', // Temporary fix for ng-hal
       { pattern: './src/test.ts', watched: false }
     ],
     preprocessors: {
