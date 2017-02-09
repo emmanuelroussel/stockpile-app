@@ -2,11 +2,5 @@
   "name": "stockpile",
   "app_id": "90c804f8",
   "v2": true,
-  "typescript": true,
-  "proxies": [
-    {
-      "path": "/api",
-      "proxyUrl": "http://localhost:5000"
-    }
-  ]
+  "typescript": true
 }
