@@ -1,8 +1,9 @@
 import { ComponentFixture, async } from '@angular/core/testing';
 
 import { TestUtils } from '../../test';
-import { AddItemPage } from '../add-item/add-item';
+import { ItemPage } from '../item/item';
 import { HomePage } from './home';
+import { Actions } from '../../constants';
 
 let fixture: ComponentFixture<HomePage> = null;
 let instance: any = null;
@@ -33,15 +34,27 @@ describe('Home Page', () => {
     expect(instance.onNext).toHaveBeenCalled();
   });
 
-  it('calls this.navCtrl.push when onNext() is called and pass on tag in NavParams', async(() => {
-    instance.segment = 'Add';
+  it('pushes item page onNext() with \'Add\'', async(() => {
+    instance.segment = Actions.add;
     instance.tag = 'banana';
     spyOn(instance.navCtrl, 'push');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onNext();
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(AddItemPage, {tag: 'banana'});
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, {tag: 'banana', action: Actions.add});
+    });
+  }));
+
+  it('pushes item page onNext() with \'Edit\'', async(() => {
+    instance.segment = Actions.edit;
+    instance.tag = 'banana';
+    spyOn(instance.navCtrl, 'push');
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      instance.onNext();
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, {tag: 'banana', action: Actions.edit});
     });
   }));
 });

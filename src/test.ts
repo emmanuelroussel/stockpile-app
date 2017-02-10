@@ -14,7 +14,7 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, GestureController, NavParams } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
-import { ConfigMock, PlatformMock, NavMock, NavParamsMock } from './mocks';
+import { ConfigMock, PlatformMock, NavMock, NavParamsMock, InventoryDataMock } from './mocks';
 import { InventoryData } from './providers/inventory-data';
 import { UserData } from './providers/user-data';
 
@@ -60,10 +60,11 @@ export class TestUtils {
       providers: [
         App, Form, Keyboard, DomController, MenuController, GestureController,
         NgForm, InventoryData, UserData,
-        { provide: Platform, useClass: PlatformMock },
-        { provide: Config, useClass: ConfigMock },
-        { provide: NavController, useClass: NavMock },
-        { provide: NavParams, useClass: NavParamsMock }
+        {provide: Platform, useClass: PlatformMock},
+        {provide: Config, useClass: ConfigMock},
+        {provide: NavController, useClass: NavMock},
+        {provide: NavParams, useClass: NavParamsMock},
+        {provide: InventoryData, useClass: InventoryDataMock}
       ],
       imports: [
         FormsModule,

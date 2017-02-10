@@ -1,4 +1,5 @@
 import { InventoryData } from './inventory-data';
+import { TestData } from '../test-data';
 
 let inventoryData: InventoryData = null;
 
@@ -12,9 +13,29 @@ describe('InventoryData Provider', () => {
     expect(InventoryData).not.toBeNull();
   });
 
+  it('returns an empty promise on getItem()', () => {
+    inventoryData.getItem('banana').then(
+      (success) => expect(true),
+      (err) => expect(false)
+    );
+  });
+
   it('returns an empty promise on addItem()', () => {
-    let item = {brand: 'Canon', model: 'Rebel T5I', category: 'Camera', cost: '750', condition: 'Good'};
-    inventoryData.addItem(item, 'banana').then(
+    inventoryData.addItem(TestData.item, 'banana').then(
+      (success) => expect(true),
+      (err) => expect(false)
+    );
+  });
+
+  it('returns an empty promise on editItem()', () => {
+    inventoryData.editItem(TestData.item, 'banana').then(
+      (success) => expect(true),
+      (err) => expect(false)
+    );
+  });
+
+  it('returns an empty promise on deleteItem()', () => {
+    inventoryData.deleteItem('banana').then(
       (success) => expect(true),
       (err) => expect(false)
     );

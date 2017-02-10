@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
-import { AddItemPage } from '../add-item/add-item';
+import { ItemPage } from '../item/item';
+import { Actions } from '../../constants';
 
 @Component({
   selector: 'page-home',
@@ -9,7 +10,8 @@ import { AddItemPage } from '../add-item/add-item';
 })
 export class HomePage {
 
-  segment: string = 'Rent';
+  actions = Actions;
+  segment: Actions = this.actions.rent;
   tag: string = '';
 
   constructor(public navCtrl: NavController) { }
@@ -17,27 +19,31 @@ export class HomePage {
   onNext() {
     if (this.tag) {
       switch (this.segment) {
-        case 'Rent': {
-          console.log('Rent');
+        case this.actions.rent: {
+          console.log(this.actions.rent);
           break;
         }
-        case 'Return': {
-          console.log('Return');
+        case this.actions.return: {
+          console.log(this.actions.return);
           break;
         }
-        case 'Edit': {
-          console.log('Edit');
+        case this.actions.edit: {
+          this.navCtrl.push(ItemPage, {
+            tag: this.tag,
+            action: this.actions.edit
+          });
           break;
         }
-        case 'Add': {
-          this.navCtrl.push(AddItemPage, {
-            tag: this.tag
+        case this.actions.add: {
+          this.navCtrl.push(ItemPage, {
+            tag: this.tag,
+            action: this.actions.add
           });
           break;
         }
       }
 
-      this.segment = 'Rent';
+      this.segment = this.actions.rent;
       this.tag = '';
     }
   }
