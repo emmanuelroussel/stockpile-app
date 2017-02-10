@@ -2,6 +2,7 @@ import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing'
 import { TestUtils } from '../../test';
 import { RentalPage } from './rental';
 import { ItemPage } from '../item/item';
+import { RentalDetailsPage } from '../rental-details/rental-details';
 import { Actions } from '../../constants';
 import { TestData } from '../../test-data';
 
@@ -54,7 +55,7 @@ describe('Rental Page', () => {
     });
   }));
 
-  it('calls viewItem on click on an item', () => {
+  it('pushes ItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.viewItem(TestData.item);
     expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.item.tag, action: Actions.edit });

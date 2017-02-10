@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { InventoryData } from '../../providers/inventory-data';
 import { ItemPage } from '../item/item';
+import { RentalDetailsPage } from '../rental-details/rental-details';
 import { Actions } from '../../constants';
 
 @Component({
@@ -40,6 +41,12 @@ export class RentalPage {
     this.navCtrl.push(ItemPage, {
       tag: item.tag,
       action: this.actions.edit
+    });
+  }
+
+  onContinue() {
+    this.navCtrl.push(RentalDetailsPage, {
+      items: this.items
     });
   }
 }

@@ -52,6 +52,12 @@ export class NavMock {
   public setRoot(): any {
     return true;
   }
+
+  public popToRoot(): any {
+    return new Promise(function(resolve: Function): void {
+      resolve();
+    });
+  }
 }
 
 export class PlatformMock {
@@ -136,6 +142,12 @@ export class InventoryDataMock {
   }
 
   public deleteItem(): any {
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
+
+  public rent(): any {
     return new Promise((resolve, reject) => {
       resolve();
     });

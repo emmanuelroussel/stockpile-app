@@ -40,4 +40,11 @@ describe('InventoryData Provider', () => {
       (err) => expect(false)
     );
   });
+
+  it('returns an empty promise on rent()', () => {
+    inventoryData.rent(TestData.items, TestData.details).then(
+      (success) => expect(true),
+      (err) => expect(false)
+    );
+  });
 });

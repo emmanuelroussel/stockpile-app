@@ -30,4 +30,10 @@ export class InventoryData {
       resolve();
     });
   }
+
+  rent(items: Array<Object>, details: Object) {
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
 }
