@@ -60,4 +60,10 @@ describe('Rental Page', () => {
     instance.viewItem(TestData.item);
     expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.item.tag, action: Actions.edit });
   });
+
+  it('pushes RentalDetailsPage on nav onContinue()', () => {
+    spyOn(instance.navCtrl, 'push');
+    instance.onContinue();
+    expect(instance.navCtrl.push).toHaveBeenCalled();
+  });
 });
