@@ -33,7 +33,7 @@ describe('Item Page', () => {
   it('gets navParam action', () => {
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
-    expect(instance.tag).toEqual(Actions.edit);
+    expect(instance.action).toEqual(Actions.edit);
   });
 
   it('initializes with \'Good\' as condition default value', () => {
