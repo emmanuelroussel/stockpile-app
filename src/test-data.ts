@@ -1,5 +1,6 @@
 export class TestData {
   public static item = {
+    tag: 'banana',
     brand: 'Canon',
     model: 'Rebel T5i',
     category: 'Camera',

@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{action}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+	<ion-item>
+		<ion-input [(ngModel)]="tag" name="tag" type="text" placeholder="Tag">
+		</ion-input>
+	</ion-item>
+
+	<button ion-button class="tag-button" (click)="onAdd()" type="submit" block [disabled]="!tag">
+    Add
+  </button>
+
+  <ion-list-header>Scanned Items</ion-list-header>
+
+  <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="viewItem(item)" detail-push>
+      <ion-avatar item-left>
+        <img src="img/fake.png">
+      </ion-avatar>
+      <h2>{{ item.brand }} {{ item.model }}</h2>
+    </button>
+  </ion-list>
+</ion-content>

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { TestData } from '../test-data';
 
 @Injectable()
 export class InventoryData {
-  item: {brand?: string, model?: string, category?: string, cost?: string, condition?: string} = {brand: 'Canon', model: 'Rebel T5i', category: 'Camera', cost: '750', condition: 'Good'};
+  item: {tag?: string, brand?: string, model?: string, category?: string, cost?: string, condition?: string} = TestData.item;
 
   constructor() { }
 
