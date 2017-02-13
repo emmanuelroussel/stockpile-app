@@ -36,4 +36,10 @@ export class InventoryData {
       resolve();
     });
   }
+
+  return(items: Array<Object>) {
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
 }

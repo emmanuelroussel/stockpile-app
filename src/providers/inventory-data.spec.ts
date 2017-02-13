@@ -47,4 +47,11 @@ describe('InventoryData Provider', () => {
       (err) => expect(false)
     );
   });
+
+  it('returns an empty promise on return()', () => {
+    inventoryData.return(TestData.items).then(
+      (success) => expect(true),
+      (err) => expect(false)
+    );
+  });
 });

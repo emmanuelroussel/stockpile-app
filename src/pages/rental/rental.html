@@ -26,7 +26,10 @@
     </button>
   </ion-list>
 
-  <button ion-button (click)="onContinue()" block>
+  <button ion-button *ngIf="action === actions.rent" (click)="onContinue()" block>
     Continue
+  </button>
+  <button ion-button *ngIf="action === actions.return" (click)="onReturn()" block>
+    Return
   </button>
 </ion-content>
