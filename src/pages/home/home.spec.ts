@@ -2,6 +2,7 @@ import { ComponentFixture, async } from '@angular/core/testing';
 
 import { TestUtils } from '../../test';
 import { ItemPage } from '../item/item';
+import { RentalPage } from '../rental/rental';
 import { HomePage } from './home';
 import { Actions } from '../../constants';
 
@@ -33,6 +34,18 @@ describe('Home Page', () => {
     TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
     expect(instance.onNext).toHaveBeenCalled();
   });
+
+  it('pushes rental page onNext() with \'Rent\'', async(() => {
+    instance.segment = Actions.rent;
+    instance.tag = 'banana';
+    spyOn(instance.navCtrl, 'push');
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      instance.onNext();
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, {tag: 'banana', action: Actions.rent});
+    });
+  }));
 
   it('pushes item page onNext() with \'Add\'', async(() => {
     instance.segment = Actions.add;

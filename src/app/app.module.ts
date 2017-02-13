@@ -7,6 +7,8 @@ import { HalModule } from 'ng-hal';
 import { HomePage } from '../pages/home/home';
 import { InventoryPage } from '../pages/inventory/inventory';
 import { LoginPage } from '../pages/login/login';
+import { RentalPage } from '../pages/rental/rental';
+import { RentalDetailsPage } from '../pages/rental-details/rental-details';
 import { TabsPage } from '../pages/tabs/tabs';
 import { UserData } from '../providers/user-data';
 import { StockpileData } from '../providers/stockpile-data';
@@ -25,6 +27,8 @@ const cloudSettings: CloudSettings = {
     InventoryPage,
     ItemPage,
     LoginPage,
+    RentalPage,
+    RentalDetailsPage,
     TabsPage
   ],
   imports: [
@@ -39,6 +43,8 @@ const cloudSettings: CloudSettings = {
     InventoryPage,
     ItemPage,
     LoginPage,
+    RentalPage,
+    RentalDetailsPage,
     TabsPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, InventoryData, UserData, StockpileData]

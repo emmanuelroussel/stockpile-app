@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Rent</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form #rentalForm="ngForm" novalidate>
+		<ion-list>
+      <ion-list-header>Rental Details</ion-list-header>
+
+			<ion-item>
+				<ion-label floating color="primary">Person</ion-label>
+				<ion-input [(ngModel)]="details.person" name="person" type="text" #person="ngModel" required>
+				</ion-input>
+			</ion-item>
+
+      <ion-item>
+				<ion-label floating color="primary">Purpose</ion-label>
+				<ion-input [(ngModel)]="details.purpose" name="purpose" type="text" #purpose="ngModel" required>
+				</ion-input>
+			</ion-item>
+
+      <ion-item>
+				<ion-label floating color="primary">Return Date</ion-label>
+				<ion-input [(ngModel)]="details.date" name="date" type="text" #date="ngModel" required>
+				</ion-input>
+			</ion-item>
+
+      <ion-list-header>Scanned Items</ion-list-header>
+
+      <ion-item *ngFor="let item of items">
+        {{ item.brand }} {{ item.model }}
+      </ion-item>
+    </ion-list>
+
+		<button ion-button (click)="onRent(rentalForm)" type="submit" block [disabled]="!rentalForm.valid">
+      Rent
+    </button>
+	</form>
+</ion-content>

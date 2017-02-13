@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{action}} item</ion-title>
+    <ion-title>{{ item.brand }} {{ item.model }}</ion-title>
     <ion-buttons *ngIf="action === actions.edit" end>
       <button ion-button icon-only (click)="deleteItem()">
         <ion-icon name="trash"></ion-icon>
@@ -11,7 +11,7 @@
 
 <ion-content padding>
   <form #itemForm="ngForm" novalidate>
-		<ion-list>
+		<ion-list no-line>
 			<ion-item>
 				<ion-label floating color="primary">Brand</ion-label>
 				<ion-input [(ngModel)]="item.brand" name="brand" type="text" #brand="ngModel" required>
