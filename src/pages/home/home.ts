@@ -19,17 +19,18 @@ export class HomePage {
 
   onNext() {
     if (this.tag) {
+      let page;
+
       if (this.segment === this.actions.rent || this.segment === this.actions.return) {
-        this.navCtrl.push(RentalPage, {
-          tag: this.tag,
-          action: this.segment
-        });
+        page = RentalPage;
       } else if (this.segment === this.actions.edit || this.segment === this.actions.add) {
-        this.navCtrl.push(ItemPage, {
-          tag: this.tag,
-          action: this.segment
-        });
+        page = ItemPage;
       }
+
+      this.navCtrl.push(page, {
+        tag: this.tag,
+        action: this.segment
+      });
 
       this.segment = this.actions.rent;
       this.tag = '';
