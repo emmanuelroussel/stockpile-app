@@ -49,4 +49,11 @@ export class RentalPage {
       items: this.items
     });
   }
+
+  onReturn() {
+    this.inventoryData.return(this.items).then(
+      data => this.navCtrl.pop(),
+      err => console.log(err)
+    );
+  }
 }

@@ -47,6 +47,18 @@ describe('Home Page', () => {
     });
   }));
 
+  it('pushes rental page onNext() with \'Return\'', async(() => {
+    instance.segment = Actions.return;
+    instance.tag = 'banana';
+    spyOn(instance.navCtrl, 'push');
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      instance.onNext();
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, {tag: 'banana', action: Actions.return});
+    });
+  }));
+
   it('pushes item page onNext() with \'Add\'', async(() => {
     instance.segment = Actions.add;
     instance.tag = 'banana';

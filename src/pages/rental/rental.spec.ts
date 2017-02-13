@@ -66,4 +66,13 @@ describe('Rental Page', () => {
     instance.onContinue();
     expect(instance.navCtrl.push).toHaveBeenCalled();
   });
+
+  it('calls inventoryData.return and pops nav onReturn()', fakeAsync(() => {
+    spyOn(instance.navCtrl, 'pop');
+    spyOn(instance.inventoryData, 'return').and.callThrough();
+    instance.onReturn();
+    tick();
+    expect(instance.navCtrl.pop).toHaveBeenCalled();
+    expect(instance.inventoryData.return).toHaveBeenCalled();
+  }));
 });

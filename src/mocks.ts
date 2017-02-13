@@ -152,6 +152,12 @@ export class InventoryDataMock {
       resolve();
     });
   }
+
+  public return(): any {
+    return new Promise((resolve, reject) => {
+      resolve();
+    });
+  }
 }
 
 export class StockpileDataMock {
