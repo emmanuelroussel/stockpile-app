@@ -32,7 +32,9 @@ const cloudSettings: CloudSettings = {
     TabsPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      tabsHideOnSubPages: true
+    }),
     CloudModule.forRoot(cloudSettings),
     HalModule
   ],
