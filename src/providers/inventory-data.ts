@@ -3,43 +3,38 @@ import { TestData } from '../test-data';
 
 @Injectable()
 export class InventoryData {
-  item: {tag?: string, brand?: string, model?: string, category?: string, cost?: string, condition?: string} = TestData.item;
 
   constructor() { }
 
   getItem(tag: string) {
-    return new Promise((resolve, reject) => {
-      resolve(this.item);
-    });
+    return Promise.resolve(TestData.item);
   }
 
   addItem(item: Object, tag: string) {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
+    return Promise.resolve();
   }
 
   editItem(item: Object, tag: string) {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
+    return Promise.resolve();
   }
 
   deleteItem(tag: string) {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
+    return Promise.resolve();
   }
 
   rent(items: Array<Object>, details: Object) {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
+    return Promise.resolve();
   }
 
   return(items: Array<Object>) {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
+    return Promise.resolve();
+  }
+
+  getConditions() {
+    return Promise.resolve(TestData.conditions);
+  }
+
+  getCategories() {
+    return Promise.resolve(TestData.categories);
   }
 }

@@ -12,7 +12,6 @@ export class TabsPage {
   tab1Root: any = HomePage;
   tab2Root: any = InventoryPage;
 
-  constructor() {
+  constructor() { }
 
-  }
 }

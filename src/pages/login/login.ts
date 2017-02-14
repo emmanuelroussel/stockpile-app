@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NavController } from 'ionic-angular';
+
 import { TabsPage } from '../tabs/tabs';
 import { UserData } from '../../providers/user-data';
 
@@ -19,8 +20,8 @@ export class LoginPage {
 
     if (form.valid) {
       this.userData.login(this.login.email, this.login.password).then(
-        (success) => this.navCtrl.setRoot(TabsPage),
-        (err) => console.error(err));
+        success => this.navCtrl.setRoot(TabsPage),
+        err => console.error(err));
     }
   }
 }

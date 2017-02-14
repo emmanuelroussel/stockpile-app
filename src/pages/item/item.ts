@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
 import { NavController, NavParams } from 'ionic-angular';
+
 import { InventoryData } from '../../providers/inventory-data';
 import { Actions } from '../../constants';
 
@@ -14,8 +14,8 @@ export class ItemPage {
   tag: string = '';
   action: Actions = '';
   item: {brand?: string, model?: string, category?: string, cost?: string, condition?: string} = {};
-  conditions: Array<string> = ['Good', 'Broken', 'Getting Fixed'];
-  categories: Array<string> = ['Camera', 'Stand', 'Cable'];
+  conditions;
+  categories;
 
   constructor(
     public navCtrl: NavController,
@@ -24,7 +24,6 @@ export class ItemPage {
   ) { }
 
   ngOnInit() {
-    this.item.condition = 'Good';
     this.tag = this.navParams.get('tag');
     this.action = this.navParams.get('action');
 
@@ -34,6 +33,16 @@ export class ItemPage {
         err => console.error(err)
       );
     }
+
+    this.inventoryData.getConditions().then(
+      conditions => this.conditions = conditions,
+      err => console.log(err)
+    );
+
+    this.inventoryData.getCategories().then(
+      categories => this.categories = categories,
+      err => console.log(err)
+    );
   }
 
   onSave(form: NgForm) {

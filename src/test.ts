@@ -60,11 +60,11 @@ export class TestUtils {
       providers: [
         App, Form, Keyboard, DomController, MenuController, GestureController,
         NgForm, InventoryData, UserData,
-        {provide: Platform, useClass: PlatformMock},
-        {provide: Config, useClass: ConfigMock},
-        {provide: NavController, useClass: NavMock},
-        {provide: NavParams, useClass: NavParamsMock},
-        {provide: InventoryData, useClass: InventoryDataMock}
+        { provide: Platform, useClass: PlatformMock },
+        { provide: Config, useClass: ConfigMock },
+        { provide: NavController, useClass: NavMock },
+        { provide: NavParams, useClass: NavParamsMock },
+        { provide: InventoryData, useClass: InventoryDataMock }
       ],
       imports: [
         FormsModule,

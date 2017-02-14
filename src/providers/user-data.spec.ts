@@ -1,4 +1,5 @@
 import { UserData } from './user-data';
+import { TestData } from '../test-data';
 
 let userData: UserData = null;
 
@@ -13,8 +14,8 @@ describe('UserData Provider', () => {
   });
 
   it('returns an empty promise on login()', () => {
-    userData.login('hello@me.com', 'monkey').then(
-      (success) => expect(true),
-      (err) => expect(false));
+    userData.login(TestData.credentials.email, TestData.credentials.password).then(
+      success => expect(true),
+      err => expect(false));
   });
 });

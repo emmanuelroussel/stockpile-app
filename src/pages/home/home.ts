@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-
 import { NavController } from 'ionic-angular';
+
 import { ItemPage } from '../item/item';
 import { RentalPage } from '../rental/rental';
 import { Actions } from '../../constants';
@@ -10,7 +10,6 @@ import { Actions } from '../../constants';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
   actions = Actions;
   segment: Actions = this.actions.rent;
   tag: string = '';

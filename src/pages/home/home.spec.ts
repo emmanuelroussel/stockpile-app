@@ -1,10 +1,11 @@
-import { ComponentFixture, async } from '@angular/core/testing';
-
+import { ComponentFixture, async, fakeAsync } from '@angular/core/testing';
 import { TestUtils } from '../../test';
+import { Actions } from '../../constants';
+import { TestData } from '../../test-data';
+
+import { HomePage } from './home';
 import { ItemPage } from '../item/item';
 import { RentalPage } from '../rental/rental';
-import { HomePage } from './home';
-import { Actions } from '../../constants';
 
 let fixture: ComponentFixture<HomePage> = null;
 let instance: any = null;
@@ -35,51 +36,51 @@ describe('Home Page', () => {
     expect(instance.onNext).toHaveBeenCalled();
   });
 
-  it('pushes rental page onNext() with \'Rent\'', async(() => {
+  it('pushes rental page onNext() with \'Rent\'', fakeAsync(() => {
     instance.segment = Actions.rent;
-    instance.tag = 'banana';
+    instance.tag = TestData.item.tag;
     spyOn(instance.navCtrl, 'push');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onNext();
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, {tag: 'banana', action: Actions.rent});
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { tag: TestData.item.tag, action: Actions.rent });
     });
   }));
 
-  it('pushes rental page onNext() with \'Return\'', async(() => {
+  it('pushes rental page onNext() with \'Return\'', fakeAsync(() => {
     instance.segment = Actions.return;
-    instance.tag = 'banana';
+    instance.tag = TestData.item.tag;
     spyOn(instance.navCtrl, 'push');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onNext();
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, {tag: 'banana', action: Actions.return});
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { tag: TestData.item.tag, action: Actions.return });
     });
   }));
 
-  it('pushes item page onNext() with \'Add\'', async(() => {
+  it('pushes item page onNext() with \'Add\'', fakeAsync(() => {
     instance.segment = Actions.add;
-    instance.tag = 'banana';
+    instance.tag = TestData.item.tag;
     spyOn(instance.navCtrl, 'push');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onNext();
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, {tag: 'banana', action: Actions.add});
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.item.tag, action: Actions.add });
     });
   }));
 
-  it('pushes item page onNext() with \'Edit\'', async(() => {
+  it('pushes item page onNext() with \'Edit\'', fakeAsync(() => {
     instance.segment = Actions.edit;
-    instance.tag = 'banana';
+    instance.tag = TestData.item.tag;
     spyOn(instance.navCtrl, 'push');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onNext();
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, {tag: 'banana', action: Actions.edit});
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.item.tag, action: Actions.edit });
     });
   }));
 });

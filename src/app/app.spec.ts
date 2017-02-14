@@ -15,6 +15,12 @@ describe('Root Component', () => {
   });
 
   it('initialises with a root page of LoginPage', () => {
-    expect(instance['rootPage']).toBe(LoginPage);
+    expect(instance.rootPage).toBe(LoginPage);
+  });
+
+  it('calls stockpileData.initHal()', () => {
+    spyOn(instance.stockpileData, 'initHal');
+    instance.ngOnInit();
+    expect(instance.stockpileData.initHal).toHaveBeenCalled();
   });
 });
