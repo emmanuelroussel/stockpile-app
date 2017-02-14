@@ -16,8 +16,8 @@ describe('InventoryData Provider', () => {
 
   it('returns an empty promise on getItem()', () => {
     inventoryData.getItem('banana').then(
-      (success) => expect(true),
-      (err) => expect(false)
+      item => expect(item).toEqual(TestData.item),
+      err => expect(false)
     );
   });
 
@@ -53,6 +53,20 @@ describe('InventoryData Provider', () => {
     inventoryData.return(TestData.items).then(
       (success) => expect(true),
       (err) => expect(false)
+    );
+  });
+
+  it('returns categories on getCategories()', () => {
+    inventoryData.getCategories().then(
+      categories => expect(categories).toEqual(TestData.categories),
+      err => expect(false)
+    );
+  });
+
+  it('returns conditions on getConditions()', () => {
+    inventoryData.getConditions().then(
+      conditions => expect(conditions).toEqual(TestData.conditions),
+      err => expect(false)
     );
   });
 });

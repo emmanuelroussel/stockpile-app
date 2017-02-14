@@ -67,12 +67,13 @@ describe('Rental Page', () => {
     expect(instance.navCtrl.push).toHaveBeenCalled();
   });
 
-  it('calls inventoryData.return and pops nav onReturn()', fakeAsync(() => {
+  it('calls inventoryData.return() and pops nav onReturn()', fakeAsync(() => {
     spyOn(instance.navCtrl, 'pop');
     spyOn(instance.inventoryData, 'return').and.callThrough();
+    instance.items.push(TestData.item);
     instance.onReturn();
     tick();
     expect(instance.navCtrl.pop).toHaveBeenCalled();
-    expect(instance.inventoryData.return).toHaveBeenCalled();
+    expect(instance.inventoryData.return).toHaveBeenCalledWith([TestData.item]);
   }));
 });

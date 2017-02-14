@@ -14,8 +14,8 @@ export class ItemPage {
   tag: string = '';
   action: Actions = '';
   item: {brand?: string, model?: string, category?: string, cost?: string, condition?: string} = {};
-  conditions: Array<string> = ['Good', 'Broken', 'Getting Fixed'];
-  categories: Array<string> = ['Camera', 'Stand', 'Cable'];
+  conditions;
+  categories;
 
   constructor(
     public navCtrl: NavController,
@@ -34,6 +34,16 @@ export class ItemPage {
         err => console.error(err)
       );
     }
+
+    this.inventoryData.getConditions().then(
+      conditions => this.conditions = conditions,
+      err => console.log(err)
+    );
+
+    this.inventoryData.getCategories().then(
+      categories => this.categories = categories,
+      err => console.log(err)
+    );
   }
 
   onSave(form: NgForm) {

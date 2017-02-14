@@ -5,6 +5,7 @@
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
+import { TestData } from './test-data';
 
 export class ConfigMock {
 
@@ -121,7 +122,9 @@ export class NavigatorMock {
 }
 
 export class InventoryDataMock {
-  item: {brand?: string, model?: string, category?: string, cost?: string, condition?: string} = {brand: 'Canon', model: 'Rebel T5i', category: 'Camera', cost: '750', condition: 'Good'};
+  item: {brand?: string, model?: string, category?: string, cost?: string, condition?: string} = TestData.item;
+  conditions = TestData.conditions;
+  categories = TestData.categories;
 
   public addItem(): any {
     return new Promise((resolve, reject) => {
@@ -156,6 +159,18 @@ export class InventoryDataMock {
   public return(): any {
     return new Promise((resolve, reject) => {
       resolve();
+    });
+  }
+
+  public getConditions(): any {
+    return new Promise((resolve, reject) => {
+      resolve(this.conditions);
+    });
+  }
+
+  public getCategories(): any {
+    return new Promise((resolve, reject) => {
+      resolve(this.categories);
     });
   }
 }

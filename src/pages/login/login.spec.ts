@@ -2,6 +2,7 @@ import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing'
 import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
 import { UserDataMock } from '../../mocks';
+import { TestData } from '../../test-data';
 
 import { LoginPage } from './login';
 import { TabsPage } from '../tabs/tabs';
@@ -33,8 +34,8 @@ describe('Login Page', () => {
   });
 
   it('changes root nav to TabsPage onLogin() if form is valid', fakeAsync(() => {
-    instance.login.email = 'me@me.com';
-    instance.login.password = 'monkey';
+    instance.login.email = TestData.credentials.email;
+    instance.login.password = TestData.credentials.password;
     spyOn(instance.navCtrl, 'setRoot');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -46,7 +47,7 @@ describe('Login Page', () => {
     });
   }));
 
-  it('disables login button initially', async(() => {
+  it('disables login button initially', fakeAsync(() => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
@@ -54,16 +55,16 @@ describe('Login Page', () => {
     });
   }));
 
-  it('keeps login button disabled of form is not valid', async(() => {
+  it('keeps login button disabled of form is not valid', fakeAsync(() => {
     instance.login.email = 'invalid email';
-    instance.login.password = 'monkey';
+    instance.login.password = TestData.credentials.password;
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       expect(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0].disabled).toBe(true);
     });
 
-    instance.login.email = 'hello@me.com';
+    instance.login.email = TestData.credentials.email;
     instance.login.password = '';
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -72,9 +73,9 @@ describe('Login Page', () => {
     });
   }));
 
-  it('enables login button if form is valid', async(() => {
-    instance.login.email = 'hello@me.com';
-    instance.login.password = 'monkey';
+  it('enables login button if form is valid', fakeAsync(() => {
+    instance.login.email = TestData.credentials.email;
+    instance.login.password = TestData.credentials.password;
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();

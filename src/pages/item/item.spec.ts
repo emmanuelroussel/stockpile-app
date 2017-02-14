@@ -57,6 +57,14 @@ describe('Item Page', () => {
     expect(instance.item).toEqual({ condition: 'Good' });
   }));
 
+  it('gets conditions and categories', fakeAsync(() => {
+    instance.navParams.param = Actions.edit;
+    instance.ngOnInit();
+    tick();
+    expect(instance.conditions).toEqual(TestData.conditions);
+    expect(instance.categories).toEqual(TestData.categories);
+  }));
+
   it('calls onSave() on click on save button', () => {
     spyOn(instance, 'onSave');
     TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');

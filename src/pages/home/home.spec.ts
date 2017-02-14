@@ -1,4 +1,4 @@
-import { ComponentFixture, async } from '@angular/core/testing';
+import { ComponentFixture, async, fakeAsync } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { Actions } from '../../constants';
 
@@ -35,7 +35,7 @@ describe('Home Page', () => {
     expect(instance.onNext).toHaveBeenCalled();
   });
 
-  it('pushes rental page onNext() with \'Rent\'', async(() => {
+  it('pushes rental page onNext() with \'Rent\'', fakeAsync(() => {
     instance.segment = Actions.rent;
     instance.tag = 'banana';
     spyOn(instance.navCtrl, 'push');
@@ -43,11 +43,11 @@ describe('Home Page', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onNext();
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, {tag: 'banana', action: Actions.rent});
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { tag: 'banana', action: Actions.rent });
     });
   }));
 
-  it('pushes rental page onNext() with \'Return\'', async(() => {
+  it('pushes rental page onNext() with \'Return\'', fakeAsync(() => {
     instance.segment = Actions.return;
     instance.tag = 'banana';
     spyOn(instance.navCtrl, 'push');
@@ -55,11 +55,11 @@ describe('Home Page', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onNext();
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, {tag: 'banana', action: Actions.return});
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { tag: 'banana', action: Actions.return });
     });
   }));
 
-  it('pushes item page onNext() with \'Add\'', async(() => {
+  it('pushes item page onNext() with \'Add\'', fakeAsync(() => {
     instance.segment = Actions.add;
     instance.tag = 'banana';
     spyOn(instance.navCtrl, 'push');
@@ -67,11 +67,11 @@ describe('Home Page', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onNext();
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, {tag: 'banana', action: Actions.add});
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: 'banana', action: Actions.add });
     });
   }));
 
-  it('pushes item page onNext() with \'Edit\'', async(() => {
+  it('pushes item page onNext() with \'Edit\'', fakeAsync(() => {
     instance.segment = Actions.edit;
     instance.tag = 'banana';
     spyOn(instance.navCtrl, 'push');
@@ -79,7 +79,7 @@ describe('Home Page', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onNext();
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, {tag: 'banana', action: Actions.edit});
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: 'banana', action: Actions.edit });
     });
   }));
 });

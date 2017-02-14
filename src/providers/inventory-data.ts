@@ -3,13 +3,12 @@ import { TestData } from '../test-data';
 
 @Injectable()
 export class InventoryData {
-  item: {tag?: string, brand?: string, model?: string, category?: string, cost?: string, condition?: string} = TestData.item;
 
   constructor() { }
 
   getItem(tag: string) {
     return new Promise((resolve, reject) => {
-      resolve(this.item);
+      resolve(TestData.item);
     });
   }
 
@@ -40,6 +39,18 @@ export class InventoryData {
   return(items: Array<Object>) {
     return new Promise((resolve, reject) => {
       resolve();
+    });
+  }
+
+  getConditions() {
+    return new Promise((resolve, reject) => {
+      resolve(TestData.conditions);
+    });
+  }
+
+  getCategories() {
+    return new Promise((resolve, reject) => {
+      resolve(TestData.categories);
     });
   }
 }

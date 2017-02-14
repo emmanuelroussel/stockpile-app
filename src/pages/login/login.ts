@@ -20,8 +20,8 @@ export class LoginPage {
 
     if (form.valid) {
       this.userData.login(this.login.email, this.login.password).then(
-        (success) => this.navCtrl.setRoot(TabsPage),
-        (err) => console.error(err));
+        success => this.navCtrl.setRoot(TabsPage),
+        err => console.error(err));
     }
   }
 }
