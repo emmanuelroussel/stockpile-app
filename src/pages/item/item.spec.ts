@@ -26,20 +26,15 @@ describe('Item Page', () => {
   });
 
   it('gets navParam tag', () => {
-    instance.navParams.param = 'banana';
+    instance.navParams.param = TestData.item.tag;
     instance.ngOnInit();
-    expect(instance.tag).toEqual('banana');
+    expect(instance.tag).toEqual(TestData.item.tag);
   });
 
   it('gets navParam action', () => {
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     expect(instance.action).toEqual(Actions.edit);
-  });
-
-  it('initializes with \'Good\' as condition default value', () => {
-    instance.ngOnInit();
-    expect(instance.item.condition).toEqual('Good');
   });
 
   it('gets item if action === \'Edit\'', fakeAsync(() => {
@@ -54,7 +49,7 @@ describe('Item Page', () => {
     instance.navParams.param = Actions.add;
     instance.ngOnInit();
     tick();
-    expect(instance.item).toEqual({ condition: 'Good' });
+    expect(instance.item).toEqual({});
   }));
 
   it('gets conditions and categories', fakeAsync(() => {

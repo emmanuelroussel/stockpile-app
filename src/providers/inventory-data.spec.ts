@@ -15,28 +15,28 @@ describe('InventoryData Provider', () => {
   });
 
   it('returns an empty promise on getItem()', () => {
-    inventoryData.getItem('banana').then(
+    inventoryData.getItem(TestData.item.tag).then(
       item => expect(item).toEqual(TestData.item),
       err => expect(false)
     );
   });
 
   it('returns an empty promise on addItem()', () => {
-    inventoryData.addItem(TestData.item, 'banana').then(
+    inventoryData.addItem(TestData.item, TestData.item.tag).then(
       (success) => expect(true),
       (err) => expect(false)
     );
   });
 
   it('returns an empty promise on editItem()', () => {
-    inventoryData.editItem(TestData.item, 'banana').then(
+    inventoryData.editItem(TestData.item, TestData.item.tag).then(
       (success) => expect(true),
       (err) => expect(false)
     );
   });
 
   it('returns an empty promise on deleteItem()', () => {
-    inventoryData.deleteItem('banana').then(
+    inventoryData.deleteItem(TestData.item.tag).then(
       (success) => expect(true),
       (err) => expect(false)
     );

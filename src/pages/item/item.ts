@@ -24,7 +24,6 @@ export class ItemPage {
   ) { }
 
   ngOnInit() {
-    this.item.condition = 'Good';
     this.tag = this.navParams.get('tag');
     this.action = this.navParams.get('action');
 
