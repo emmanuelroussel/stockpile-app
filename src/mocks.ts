@@ -31,15 +31,11 @@ export class FormMock {
 export class NavMock {
 
   public pop(): any {
-    return new Promise(function(resolve: Function): void {
-      resolve();
-    });
+    return Promise.resolve();
   }
 
   public push(): any {
-    return new Promise(function(resolve: Function): void {
-      resolve();
-    });
+    return Promise.resolve();
   }
 
   public getActive(): any {
@@ -55,17 +51,13 @@ export class NavMock {
   }
 
   public popToRoot(): any {
-    return new Promise(function(resolve: Function): void {
-      resolve();
-    });
+    return Promise.resolve();
   }
 }
 
 export class PlatformMock {
   public ready(): Promise<{String}> {
-    return new Promise((resolve) => {
-      resolve('READY');
-    });
+    return Promise.resolve('READY');
   }
 
   public registerBackButtonAction(fn: Function, priority?: number): Function {
@@ -95,9 +87,7 @@ export class PlatformMock {
 
 export class MenuMock {
   public close(): any {
-    return new Promise((resolve: Function) => {
-      resolve();
-    });
+    return Promise.resolve();
   }
 }
 
@@ -127,51 +117,35 @@ export class InventoryDataMock {
   categories = TestData.categories;
 
   public addItem(): any {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
+    return Promise.resolve();
   }
 
   public getItem(): any {
-    return new Promise((resolve, reject) => {
-      resolve(this.item);
-    });
+    return Promise.resolve(this.item);
   }
 
   public editItem(): any {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
+    return Promise.resolve();
   }
 
   public deleteItem(): any {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
+    return Promise.resolve();
   }
 
   public rent(): any {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
+    return Promise.resolve();
   }
 
   public return(): any {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
+    return Promise.resolve();
   }
 
   public getConditions(): any {
-    return new Promise((resolve, reject) => {
-      resolve(this.conditions);
-    });
+    return Promise.resolve(this.conditions);
   }
 
   public getCategories(): any {
-    return new Promise((resolve, reject) => {
-      resolve(this.categories);
-    });
+    return Promise.resolve(this.categories);
   }
 }
 
@@ -181,9 +155,7 @@ export class StockpileDataMock {
 
 export class UserDataMock {
   public login(): any {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
+    return Promise.resolve();
   }
 }
 
