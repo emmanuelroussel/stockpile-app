@@ -2,6 +2,7 @@ import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing'
 import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
 import { UserDataMock } from '../../mocks';
+
 import { LoginPage } from './login';
 import { TabsPage } from '../tabs/tabs';
 

@@ -3,7 +3,7 @@
 
 // IONIC:
 
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
 export class ConfigMock {

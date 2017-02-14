@@ -1,5 +1,6 @@
 import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
+
 import { InventoryPage } from './inventory';
 
 let fixture: ComponentFixture<InventoryPage> = null;

@@ -1,10 +1,10 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { TestUtils } from '../../test';
-import { RentalPage } from './rental';
-import { ItemPage } from '../item/item';
-import { RentalDetailsPage } from '../rental-details/rental-details';
 import { Actions } from '../../constants';
 import { TestData } from '../../test-data';
+
+import { RentalPage } from './rental';
+import { ItemPage } from '../item/item';
 
 let fixture: ComponentFixture<RentalPage> = null;
 let instance: any = null;

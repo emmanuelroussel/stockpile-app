@@ -1,6 +1,7 @@
 import { fakeAsync, tick } from '@angular/core/testing';
-import { StockpileData } from './stockpile-data';
 import { NavigatorMock } from '../mocks';
+
+import { StockpileData } from './stockpile-data';
 
 let stockpileData: StockpileData = null;
 

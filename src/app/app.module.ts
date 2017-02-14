@@ -1,18 +1,20 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
-import { MyApp } from './app.component';
-import { ItemPage } from '../pages/item/item';
 import { HalModule } from 'ng-hal';
+import { MyApp } from './app.component';
+
 import { HomePage } from '../pages/home/home';
 import { InventoryPage } from '../pages/inventory/inventory';
+import { ItemPage } from '../pages/item/item';
 import { LoginPage } from '../pages/login/login';
 import { RentalPage } from '../pages/rental/rental';
 import { RentalDetailsPage } from '../pages/rental-details/rental-details';
 import { TabsPage } from '../pages/tabs/tabs';
-import { UserData } from '../providers/user-data';
-import { StockpileData } from '../providers/stockpile-data';
+
 import { InventoryData } from '../providers/inventory-data';
+import { StockpileData } from '../providers/stockpile-data';
+import { UserData } from '../providers/user-data';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -49,6 +51,6 @@ const cloudSettings: CloudSettings = {
     RentalDetailsPage,
     TabsPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, InventoryData, UserData, StockpileData]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, InventoryData, StockpileData, UserData]
 })
 export class AppModule {}

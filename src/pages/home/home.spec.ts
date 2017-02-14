@@ -1,10 +1,10 @@
 import { ComponentFixture, async } from '@angular/core/testing';
-
 import { TestUtils } from '../../test';
+import { Actions } from '../../constants';
+
+import { HomePage } from './home';
 import { ItemPage } from '../item/item';
 import { RentalPage } from '../rental/rental';
-import { HomePage } from './home';
-import { Actions } from '../../constants';
 
 let fixture: ComponentFixture<HomePage> = null;
 let instance: any = null;

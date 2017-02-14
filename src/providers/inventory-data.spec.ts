@@ -1,5 +1,6 @@
-import { InventoryData } from './inventory-data';
 import { TestData } from '../test-data';
+
+import { InventoryData } from './inventory-data';
 
 let inventoryData: InventoryData = null;
 

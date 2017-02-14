@@ -1,9 +1,10 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
-import { ItemPage } from './item';
-import { Actions } from '../../constants';
 import { TestData } from '../../test-data';
+import { Actions } from '../../constants';
+
+import { ItemPage } from './item';
 
 let fixture: ComponentFixture<ItemPage> = null;
 let instance: any = null;
