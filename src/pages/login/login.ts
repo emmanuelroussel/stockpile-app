@@ -19,9 +19,10 @@ export class LoginPage {
     this.submitted = true;
 
     if (form.valid) {
-      this.userData.login(this.login.email, this.login.password).then(
-        success => this.navCtrl.setRoot(TabsPage),
-        err => console.error(err));
+      this.userData.login(this.login.email, this.login.password).subscribe(
+        data => this.navCtrl.setRoot(TabsPage),
+        err => console.log(err)
+      );
     }
   }
 }
