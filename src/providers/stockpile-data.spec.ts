@@ -2,6 +2,7 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { NavigatorMock } from '../mocks';
 
 import { StockpileData } from './stockpile-data';
+import { ApiUrl } from '../constants';
 
 let stockpileData: StockpileData = null;
 
@@ -15,8 +16,11 @@ describe('StockpileData Provider', () => {
     expect(stockpileData).not.toBeNull();
   });
 
-  it('gets a hal doc on init()', fakeAsync(() => {
-    stockpileData.initHal();
+  it('gets a hal doc on init() and returns a promise', fakeAsync(() => {
+    stockpileData.initHal().then(
+      success => expect(true).toBeTruthy(),
+      err => expect(false).toBeTruthy()
+    );
     tick();
     expect(stockpileData.hal).toBeTruthy();
   }));

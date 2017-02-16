@@ -99,6 +99,16 @@ export class NavParamsMock {
   }
 }
 
+export class StorageMock {
+  public get(): any {
+    return Promise.resolve();
+  }
+
+  public set(): any {
+    return Promise.resolve();
+  }
+}
+
 export class NavigatorMock {
   hal = {};
 
@@ -146,12 +156,29 @@ export class InventoryDataMock {
 }
 
 export class StockpileDataMock {
-  public initHal(): any { }
+  public initHal(): any {
+    return Promise.resolve();
+  }
+
+  public getUrl(): any { }
 }
 
 export class UserDataMock {
+  resolve: boolean;
+  loggedIn: boolean;
+
   public login(): any {
-    return Observable.fromPromise(Promise.resolve());
+    return new Promise((resolve, reject) => {
+      if (this.resolve) {
+        resolve();
+      } else {
+        reject();
+      }
+    });
+  }
+
+  public isLoggedIn(): any {
+    return Promise.resolve(this.loggedIn);
   }
 }
 
