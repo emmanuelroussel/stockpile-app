@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Navigator, HalDocument } from 'ng-hal';
+import { ApiUrl } from '../constants';
 
 @Injectable()
 export class StockpileData {
@@ -8,8 +9,20 @@ export class StockpileData {
   constructor(public navigator: Navigator) { }
 
   initHal() {
-    this.navigator
-      .get('https://stockpile.adamvig.com/api')
-      .subscribe((doc: HalDocument) => this.hal = doc);
+    return new Promise((resolve, reject) => {
+      this.navigator
+        .get(ApiUrl)
+        .subscribe((doc: HalDocument) => {
+          this.hal = doc;
+          resolve();
+        });
+    });
+  }
+
+  getUrl(key: string) {
+    // Ugly solution to extract endpoint from the HAL object.
+    // The ng-hal library does not support this out of the box,
+    // but they are planning on implementing it
+    return ApiUrl + this.hal.resource.allLinks()[key][0].href;
   }
 }

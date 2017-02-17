@@ -39,4 +39,10 @@ export class TestData {
     email: 'luke@rebellion.com',
     password: 'yodarocks'
   };
+
+  public static loginResponse = {
+    id: 1,
+    token: '987234.sdf0982347234.hjgsdf89234',
+    message: 'organization credentials are valid'
+  };
 }

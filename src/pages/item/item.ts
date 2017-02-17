@@ -28,18 +28,18 @@ export class ItemPage {
     this.action = this.navParams.get('action');
 
     if (this.action === this.actions.edit) {
-      this.inventoryData.getItem(this.tag).then(
+      this.inventoryData.getItem(this.tag).subscribe(
         item => this.item = item,
         err => console.error(err)
       );
     }
 
-    this.inventoryData.getConditions().then(
+    this.inventoryData.getConditions().subscribe(
       conditions => this.conditions = conditions,
       err => console.log(err)
     );
 
-    this.inventoryData.getCategories().then(
+    this.inventoryData.getCategories().subscribe(
       categories => this.categories = categories,
       err => console.log(err)
     );
@@ -48,12 +48,12 @@ export class ItemPage {
   onSave(form: NgForm) {
     if (form.valid) {
       if (this.action === this.actions.add) {
-        this.inventoryData.addItem(this.item, this.tag).then(
+        this.inventoryData.addItem(this.item, this.tag).subscribe(
           success => this.navCtrl.pop(),
           err => console.error(err)
         );
       } else if (this.action === this.actions.edit) {
-        this.inventoryData.editItem(this.item, this.tag).then(
+        this.inventoryData.editItem(this.item, this.tag).subscribe(
           success => this.navCtrl.pop(),
           err => console.error(err)
         );
@@ -62,7 +62,7 @@ export class ItemPage {
   }
 
   onDelete() {
-    this.inventoryData.deleteItem(this.tag).then(
+    this.inventoryData.deleteItem(this.tag).subscribe(
       success => this.navCtrl.pop(),
       err => console.error(err)
     );

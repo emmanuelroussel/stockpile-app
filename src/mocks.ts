@@ -99,15 +99,21 @@ export class NavParamsMock {
   }
 }
 
+export class StorageMock {
+  public get(): any {
+    return Promise.resolve();
+  }
+
+  public set(): any {
+    return Promise.resolve();
+  }
+}
+
 export class NavigatorMock {
   hal = {};
 
   public get(): any {
-    let promise = new Promise((resolve, reject) => {
-      resolve(this.hal);
-    });
-
-    return Observable.fromPromise(promise);
+    return Observable.fromPromise(Promise.resolve(this.hal));
   }
 }
 
@@ -117,45 +123,64 @@ export class InventoryDataMock {
   categories = TestData.categories;
 
   public addItem(): any {
-    return Promise.resolve();
+    return Observable.fromPromise(Promise.resolve());
   }
 
   public getItem(): any {
-    return Promise.resolve(this.item);
+    return Observable.fromPromise(Promise.resolve(this.item));
   }
 
   public editItem(): any {
-    return Promise.resolve();
+    return Observable.fromPromise(Promise.resolve());
   }
 
   public deleteItem(): any {
-    return Promise.resolve();
+    return Observable.fromPromise(Promise.resolve());
   }
 
   public rent(): any {
-    return Promise.resolve();
+    return Observable.fromPromise(Promise.resolve());
   }
 
   public return(): any {
-    return Promise.resolve();
+    return Observable.fromPromise(Promise.resolve());
   }
 
   public getConditions(): any {
-    return Promise.resolve(this.conditions);
+    return Observable.fromPromise(Promise.resolve(this.conditions));
   }
 
   public getCategories(): any {
-    return Promise.resolve(this.categories);
+    return Observable.fromPromise(Promise.resolve(this.categories));
   }
 }
 
 export class StockpileDataMock {
-  public initHal(): any { }
+  public initHal(): any {
+    return Promise.resolve();
+  }
+
+  public getUrl(): any { }
 }
 
 export class UserDataMock {
+  resolve: boolean;
+  loggedIn: boolean;
+
   public login(): any {
-    return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      if (this.resolve) {
+        resolve();
+      } else {
+        reject();
+      }
+    });
+  }
+
+  public logout(): any { }
+
+  public isLoggedIn(): any {
+    return Promise.resolve(this.loggedIn);
   }
 }
 

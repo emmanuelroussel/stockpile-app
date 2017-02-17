@@ -15,8 +15,11 @@ describe('StockpileData Provider', () => {
     expect(stockpileData).not.toBeNull();
   });
 
-  it('gets a hal doc on init()', fakeAsync(() => {
-    stockpileData.initHal();
+  it('gets a hal doc on init() and returns a promise', fakeAsync(() => {
+    stockpileData.initHal().then(
+      success => expect(true).toBeTruthy(),
+      err => expect(false).toBeTruthy()
+    );
     tick();
     expect(stockpileData.hal).toBeTruthy();
   }));
