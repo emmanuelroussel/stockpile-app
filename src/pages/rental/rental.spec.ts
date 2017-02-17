@@ -44,13 +44,19 @@ describe('Rental Page', () => {
     expect(instance.onAdd).toHaveBeenCalled();
   });
 
+  it('calls onScan() on click on add button', () => {
+    spyOn(instance, 'onScan');
+    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button')[3], 'click');
+    expect(instance.onScan).toHaveBeenCalled();
+  });
+
   it('calls viewItem() on click on an item', fakeAsync(() => {
     spyOn(instance, 'viewItem');
     instance.items.push(TestData.item);
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button')[3], 'click');
+      TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button')[4], 'click');
       expect(instance.viewItem).toHaveBeenCalledWith(TestData.item);
     });
   }));

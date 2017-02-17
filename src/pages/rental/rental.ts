@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { BarcodeScanner } from 'ionic-native';
 
 import { InventoryData } from '../../providers/inventory-data';
 import { ItemPage } from '../item/item';
@@ -55,6 +56,16 @@ export class RentalPage {
     this.inventoryData.return(this.items).then(
       data => this.navCtrl.pop(),
       err => console.log(err)
+    );
+  }
+
+  onScan() {
+    BarcodeScanner.scan().then(
+      barcodeData => {
+        this.tag = barcodeData.text;
+        this.onAdd();
+      },
+      err => console.error('scan failed: ' + err)
     );
   }
 }
