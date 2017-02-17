@@ -38,7 +38,7 @@ describe('Home Page', () => {
 
   it('calls onScan() on click', () => {
     spyOn(instance, 'onScan');
-    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button')[3], 'click');
+    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button')[4], 'click');
     expect(instance.onScan).toHaveBeenCalled();
   });
 
