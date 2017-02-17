@@ -45,4 +45,8 @@ export class TestData {
     token: '987234.sdf0982347234.hjgsdf89234',
     message: 'organization credentials are valid'
   };
+
+  public static response = {
+    message: 'Successful operation'
+  };
 }
