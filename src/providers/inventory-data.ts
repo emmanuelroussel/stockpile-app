@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TestData } from '../test-data';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
 
 @Injectable()
 export class InventoryData {
@@ -7,34 +9,34 @@ export class InventoryData {
   constructor() { }
 
   getItem(tag: string) {
-    return Promise.resolve(TestData.item);
+    return Observable.fromPromise(Promise.resolve(TestData.item));
   }
 
   addItem(item: Object, tag: string) {
-    return Promise.resolve();
+    return Observable.fromPromise(Promise.resolve());
   }
 
   editItem(item: Object, tag: string) {
-    return Promise.resolve();
+    return Observable.fromPromise(Promise.resolve());
   }
 
   deleteItem(tag: string) {
-    return Promise.resolve();
+    return Observable.fromPromise(Promise.resolve());
   }
 
   rent(items: Array<Object>, details: Object) {
-    return Promise.resolve();
+    return Observable.fromPromise(Promise.resolve());
   }
 
   return(items: Array<Object>) {
-    return Promise.resolve();
+    return Observable.fromPromise(Promise.resolve());
   }
 
   getConditions() {
-    return Promise.resolve(TestData.conditions);
+    return Observable.fromPromise(Promise.resolve(TestData.conditions));
   }
 
   getCategories() {
-    return Promise.resolve(TestData.categories);
+    return Observable.fromPromise(Promise.resolve(TestData.categories));
   }
 }

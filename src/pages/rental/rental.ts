@@ -31,7 +31,7 @@ export class RentalPage {
   }
 
   onAdd() {
-    this.inventoryData.getItem(this.tag).then(
+    this.inventoryData.getItem(this.tag).subscribe(
       item => this.items.push(item),
       err => console.error(err)
     );
@@ -53,7 +53,7 @@ export class RentalPage {
   }
 
   onReturn() {
-    this.inventoryData.return(this.items).then(
+    this.inventoryData.return(this.items).subscribe(
       data => this.navCtrl.pop(),
       err => console.log(err)
     );

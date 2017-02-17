@@ -36,6 +36,7 @@ describe('Login Page', () => {
   it('changes root nav to TabsPage onLogin() if form is valid', fakeAsync(() => {
     instance.login.email = TestData.credentials.email;
     instance.login.password = TestData.credentials.password;
+    instance.userData.resolve = true;
     spyOn(instance.navCtrl, 'setRoot');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -44,6 +45,22 @@ describe('Login Page', () => {
       instance.onLogin(form);
       tick();
       expect(instance.navCtrl.setRoot).toHaveBeenCalledWith(TabsPage);
+    });
+  }));
+
+  it('resets password and logs error if error', fakeAsync(() => {
+    instance.login.email = TestData.credentials.email;
+    instance.login.password = TestData.credentials.password;
+    instance.userData.resolve = false;
+    spyOn(console, 'error');
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
+      instance.onLogin(form);
+      tick();
+      expect(instance.login.password).toEqual('');
+      expect(console.error).toHaveBeenCalled();
     });
   }));
 

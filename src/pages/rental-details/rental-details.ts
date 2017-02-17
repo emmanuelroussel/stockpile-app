@@ -27,7 +27,7 @@ export class RentalDetailsPage {
     this.submitted = true;
 
     if (form.valid) {
-      this.inventoryData.rent(this.items, this.details).then(
+      this.inventoryData.rent(this.items, this.details).subscribe(
         success => this.navCtrl.popToRoot(),
         err => console.error(err)
       );
