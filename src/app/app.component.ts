@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, Platform, MenuController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { LoginPage } from '../pages/login/login';
@@ -7,17 +7,18 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StockpileData } from '../providers/stockpile-data';
 import { UserData } from '../providers/user-data';
 
-
 @Component({
   templateUrl: './app.html'
 })
 export class MyApp {
+  @ViewChild(Nav) nav: Nav;
   rootPage: any;
 
   constructor(
     public platform: Platform,
     public stockpileData: StockpileData,
-    public userData: UserData
+    public userData: UserData,
+    public menuCtrl: MenuController
   ) { }
 
   ngOnInit() {
@@ -29,13 +30,23 @@ export class MyApp {
           this.rootPage = LoginPage;
         }
 
-        this.platform.ready().then(() => {
-          // Okay, so the platform is ready and our plugins are available.
-          // Here you can do any higher level native things you might need.
-          StatusBar.styleDefault();
-          Splashscreen.hide();
-        });
+        this.initializeApp();
       });
     });
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      StatusBar.styleDefault();
+      Splashscreen.hide();
+    });
+  }
+
+  logout() {
+    this.userData.logout();
+    this.menuCtrl.close();
+    this.nav.setRoot(LoginPage);
   }
 }

@@ -2,7 +2,6 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { NavigatorMock } from '../mocks';
 
 import { StockpileData } from './stockpile-data';
-import { ApiUrl } from '../constants';
 
 let stockpileData: StockpileData = null;
 

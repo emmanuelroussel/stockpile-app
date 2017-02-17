@@ -35,6 +35,10 @@ export class UserData {
     });
   }
 
+  logout() {
+    this.storage.remove('id_token');
+  }
+
   isLoggedIn() {
     return new Promise((resolve, reject) => {
       this.storage.get('id_token').then(token => {

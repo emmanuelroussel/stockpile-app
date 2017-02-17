@@ -1,5 +1,5 @@
 import { fakeAsync, tick } from '@angular/core/testing';
-import { PlatformMock, StockpileDataMock, UserDataMock } from '../mocks';
+import { PlatformMock, StockpileDataMock, UserDataMock, MenuMock, NavMock } from '../mocks';
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -9,7 +9,8 @@ let instance: any = null;
 describe('Root Component', () => {
 
   beforeEach(() => {
-    instance = new MyApp((<any> new PlatformMock), (<any> new StockpileDataMock), (<any> new UserDataMock));
+    instance = new MyApp((<any> new PlatformMock), (<any> new StockpileDataMock), (<any> new UserDataMock), (<any> new MenuMock));
+    instance.nav = (<any> new NavMock);
   });
 
   it('is created', () => {
@@ -40,4 +41,14 @@ describe('Root Component', () => {
     tick();
     expect(instance.rootPage).toEqual(TabsPage);
   }));
+
+  it('calls logout(), closes side menu and sets nav root to LoginPage', () => {
+    spyOn(instance.userData, 'logout');
+    spyOn(instance.menuCtrl, 'close');
+    spyOn(instance.nav, 'setRoot');
+    instance.logout();
+    expect(instance.userData.logout).toHaveBeenCalled();
+    expect(instance.menuCtrl.close).toHaveBeenCalled();
+    expect(instance.nav.setRoot).toHaveBeenCalledWith(LoginPage);
+  });
 });

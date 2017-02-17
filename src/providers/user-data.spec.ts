@@ -57,6 +57,12 @@ describe('UserData Provider', () => {
     });
   })));
 
+  it('deletes id_token on logout()', inject([UserData, Storage], (userData: UserData, storage: Storage) => {
+    spyOn(userData.storage, 'remove');
+    userData.logout();
+    expect(userData.storage.remove).toHaveBeenCalledWith('id_token');
+  }));
+
   it('returns a promise on isLoggedIn', inject([UserData], (userData: UserData) => {
     userData.isLoggedIn().then(
       data => expect(data).toBeTruthy(),

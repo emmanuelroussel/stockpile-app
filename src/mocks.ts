@@ -177,6 +177,8 @@ export class UserDataMock {
     });
   }
 
+  public logout(): any { }
+
   public isLoggedIn(): any {
     return Promise.resolve(this.loggedIn);
   }
