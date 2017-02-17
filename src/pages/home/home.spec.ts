@@ -36,6 +36,12 @@ describe('Home Page', () => {
     expect(instance.onNext).toHaveBeenCalled();
   });
 
+  it('calls onScan() on click', () => {
+    spyOn(instance, 'onScan');
+    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button')[4], 'click');
+    expect(instance.onScan).toHaveBeenCalled();
+  });
+
   it('pushes rental page onNext() with \'Rent\'', fakeAsync(() => {
     instance.segment = Actions.rent;
     instance.tag = TestData.item.tag;

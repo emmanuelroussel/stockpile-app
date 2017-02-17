@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { BarcodeScanner } from 'ionic-native';
 
 import { ItemPage } from '../item/item';
 import { RentalPage } from '../rental/rental';
@@ -34,5 +35,15 @@ export class HomePage {
       this.segment = this.actions.rent;
       this.tag = '';
     }
+  }
+
+  onScan() {
+    BarcodeScanner.scan().then(
+      barcodeData => {
+        this.tag = barcodeData.text;
+        this.onNext();
+      },
+      err => console.error('scan failed: ' + err)
+    );
   }
 }

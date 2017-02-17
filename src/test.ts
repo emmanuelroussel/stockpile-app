@@ -70,7 +70,7 @@ export class TestUtils {
       imports: [
         FormsModule,
         IonicModule,
-        ReactiveFormsModule,
+        ReactiveFormsModule
       ],
     });
   }
