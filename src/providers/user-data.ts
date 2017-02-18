@@ -3,7 +3,7 @@ import { Response, Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { AuthHttp, tokenNotExpired } from 'angular2-jwt';
 import { StockpileData } from './stockpile-data';
-import { Links } from '../constants';
+import { Links, ApiUrl } from '../constants';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class UserData {
     };
 
     return new Promise((resolve, reject) => {
-      this.http.post(this.stockpileData.getUrl(Links.authenticate), creds)
+      this.http.post(ApiUrl + Links.authenticate, creds)
         .map(this.extractData)
         .subscribe(
           data => {

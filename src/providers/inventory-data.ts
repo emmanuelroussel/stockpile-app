@@ -13,12 +13,12 @@ export class InventoryData {
   constructor(public authHttp: AuthHttp, public stockpileData: StockpileData) { }
 
   getItem(tag: string) {
-    return this.authHttp.get(ApiUrl + '/item/' + tag)
+    return this.authHttp.get(ApiUrl + Links.item + '/' + tag)
       .map(this.extractData);
   }
 
   addItem(item: Object, tag: string) {
-    return this.authHttp.put(this.stockpileData.getUrl(Links.createitem), item)
+    return this.authHttp.put(ApiUrl + Links.item, item)
       .map(this.extractData);
   }
 
