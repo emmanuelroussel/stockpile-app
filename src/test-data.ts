@@ -4,7 +4,7 @@ export class TestData {
     brand: 'Canon',
     model: 'T5i',
     category: 'Camera',
-    status: 'Functional'
+    status: 'Available'
   };
 
   public static items = [{
@@ -12,14 +12,14 @@ export class TestData {
     brand: 'Canon',
     model: 'T5i',
     category: 'Camera',
-    status: 'Functional'
+    status: 'Available'
   },
   {
     tag: 'banana',
     brand: 'Canon',
     model: 'T5i',
     category: 'Camera',
-    status: 'Functional'
+    status: 'Available'
   }];
 
   public static details = {

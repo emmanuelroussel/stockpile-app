@@ -92,6 +92,20 @@ describe('InventoryData Provider', () => {
     );
   }));
 
+  it('returns brands on getBrands()', inject([InventoryData], (inventoryData: InventoryData) => {
+    inventoryData.getBrands().subscribe(
+      brands => expect(brands).toEqual(TestData.brands),
+      err => expect(false)
+    );
+  }));
+
+  it('returns models on getModels()', inject([InventoryData], (inventoryData: InventoryData) => {
+    inventoryData.getModels().subscribe(
+      models => expect(models).toEqual(TestData.models),
+      err => expect(false)
+    );
+  }));
+
   it('returns categories on getCategories()', inject([InventoryData], (inventoryData: InventoryData) => {
     inventoryData.getCategories().subscribe(
       categories => expect(categories).toEqual(TestData.categories),
