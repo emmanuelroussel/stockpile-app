@@ -71,12 +71,15 @@ describe('InventoryData Provider', () => {
     );
   }));
 
-  it('returns an empty promise on deleteItem()', inject([InventoryData], (inventoryData: InventoryData) => {
-    inventoryData.deleteItem(TestData.item.tag).subscribe(
-      success => expect(true),
-      err => expect(false)
+  it('returns a message on deleteItem()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
     );
-  }));
+    tick();
+    inventoryData.deleteItem(TestData.item.tag).subscribe(res => {
+      expect(res).toEqual(TestData.response);
+    });
+  })));
 
   it('returns an empty promise on rent()', inject([InventoryData], (inventoryData: InventoryData) => {
     inventoryData.rent(TestData.items, TestData.details).subscribe(

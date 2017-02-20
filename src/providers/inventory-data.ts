@@ -27,7 +27,8 @@ export class InventoryData {
   }
 
   deleteItem(tag: string) {
-    return Observable.fromPromise(Promise.resolve());
+    return this.authHttp.delete(ApiUrl + Links.item + '/' + tag)
+      .map(this.extractData);
   }
 
   rent(items: Array<Object>, details: Object) {
