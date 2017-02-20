@@ -81,12 +81,15 @@ describe('InventoryData Provider', () => {
     });
   })));
 
-  it('returns an empty promise on rent()', inject([InventoryData], (inventoryData: InventoryData) => {
-    inventoryData.rent(TestData.items, TestData.details).subscribe(
-      success => expect(true),
-      err => expect(false)
+  it('returns an message on rent()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
     );
-  }));
+    tick();
+    inventoryData.rent(TestData.details).subscribe(res => {
+      expect(res).toEqual(TestData.response);
+    });
+  })));
 
   it('returns an empty promise on return()', inject([InventoryData], (inventoryData: InventoryData) => {
     inventoryData.return(TestData.items).subscribe(

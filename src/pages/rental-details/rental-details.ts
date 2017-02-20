@@ -9,8 +9,8 @@ import { InventoryData } from '../../providers/inventory-data';
   templateUrl: 'rental-details.html'
 })
 export class RentalDetailsPage {
-  items: Array<Object> = [];
-  details: {person?: string, purpose?: string, date?: string} = {};
+  items = [];
+  details: {itemID?: string, startDate?: string, endDate?: string} = {};
   submitted = false;
 
   constructor(
@@ -27,7 +27,8 @@ export class RentalDetailsPage {
     this.submitted = true;
 
     if (form.valid) {
-      this.inventoryData.rent(this.items, this.details).subscribe(
+      this.details.itemID = this.items[0].itemID;
+      this.inventoryData.rent(this.details).subscribe(
         success => this.navCtrl.popToRoot(),
         err => console.error(err)
       );
