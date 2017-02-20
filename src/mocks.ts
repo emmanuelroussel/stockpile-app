@@ -118,9 +118,11 @@ export class NavigatorMock {
 }
 
 export class InventoryDataMock {
-  item: {brand?: string, model?: string, category?: string, cost?: string, condition?: string} = TestData.item;
-  conditions = TestData.conditions;
+  item = TestData.item;
+  brands = TestData.brands;
+  models = TestData.models;
   categories = TestData.categories;
+  statuses = TestData.statuses;
 
   public addItem(): any {
     return Observable.fromPromise(Promise.resolve());
@@ -146,8 +148,16 @@ export class InventoryDataMock {
     return Observable.fromPromise(Promise.resolve());
   }
 
-  public getConditions(): any {
-    return Observable.fromPromise(Promise.resolve(this.conditions));
+  public getBrands(): any {
+    return Observable.fromPromise(Promise.resolve(this.brands));
+  }
+
+  public getModels(): any {
+    return Observable.fromPromise(Promise.resolve(this.models));
+  }
+
+  public getStatuses(): any {
+    return Observable.fromPromise(Promise.resolve(this.statuses));
   }
 
   public getCategories(): any {

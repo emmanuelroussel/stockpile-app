@@ -11,10 +11,11 @@ import { Actions } from '../../constants';
 })
 export class ItemPage {
   actions = Actions;
-  tag: string = '';
   action: Actions = '';
-  item: {brand?: string, model?: string, category?: string, cost?: string, condition?: string} = {};
-  conditions;
+  item: {brandID?: number, modelID?: number, categoryID?: number, statusID?: number, tag?: string} = {};
+  brands;
+  models;
+  statuses;
   categories;
 
   constructor(
@@ -24,18 +25,28 @@ export class ItemPage {
   ) { }
 
   ngOnInit() {
-    this.tag = this.navParams.get('tag');
+    this.item.tag = this.navParams.get('tag');
     this.action = this.navParams.get('action');
 
     if (this.action === this.actions.edit) {
-      this.inventoryData.getItem(this.tag).subscribe(
+      this.inventoryData.getItem(this.item.tag).subscribe(
         item => this.item = item,
         err => console.error(err)
       );
     }
 
-    this.inventoryData.getConditions().subscribe(
-      conditions => this.conditions = conditions,
+    this.inventoryData.getBrands().subscribe(
+      brands => this.brands = brands,
+      err => console.log(err)
+    );
+
+    this.inventoryData.getModels().subscribe(
+      models => this.models = models,
+      err => console.log(err)
+    );
+
+    this.inventoryData.getStatuses().subscribe(
+      statuses => this.statuses = statuses,
       err => console.log(err)
     );
 
@@ -48,12 +59,12 @@ export class ItemPage {
   onSave(form: NgForm) {
     if (form.valid) {
       if (this.action === this.actions.add) {
-        this.inventoryData.addItem(this.item, this.tag).subscribe(
+        this.inventoryData.addItem(this.item).subscribe(
           success => this.navCtrl.pop(),
           err => console.error(err)
         );
       } else if (this.action === this.actions.edit) {
-        this.inventoryData.editItem(this.item, this.tag).subscribe(
+        this.inventoryData.editItem(this.item).subscribe(
           success => this.navCtrl.pop(),
           err => console.error(err)
         );
@@ -62,7 +73,7 @@ export class ItemPage {
   }
 
   onDelete() {
-    this.inventoryData.deleteItem(this.tag).subscribe(
+    this.inventoryData.deleteItem(this.item.tag).subscribe(
       success => this.navCtrl.pop(),
       err => console.error(err)
     );
