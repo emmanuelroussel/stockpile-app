@@ -12,7 +12,7 @@ import { Actions } from '../../constants';
 export class ItemPage {
   actions = Actions;
   action: Actions = '';
-  item: {brandID?: number, modelID?: number, categoryID?: number, statusID?: number, organizationID?: number, tag?: string} = {organizationID: 539};
+  item: {brandID?: number, modelID?: number, categoryID?: number, statusID?: number, tag?: string} = {};
   brands;
   models;
   statuses;
