@@ -42,8 +42,8 @@ export class TestData {
   ];
 
   public static statuses = [
-    { name: 'Functional', id: 5 },
-    { name: 'Broken', id: 6 },
+    { name: 'Available', id: 5 },
+    { name: 'Rented', id: 6 },
     { name: 'Getting Fixed', id: 7}
   ];
 
