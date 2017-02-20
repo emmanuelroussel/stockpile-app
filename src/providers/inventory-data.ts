@@ -17,12 +17,12 @@ export class InventoryData {
       .map(this.extractData);
   }
 
-  addItem(item: Object, tag: string) {
+  addItem(item: Object) {
     return this.authHttp.put(ApiUrl + Links.item, item)
       .map(this.extractData);
   }
 
-  editItem(item: Object, tag: string) {
+  editItem(item: Object) {
     return Observable.fromPromise(Promise.resolve());
   }
 
@@ -38,8 +38,16 @@ export class InventoryData {
     return Observable.fromPromise(Promise.resolve());
   }
 
-  getConditions() {
-    return Observable.fromPromise(Promise.resolve(TestData.conditions));
+  getBrands() {
+    return Observable.fromPromise(Promise.resolve(TestData.brands));
+  }
+
+  getModels() {
+    return Observable.fromPromise(Promise.resolve(TestData.models));
+  }
+
+  getStatuses() {
+    return Observable.fromPromise(Promise.resolve(TestData.statuses));
   }
 
   getCategories() {

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{ item.brand }} {{ item.model }}</ion-title>
+    <ion-title>{{ action }} Item</ion-title>
     <ion-buttons *ngIf="action === actions.edit" end>
       <button ion-button icon-only (click)="deleteItem()">
         <ion-icon name="trash"></ion-icon>
@@ -12,35 +12,31 @@
 <ion-content padding>
   <form #itemForm="ngForm" novalidate>
 		<ion-list no-line>
-			<ion-item>
-				<ion-label floating color="primary">Brand</ion-label>
-				<ion-input [(ngModel)]="item.brand" name="brand" type="text" #brand="ngModel" required>
-				</ion-input>
-			</ion-item>
-
-			<ion-item>
-				<ion-label floating color="primary">Model</ion-label>
-				<ion-input [(ngModel)]="item.model" name="model" type="text" #model="ngModel" required>
-				</ion-input>
-			</ion-item>
-
       <ion-item>
-				<ion-label floating color="primary">Category</ion-label>
-				<ion-select [(ngModel)]="item.category" name="category">
-          <ion-option *ngFor="let category of categories" value="{{category}}">{{category}}</ion-option>
+				<ion-label floating color="primary">Brand</ion-label>
+				<ion-select [(ngModel)]="item.brandID" name="brand">
+          <ion-option *ngFor="let brand of brands" value="{{brand.id}}">{{brand.name}}</ion-option>
         </ion-select>
 			</ion-item>
 
       <ion-item>
-				<ion-label floating color="primary">Cost</ion-label>
-				<ion-input [(ngModel)]="item.cost" name="cost" type="currency" #cost="ngModel">
-				</ion-input>
+				<ion-label floating color="primary">Model</ion-label>
+				<ion-select [(ngModel)]="item.modelID" name="model">
+          <ion-option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</ion-option>
+        </ion-select>
 			</ion-item>
 
       <ion-item>
-				<ion-label floating color="primary">Condition</ion-label>
-				<ion-select [(ngModel)]="item.condition" name="condition">
-          <ion-option *ngFor="let condition of conditions" value="{{condition}}">{{condition}}</ion-option>
+				<ion-label floating color="primary">Category</ion-label>
+				<ion-select [(ngModel)]="item.categoryID" name="category">
+          <ion-option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</ion-option>
+        </ion-select>
+			</ion-item>
+
+      <ion-item>
+				<ion-label floating color="primary">Status</ion-label>
+				<ion-select [(ngModel)]="item.statusID" name="status">
+          <ion-option *ngFor="let status of statuses" value="{{status.id}}">{{status.name}}</ion-option>
         </ion-select>
 			</ion-item>
 		</ion-list>

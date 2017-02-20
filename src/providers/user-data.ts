@@ -18,8 +18,8 @@ export class UserData {
 
   login(email: string, password: string) {
     let creds = {
-      'email': email,
-      'password': password
+      email: email,
+      password: password
     };
 
     return new Promise((resolve, reject) => {

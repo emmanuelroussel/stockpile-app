@@ -59,13 +59,13 @@ describe('InventoryData Provider', () => {
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
     );
     tick();
-    inventoryData.addItem(TestData.item, TestData.item.tag).subscribe(res => {
+    inventoryData.addItem(TestData.item).subscribe(res => {
       expect(res).toEqual(TestData.response);
     });
   })));
 
   it('returns an empty promise on editItem()', inject([InventoryData], (inventoryData: InventoryData) => {
-    inventoryData.editItem(TestData.item, TestData.item.tag).subscribe(
+    inventoryData.editItem(TestData.item).subscribe(
       success => expect(true),
       err => expect(false)
     );
@@ -99,9 +99,9 @@ describe('InventoryData Provider', () => {
     );
   }));
 
-  it('returns conditions on getConditions()', inject([InventoryData], (inventoryData: InventoryData) => {
-    inventoryData.getConditions().subscribe(
-      conditions => expect(conditions).toEqual(TestData.conditions),
+  it('returns conditions on getStatuses()', inject([InventoryData], (inventoryData: InventoryData) => {
+    inventoryData.getStatuses().subscribe(
+      statuses => expect(statuses).toEqual(TestData.statuses),
       err => expect(false)
     );
   }));
