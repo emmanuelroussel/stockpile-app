@@ -23,7 +23,7 @@ export class RentalDetailsPage {
     this.items = this.navParams.get('items');
 
     const today = new Date();
-    let tomorrow = new Date();
+    const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
     this.details.startDate = today.toISOString();
     this.details.endDate = tomorrow.toISOString();
