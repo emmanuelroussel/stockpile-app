@@ -32,7 +32,7 @@ export class InventoryData {
   }
 
   rent(rental: Object) {
-    return this.authHttp.put(ApiUrl + '/rental', rental)
+    return this.authHttp.put(ApiUrl + Links.rental, rental)
       .map(this.extractData);
   }
 
