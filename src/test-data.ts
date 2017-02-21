@@ -23,9 +23,8 @@ export class TestData {
   }];
 
   public static details = {
-    person: 'Luke Skywalker',
-    purpose: 'Save the Galaxy',
-    date: '01/01/2017'
+    startDate: '01/01/2017',
+    endDate: '01/02/2017'
   };
 
   public static brands = [

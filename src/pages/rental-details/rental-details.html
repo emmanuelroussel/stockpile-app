@@ -9,21 +9,15 @@
 		<ion-list>
       <ion-list-header>Rental Details</ion-list-header>
 
-			<ion-item>
-				<ion-label floating color="primary">Person</ion-label>
-				<ion-input [(ngModel)]="details.person" name="person" type="text" #person="ngModel" required>
-				</ion-input>
-			</ion-item>
-
       <ion-item>
-				<ion-label floating color="primary">Purpose</ion-label>
-				<ion-input [(ngModel)]="details.purpose" name="purpose" type="text" #purpose="ngModel" required>
+				<ion-label floating color="primary">Start Date</ion-label>
+				<ion-input [(ngModel)]="details.startDate" name="startDate" type="date" #date="ngModel" required>
 				</ion-input>
 			</ion-item>
 
       <ion-item>
 				<ion-label floating color="primary">Return Date</ion-label>
-				<ion-input [(ngModel)]="details.date" name="date" type="text" #date="ngModel" required>
+				<ion-input [(ngModel)]="details.endDate" name="endDate" type="date" #date="ngModel" required>
 				</ion-input>
 			</ion-item>
 

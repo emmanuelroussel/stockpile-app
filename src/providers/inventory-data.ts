@@ -31,8 +31,9 @@ export class InventoryData {
       .map(this.extractData);
   }
 
-  rent(items: Array<Object>, details: Object) {
-    return Observable.fromPromise(Promise.resolve());
+  rent(rental: Object) {
+    return this.authHttp.put(ApiUrl + Links.rental, rental)
+      .map(this.extractData);
   }
 
   return(items: Array<Object>) {

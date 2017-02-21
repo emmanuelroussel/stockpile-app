@@ -10,4 +10,5 @@ export const ApiUrl = 'https://stockpile.adamvig.com/api';
 export class Links {
   public static authenticate = '/auth';
   public static item = '/item';
+  public static rental = '/rental';
 }

@@ -9,8 +9,8 @@ import { InventoryData } from '../../providers/inventory-data';
   templateUrl: 'rental-details.html'
 })
 export class RentalDetailsPage {
-  items: Array<Object> = [];
-  details: {person?: string, purpose?: string, date?: string} = {};
+  items = [];
+  details: {itemID?: string, startDate?: string, endDate?: string} = {};
   submitted = false;
 
   constructor(
@@ -27,7 +27,14 @@ export class RentalDetailsPage {
     this.submitted = true;
 
     if (form.valid) {
-      this.inventoryData.rent(this.items, this.details).subscribe(
+      let promises = [];
+
+      for (const item of this.items) {
+        this.details.itemID = item.itemID;
+        promises.push(this.inventoryData.rent(this.details).toPromise());
+      }
+
+      Promise.all(promises).then(
         success => this.navCtrl.popToRoot(),
         err => console.error(err)
       );
