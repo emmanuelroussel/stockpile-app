@@ -29,7 +29,7 @@ export class RentalDetailsPage {
     if (form.valid) {
       let promises = [];
 
-      for (let item of this.items) {
+      for (const item of this.items) {
         this.details.itemID = item.itemID;
         promises.push(this.inventoryData.rent(this.details).toPromise());
       }
