@@ -11,14 +11,16 @@
 
       <ion-item>
 				<ion-label floating color="primary">Start Date</ion-label>
-				<ion-input [(ngModel)]="details.startDate" name="startDate" type="date" #date="ngModel" required>
-				</ion-input>
+        <!-- Displays date in the following format: Sun 01 Jan, 2017 -->
+        <ion-datetime displayFormat="DDD D MMM, YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="details.startDate"  name="startDate" #date="ngModel" required>
+        </ion-datetime>
 			</ion-item>
 
       <ion-item>
 				<ion-label floating color="primary">Return Date</ion-label>
-				<ion-input [(ngModel)]="details.endDate" name="endDate" type="date" #date="ngModel" required>
-				</ion-input>
+        <!-- Displays date in the following format: Sun 01 Jan, 2017 -->
+        <ion-datetime displayFormat="DDD D MMM, YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="details.endDate"  name="endDate" #date="ngModel" required>
+        </ion-datetime>
 			</ion-item>
 
       <ion-list-header>Scanned Items</ion-list-header>
