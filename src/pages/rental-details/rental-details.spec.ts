@@ -36,13 +36,24 @@ describe('RentalDetails Page', () => {
     expect(instance.onRent).toHaveBeenCalled();
   });
 
+  it('calls inventoryData.rent for each item', fakeAsync(() => {
+    instance.details = TestData.details;
+    instance.items = TestData.items;
+    spyOn(instance.inventoryData, 'rent').and.callThrough();
+    fixture.whenStable().then(() => {
+      let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
+      instance.onRent(form);
+      tick();
+      expect(instance.inventoryData.rent).toHaveBeenCalledTimes(TestData.items.length);
+    });
+  }));
+
   it('goes back to the root\'s nav on successful rent()', fakeAsync(() => {
     instance.details = TestData.details;
+    instance.items = TestData.items;
     spyOn(instance.navCtrl, 'popToRoot');
     spyOn(instance.inventoryData, 'rent').and.callThrough();
-    fixture.detectChanges();
     fixture.whenStable().then(() => {
-      fixture.detectChanges();
       let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
       instance.onRent(form);
       tick();

@@ -27,8 +27,14 @@ export class RentalDetailsPage {
     this.submitted = true;
 
     if (form.valid) {
-      this.details.itemID = this.items[0].itemID;
-      this.inventoryData.rent(this.details).subscribe(
+      let promises = [];
+
+      for (let item of this.items) {
+        this.details.itemID = item.itemID;
+        promises.push(this.inventoryData.rent(this.details).toPromise());
+      }
+
+      Promise.all(promises).then(
         success => this.navCtrl.popToRoot(),
         err => console.error(err)
       );
