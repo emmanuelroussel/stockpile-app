@@ -41,19 +41,23 @@ export class InventoryData {
   }
 
   getBrands() {
-    return Observable.fromPromise(Promise.resolve(TestData.brands));
+    return this.authHttp.get(ApiUrl + Links.brand)
+      .map(this.extractData);
   }
 
   getModels() {
-    return Observable.fromPromise(Promise.resolve(TestData.models));
+    return this.authHttp.get(ApiUrl + Links.model)
+      .map(this.extractData);
   }
 
   getStatuses() {
-    return Observable.fromPromise(Promise.resolve(TestData.statuses));
+    return this.authHttp.get(ApiUrl + Links.status)
+      .map(this.extractData);
   }
 
   getCategories() {
-    return Observable.fromPromise(Promise.resolve(TestData.categories));
+    return this.authHttp.get(ApiUrl + Links.category)
+      .map(this.extractData);
   }
 
   private extractData(res: Response) {

@@ -11,4 +11,8 @@ export class Links {
   public static authenticate = '/auth';
   public static item = '/item';
   public static rental = '/rental';
+  public static brand = '/brand';
+  public static model = '/model';
+  public static category = '/category';
+  public static status = '/status';
 }
