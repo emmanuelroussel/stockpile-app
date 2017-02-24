@@ -101,25 +101,66 @@ export class ItemPage {
       type: type
     });
 
-    popover.onDidDismiss(value => {
+    popover.onDidDismiss((value, addNew) => {
       if (value) {
-        switch (type) {
-          case this.itemProperties.brand:
-            this.item.brandID = value.id;
-            this.selectedBrand = value.name;
-            break;
-          case this.itemProperties.model:
-            this.item.modelID = value.id;
-            this.selectedModel = value.name;
-            break;
-          case this.itemProperties.category:
-            this.item.categoryID = value.id;
-            this.selectedCategory = value.name;
-            break;
-          case this.itemProperties.status:
-            this.item.statusID = value.id;
-            this.selectedStatus = value.name;
-            break;
+        if (addNew) {
+          switch (type) {
+            case this.itemProperties.brand:
+              this.inventoryData.addBrand(value.name).subscribe(
+                brand => {
+                  this.item.brandID = brand.id;
+                  this.selectedBrand = brand.name;
+                },
+                err => console.error(err)
+              );
+              break;
+            case this.itemProperties.model:
+              this.inventoryData.addModel(value.name).subscribe(
+                model => {
+                  this.item.modelID = model.id;
+                  this.selectedModel = model.name;
+                },
+                err => console.error(err)
+              );
+              break;
+            case this.itemProperties.category:
+              this.inventoryData.addCategory(value.name).subscribe(
+                category => {
+                  this.item.categoryID = category.id;
+                  this.selectedCategory = category.name;
+                },
+                err => console.error(err)
+              );
+              break;
+            case this.itemProperties.status:
+              this.inventoryData.addStatus(value.name).subscribe(
+                status => {
+                  this.item.statusID = status.id;
+                  this.selectedStatus = status.name;
+                },
+                err => console.error(err)
+              );
+              break;
+          }
+        } else {
+          switch (type) {
+            case this.itemProperties.brand:
+              this.item.brandID = value.id;
+              this.selectedBrand = value.name;
+              break;
+            case this.itemProperties.model:
+              this.item.modelID = value.id;
+              this.selectedModel = value.name;
+              break;
+            case this.itemProperties.category:
+              this.item.categoryID = value.id;
+              this.selectedCategory = value.name;
+              break;
+            case this.itemProperties.status:
+              this.item.statusID = value.id;
+              this.selectedStatus = value.name;
+              break;
+          }
         }
       }
     });
@@ -137,6 +178,9 @@ export class ItemPage {
     <button ion-item detail-none *ngFor="let element of filteredElements" (click)="elementSelected(element)">
       {{ element.name }}
     </button>
+    <button ion-item detail-none *ngIf="showAdd" (click)="elementSelected(input, true)">
+       New {{ type.toLowerCase() }}: {{ input }}
+    </button>
   </ion-list>
   `
 })
@@ -144,6 +188,8 @@ export class ItemPopoverPage {
   allElements;
   filteredElements;
   type: ItemProperties;
+  showAdd: boolean = false;
+  input: string;
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams) { }
 
@@ -155,21 +201,25 @@ export class ItemPopoverPage {
   }
 
   getElements(ev: any) {
-    // Reset items back to all of the items
     this.filteredElements = this.allElements;
+    this.showAdd = false;
+    this.input = '';
 
-    // set val to the value of the searchbar
     const val = ev.target.value;
 
-    // if the value is an empty string don't filter the items
     if (val && val.trim() !== '') {
       this.filteredElements = this.filteredElements.filter((element) => {
         return (element.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
+
+      if (!this.filteredElements.includes(val.toLowerCase())) {
+        this.showAdd = true;
+        this.input = val;
+      }
     }
   }
 
-  elementSelected(element: Object) {
-    this.viewCtrl.dismiss(element);
+  elementSelected(element: Object, addNew: boolean = false) {
+    this.viewCtrl.dismiss(element, addNew);
   }
 }

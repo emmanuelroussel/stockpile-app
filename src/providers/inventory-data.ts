@@ -44,16 +44,32 @@ export class InventoryData {
     return Observable.fromPromise(Promise.resolve(TestData.brands));
   }
 
+  addBrand(brand: string) {
+    return Observable.fromPromise(Promise.resolve(TestData.brands[0]));
+  }
+
   getModels() {
     return Observable.fromPromise(Promise.resolve(TestData.models));
+  }
+
+  addModel(brand: string) {
+    return Observable.fromPromise(Promise.resolve(TestData.models[0]));
   }
 
   getStatuses() {
     return Observable.fromPromise(Promise.resolve(TestData.statuses));
   }
 
+  addStatus(brand: string) {
+    return Observable.fromPromise(Promise.resolve(TestData.statuses[0]));
+  }
+
   getCategories() {
     return Observable.fromPromise(Promise.resolve(TestData.categories));
+  }
+
+  addCategory(brand: string) {
+    return Observable.fromPromise(Promise.resolve(TestData.categories[0]));
   }
 
   private extractData(res: Response) {
