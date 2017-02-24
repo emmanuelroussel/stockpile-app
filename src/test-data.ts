@@ -27,30 +27,38 @@ export class TestData {
     endDate: '01/02/2017'
   };
 
-  public static brands = [
-    { name: 'Canon', id: 5 },
-    { name: 'Nikon', id: 6 },
-    { name: 'Sennheiser', id: 7}
-  ];
+  public static brands = {
+    results: [
+      { name: 'Canon', brandID: 5 },
+      { name: 'Nikon', brandID: 6 },
+      { name: 'Sennheiser', brandID: 7}
+    ]
+  };
 
-  public static models = [
-    { name: 'T5i', id: 5 },
-    { name: 'e609', id: 6 },
-    { name: 'MKE 600', id: 7},
-    { name: 'D5', id: 8}
-  ];
+  public static models = {
+    results: [
+      { name: 'T5i', modelID: 5 },
+      { name: 'e609', modelID: 6 },
+      { name: 'MKE 600', modelID: 7},
+      { name: 'D5', modelID: 8}
+    ]
+  };
 
-  public static statuses = [
-    { name: 'Available', id: 5 },
-    { name: 'Rented', id: 6 },
-    { name: 'Getting Fixed', id: 7}
-  ];
+  public static statuses = {
+    results: [
+      { name: 'Available', statusID: 5 },
+      { name: 'Rented', statusID: 6 },
+      { name: 'Getting Fixed', statusID: 7}
+    ]
+  };
 
-  public static categories = [
-    { name: 'Camera', id: 5 },
-    { name: 'Mic', id: 6 },
-    { name: 'Light', id: 7}
-  ];
+  public static categories = {
+    results: [
+      { name: 'Camera', categoryID: 5 },
+      { name: 'Mic', categoryID: 6 },
+      { name: 'Light', categoryID: 7}
+    ]
+  };
 
   public static credentials = {
     email: 'luke@rebellion.com',

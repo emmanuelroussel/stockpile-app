@@ -45,12 +45,14 @@ describe('Item Page', () => {
     expect(instance.item).toEqual(TestData.item);
   }));
 
-  it('gets conditions and categories', fakeAsync(() => {
+  it('gets brands, models, statuses and categories', fakeAsync(() => {
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     tick();
-    expect(instance.statuses).toEqual(TestData.statuses);
-    expect(instance.categories).toEqual(TestData.categories);
+    expect(instance.brands).toEqual(TestData.brands.results);
+    expect(instance.models).toEqual(TestData.models.results);
+    expect(instance.categories).toEqual(TestData.categories.results);
+    expect(instance.statuses).toEqual(TestData.statuses.results);
   }));
 
   it('calls onSave() on click on save button', () => {

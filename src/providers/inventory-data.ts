@@ -13,8 +13,7 @@ export class InventoryData {
   constructor(public authHttp: AuthHttp, public stockpileData: StockpileData) { }
 
   getItem(tag: string) {
-    return this.authHttp.get(ApiUrl + Links.item + '/' + tag)
-      .map(this.extractData);
+    return this.getEndpoint(Links.item + '/' + tag);
   }
 
   addItem(item: Object) {
@@ -41,19 +40,24 @@ export class InventoryData {
   }
 
   getBrands() {
-    return Observable.fromPromise(Promise.resolve(TestData.brands));
+    return this.getEndpoint(Links.brand);
   }
 
   getModels() {
-    return Observable.fromPromise(Promise.resolve(TestData.models));
+    return this.getEndpoint(Links.model);
   }
 
   getStatuses() {
-    return Observable.fromPromise(Promise.resolve(TestData.statuses));
+    return this.getEndpoint(Links.status);
   }
 
   getCategories() {
-    return Observable.fromPromise(Promise.resolve(TestData.categories));
+    return this.getEndpoint(Links.category);
+  }
+
+  private getEndpoint(endpoint: string) {
+    return this.authHttp.get(ApiUrl + endpoint)
+      .map(this.extractData);
   }
 
   private extractData(res: Response) {
