@@ -92,7 +92,7 @@ export class MenuMock {
 }
 
 export class NavParamsMock {
-  param;
+  param: any;
 
   public get(): any {
     return this.param;

@@ -17,19 +17,6 @@ describe('ItemFilter Page', () => {
     expect(itemFilterPage).not.toBeNull();
   });
 
-  it('gets navParam allElements and initializes filteredElements', () => {
-    itemFilterPage.navParams.param = TestData.brands;
-    itemFilterPage.ngOnInit();
-    expect(itemFilterPage.allElements).toEqual(TestData.brands);
-    expect(itemFilterPage.filteredElements).toEqual(TestData.brands)
-  });
-
-  it('gets navParam type', () => {
-    itemFilterPage.navParams.param = ItemProperties.brand;
-    itemFilterPage.ngOnInit();
-    expect(itemFilterPage.type).toEqual(ItemProperties.brand);
-  });
-
   it('filters elements on getElements()', () => {
     itemFilterPage.queryText = TestData.queryText;
     itemFilterPage.allElements = TestData.brands;
