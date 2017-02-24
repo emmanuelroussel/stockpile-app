@@ -12,3 +12,10 @@ export class Links {
   public static item = '/item';
   public static rental = '/rental';
 }
+
+export class ItemProperties {
+  public static brand = 'Brand';
+  public static model = 'Model';
+  public static category = 'Category';
+  public static status = 'Status';
+}

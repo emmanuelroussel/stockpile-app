@@ -1,10 +1,12 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { NgForm } from '@angular/forms';
+import { ViewController } from 'ionic-angular';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
-import { Actions } from '../../constants';
+import { Actions, ItemProperties } from '../../constants';
+import { ViewMock, NavParamsMock } from '../../mocks';
 
-import { ItemPage } from './item';
+import { ItemPage, ItemPopoverPage } from './item';
 
 let fixture: ComponentFixture<ItemPage> = null;
 let instance: any = null;
@@ -38,19 +40,29 @@ describe('Item Page', () => {
   });
 
   it('gets item if action === \'Edit\'', fakeAsync(() => {
-    instance.inventoryData.item = TestData.item;
+    instance.inventoryData.item = TestData.apiItem;
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     tick();
     expect(instance.item).toEqual(TestData.item);
+    expect(instance.selectedBrand).toEqual(TestData.apiItem.brand);
+    expect(instance.selectedModel).toEqual(TestData.apiItem.model);
+    expect(instance.selectedCategory).toEqual(TestData.apiItem.category);
+    expect(instance.selectedStatus).toEqual(TestData.apiItem.status);
   }));
 
-  it('gets conditions and categories', fakeAsync(() => {
+  it('gets brands, models, statuses and categories', fakeAsync(() => {
+    instance.inventoryData.brands = TestData.brands;
+    instance.inventoryData.models = TestData.models;
+    instance.inventoryData.statuses = TestData.statuses;
+    instance.inventoryData.categories = TestData.categories;
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     tick();
-    expect(instance.statuses).toEqual(TestData.statuses);
-    expect(instance.categories).toEqual(TestData.categories);
+    expect(instance.allBrands).toEqual(TestData.brands);
+    expect(instance.allModels).toEqual(TestData.models);
+    expect(instance.allStatuses).toEqual(TestData.statuses);
+    expect(instance.allCategories).toEqual(TestData.categories);
   }));
 
   it('calls onSave() on click on save button', () => {
@@ -100,4 +112,10 @@ describe('Item Page', () => {
       expect(instance.navCtrl.pop).toHaveBeenCalled();
     });
   }));
+
+  it('creates a popover on presentPopover()', () => {
+    spyOn(instance.popoverCtrl, 'create').and.callThrough();
+    instance.presentPopover(null, TestData.brands, ItemProperties.brand);
+    expect(instance.popoverCtrl.create).toHaveBeenCalledWith(ItemPopoverPage, { elements: TestData.brands, type: ItemProperties.brand });
+  });
 });

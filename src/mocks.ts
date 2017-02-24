@@ -109,6 +109,20 @@ export class StorageMock {
   }
 }
 
+export class PopoverMock {
+  public create(): any {
+    return new PopoverMock;
+  }
+
+  public onDidDismiss(): any {}
+
+  public present(): any {}
+}
+
+export class ViewMock {
+  public dismiss(): any {}
+}
+
 export class NavigatorMock {
   hal = {};
 
@@ -118,7 +132,7 @@ export class NavigatorMock {
 }
 
 export class InventoryDataMock {
-  item = TestData.item;
+  item = TestData.apiItem;
   brands = TestData.brands;
   models = TestData.models;
   categories = TestData.categories;

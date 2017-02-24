@@ -13,32 +13,24 @@
   <form #itemForm="ngForm" novalidate>
 		<ion-list no-line>
       <ion-item>
-				<ion-label floating color="primary">Brand</ion-label>
-				<ion-select [(ngModel)]="item.brandID" name="brand">
-          <ion-option *ngFor="let brand of brands" value="{{brand.id}}">{{brand.name}}</ion-option>
-        </ion-select>
-			</ion-item>
+        <ion-label stacked color="primary">Brand</ion-label>
+        <ion-input (click)="presentPopover($event, allBrands, itemProperties.brand)" value="{{ selectedBrand }}"></ion-input>
+      </ion-item>
 
       <ion-item>
-				<ion-label floating color="primary">Model</ion-label>
-				<ion-select [(ngModel)]="item.modelID" name="model">
-          <ion-option *ngFor="let model of models" value="{{model.id}}">{{model.name}}</ion-option>
-        </ion-select>
-			</ion-item>
+        <ion-label stacked color="primary">Model</ion-label>
+        <ion-input (click)="presentPopover($event, allModels, itemProperties.model)" value="{{ selectedModel }}"></ion-input>
+      </ion-item>
 
       <ion-item>
-				<ion-label floating color="primary">Category</ion-label>
-				<ion-select [(ngModel)]="item.categoryID" name="category">
-          <ion-option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</ion-option>
-        </ion-select>
-			</ion-item>
+        <ion-label stacked color="primary">Category</ion-label>
+        <ion-input (click)="presentPopover($event, allCategories, itemProperties.category)" value="{{ selectedCategory }}"></ion-input>
+      </ion-item>
 
       <ion-item>
-				<ion-label floating color="primary">Status</ion-label>
-				<ion-select [(ngModel)]="item.statusID" name="status">
-          <ion-option *ngFor="let status of statuses" value="{{status.id}}">{{status.name}}</ion-option>
-        </ion-select>
-			</ion-item>
+        <ion-label stacked color="primary">Status</ion-label>
+        <ion-input (click)="presentPopover($event, allStatuses, itemProperties.status)" value="{{ selectedStatus }}"></ion-input>
+      </ion-item>
 		</ion-list>
 
 		<button ion-button (click)="onSave(itemForm)" type="submit" block>Save</button>

@@ -1,10 +1,22 @@
 export class TestData {
-  public static item = {
+  public static apiItem = {
     tag: 'banana',
     brand: 'Canon',
+    brandID: 1,
     model: 'T5i',
+    modelID: 1,
     category: 'Camera',
-    status: 'Available'
+    categoryID: 1,
+    status: 'Available',
+    statusID: 1
+  };
+
+  public static item = {
+    tag: 'banana',
+    brandID: 1,
+    modelID: 1,
+    categoryID: 1,
+    statusID: 1
   };
 
   public static items = [{
