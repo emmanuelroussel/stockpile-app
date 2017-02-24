@@ -45,6 +45,10 @@ export class TestData {
     { name: 'Sennheiser', id: 7}
   ];
 
+  public static filteredBrands = [
+    { name: 'Canon', id: 5 }
+  ];
+
   public static models = [
     { name: 'T5i', id: 5 },
     { name: 'e609', id: 6 },
@@ -68,6 +72,8 @@ export class TestData {
     email: 'luke@rebellion.com',
     password: 'yodarocks'
   };
+
+  public static queryText = 'Can';
 
   public static loginResponse = {
     id: 1,

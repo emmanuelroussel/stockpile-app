@@ -1,12 +1,12 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { NgForm } from '@angular/forms';
-import { ViewController } from 'ionic-angular';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { Actions, ItemProperties } from '../../constants';
 import { ViewMock, NavParamsMock } from '../../mocks';
 
-import { ItemPage, ItemPopoverPage } from './item';
+import { ItemPage } from './item';
+import { ItemFilterPage } from '../item-filter/item-filter';
 
 let fixture: ComponentFixture<ItemPage> = null;
 let instance: any = null;
@@ -113,9 +113,9 @@ describe('Item Page', () => {
     });
   }));
 
-  it('creates a popover on presentPopover()', () => {
-    spyOn(instance.popoverCtrl, 'create').and.callThrough();
-    instance.presentPopover(null, TestData.brands, ItemProperties.brand);
-    expect(instance.popoverCtrl.create).toHaveBeenCalledWith(ItemPopoverPage, { elements: TestData.brands, type: ItemProperties.brand });
+  it('creates a modal on presentModal()', () => {
+    spyOn(instance.modalCtrl, 'create').and.callThrough();
+    instance.presentModal(null, TestData.brands, ItemProperties.brand);
+    expect(instance.modalCtrl.create).toHaveBeenCalledWith(ItemFilterPage, { elements: TestData.brands, type: ItemProperties.brand });
   });
 });

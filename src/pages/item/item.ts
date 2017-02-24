@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NavController, NavParams, PopoverController, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
 import { Actions, ItemProperties } from '../../constants';
+import { ItemFilterPage } from '../item-filter/item-filter';
 
 @Component({
   selector: 'page-item',
@@ -27,7 +28,7 @@ export class ItemPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public inventoryData: InventoryData,
-    public popoverCtrl: PopoverController
+    public modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
@@ -95,18 +96,18 @@ export class ItemPage {
     );
   }
 
-  presentPopover(event, elements, type) {
-    let popover = this.popoverCtrl.create(ItemPopoverPage, {
+  presentModal(event, elements, type) {
+    let modal = this.modalCtrl.create(ItemFilterPage, {
       elements: elements,
       type: type
     });
 
-    popover.onDidDismiss((value, addNew) => {
-      if (value) {
-        if (addNew) {
+    modal.onDidDismiss((element, isNew) => {
+      if (element) {
+        if (isNew) {
           switch (type) {
             case this.itemProperties.brand:
-              this.inventoryData.addBrand(value.name).subscribe(
+              this.inventoryData.addBrand(element.name).subscribe(
                 brand => {
                   this.item.brandID = brand.id;
                   this.selectedBrand = brand.name;
@@ -115,7 +116,7 @@ export class ItemPage {
               );
               break;
             case this.itemProperties.model:
-              this.inventoryData.addModel(value.name).subscribe(
+              this.inventoryData.addModel(element.name).subscribe(
                 model => {
                   this.item.modelID = model.id;
                   this.selectedModel = model.name;
@@ -124,7 +125,7 @@ export class ItemPage {
               );
               break;
             case this.itemProperties.category:
-              this.inventoryData.addCategory(value.name).subscribe(
+              this.inventoryData.addCategory(element.name).subscribe(
                 category => {
                   this.item.categoryID = category.id;
                   this.selectedCategory = category.name;
@@ -133,7 +134,7 @@ export class ItemPage {
               );
               break;
             case this.itemProperties.status:
-              this.inventoryData.addStatus(value.name).subscribe(
+              this.inventoryData.addStatus(element.name).subscribe(
                 status => {
                   this.item.statusID = status.id;
                   this.selectedStatus = status.name;
@@ -145,81 +146,26 @@ export class ItemPage {
         } else {
           switch (type) {
             case this.itemProperties.brand:
-              this.item.brandID = value.id;
-              this.selectedBrand = value.name;
+              this.item.brandID = element.id;
+              this.selectedBrand = element.name;
               break;
             case this.itemProperties.model:
-              this.item.modelID = value.id;
-              this.selectedModel = value.name;
+              this.item.modelID = element.id;
+              this.selectedModel = element.name;
               break;
             case this.itemProperties.category:
-              this.item.categoryID = value.id;
-              this.selectedCategory = value.name;
+              this.item.categoryID = element.id;
+              this.selectedCategory = element.name;
               break;
             case this.itemProperties.status:
-              this.item.statusID = value.id;
-              this.selectedStatus = value.name;
+              this.item.statusID = element.id;
+              this.selectedStatus = element.name;
               break;
           }
         }
       }
-    });
+   });
 
-    popover.present({
-      ev: event
-    });
-  }
-}
-
-@Component({
-  template: `
-  <ion-searchbar (ionInput)="getElements($event)" placeholder="Filter {{ type }}"></ion-searchbar>
-  <ion-list>
-    <button ion-item detail-none *ngFor="let element of filteredElements" (click)="elementSelected(element)">
-      {{ element.name }}
-    </button>
-    <button ion-item detail-none *ngIf="showAdd" (click)="elementSelected(input, true)">
-       New {{ type.toLowerCase() }}: {{ input }}
-    </button>
-  </ion-list>
-  `
-})
-export class ItemPopoverPage {
-  allElements;
-  filteredElements;
-  type: ItemProperties;
-  showAdd: boolean = false;
-  input: string;
-
-  constructor(public viewCtrl: ViewController, public navParams: NavParams) { }
-
-  ngOnInit() {
-    if (this.navParams.data) {
-      this.allElements = this.navParams.data.elements;
-      this.type = this.navParams.data.type;
-    }
-  }
-
-  getElements(ev: any) {
-    this.filteredElements = this.allElements;
-    this.showAdd = false;
-    this.input = '';
-
-    const val = ev.target.value;
-
-    if (val && val.trim() !== '') {
-      this.filteredElements = this.filteredElements.filter((element) => {
-        return (element.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      });
-
-      if (!this.filteredElements.includes(val.toLowerCase())) {
-        this.showAdd = true;
-        this.input = val;
-      }
-    }
-  }
-
-  elementSelected(element: Object, addNew: boolean = false) {
-    this.viewCtrl.dismiss(element, addNew);
+    modal.present();
   }
 }

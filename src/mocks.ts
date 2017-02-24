@@ -92,10 +92,10 @@ export class MenuMock {
 }
 
 export class NavParamsMock {
-  param: string = '';
+  param;
 
   public get(): any {
-    return String(this.param);
+    return this.param;
   }
 }
 
@@ -109,9 +109,9 @@ export class StorageMock {
   }
 }
 
-export class PopoverMock {
+export class ModalMock {
   public create(): any {
-    return new PopoverMock;
+    return new ModalMock;
   }
 
   public onDidDismiss(): any {}
