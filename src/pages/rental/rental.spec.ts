@@ -73,13 +73,21 @@ describe('Rental Page', () => {
     expect(instance.navCtrl.push).toHaveBeenCalled();
   });
 
+  it('calls inventoryData.return for each item', fakeAsync(() => {
+    instance.items = TestData.items;
+    spyOn(instance.inventoryData, 'return').and.callThrough();
+    instance.onReturn();
+    tick();
+    expect(instance.inventoryData.return).toHaveBeenCalledTimes(TestData.items.length);
+  }));
+
   it('calls inventoryData.return() and pops nav onReturn()', fakeAsync(() => {
+    instance.items.push(TestData.item);
     spyOn(instance.navCtrl, 'pop');
     spyOn(instance.inventoryData, 'return').and.callThrough();
-    instance.items.push(TestData.item);
     instance.onReturn();
     tick();
     expect(instance.navCtrl.pop).toHaveBeenCalled();
-    expect(instance.inventoryData.return).toHaveBeenCalledWith([TestData.item]);
+    expect(instance.inventoryData.return).toHaveBeenCalledWith(TestData.item.tag);
   }));
 });

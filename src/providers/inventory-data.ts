@@ -35,8 +35,9 @@ export class InventoryData {
       .map(this.extractData);
   }
 
-  return(items: Array<Object>) {
-    return Observable.fromPromise(Promise.resolve());
+  return(tag: string) {
+    return this.authHttp.delete(ApiUrl + Links.rental + '/' + tag)
+      .map(this.extractData);
   }
 
   getBrands() {

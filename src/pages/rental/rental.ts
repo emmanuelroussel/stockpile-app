@@ -15,7 +15,7 @@ export class RentalPage {
   actions = Actions;
   tag: string = '';
   action: Actions = '';
-  items: Array<Object> = [];
+  items = [];
 
   constructor(
     public navCtrl: NavController,
@@ -53,9 +53,15 @@ export class RentalPage {
   }
 
   onReturn() {
-    this.inventoryData.return(this.items).subscribe(
-      data => this.navCtrl.pop(),
-      err => console.log(err)
+    let promises = [];
+
+    for (const item of this.items) {
+      promises.push(this.inventoryData.return(item.tag).toPromise());
+    }
+
+    Promise.all(promises).then(
+      success => this.navCtrl.pop(),
+      err => console.error(err)
     );
   }
 
