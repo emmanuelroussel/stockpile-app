@@ -36,22 +36,22 @@ export class ItemPage {
     }
 
     this.inventoryData.getBrands().subscribe(
-      brands => this.brands = brands,
+      brands => this.brands = brands.results,
       err => console.log(err)
     );
 
     this.inventoryData.getModels().subscribe(
-      models => this.models = models,
+      models => this.models = models.results,
       err => console.log(err)
     );
 
     this.inventoryData.getStatuses().subscribe(
-      statuses => this.statuses = statuses,
+      statuses => this.statuses = statuses.results,
       err => console.log(err)
     );
 
     this.inventoryData.getCategories().subscribe(
-      categories => this.categories = categories,
+      categories => this.categories = categories.results,
       err => console.log(err)
     );
   }
