@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
+import { StockpileData } from '../../providers/stockpile-data';
 import { Actions } from '../../constants';
 
 @Component({
@@ -21,7 +22,8 @@ export class ItemPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public inventoryData: InventoryData
+    public inventoryData: InventoryData,
+    public stockpileData: StockpileData
   ) { }
 
   ngOnInit() {
@@ -31,28 +33,28 @@ export class ItemPage {
     if (this.action === this.actions.edit) {
       this.inventoryData.getItem(this.item.tag).subscribe(
         item => this.item = item,
-        err => console.error(err)
+        err => this.stockpileData.showToast(err.message)
       );
     }
 
     this.inventoryData.getBrands().subscribe(
       brands => this.brands = brands.results,
-      err => console.log(err)
+      err => this.stockpileData.showToast(err.message)
     );
 
     this.inventoryData.getModels().subscribe(
       models => this.models = models.results,
-      err => console.log(err)
+      err => this.stockpileData.showToast(err.message)
     );
 
     this.inventoryData.getStatuses().subscribe(
       statuses => this.statuses = statuses.results,
-      err => console.log(err)
+      err => this.stockpileData.showToast(err.message)
     );
 
     this.inventoryData.getCategories().subscribe(
       categories => this.categories = categories.results,
-      err => console.log(err)
+      err => this.stockpileData.showToast(err.message)
     );
   }
 
@@ -61,12 +63,12 @@ export class ItemPage {
       if (this.action === this.actions.add) {
         this.inventoryData.addItem(this.item).subscribe(
           success => this.navCtrl.pop(),
-          err => console.error(err)
+          err => this.stockpileData.showToast(err.message)
         );
       } else if (this.action === this.actions.edit) {
         this.inventoryData.editItem(this.item).subscribe(
           success => this.navCtrl.pop(),
-          err => console.error(err)
+          err => this.stockpileData.showToast(err.message)
         );
       }
     }
@@ -75,7 +77,7 @@ export class ItemPage {
   onDelete() {
     this.inventoryData.deleteItem(this.item.tag).subscribe(
       success => this.navCtrl.pop(),
-      err => console.error(err)
+      err => this.stockpileData.showToast(err.message)
     );
   }
 }

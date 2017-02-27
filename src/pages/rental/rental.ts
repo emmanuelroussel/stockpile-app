@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { BarcodeScanner } from 'ionic-native';
 
 import { InventoryData } from '../../providers/inventory-data';
+import { StockpileData } from '../../providers/stockpile-data';
 import { ItemPage } from '../item/item';
 import { RentalDetailsPage } from '../rental-details/rental-details';
 import { Actions } from '../../constants';
@@ -20,7 +21,8 @@ export class RentalPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public inventoryData: InventoryData
+    public inventoryData: InventoryData,
+    public stockpileData: StockpileData
   ) { }
 
   ngOnInit() {
@@ -33,7 +35,7 @@ export class RentalPage {
   onAdd() {
     this.inventoryData.getItem(this.tag).subscribe(
       item => this.items.push(item),
-      err => console.error(err)
+      err => this.stockpileData.showToast(err.message)
     );
 
     this.tag = '';
@@ -61,7 +63,7 @@ export class RentalPage {
 
     Promise.all(promises).then(
       success => this.navCtrl.pop(),
-      err => console.error(err)
+      err => this.stockpileData.showToast(err.message)
     );
   }
 
@@ -71,7 +73,7 @@ export class RentalPage {
         this.tag = barcodeData.text;
         this.onAdd();
       },
-      err => console.error('scan failed: ' + err)
+      err => this.stockpileData.showToast(err.message)
     );
   }
 }
