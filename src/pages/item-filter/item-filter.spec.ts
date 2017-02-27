@@ -1,6 +1,5 @@
 import { TestData } from '../../test-data';
 import { ViewController } from 'ionic-angular';
-import { ItemProperties } from '../../constants';
 import { NavParamsMock } from '../../mocks';
 
 import { ItemFilterPage } from './item-filter';

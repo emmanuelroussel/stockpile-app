@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, ViewController, ModalController } from 'ionic-angular';
-
-import { ItemProperties } from '../../constants';
+import { NavParams, ViewController } from 'ionic-angular';
 
 @Component({
   selector: 'page-item-filter',
@@ -10,7 +8,7 @@ import { ItemProperties } from '../../constants';
 export class ItemFilterPage {
   allElements;
   filteredElements;
-  type: ItemProperties;
+  type;
   showNew: boolean = false;
   queryText: string = '';
 

@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { Actions, ItemProperties } from '../../constants';
-import { ViewMock, NavParamsMock } from '../../mocks';
 
 import { ItemPage } from './item';
 import { ItemFilterPage } from '../item-filter/item-filter';
