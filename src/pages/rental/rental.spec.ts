@@ -1,6 +1,6 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { TestUtils } from '../../test';
-import { Actions } from '../../constants';
+import { Actions, Messages } from '../../constants';
 import { TestData } from '../../test-data';
 
 import { RentalPage } from './rental';
@@ -61,6 +61,20 @@ describe('Rental Page', () => {
     });
   }));
 
+  it('pushes item onAdd()', fakeAsync(() => {
+    instance.onAdd();
+    tick();
+    expect(instance.items).toEqual([TestData.item]);
+  }));
+
+  it('shows toast if error onAdd()', fakeAsync(() => {
+    instance.inventoryData.resolve = false;
+    spyOn(instance.stockpileData, 'showToast');
+    instance.onAdd();
+    tick();
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+  }));
+
   it('pushes ItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.viewItem(TestData.item);
@@ -73,13 +87,32 @@ describe('Rental Page', () => {
     expect(instance.navCtrl.push).toHaveBeenCalled();
   });
 
+  it('calls inventoryData.return for each item', fakeAsync(() => {
+    instance.items = TestData.items;
+    spyOn(instance.inventoryData, 'return').and.callThrough();
+    spyOn(instance.stockpileData, 'showToast');
+    instance.onReturn();
+    tick();
+    expect(instance.inventoryData.return).toHaveBeenCalledTimes(TestData.items.length);
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemsReturned);
+  }));
+
+  it('shows toast if error onReturn()', fakeAsync(() => {
+    instance.inventoryData.resolve = false;
+    instance.items = TestData.items;
+    spyOn(instance.stockpileData, 'showToast');
+    instance.onReturn();
+    tick();
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+  }));
+
   it('calls inventoryData.return() and pops nav onReturn()', fakeAsync(() => {
+    instance.items.push(TestData.item);
     spyOn(instance.navCtrl, 'pop');
     spyOn(instance.inventoryData, 'return').and.callThrough();
-    instance.items.push(TestData.item);
     instance.onReturn();
     tick();
     expect(instance.navCtrl.pop).toHaveBeenCalled();
-    expect(instance.inventoryData.return).toHaveBeenCalledWith([TestData.item]);
+    expect(instance.inventoryData.return).toHaveBeenCalledWith(TestData.item.tag);
   }));
 });

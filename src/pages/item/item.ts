@@ -3,8 +3,10 @@ import { NgForm } from '@angular/forms';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
-import { Actions, ItemProperties } from '../../constants';
+
+import { Actions, ItemProperties, Messages } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
+import { StockpileData } from '../../providers/stockpile-data';
 
 @Component({
   selector: 'page-item',
@@ -29,30 +31,38 @@ export class ItemPage {
     public navParams: NavParams,
     public inventoryData: InventoryData,
     public modalCtrl: ModalController
+    public stockpileData: StockpileData
   ) { }
 
   ngOnInit() {
     this.item.tag = this.navParams.get('tag');
     this.action = this.navParams.get('action');
 
+    if (this.action === this.actions.edit) {
+      this.inventoryData.getItem(this.item.tag).subscribe(
+        item => this.item = item,
+        err => this.stockpileData.showToast(err.message)
+      );
+    }
+
     this.inventoryData.getBrands().subscribe(
-      brands => this.allBrands = brands,
-      err => console.log(err)
+      brands => this.brands = brands.results,
+      err => this.stockpileData.showToast(err.message)
     );
 
     this.inventoryData.getModels().subscribe(
-      models => this.allModels = models,
-      err => console.log(err)
+      models => this.models = models.results,
+      err => this.stockpileData.showToast(err.message)
     );
 
     this.inventoryData.getStatuses().subscribe(
-      statuses => this.allStatuses = statuses,
-      err => console.log(err)
+      statuses => this.statuses = statuses.results,
+      err => this.stockpileData.showToast(err.message)
     );
 
     this.inventoryData.getCategories().subscribe(
-      categories => this.allCategories = categories,
-      err => console.log(err)
+      categories => this.categories = categories.results,
+      err => this.stockpileData.showToast(err.message)
     );
 
     if (this.action === this.actions.edit) {
@@ -75,24 +85,34 @@ export class ItemPage {
 
   onSave(form: NgForm) {
     if (form.valid) {
+      let observable;
+      let message;
+
       if (this.action === this.actions.add) {
-        this.inventoryData.addItem(this.item).subscribe(
-          success => this.navCtrl.pop(),
-          err => console.error(err)
-        );
+        observable = this.inventoryData.addItem(this.item);
+        message = Messages.itemAdded;
       } else if (this.action === this.actions.edit) {
-        this.inventoryData.editItem(this.item).subscribe(
-          success => this.navCtrl.pop(),
-          err => console.error(err)
-        );
+        observable = this.inventoryData.editItem(this.item);
+        message = Messages.itemEdited;
       }
+
+      observable.subscribe(
+        success => {
+          this.stockpileData.showToast(message);
+          this.navCtrl.pop();
+        },
+        err => this.stockpileData.showToast(err.message)
+      );
     }
   }
 
   onDelete() {
     this.inventoryData.deleteItem(this.item.tag).subscribe(
-      success => this.navCtrl.pop(),
-      err => console.error(err)
+      success => {
+        this.stockpileData.showToast(Messages.itemDeleted);
+        this.navCtrl.pop();
+      },
+      err => this.stockpileData.showToast(err.message)
     );
   }
 
