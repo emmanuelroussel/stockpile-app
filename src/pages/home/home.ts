@@ -5,6 +5,7 @@ import { BarcodeScanner } from 'ionic-native';
 import { ItemPage } from '../item/item';
 import { RentalPage } from '../rental/rental';
 import { Actions } from '../../constants';
+import { StockpileData } from '../../providers/stockpile-data';
 
 @Component({
   selector: 'page-home',
@@ -15,7 +16,7 @@ export class HomePage {
   segment: Actions = this.actions.rent;
   tag: string = '';
 
-  constructor(public navCtrl: NavController) { }
+  constructor(public navCtrl: NavController, public stockpileData: StockpileData) { }
 
   onNext() {
     if (this.tag) {
@@ -43,7 +44,7 @@ export class HomePage {
         this.tag = barcodeData.text;
         this.onNext();
       },
-      err => console.error('scan failed: ' + err)
+      err => this.stockpileData.showToast(err.message)
     );
   }
 }

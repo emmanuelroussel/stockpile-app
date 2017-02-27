@@ -74,4 +74,8 @@ export class TestData {
   public static response = {
     message: 'Successful operation'
   };
+
+  public static error = {
+    message: 'Error message'
+  };
 }

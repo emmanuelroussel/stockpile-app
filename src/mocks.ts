@@ -123,45 +123,86 @@ export class InventoryDataMock {
   models = TestData.models;
   categories = TestData.categories;
   statuses = TestData.statuses;
+  resolve: boolean = true;
 
   public addItem(): any {
-    return Observable.fromPromise(Promise.resolve());
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve());
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
   }
 
   public getItem(): any {
-    return Observable.fromPromise(Promise.resolve(this.item));
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve(this.item));
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
   }
 
   public editItem(): any {
-    return Observable.fromPromise(Promise.resolve());
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve());
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
   }
 
   public deleteItem(): any {
-    return Observable.fromPromise(Promise.resolve());
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve());
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
   }
 
   public rent(): any {
-    return Observable.fromPromise(Promise.resolve());
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve());
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
   }
 
   public return(): any {
-    return Observable.fromPromise(Promise.resolve());
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve());
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
   }
 
   public getBrands(): any {
-    return Observable.fromPromise(Promise.resolve(this.brands));
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve(this.brands));
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
   }
 
   public getModels(): any {
-    return Observable.fromPromise(Promise.resolve(this.models));
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve(this.models));
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
   }
 
   public getStatuses(): any {
-    return Observable.fromPromise(Promise.resolve(this.statuses));
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve(this.statuses));
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
   }
 
   public getCategories(): any {
-    return Observable.fromPromise(Promise.resolve(this.categories));
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve(this.categories));
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
   }
 }
 
@@ -171,20 +212,20 @@ export class StockpileDataMock {
   }
 
   public getUrl(): any { }
+
+  public showToast(): any { }
 }
 
 export class UserDataMock {
-  resolve: boolean;
+  resolve: boolean = true;
   loggedIn: boolean;
 
   public login(): any {
-    return new Promise((resolve, reject) => {
-      if (this.resolve) {
-        resolve();
-      } else {
-        reject();
-      }
-    });
+    if (this.resolve) {
+      return Promise.resolve();
+    } else {
+      return Promise.reject(TestData.error);
+    }
   }
 
   public logout(): any { }
