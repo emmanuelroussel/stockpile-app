@@ -64,7 +64,7 @@ describe('Rental Page', () => {
   it('pushes item onAdd()', fakeAsync(() => {
     instance.onAdd();
     tick();
-    expect(instance.items).toEqual([TestData.item]);
+    expect(instance.items).toEqual([TestData.apiItem]);
   }));
 
   it('shows toast if error onAdd()', fakeAsync(() => {

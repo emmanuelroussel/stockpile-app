@@ -26,3 +26,10 @@ export class Messages {
   public static itemsReturned = Messages.basePlural + 'returned';
   public static itemsRented = Messages.basePlural + 'rented';
 }
+
+export class ItemProperties {
+  public static brand = 'Brand';
+  public static model = 'Model';
+  public static category = 'Category';
+  public static status = 'Status';
+}

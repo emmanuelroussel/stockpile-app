@@ -92,10 +92,10 @@ export class MenuMock {
 }
 
 export class NavParamsMock {
-  param: string = '';
+  param: any;
 
   public get(): any {
-    return String(this.param);
+    return this.param;
   }
 }
 
@@ -109,6 +109,20 @@ export class StorageMock {
   }
 }
 
+export class ModalMock {
+  public create(): any {
+    return new ModalMock;
+  }
+
+  public onDidDismiss(): any {}
+
+  public present(): any {}
+}
+
+export class ViewMock {
+  public dismiss(): any {}
+}
+
 export class NavigatorMock {
   hal = {};
 
@@ -118,7 +132,7 @@ export class NavigatorMock {
 }
 
 export class InventoryDataMock {
-  item = TestData.item;
+  item = TestData.apiItem;
   brands = TestData.brands;
   models = TestData.models;
   categories = TestData.categories;

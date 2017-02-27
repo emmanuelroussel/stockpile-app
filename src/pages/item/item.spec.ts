@@ -2,9 +2,10 @@ import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing'
 import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
-import { Actions, Messages } from '../../constants';
+import { Actions, ItemProperties, Messages } from '../../constants';
 
 import { ItemPage } from './item';
+import { ItemFilterPage } from '../item-filter/item-filter';
 
 let fixture: ComponentFixture<ItemPage> = null;
 let instance: any = null;
@@ -38,21 +39,29 @@ describe('Item Page', () => {
   });
 
   it('gets item if action === \'Edit\'', fakeAsync(() => {
-    instance.inventoryData.item = TestData.item;
+    instance.inventoryData.item = TestData.apiItem;
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     tick();
     expect(instance.item).toEqual(TestData.item);
+    expect(instance.selectedBrand).toEqual(TestData.apiItem.brand);
+    expect(instance.selectedModel).toEqual(TestData.apiItem.model);
+    expect(instance.selectedCategory).toEqual(TestData.apiItem.category);
+    expect(instance.selectedStatus).toEqual(TestData.apiItem.status);
   }));
 
   it('gets brands, models, statuses and categories', fakeAsync(() => {
+    instance.inventoryData.brands = TestData.brands;
+    instance.inventoryData.models = TestData.models;
+    instance.inventoryData.statuses = TestData.statuses;
+    instance.inventoryData.categories = TestData.categories;
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     tick();
-    expect(instance.brands).toEqual(TestData.brands.results);
-    expect(instance.models).toEqual(TestData.models.results);
-    expect(instance.categories).toEqual(TestData.categories.results);
-    expect(instance.statuses).toEqual(TestData.statuses.results);
+    expect(instance.allBrands).toEqual(TestData.brands.results);
+    expect(instance.allModels).toEqual(TestData.models.results);
+    expect(instance.allStatuses).toEqual(TestData.statuses.results);
+    expect(instance.allCategories).toEqual(TestData.categories.results);
   }));
 
   it('shows toast if error while getting item, brands, models, statuses and categories', fakeAsync(() => {
@@ -143,4 +152,10 @@ describe('Item Page', () => {
       expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
     });
   }));
+
+  it('creates a modal on presentModal()', () => {
+    spyOn(instance.modalCtrl, 'create').and.callThrough();
+    instance.presentModal(TestData.brands.results, ItemProperties.brand);
+    expect(instance.modalCtrl.create).toHaveBeenCalledWith(ItemFilterPage, { elements: TestData.brands.results, type: ItemProperties.brand });
+  });
 });

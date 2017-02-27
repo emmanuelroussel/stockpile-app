@@ -10,6 +10,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { InventoryPage } from '../pages/inventory/inventory';
 import { ItemPage } from '../pages/item/item';
+import { ItemFilterPage } from '../pages/item-filter/item-filter';
 import { LoginPage } from '../pages/login/login';
 import { RentalPage } from '../pages/rental/rental';
 import { RentalDetailsPage } from '../pages/rental-details/rental-details';
@@ -39,6 +40,7 @@ const cloudSettings: CloudSettings = {
     HomePage,
     InventoryPage,
     ItemPage,
+    ItemFilterPage,
     LoginPage,
     RentalPage,
     RentalDetailsPage,
@@ -57,6 +59,7 @@ const cloudSettings: CloudSettings = {
     HomePage,
     InventoryPage,
     ItemPage,
+    ItemFilterPage,
     LoginPage,
     RentalPage,
     RentalDetailsPage,

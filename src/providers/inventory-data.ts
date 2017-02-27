@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { AuthHttp } from 'angular2-jwt';
 import { StockpileData } from './stockpile-data';
 import { Links, ApiUrl } from '../constants';
+import { TestData } from '../test-data';
 import 'rxjs/Rx';
 
 @Injectable()
@@ -43,12 +44,24 @@ export class InventoryData {
     return this.getEndpoint(Links.brand);
   }
 
+  addBrand(brand: string) {
+    return Observable.fromPromise(Promise.resolve(TestData.brands[0]));
+  }
+
   getModels() {
     return this.getEndpoint(Links.model);
   }
 
+  addModel(brand: string) {
+    return Observable.fromPromise(Promise.resolve(TestData.models[0]));
+  }
+
   getStatuses() {
     return this.getEndpoint(Links.status);
+  }
+
+  addStatus(brand: string) {
+    return Observable.fromPromise(Promise.resolve(TestData.statuses[0]));
   }
 
   getCategories() {
@@ -58,6 +71,10 @@ export class InventoryData {
   private getEndpoint(endpoint: string) {
     return this.authHttp.get(ApiUrl + endpoint)
       .map(this.extractData);
+  }
+
+  addCategory(brand: string) {
+    return Observable.fromPromise(Promise.resolve(TestData.categories[0]));
   }
 
   private extractData(res: Response) {

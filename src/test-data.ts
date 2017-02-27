@@ -1,10 +1,22 @@
 export class TestData {
-  public static item = {
+  public static apiItem = {
     tag: 'banana',
     brand: 'Canon',
+    brandID: 1,
     model: 'T5i',
+    modelID: 1,
     category: 'Camera',
-    status: 'Available'
+    categoryID: 1,
+    status: 'Available',
+    statusID: 1
+  };
+
+  public static item = {
+    tag: 'banana',
+    brandID: 1,
+    modelID: 1,
+    categoryID: 1,
+    statusID: 1
   };
 
   public static items = [{
@@ -29,34 +41,39 @@ export class TestData {
 
   public static brands = {
     results: [
-      { name: 'Canon', brandID: 5 },
-      { name: 'Nikon', brandID: 6 },
-      { name: 'Sennheiser', brandID: 7}
+      { name: 'Canon', id: 5 },
+      { name: 'Nikon', id: 6 },
+      { name: 'Sennheiser', id: 7}
     ]
   };
+
+  public static filteredBrands = [
+    { name: 'Canon', id: 5 }
+  ];
 
   public static models = {
     results: [
-      { name: 'T5i', modelID: 5 },
-      { name: 'e609', modelID: 6 },
-      { name: 'MKE 600', modelID: 7},
-      { name: 'D5', modelID: 8}
+      { name: 'T5i', id: 5 },
+      { name: 'e609', id: 6 },
+      { name: 'MKE 600', id: 7},
+      { name: 'D5', id: 8}
     ]
   };
 
+
   public static statuses = {
     results: [
-      { name: 'Available', statusID: 5 },
-      { name: 'Rented', statusID: 6 },
-      { name: 'Getting Fixed', statusID: 7}
+      { name: 'Available', id: 5 },
+      { name: 'Rented', id: 6 },
+      { name: 'Getting Fixed', id: 7}
     ]
   };
 
   public static categories = {
     results: [
-      { name: 'Camera', categoryID: 5 },
-      { name: 'Mic', categoryID: 6 },
-      { name: 'Light', categoryID: 7}
+      { name: 'Camera', id: 5 },
+      { name: 'Mic', id: 6 },
+      { name: 'Light', id: 7}
     ]
   };
 
@@ -64,6 +81,8 @@ export class TestData {
     email: 'luke@rebellion.com',
     password: 'yodarocks'
   };
+
+  public static queryText = 'Can';
 
   public static loginResponse = {
     id: 1,
