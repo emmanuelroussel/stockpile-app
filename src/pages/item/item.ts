@@ -4,7 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
 import { StockpileData } from '../../providers/stockpile-data';
-import { Actions } from '../../constants';
+import { Actions, Messages } from '../../constants';
 
 @Component({
   selector: 'page-item',
@@ -60,23 +60,33 @@ export class ItemPage {
 
   onSave(form: NgForm) {
     if (form.valid) {
+      let observable;
+      let message;
+
       if (this.action === this.actions.add) {
-        this.inventoryData.addItem(this.item).subscribe(
-          success => this.navCtrl.pop(),
-          err => this.stockpileData.showToast(err.message)
-        );
+        observable = this.inventoryData.addItem(this.item);
+        message = Messages.itemAdded;
       } else if (this.action === this.actions.edit) {
-        this.inventoryData.editItem(this.item).subscribe(
-          success => this.navCtrl.pop(),
-          err => this.stockpileData.showToast(err.message)
-        );
+        observable = this.inventoryData.editItem(this.item);
+        message = Messages.itemEdited;
       }
+
+      observable.subscribe(
+        success => {
+          this.stockpileData.showToast(message);
+          this.navCtrl.pop();
+        },
+        err => this.stockpileData.showToast(err.message)
+      );
     }
   }
 
   onDelete() {
     this.inventoryData.deleteItem(this.item.tag).subscribe(
-      success => this.navCtrl.pop(),
+      success => {
+        this.stockpileData.showToast(Messages.itemDeleted);
+        this.navCtrl.pop();
+      },
       err => this.stockpileData.showToast(err.message)
     );
   }

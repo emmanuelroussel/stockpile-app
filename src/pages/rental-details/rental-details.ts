@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
 import { StockpileData } from '../../providers/stockpile-data';
+import { Messages } from '../../constants';
 
 @Component({
   selector: 'page-rental-details',
@@ -43,7 +44,10 @@ export class RentalDetailsPage {
       }
 
       Promise.all(promises).then(
-        success => this.navCtrl.popToRoot(),
+        success => {
+          this.stockpileData.showToast(Messages.itemsRented);
+          this.navCtrl.popToRoot();
+        },
         err => this.stockpileData.showToast(err.message)
       );
     }

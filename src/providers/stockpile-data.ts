@@ -28,6 +28,6 @@ export class StockpileData {
   }
 
   showToast(message: string) {
-    Toast.show(message, '5000', 'center');
+    Toast.show(message, '5000', 'bottom');
   }
 }

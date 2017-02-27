@@ -2,6 +2,7 @@ import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing'
 import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
+import { Messages } from '../../constants';
 
 import { RentalDetailsPage } from './rental-details';
 
@@ -53,12 +54,26 @@ describe('RentalDetails Page', () => {
     instance.items = TestData.items;
     spyOn(instance.navCtrl, 'popToRoot');
     spyOn(instance.inventoryData, 'rent').and.callThrough();
+    spyOn(instance.stockpileData, 'showToast');
     fixture.whenStable().then(() => {
       let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
       instance.onRent(form);
       tick();
       expect(instance.inventoryData.rent).toHaveBeenCalled();
       expect(instance.navCtrl.popToRoot).toHaveBeenCalled();
+      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemsRented);
+    });
+  }));
+
+  it('shows toast on error onRent()', fakeAsync(() => {
+    instance.inventoryData.resolve = false;
+    instance.items = TestData.items;
+    spyOn(instance.stockpileData, 'showToast');
+    fixture.whenStable().then(() => {
+      let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
+      instance.onRent(form);
+      tick();
+      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
     });
   }));
 });

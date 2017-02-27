@@ -6,7 +6,7 @@ import { InventoryData } from '../../providers/inventory-data';
 import { StockpileData } from '../../providers/stockpile-data';
 import { ItemPage } from '../item/item';
 import { RentalDetailsPage } from '../rental-details/rental-details';
-import { Actions } from '../../constants';
+import { Actions, Messages } from '../../constants';
 
 @Component({
   selector: 'page-rental',
@@ -62,7 +62,10 @@ export class RentalPage {
     }
 
     Promise.all(promises).then(
-      success => this.navCtrl.pop(),
+      success => {
+        this.stockpileData.showToast(Messages.itemsReturned);
+        this.navCtrl.pop();
+      },
       err => this.stockpileData.showToast(err.message)
     );
   }
