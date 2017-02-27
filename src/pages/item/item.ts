@@ -3,8 +3,10 @@ import { NgForm } from '@angular/forms';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
-import { Actions, ItemProperties } from '../../constants';
+
+import { Actions, ItemProperties, Messages } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
+import { StockpileData } from '../../providers/stockpile-data';
 
 @Component({
   selector: 'page-item',
@@ -28,7 +30,8 @@ export class ItemPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public inventoryData: InventoryData,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public stockpileData: StockpileData
   ) { }
 
   ngOnInit() {
@@ -36,23 +39,23 @@ export class ItemPage {
     this.action = this.navParams.get('action');
 
     this.inventoryData.getBrands().subscribe(
-      brands => this.allBrands = brands,
-      err => console.log(err)
+      brands => this.allBrands = brands.results,
+      err => this.stockpileData.showToast(err.message)
     );
 
     this.inventoryData.getModels().subscribe(
-      models => this.allModels = models,
-      err => console.log(err)
+      models => this.allModels = models.results,
+      err => this.stockpileData.showToast(err.message)
     );
 
     this.inventoryData.getStatuses().subscribe(
-      statuses => this.allStatuses = statuses,
-      err => console.log(err)
+      statuses => this.allStatuses = statuses.results,
+      err => this.stockpileData.showToast(err.message)
     );
 
     this.inventoryData.getCategories().subscribe(
-      categories => this.allCategories = categories,
-      err => console.log(err)
+      categories => this.allCategories = categories.results,
+      err => this.stockpileData.showToast(err.message)
     );
 
     if (this.action === this.actions.edit) {
@@ -68,31 +71,41 @@ export class ItemPage {
           this.selectedCategory = item.category;
           this.selectedStatus = item.status;
         },
-        err => console.error(err)
+        err => this.stockpileData.showToast(err.message)
       );
     }
   }
 
   onSave(form: NgForm) {
     if (form.valid) {
+      let observable;
+      let message;
+
       if (this.action === this.actions.add) {
-        this.inventoryData.addItem(this.item).subscribe(
-          success => this.navCtrl.pop(),
-          err => console.error(err)
-        );
+        observable = this.inventoryData.addItem(this.item);
+        message = Messages.itemAdded;
       } else if (this.action === this.actions.edit) {
-        this.inventoryData.editItem(this.item).subscribe(
-          success => this.navCtrl.pop(),
-          err => console.error(err)
-        );
+        observable = this.inventoryData.editItem(this.item);
+        message = Messages.itemEdited;
       }
+
+      observable.subscribe(
+        success => {
+          this.stockpileData.showToast(message);
+          this.navCtrl.pop();
+        },
+        err => this.stockpileData.showToast(err.message)
+      );
     }
   }
 
   onDelete() {
     this.inventoryData.deleteItem(this.item.tag).subscribe(
-      success => this.navCtrl.pop(),
-      err => console.error(err)
+      success => {
+        this.stockpileData.showToast(Messages.itemDeleted);
+        this.navCtrl.pop();
+      },
+      err => this.stockpileData.showToast(err.message)
     );
   }
 
@@ -112,7 +125,7 @@ export class ItemPage {
                   this.item.brandID = brand.id;
                   this.selectedBrand = brand.name;
                 },
-                err => console.error(err)
+                err => this.stockpileData.showToast(err.message)
               );
               break;
             case this.itemProperties.model:
@@ -121,7 +134,7 @@ export class ItemPage {
                   this.item.modelID = model.id;
                   this.selectedModel = model.name;
                 },
-                err => console.error(err)
+                err => this.stockpileData.showToast(err.message)
               );
               break;
             case this.itemProperties.category:
@@ -130,7 +143,7 @@ export class ItemPage {
                   this.item.categoryID = category.id;
                   this.selectedCategory = category.name;
                 },
-                err => console.error(err)
+                err => this.stockpileData.showToast(err.message)
               );
               break;
             case this.itemProperties.status:
@@ -139,7 +152,7 @@ export class ItemPage {
                   this.item.statusID = status.id;
                   this.selectedStatus = status.name;
                 },
-                err => console.error(err)
+                err => this.stockpileData.showToast(err.message)
               );
               break;
           }

@@ -2,7 +2,7 @@ import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing'
 import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
-import { Actions, ItemProperties } from '../../constants';
+import { Actions, ItemProperties, Messages } from '../../constants';
 
 import { ItemPage } from './item';
 import { ItemFilterPage } from '../item-filter/item-filter';
@@ -58,10 +58,19 @@ describe('Item Page', () => {
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     tick();
-    expect(instance.allBrands).toEqual(TestData.brands);
-    expect(instance.allModels).toEqual(TestData.models);
-    expect(instance.allStatuses).toEqual(TestData.statuses);
-    expect(instance.allCategories).toEqual(TestData.categories);
+    expect(instance.allBrands).toEqual(TestData.brands.results);
+    expect(instance.allModels).toEqual(TestData.models.results);
+    expect(instance.allStatuses).toEqual(TestData.statuses.results);
+    expect(instance.allCategories).toEqual(TestData.categories.results);
+  }));
+
+  it('shows toast if error while getting item, brands, models, statuses and categories', fakeAsync(() => {
+    instance.navParams.param = Actions.edit;
+    instance.inventoryData.resolve = false;
+    spyOn(instance.stockpileData, 'showToast');
+    instance.ngOnInit();
+    tick();
+    expect(instance.stockpileData.showToast).toHaveBeenCalledTimes(5);
   }));
 
   it('calls onSave() on click on save button', () => {
@@ -75,6 +84,7 @@ describe('Item Page', () => {
     instance.navParams.param = Actions.add;
     instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
+    spyOn(instance.stockpileData, 'showToast');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
@@ -82,6 +92,7 @@ describe('Item Page', () => {
       instance.onSave(form);
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
+      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemAdded);
     });
   }));
 
@@ -90,6 +101,7 @@ describe('Item Page', () => {
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
+    spyOn(instance.stockpileData, 'showToast');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
@@ -97,24 +109,53 @@ describe('Item Page', () => {
       instance.onSave(form);
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
+      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemEdited);
+    });
+  }));
+
+  it('shows toast if error onSave()', fakeAsync(() => {
+    instance.inventoryData.resolve = false;
+    instance.navParams.param = Actions.edit;
+    spyOn(instance.stockpileData, 'showToast');
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
+      instance.onSave(form);
+      tick();
+      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
     });
   }));
 
   it('pops nav onDelete()', fakeAsync(() => {
     instance.action = Actions.edit;
     spyOn(instance.navCtrl, 'pop');
+    spyOn(instance.stockpileData, 'showToast');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onDelete();
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
+      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemDeleted);
+    });
+  }));
+
+  it('shows toast if error onDelete()', fakeAsync(() => {
+    instance.inventoryData.resolve = false;
+    spyOn(instance.stockpileData, 'showToast');
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      instance.onDelete();
+      tick();
+      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
     });
   }));
 
   it('creates a modal on presentModal()', () => {
     spyOn(instance.modalCtrl, 'create').and.callThrough();
-    instance.presentModal(null, TestData.brands, ItemProperties.brand);
-    expect(instance.modalCtrl.create).toHaveBeenCalledWith(ItemFilterPage, { elements: TestData.brands, type: ItemProperties.brand });
+    instance.presentModal(TestData.brands.results, ItemProperties.brand);
+    expect(instance.modalCtrl.create).toHaveBeenCalledWith(ItemFilterPage, { elements: TestData.brands.results, type: ItemProperties.brand });
   });
 });

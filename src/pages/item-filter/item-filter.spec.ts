@@ -18,16 +18,16 @@ describe('ItemFilter Page', () => {
 
   it('filters elements on getElements()', () => {
     itemFilterPage.queryText = TestData.queryText;
-    itemFilterPage.allElements = TestData.brands;
+    itemFilterPage.allElements = TestData.brands.results;
     itemFilterPage.getElements();
     expect(itemFilterPage.filteredElements).toEqual(TestData.filteredBrands);
   });
 
   it('does not filter elements if queryText is empty', () => {
     itemFilterPage.queryText = '';
-    itemFilterPage.allElements = TestData.brands;
+    itemFilterPage.allElements = TestData.brands.results;
     itemFilterPage.getElements();
-    expect(itemFilterPage.filteredElements).toEqual(TestData.brands);
+    expect(itemFilterPage.filteredElements).toEqual(TestData.brands.results);
   });
 
   it('calls viewCtrl.dismiss on dismiss()', () => {

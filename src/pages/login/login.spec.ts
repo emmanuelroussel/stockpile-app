@@ -1,7 +1,6 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
-import { UserDataMock } from '../../mocks';
 import { TestData } from '../../test-data';
 
 import { LoginPage } from './login';
@@ -15,7 +14,6 @@ describe('Login Page', () => {
   beforeEach(async(() => TestUtils.beforeEachCompiler([LoginPage]).then(compiled => {
     fixture = compiled.fixture;
     instance = compiled.instance;
-    instance.userData = new UserDataMock();
   })));
 
   afterEach(() => {
@@ -48,11 +46,11 @@ describe('Login Page', () => {
     });
   }));
 
-  it('resets password and logs error if error', fakeAsync(() => {
+  it('resets password and shows toast if error', fakeAsync(() => {
     instance.login.email = TestData.credentials.email;
     instance.login.password = TestData.credentials.password;
     instance.userData.resolve = false;
-    spyOn(console, 'error');
+    spyOn(instance.stockpileData, 'showToast');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
@@ -60,7 +58,7 @@ describe('Login Page', () => {
       instance.onLogin(form);
       tick();
       expect(instance.login.password).toEqual('');
-      expect(console.error).toHaveBeenCalled();
+      expect(instance.stockpileData.showToast).toHaveBeenCalled();
     });
   }));
 
