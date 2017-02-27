@@ -96,7 +96,7 @@ export class ItemPage {
     );
   }
 
-  presentModal(event, elements, type) {
+  presentModal(elements, type) {
     let modal = this.modalCtrl.create(ItemFilterPage, {
       elements: elements,
       type: type
