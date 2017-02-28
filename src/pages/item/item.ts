@@ -76,7 +76,7 @@ export class ItemPage {
         observable = this.inventoryData.addItem(this.item);
         message = Messages.itemAdded;
       } else if (this.action === this.actions.edit) {
-        observable = this.inventoryData.editItem(this.item);
+        observable = this.inventoryData.editItem(this.item, this.item.tag);
         message = Messages.itemEdited;
       }
 

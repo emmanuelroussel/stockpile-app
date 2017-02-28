@@ -64,12 +64,15 @@ describe('InventoryData Provider', () => {
     });
   })));
 
-  it('returns an empty promise on editItem()', inject([InventoryData], (inventoryData: InventoryData) => {
-    inventoryData.editItem(TestData.item).subscribe(
-      success => expect(true),
-      err => expect(false)
+  it('returns a message on editItem()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
     );
-  }));
+    tick();
+    inventoryData.editItem(TestData.item, TestData.item.tag).subscribe(res => {
+      expect(res).toEqual(TestData.response);
+    });
+  })));
 
   it('returns a message on deleteItem()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
     mockBackend.connections.subscribe(
