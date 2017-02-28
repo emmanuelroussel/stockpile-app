@@ -17,28 +17,23 @@ export class InventoryData {
   }
 
   addItem(item: Object) {
-    return this.authHttp.put(ApiUrl + Links.item, item)
-      .map(this.extractData);
+    return this.putEndpoint(Links.item, item);
   }
 
   editItem(item: Object, tag: string) {
-    return this.authHttp.put(ApiUrl + Links.item + '/' + tag, item)
-      .map(this.extractData);
+    return this.putEndpoint(Links.item + '/' + tag, item);
   }
 
   deleteItem(tag: string) {
-    return this.authHttp.delete(ApiUrl + Links.item + '/' + tag)
-      .map(this.extractData);
+    return this.deleteEndpoint(Links.item + '/' + tag);
   }
 
   rent(rental: Object) {
-    return this.authHttp.put(ApiUrl + Links.rental, rental)
-      .map(this.extractData);
+    return this.putEndpoint(Links.rental, rental);
   }
 
   return(tag: string) {
-    return this.authHttp.delete(ApiUrl + Links.rental + '/' + tag)
-      .map(this.extractData);
+    return this.deleteEndpoint(Links.rental + '/' + tag);
   }
 
   getBrands() {
@@ -61,13 +56,23 @@ export class InventoryData {
     return this.getEndpoint(Links.category);
   }
 
+  addCategory(brand: string) {
+    return Observable.fromPromise(Promise.resolve(TestData.categories[0]));
+  }
+
   private getEndpoint(endpoint: string) {
     return this.authHttp.get(ApiUrl + endpoint)
       .map(this.extractData);
   }
 
-  addCategory(brand: string) {
-    return Observable.fromPromise(Promise.resolve(TestData.categories[0]));
+  private putEndpoint(endpoint: string, body: Object) {
+    return this.authHttp.put(ApiUrl + endpoint, body)
+      .map(this.extractData);
+  }
+
+  private deleteEndpoint(endpoint: string) {
+    return this.authHttp.delete(ApiUrl + endpoint)
+      .map(this.extractData);
   }
 
   private extractData(res: Response) {
