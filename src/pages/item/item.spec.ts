@@ -49,7 +49,7 @@ describe('Item Page', () => {
     expect(instance.selectedCategory).toEqual(TestData.apiItem.category);
   }));
 
-  it('gets brands, models, statuses and categories', fakeAsync(() => {
+  it('gets brands, models and categories', fakeAsync(() => {
     instance.inventoryData.brands = TestData.brands;
     instance.inventoryData.models = TestData.models;
     instance.inventoryData.categories = TestData.categories;
@@ -61,7 +61,7 @@ describe('Item Page', () => {
     expect(instance.allCategories).toEqual(TestData.categories.results);
   }));
 
-  it('shows toast if error while getting item, brands, models, statuses and categories', fakeAsync(() => {
+  it('shows toast if error while getting item, brands, models and categories', fakeAsync(() => {
     instance.navParams.param = Actions.edit;
     instance.inventoryData.resolve = false;
     spyOn(instance.stockpileData, 'showToast');
