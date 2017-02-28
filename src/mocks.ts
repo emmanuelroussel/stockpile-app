@@ -136,7 +136,6 @@ export class InventoryDataMock {
   brands = TestData.brands;
   models = TestData.models;
   categories = TestData.categories;
-  statuses = TestData.statuses;
   resolve: boolean = true;
 
   public addItem(): any {
@@ -198,14 +197,6 @@ export class InventoryDataMock {
   public getModels(): any {
     if (this.resolve) {
       return Observable.fromPromise(Promise.resolve(this.models));
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
-  }
-
-  public getStatuses(): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve(this.statuses));
     } else {
       return Observable.fromPromise(Promise.reject(TestData.error));
     }

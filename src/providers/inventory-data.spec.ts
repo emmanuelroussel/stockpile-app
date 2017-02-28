@@ -121,11 +121,4 @@ describe('InventoryData Provider', () => {
       err => expect(false)
     );
   }));
-
-  it('returns conditions on getStatuses()', inject([InventoryData], (inventoryData: InventoryData) => {
-    inventoryData.getStatuses().subscribe(
-      statuses => expect(statuses).toEqual(TestData.statuses),
-      err => expect(false)
-    );
-  }));
 });

@@ -26,11 +26,6 @@
         <ion-label stacked color="primary">Category</ion-label>
         <ion-input (click)="presentModal(allCategories, itemProperties.category)" value="{{ selectedCategory }}"></ion-input>
       </ion-item>
-
-      <ion-item>
-        <ion-label stacked color="primary">Status</ion-label>
-        <ion-input (click)="presentModal(allStatuses, itemProperties.status)" value="{{ selectedStatus }}"></ion-input>
-      </ion-item>
 		</ion-list>
 
 		<button ion-button (click)="onSave(itemForm)" type="submit" block>Save</button>

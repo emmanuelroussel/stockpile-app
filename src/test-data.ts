@@ -15,8 +15,7 @@ export class TestData {
     tag: 'banana',
     brandID: 1,
     modelID: 1,
-    categoryID: 1,
-    statusID: 1
+    categoryID: 1
   };
 
   public static items = [{
@@ -57,15 +56,6 @@ export class TestData {
       { name: 'e609', id: 6 },
       { name: 'MKE 600', id: 7},
       { name: 'D5', id: 8}
-    ]
-  };
-
-
-  public static statuses = {
-    results: [
-      { name: 'Available', id: 5 },
-      { name: 'Rented', id: 6 },
-      { name: 'Getting Fixed', id: 7}
     ]
   };
 

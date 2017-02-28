@@ -56,14 +56,6 @@ export class InventoryData {
     return Observable.fromPromise(Promise.resolve(TestData.models[0]));
   }
 
-  getStatuses() {
-    return this.getEndpoint(Links.status);
-  }
-
-  addStatus(brand: string) {
-    return Observable.fromPromise(Promise.resolve(TestData.statuses[0]));
-  }
-
   getCategories() {
     return this.getEndpoint(Links.category);
   }
