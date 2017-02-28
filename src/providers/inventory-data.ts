@@ -16,6 +16,10 @@ export class InventoryData {
     return this.getEndpoint(Links.item + '/' + tag);
   }
 
+  getAllItems() {
+    return this.getEndpoint(Links.item);
+  }
+
   addItem(item: Object) {
     return this.authHttp.put(ApiUrl + Links.item, item)
       .map(this.extractData);
