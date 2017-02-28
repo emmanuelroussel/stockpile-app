@@ -21,8 +21,9 @@ export class InventoryData {
       .map(this.extractData);
   }
 
-  editItem(item: Object) {
-    return Observable.fromPromise(Promise.resolve());
+  editItem(item: Object, tag: string) {
+    return this.authHttp.put(ApiUrl + Links.item + '/' + tag, item)
+      .map(this.extractData);
   }
 
   deleteItem(tag: string) {
