@@ -80,8 +80,6 @@ export class ItemPage {
         message = Messages.itemEdited;
       }
 
-      console.log(this.item);
-
       observable.subscribe(
         success => {
           this.stockpileData.showToast(message);
@@ -143,7 +141,6 @@ export class ItemPage {
         } else {
           switch (type) {
             case this.itemProperties.brand:
-              console.log(element);
               this.item.brandID = element.brandID;
               this.selectedBrand = element.name;
               break;
