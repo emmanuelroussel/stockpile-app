@@ -3,7 +3,8 @@ import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 
 import { InventoryPage } from './inventory';
-import { Statuses } from '../../constants';
+import { Statuses, Actions } from '../../constants';
+import { ItemPage } from '../item/item';
 
 let fixture: ComponentFixture<InventoryPage> = null;
 let instance: any = null;
@@ -46,19 +47,30 @@ describe('Inventory Page', () => {
     expect(instance.stockpileData.showToast).toHaveBeenCalledTimes(2);
   }));
 
-  it('filters items on filterItems()', () => {
+  it('calls inventoryData.filterItems on filterItems()', fakeAsync(() => {
     instance.selectedCategoryIDs = TestData.selectedCategoryIDs;
-    instance.allItems = TestData.items;
     instance.segment = Statuses.rented;
+    instance.inventoryData.items = TestData.items;
+    spyOn(instance.inventoryData, 'filterItems').and.callThrough();
     instance.filterItems();
-    expect(instance.filteredItems).toEqual(TestData.filteredRentedItems);
-  });
+    tick();
+    expect(instance.inventoryData.filterItems).toHaveBeenCalledWith(TestData.selectedCategoryIDs, Statuses.rented);
+    expect(instance.filteredItems).toEqual(TestData.items);
+  }));
 
-  it('only filters items on based on categories on filterItems() if status is all', () => {
+  it('shows toast if error on filterItems()', fakeAsync(() => {
     instance.selectedCategoryIDs = TestData.selectedCategoryIDs;
-    instance.allItems = TestData.items;
-    instance.segment = Statuses.all;
+    instance.segment = Statuses.rented;
+    instance.inventoryData.resolve = false;
+    spyOn(instance.stockpileData, 'showToast');
     instance.filterItems();
-    expect(instance.filteredItems).toEqual(TestData.filteredAllItems);
+    tick();
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+  }));
+
+  it('pushes ItemPage on nav on viewItem()', () => {
+    spyOn(instance.navCtrl, 'push');
+    instance.viewItem(TestData.item);
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.item.tag, action: Actions.edit });
   });
 });

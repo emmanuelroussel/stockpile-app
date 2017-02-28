@@ -3,7 +3,8 @@ import { NavController } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
 import { StockpileData } from '../../providers/stockpile-data';
-import { Statuses } from '../../constants';
+import { Statuses, Actions } from '../../constants';
+import { ItemPage } from '../item/item';
 
 @Component({
   selector: 'page-inventory',
@@ -39,16 +40,16 @@ export class InventoryPage {
   }
 
   filterItems() {
-    // Filter by categories
-    this.filteredItems = this.allItems.filter((item) => {
-      return this.selectedCategoryIDs.find(categoryID => categoryID === item.categoryID);
-    });
+    this.inventoryData.filterItems(this.selectedCategoryIDs, this.segment).subscribe(
+      items => this.filteredItems = items,
+      err => this.stockpileData.showToast(err.message)
+    )
+  }
 
-    if (this.segment !== this.statuses.all) {
-      // Filter by status
-      this.filteredItems = this.filteredItems.filter((item) => {
-        return item.status.toLowerCase() === this.segment.toLowerCase();
-      });
-    }
+  viewItem(item) {
+    this.navCtrl.push(ItemPage, {
+      tag: item.tag,
+      action: Actions.edit
+    });
   }
 }

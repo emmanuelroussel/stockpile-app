@@ -179,6 +179,14 @@ export class InventoryDataMock {
     }
   }
 
+  public filterItems(): any {
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve(this.allItems));
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
+  }
+
   public rent(): any {
     if (this.resolve) {
       return Observable.fromPromise(Promise.resolve());

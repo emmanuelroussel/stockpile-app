@@ -47,29 +47,6 @@ export class TestData {
     status: 'Rented'
   }];
 
-  public static filteredRentedItems = [{
-    tag: 'orange',
-    brandID: 4,
-    modelID: 4,
-    categoryID: 2,
-    status: 'Rented'
-  }];
-
-  public static filteredAllItems =[{
-    tag: 'mango',
-    brandID: 3,
-    modelID: 3,
-    categoryID: 2,
-    status: 'Available'
-  },
-  {
-    tag: 'orange',
-    brandID: 4,
-    modelID: 4,
-    categoryID: 2,
-    status: 'Rented'
-  }]
-
   public static details = {
     startDate: '01/01/2017',
     endDate: '01/02/2017'
@@ -104,7 +81,7 @@ export class TestData {
     ]
   };
 
-  public static selectedCategoryIDs = [2];
+  public static selectedCategoryIDs = [2, 3];
 
   public static credentials = {
     email: 'luke@rebellion.com',

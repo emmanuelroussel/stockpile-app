@@ -35,6 +35,10 @@ export class InventoryData {
       .map(this.extractData);
   }
 
+  filterItems(categoryIDs: Array<number>, status) {
+    return Observable.fromPromise(Promise.resolve(TestData.items));
+  }
+
   rent(rental: Object) {
     return this.authHttp.put(ApiUrl + Links.rental, rental)
       .map(this.extractData);
