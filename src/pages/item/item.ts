@@ -16,13 +16,11 @@ export class ItemPage {
   actions = Actions;
   itemProperties = ItemProperties;
   action: Actions = '';
-  item: {brandID?: number, modelID?: number, categoryID?: number, statusID?: number, tag?: string} = {};
+  item: {brandID?: number, modelID?: number, categoryID?: number, tag?: string} = {};
   selectedBrand: string;
   allBrands;
   selectedModel: string;
   allModels;
-  selectedStatus: string;
-  allStatuses;
   selectedCategory: string;
   allCategories;
 
@@ -48,11 +46,6 @@ export class ItemPage {
       err => this.stockpileData.showToast(err.message)
     );
 
-    this.inventoryData.getStatuses().subscribe(
-      statuses => this.allStatuses = statuses.results,
-      err => this.stockpileData.showToast(err.message)
-    );
-
     this.inventoryData.getCategories().subscribe(
       categories => this.allCategories = categories.results,
       err => this.stockpileData.showToast(err.message)
@@ -64,12 +57,10 @@ export class ItemPage {
           this.item.brandID = item.brandID;
           this.item.modelID = item.modelID;
           this.item.categoryID = item.categoryID;
-          this.item.statusID = item.statusID;
           this.item.tag = item.tag;
           this.selectedBrand = item.brand;
           this.selectedModel = item.model;
           this.selectedCategory = item.category;
-          this.selectedStatus = item.status;
         },
         err => this.stockpileData.showToast(err.message)
       );
@@ -88,6 +79,8 @@ export class ItemPage {
         observable = this.inventoryData.editItem(this.item);
         message = Messages.itemEdited;
       }
+
+      console.log(this.item);
 
       observable.subscribe(
         success => {
@@ -146,33 +139,21 @@ export class ItemPage {
                 err => this.stockpileData.showToast(err.message)
               );
               break;
-            case this.itemProperties.status:
-              this.inventoryData.addStatus(element.name).subscribe(
-                status => {
-                  this.item.statusID = status.id;
-                  this.selectedStatus = status.name;
-                },
-                err => this.stockpileData.showToast(err.message)
-              );
-              break;
           }
         } else {
           switch (type) {
             case this.itemProperties.brand:
-              this.item.brandID = element.id;
+              console.log(element);
+              this.item.brandID = element.brandID;
               this.selectedBrand = element.name;
               break;
             case this.itemProperties.model:
-              this.item.modelID = element.id;
+              this.item.modelID = element.modelID;
               this.selectedModel = element.name;
               break;
             case this.itemProperties.category:
-              this.item.categoryID = element.id;
+              this.item.categoryID = element.categoryID;
               this.selectedCategory = element.name;
-              break;
-            case this.itemProperties.status:
-              this.item.statusID = element.id;
-              this.selectedStatus = element.name;
               break;
           }
         }

@@ -47,20 +47,17 @@ describe('Item Page', () => {
     expect(instance.selectedBrand).toEqual(TestData.apiItem.brand);
     expect(instance.selectedModel).toEqual(TestData.apiItem.model);
     expect(instance.selectedCategory).toEqual(TestData.apiItem.category);
-    expect(instance.selectedStatus).toEqual(TestData.apiItem.status);
   }));
 
   it('gets brands, models, statuses and categories', fakeAsync(() => {
     instance.inventoryData.brands = TestData.brands;
     instance.inventoryData.models = TestData.models;
-    instance.inventoryData.statuses = TestData.statuses;
     instance.inventoryData.categories = TestData.categories;
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     tick();
     expect(instance.allBrands).toEqual(TestData.brands.results);
     expect(instance.allModels).toEqual(TestData.models.results);
-    expect(instance.allStatuses).toEqual(TestData.statuses.results);
     expect(instance.allCategories).toEqual(TestData.categories.results);
   }));
 
@@ -70,7 +67,7 @@ describe('Item Page', () => {
     spyOn(instance.stockpileData, 'showToast');
     instance.ngOnInit();
     tick();
-    expect(instance.stockpileData.showToast).toHaveBeenCalledTimes(5);
+    expect(instance.stockpileData.showToast).toHaveBeenCalledTimes(4);
   }));
 
   it('calls onSave() on click on save button', () => {
