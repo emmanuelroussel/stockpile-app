@@ -32,7 +32,7 @@ export class InventoryPage {
 
     this.inventoryData.getAllItems().subscribe(
       items => {
-        this.allItems = items;
+        this.allItems = items.results;
         this.filteredItems = this.allItems;
       },
       err => this.stockpileData.showToast(err.message)
@@ -43,7 +43,7 @@ export class InventoryPage {
     this.inventoryData.filterItems(this.selectedCategoryIDs, this.segment).subscribe(
       items => this.filteredItems = items,
       err => this.stockpileData.showToast(err.message)
-    )
+    );
   }
 
   viewItem(item) {

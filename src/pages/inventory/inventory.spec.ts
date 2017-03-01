@@ -30,8 +30,9 @@ describe('Inventory Page', () => {
   });
 
   it('gets categories and items', fakeAsync(() => {
+    const response = { results: TestData.items };
     instance.inventoryData.categories = TestData.categories;
-    instance.inventoryData.items = TestData.items;
+    instance.inventoryData.allItems = response;
     instance.ngOnInit();
     tick();
     expect(instance.allCategories).toEqual(TestData.categories.results);
