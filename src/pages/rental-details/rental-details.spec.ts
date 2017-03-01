@@ -66,6 +66,7 @@ describe('RentalDetails Page', () => {
   }));
 
   it('shows toast on error onRent()', fakeAsync(() => {
+    instance.details = TestData.details;
     instance.inventoryData.resolve = false;
     instance.items = TestData.items;
     spyOn(instance.stockpileData, 'showToast');

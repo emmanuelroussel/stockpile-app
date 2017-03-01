@@ -36,6 +36,10 @@ export class RentalDetailsPage {
     this.submitted = true;
 
     if (form.valid) {
+      // Transform date from ISO 8601 to MySQL date format
+      this.details.startDate = new Date(this.details.startDate).toISOString().substring(0, 10);
+      this.details.endDate = new Date(this.details.endDate).toISOString().substring(0, 10);
+
       let promises = [];
 
       for (const item of this.items) {
