@@ -41,12 +41,14 @@ describe('Item Page', () => {
   it('gets item if action === \'Edit\'', fakeAsync(() => {
     instance.inventoryData.item = TestData.apiItem;
     instance.navParams.param = Actions.edit;
+    spyOn(instance, 'filterModels');
     instance.ngOnInit();
     tick();
     expect(instance.item).toEqual(TestData.item);
     expect(instance.selectedBrand).toEqual(TestData.apiItem.brand);
     expect(instance.selectedModel).toEqual(TestData.apiItem.model);
     expect(instance.selectedCategory).toEqual(TestData.apiItem.category);
+    expect(instance.filterModels).toHaveBeenCalled();
   }));
 
   it('gets brands, models and categories', fakeAsync(() => {
@@ -154,5 +156,12 @@ describe('Item Page', () => {
     spyOn(instance.modalCtrl, 'create').and.callThrough();
     instance.presentModal(TestData.brands.results, ItemProperties.brand);
     expect(instance.modalCtrl.create).toHaveBeenCalledWith(ItemFilterPage, { elements: TestData.brands.results, type: ItemProperties.brand });
+  });
+
+  it('filter models on filterModels()', () => {
+    instance.allModels = TestData.models.results;
+    instance.item = TestData.item;
+    instance.filterModels();
+    expect(instance.filteredModels).toEqual(TestData.filteredModels);
   });
 });

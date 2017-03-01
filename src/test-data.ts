@@ -54,30 +54,34 @@ export class TestData {
 
   public static brands = {
     results: [
-      { name: 'Canon', id: 5 },
-      { name: 'Nikon', id: 6 },
-      { name: 'Sennheiser', id: 7}
+      { name: 'Canon', id: 1 },
+      { name: 'Nikon', id: 2 },
+      { name: 'Sennheiser', id: 3}
     ]
   };
 
   public static filteredBrands = [
-    { name: 'Canon', id: 5 }
+    { name: 'Canon', id: 1 }
   ];
 
   public static models = {
     results: [
-      { name: 'T5i', id: 5 },
-      { name: 'e609', id: 6 },
-      { name: 'MKE 600', id: 7},
-      { name: 'D5', id: 8}
+      { name: 'T5i', id: 5, brandID: 1 },
+      { name: 'e609', id: 6, brandID: 3 },
+      { name: 'MKE 600', id: 7, brandID: 2 },
+      { name: 'D5', id: 8, brandID: 2 }
     ]
   };
 
+  public static filteredModels = [
+    { name: 'T5i', id: 5, brandID: 1 }
+  ];
+
   public static categories = {
     results: [
-      { name: 'Camera', id: 5 },
-      { name: 'Mic', id: 6 },
-      { name: 'Light', id: 7}
+      { name: 'Camera', id: 1 },
+      { name: 'Mic', id: 2 },
+      { name: 'Light', id: 3 }
     ]
   };
 
