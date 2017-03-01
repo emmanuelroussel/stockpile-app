@@ -8,5 +8,34 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-segment [(ngModel)]="segment" (ionChange)="filterItems()">
+    <ion-segment-button [value]="statuses.all">
+      {{statuses.all}}
+    </ion-segment-button>
+    <ion-segment-button [value]="statuses.available">
+      {{statuses.available}}
+    </ion-segment-button>
+    <ion-segment-button [value]="statuses.rented">
+      {{statuses.rented}}
+    </ion-segment-button>
+  </ion-segment>
 
+  <ion-item>
+    <ion-label floating>Categories</ion-label>
+    <ion-select [(ngModel)]="selectedCategoryIDs" multiple="true" (ionChange)="filterItems()">
+      <ion-option *ngFor="let category of allCategories" [value]="category.categoryID">{{ category.name }}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-list *ngIf="filteredItems">
+    <button ion-item *ngFor="let item of filteredItems" (click)="viewItem(item)">
+      <ion-avatar item-left>
+        <img src="img/fake.png">
+      </ion-avatar>
+      <h2>{{ item.brand }} {{ item.model }}</h2>
+    </button>
+  </ion-list>
+  <ion-item *ngIf="!filteredItems">
+    No items found
+  </ion-item>
 </ion-content>

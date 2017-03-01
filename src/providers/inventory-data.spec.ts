@@ -7,6 +7,7 @@ import { TestData } from '../test-data';
 import { InventoryData } from './inventory-data';
 import { StockpileData } from './stockpile-data';
 import { StockpileDataMock } from '../mocks';
+import { Statuses } from '../constants';
 
 describe('InventoryData Provider', () => {
 
@@ -54,6 +55,16 @@ describe('InventoryData Provider', () => {
     });
   })));
 
+  it('returns items on getAllItems()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.items) })))
+    );
+    tick();
+    inventoryData.getAllItems().subscribe(item => {
+      expect(item).toEqual(TestData.items);
+    });
+  })));
+
   it('returns a message on addItem()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
     mockBackend.connections.subscribe(
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
@@ -81,6 +92,16 @@ describe('InventoryData Provider', () => {
     tick();
     inventoryData.deleteItem(TestData.item.tag).subscribe(res => {
       expect(res).toEqual(TestData.response);
+    });
+  })));
+
+  it('returns items on filterItems()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.items) })))
+    );
+    tick();
+    inventoryData.filterItems(TestData.selectedCategoryIDs, Statuses.rented).subscribe(res => {
+      expect(res).toEqual(TestData.items);
     });
   })));
 

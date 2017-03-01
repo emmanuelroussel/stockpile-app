@@ -132,6 +132,7 @@ export class NavigatorMock {
 }
 
 export class InventoryDataMock {
+  allItems = TestData.items;
   item = TestData.apiItem;
   brands = TestData.brands;
   models = TestData.models;
@@ -141,6 +142,14 @@ export class InventoryDataMock {
   public addItem(): any {
     if (this.resolve) {
       return Observable.fromPromise(Promise.resolve());
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
+  }
+
+  public getAllItems(): any {
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve(this.allItems));
     } else {
       return Observable.fromPromise(Promise.reject(TestData.error));
     }
@@ -165,6 +174,14 @@ export class InventoryDataMock {
   public deleteItem(): any {
     if (this.resolve) {
       return Observable.fromPromise(Promise.resolve());
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
+  }
+
+  public filterItems(): any {
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve(this.allItems));
     } else {
       return Observable.fromPromise(Promise.reject(TestData.error));
     }

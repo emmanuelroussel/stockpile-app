@@ -16,6 +16,10 @@ export class InventoryData {
     return this.getEndpoint(Links.item + '/' + tag);
   }
 
+  getAllItems() {
+    return this.getEndpoint(Links.item);
+  }
+
   addItem(item: Object) {
     return this.putEndpoint(Links.item, item);
   }
@@ -26,6 +30,10 @@ export class InventoryData {
 
   deleteItem(tag: string) {
     return this.deleteEndpoint(Links.item + '/' + tag);
+  }
+
+  filterItems(categoryIDs: Array<number>, status) {
+    return Observable.fromPromise(Promise.resolve(TestData.items));
   }
 
   rent(rental: Object) {

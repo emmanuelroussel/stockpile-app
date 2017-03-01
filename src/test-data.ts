@@ -19,18 +19,32 @@ export class TestData {
   };
 
   public static items = [{
-    tag: 'banana',
-    brand: 'Canon',
-    model: 'T5i',
-    category: 'Camera',
+    tag: 'apple',
+    brandID: 1,
+    modelID: 1,
+    categoryID: 1,
     status: 'Available'
   },
   {
     tag: 'banana',
-    brand: 'Canon',
-    model: 'T5i',
-    category: 'Camera',
+    brandID: 2,
+    modelID: 2,
+    categoryID: 1,
+    status: 'Rented'
+  },
+  {
+    tag: 'mango',
+    brandID: 3,
+    modelID: 3,
+    categoryID: 2,
     status: 'Available'
+  },
+  {
+    tag: 'orange',
+    brandID: 4,
+    modelID: 4,
+    categoryID: 2,
+    status: 'Rented'
   }];
 
   public static details = {
@@ -66,6 +80,8 @@ export class TestData {
       { name: 'Light', id: 7}
     ]
   };
+
+  public static selectedCategoryIDs = [2, 3];
 
   public static credentials = {
     email: 'luke@rebellion.com',
