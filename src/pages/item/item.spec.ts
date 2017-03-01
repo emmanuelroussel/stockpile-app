@@ -69,7 +69,7 @@ describe('Item Page', () => {
     spyOn(instance.stockpileData, 'showToast');
     instance.ngOnInit();
     tick();
-    expect(instance.stockpileData.showToast).toHaveBeenCalledTimes(4);
+    expect(instance.stockpileData.showToast).toHaveBeenCalledTimes(3);
   }));
 
   it('calls onSave() on click on save button', () => {

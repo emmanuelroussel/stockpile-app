@@ -42,8 +42,6 @@ export class ItemPage {
       err => this.stockpileData.showToast(err.message)
     );
 
-    const modelsObs = this.inventoryData.getModels();
-
     this.inventoryData.getCategories().subscribe(
       categories => this.allCategories = categories.results,
       err => this.stockpileData.showToast(err.message)
@@ -60,10 +58,10 @@ export class ItemPage {
           this.selectedModel = item.model;
           this.selectedCategory = item.category;
 
-          modelsObs.subscribe(
+          this.inventoryData.getModels().subscribe(
             models => {
               this.allModels = models.results;
-              this.filterModels;
+              this.filterModels();
             },
             err => this.stockpileData.showToast(err.message)
           );
@@ -71,7 +69,7 @@ export class ItemPage {
         err => this.stockpileData.showToast(err.message)
       );
     } else {
-      modelsObs.subscribe(
+      this.inventoryData.getModels().subscribe(
         models => this.allModels = models.results,
         err => this.stockpileData.showToast(err.message)
       );
