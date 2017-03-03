@@ -68,6 +68,10 @@ export class InventoryData {
     return Observable.fromPromise(Promise.resolve(TestData.categories[0]));
   }
 
+  getStatus(tag: string) {
+    return this.getEndpoint(Links.item + '/' + tag + '/status');
+  }
+
   private getEndpoint(endpoint: string) {
     return this.authHttp.get(ApiUrl + endpoint)
       .map(this.extractData);
