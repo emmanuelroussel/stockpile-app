@@ -31,6 +31,8 @@ export class Messages {
   public static itemDeleted = Messages.baseSingular + 'deleted';
   public static itemsReturned = Messages.basePlural + 'returned';
   public static itemsRented = Messages.basePlural + 'rented';
+  public static itemAlreadyRented = 'Item already rented';
+  public static itemNotRented = 'Item not currently rented';
 }
 
 export class ItemProperties {

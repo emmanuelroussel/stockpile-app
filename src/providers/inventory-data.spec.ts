@@ -145,4 +145,14 @@ describe('InventoryData Provider', () => {
       err => expect(false)
     );
   }));
+
+  it('returns a status on getStatus()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.status) })))
+    );
+    tick();
+    inventoryData.getStatus(TestData.item.tag).subscribe(res => {
+      expect(res).toEqual(TestData.status);
+    });
+  })));
 });

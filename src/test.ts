@@ -12,9 +12,9 @@ import 'zone.js/dist/fake-async-test';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
-import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, GestureController, NavParams, ModalController } from 'ionic-angular';
+import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, GestureController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
-import { ConfigMock, PlatformMock, NavMock, NavParamsMock, InventoryDataMock, UserDataMock, ModalMock, StockpileDataMock } from './mocks';
+import { ConfigMock, PlatformMock, NavMock, NavParamsMock, InventoryDataMock, UserDataMock, ModalMock, StockpileDataMock, AlertMock } from './mocks';
 import { InventoryData } from './providers/inventory-data';
 import { UserData } from './providers/user-data';
 import { StockpileData } from './providers/stockpile-data';
@@ -60,7 +60,7 @@ export class TestUtils {
       ],
       providers: [
         App, Form, Keyboard, DomController, MenuController, GestureController,
-        NgForm,
+        NgForm, AlertController,
         { provide: Platform, useClass: PlatformMock },
         { provide: Config, useClass: ConfigMock },
         { provide: NavController, useClass: NavMock },
@@ -68,7 +68,8 @@ export class TestUtils {
         { provide: InventoryData, useClass: InventoryDataMock },
         { provide: UserData, useClass: UserDataMock },
         { provide: ModalController, useClass: ModalMock },
-        { provide: StockpileData, useClass: StockpileDataMock }
+        { provide: StockpileData, useClass: StockpileDataMock },
+        { provide: AlertController, useClass: AlertMock }
       ],
       imports: [
         FormsModule,

@@ -81,6 +81,10 @@ export class TestData {
     ]
   };
 
+  public static status = {
+    status: 'available'
+  };
+
   public static selectedCategoryIDs = [2, 3];
 
   public static credentials = {

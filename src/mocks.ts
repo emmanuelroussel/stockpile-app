@@ -123,6 +123,14 @@ export class ViewMock {
   public dismiss(): any {}
 }
 
+export class AlertMock {
+  public create(): any {
+    return new AlertMock();
+  }
+
+  public present(): any {}
+}
+
 export class NavigatorMock {
   hal = {};
 
@@ -137,6 +145,7 @@ export class InventoryDataMock {
   brands = TestData.brands;
   models = TestData.models;
   categories = TestData.categories;
+  status = TestData.status;
   resolve: boolean = true;
 
   public addItem(): any {
@@ -222,6 +231,14 @@ export class InventoryDataMock {
   public getCategories(): any {
     if (this.resolve) {
       return Observable.fromPromise(Promise.resolve(this.categories));
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
+  }
+
+  public getStatus(): any {
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve(this.status));
     } else {
       return Observable.fromPromise(Promise.reject(TestData.error));
     }
