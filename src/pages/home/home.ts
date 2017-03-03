@@ -38,8 +38,6 @@ export class HomePage {
   }
 
   pushPage(status: string) {
-    let page;
-
     if (this.segment === this.actions.rent && status.toLowerCase() === Statuses.rented.toLowerCase()) {
       let alert = this.alertCtrl.create({
         title: Messages.itemAlreadyRented,
@@ -69,6 +67,8 @@ export class HomePage {
 
       alert.present();
     } else {
+      let page;
+
       if (this.segment === this.actions.rent || this.segment === this.actions.return) {
         page = RentalPage;
       } else if (this.segment === this.actions.edit || this.segment === this.actions.add) {
