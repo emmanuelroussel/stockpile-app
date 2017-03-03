@@ -1,6 +1,6 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { TestUtils } from '../../test';
-import { Actions, Statuses, Messages } from '../../constants';
+import { Actions, Statuses } from '../../constants';
 import { TestData } from '../../test-data';
 
 import { HomePage } from './home';
