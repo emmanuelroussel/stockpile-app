@@ -3,7 +3,7 @@ dist: trusty
 language: node_js
 node_js:
   - "6"
-  - "5"
+  - "7"
 notifications:
   slack:
     # Tell Travis CI to send a notification about the build status to our slack channel (encrypted to prevent other people to send notification with the token)

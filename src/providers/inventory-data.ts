@@ -56,7 +56,7 @@ export class InventoryData {
     return this.getEndpoint(Links.model);
   }
 
-  addModel(brand: string) {
+  addModel(model: string, brandID: number) {
     return Observable.fromPromise(Promise.resolve(TestData.models[0]));
   }
 
@@ -64,7 +64,7 @@ export class InventoryData {
     return this.getEndpoint(Links.category);
   }
 
-  addCategory(brand: string) {
+  addCategory(category: string) {
     return Observable.fromPromise(Promise.resolve(TestData.categories[0]));
   }
 

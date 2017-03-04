@@ -21,6 +21,7 @@ export class ItemPage {
   allBrands;
   selectedModel: string;
   allModels;
+  filteredModels;
   selectedCategory: string;
   allCategories;
 
@@ -41,11 +42,6 @@ export class ItemPage {
       err => this.stockpileData.showToast(err.message)
     );
 
-    this.inventoryData.getModels().subscribe(
-      models => this.allModels = models.results,
-      err => this.stockpileData.showToast(err.message)
-    );
-
     this.inventoryData.getCategories().subscribe(
       categories => this.allCategories = categories.results,
       err => this.stockpileData.showToast(err.message)
@@ -61,7 +57,20 @@ export class ItemPage {
           this.selectedBrand = item.brand;
           this.selectedModel = item.model;
           this.selectedCategory = item.category;
+
+          this.inventoryData.getModels().subscribe(
+            models => {
+              this.allModels = models.results;
+              this.filterModels();
+            },
+            err => this.stockpileData.showToast(err.message)
+          );
         },
+        err => this.stockpileData.showToast(err.message)
+      );
+    } else {
+      this.inventoryData.getModels().subscribe(
+        models => this.allModels = models.results,
         err => this.stockpileData.showToast(err.message)
       );
     }
@@ -100,6 +109,12 @@ export class ItemPage {
     );
   }
 
+  filterModels() {
+    this.filteredModels = this.allModels.filter((model) => {
+      return (model.brandID === this.item.brandID);
+    });
+  }
+
   presentModal(elements, type) {
     let modal = this.modalCtrl.create(ItemFilterPage, {
       elements: elements,
@@ -115,12 +130,13 @@ export class ItemPage {
                 brand => {
                   this.item.brandID = brand.id;
                   this.selectedBrand = brand.name;
+                  this.filterModels();
                 },
                 err => this.stockpileData.showToast(err.message)
               );
               break;
             case this.itemProperties.model:
-              this.inventoryData.addModel(element.name).subscribe(
+              this.inventoryData.addModel(element.name, this.item.brandID).subscribe(
                 model => {
                   this.item.modelID = model.id;
                   this.selectedModel = model.name;
@@ -143,6 +159,7 @@ export class ItemPage {
             case this.itemProperties.brand:
               this.item.brandID = element.brandID;
               this.selectedBrand = element.name;
+              this.filterModels();
               break;
             case this.itemProperties.model:
               this.item.modelID = element.modelID;
