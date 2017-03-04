@@ -126,29 +126,48 @@ export class ItemPage {
         if (isNew) {
           switch (type) {
             case this.itemProperties.brand:
-              this.inventoryData.addBrand(element.name).subscribe(
+              this.inventoryData.addBrand(element).subscribe(
                 brand => {
-                  this.item.brandID = brand.id;
-                  this.selectedBrand = brand.name;
+                  const newBrand = {
+                    brandID: brand.id,
+                    name: element
+                  };
+
+                  this.item.brandID = newBrand.brandID;
+                  this.selectedBrand = newBrand.name;
+                  this.allBrands.push(newBrand);
+                  this.selectedModel = '';
                   this.filterModels();
                 },
                 err => this.stockpileData.showToast(err.message)
               );
               break;
             case this.itemProperties.model:
-              this.inventoryData.addModel(element.name, this.item.brandID).subscribe(
+              this.inventoryData.addModel(element, this.item.brandID).subscribe(
                 model => {
-                  this.item.modelID = model.id;
-                  this.selectedModel = model.name;
+                  const newModel = {
+                    modelID: model.id,
+                    name: element
+                  };
+
+                  this.item.modelID = newModel.modelID;
+                  this.selectedModel = newModel.name;
+                  this.allModels.push(newModel);
                 },
                 err => this.stockpileData.showToast(err.message)
               );
               break;
             case this.itemProperties.category:
-              this.inventoryData.addCategory(element.name).subscribe(
+              this.inventoryData.addCategory(element).subscribe(
                 category => {
-                  this.item.categoryID = category.id;
-                  this.selectedCategory = category.name;
+                  const newCategory = {
+                    categoryID: category.id,
+                    name: element
+                  };
+
+                  this.item.categoryID = newCategory.categoryID;
+                  this.selectedCategory = newCategory.name;
+                  this.allCategories.push(newCategory);
                 },
                 err => this.stockpileData.showToast(err.message)
               );
@@ -159,6 +178,7 @@ export class ItemPage {
             case this.itemProperties.brand:
               this.item.brandID = element.brandID;
               this.selectedBrand = element.name;
+              this.selectedModel = '';
               this.filterModels();
               break;
             case this.itemProperties.model:
