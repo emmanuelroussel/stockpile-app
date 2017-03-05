@@ -49,7 +49,11 @@ export class InventoryData {
   }
 
   addBrand(brand: string) {
-    return Observable.fromPromise(Promise.resolve(TestData.brands[0]));
+    const body = {
+      name: brand
+    };
+
+    return this.putEndpoint(Links.brand, body);
   }
 
   getModels() {
@@ -57,7 +61,12 @@ export class InventoryData {
   }
 
   addModel(model: string, brandID: number) {
-    return Observable.fromPromise(Promise.resolve(TestData.models[0]));
+    const body = {
+      name: model,
+      brandID: brandID
+    };
+
+    return this.putEndpoint(Links.model, body);
   }
 
   getCategories() {
@@ -65,7 +74,11 @@ export class InventoryData {
   }
 
   addCategory(category: string) {
-    return Observable.fromPromise(Promise.resolve(TestData.categories[0]));
+    const body = {
+      name: category
+    };
+
+    return this.putEndpoint(Links.category, body);
   }
 
   getStatus(tag: string) {

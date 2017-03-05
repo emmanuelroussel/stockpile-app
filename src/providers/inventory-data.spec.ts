@@ -125,26 +125,65 @@ describe('InventoryData Provider', () => {
     });
   })));
 
-  it('returns brands on getBrands()', inject([InventoryData], (inventoryData: InventoryData) => {
-    inventoryData.getBrands().subscribe(
-      brands => expect(brands).toEqual(TestData.brands),
-      err => expect(false)
+  it('returns brands on getBrands()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.brands) })))
     );
-  }));
+    tick();
+    inventoryData.getBrands().subscribe(res => {
+      expect(res).toEqual(TestData.brands);
+    });
+  })));
 
-  it('returns models on getModels()', inject([InventoryData], (inventoryData: InventoryData) => {
-    inventoryData.getModels().subscribe(
-      models => expect(models).toEqual(TestData.models),
-      err => expect(false)
+  it('returns brands on getModels()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.models) })))
     );
-  }));
+    tick();
+    inventoryData.getModels().subscribe(res => {
+      expect(res).toEqual(TestData.models);
+    });
+  })));
 
-  it('returns categories on getCategories()', inject([InventoryData], (inventoryData: InventoryData) => {
-    inventoryData.getCategories().subscribe(
-      categories => expect(categories).toEqual(TestData.categories),
-      err => expect(false)
+  it('returns brands on getCategories()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.categories) })))
     );
-  }));
+    tick();
+    inventoryData.getCategories().subscribe(res => {
+      expect(res).toEqual(TestData.categories);
+    });
+  })));
+
+  it('returns a message on addBrand()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
+    );
+    tick();
+    inventoryData.addBrand(TestData.brands.results[0].name).subscribe(res => {
+      expect(res).toEqual(TestData.response);
+    });
+  })));
+
+  it('returns a message on addModel()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
+    );
+    tick();
+    inventoryData.addModel(TestData.models.results[0].name, TestData.brands.results[0].id).subscribe(res => {
+      expect(res).toEqual(TestData.response);
+    });
+  })));
+
+  it('returns a message on addCategory()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
+    );
+    tick();
+    inventoryData.addCategory(TestData.categories.results[0].name).subscribe(res => {
+      expect(res).toEqual(TestData.response);
+    });
+  })));
 
   it('returns a status on getStatus()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
     mockBackend.connections.subscribe(
