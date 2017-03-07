@@ -110,4 +110,8 @@ export class TestData {
   public static error = {
     message: 'Error message'
   };
+
+  public static barcodeData = {
+    text: 'I am a barcode'
+  };
 }

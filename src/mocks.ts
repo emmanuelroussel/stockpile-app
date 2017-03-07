@@ -246,6 +246,8 @@ export class InventoryDataMock {
 }
 
 export class StockpileDataMock {
+  resolve: boolean = true;
+
   public initHal(): any {
     return Promise.resolve();
   }
@@ -253,6 +255,14 @@ export class StockpileDataMock {
   public getUrl(): any { }
 
   public showToast(): any { }
+
+  public scan(): any {
+    if (this.resolve) {
+      return Promise.resolve(TestData.barcodeData);
+    } else {
+      return Promise.reject(TestData.error);
+    }
+  }
 }
 
 export class UserDataMock {

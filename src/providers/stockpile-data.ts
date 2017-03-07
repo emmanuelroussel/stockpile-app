@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { Navigator, HalDocument } from 'ng-hal';
 import { ApiUrl } from '../constants';
-import { Toast } from 'ionic-native';
+import { BarcodeScanner, Toast } from 'ionic-native';
 
 @Injectable()
 export class StockpileData {
@@ -34,5 +34,9 @@ export class StockpileData {
     } else {
       console.log(message);
     }
+  }
+
+  scan() {
+    return BarcodeScanner.scan();
   }
 }

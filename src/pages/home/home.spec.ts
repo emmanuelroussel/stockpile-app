@@ -121,4 +121,22 @@ describe('Home Page', () => {
     instance.pushPage(true);
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   });
+
+  it('calls stockpileData.scan() onScan()', fakeAsync(() => {
+    spyOn(instance.stockpileData, 'scan').and.callThrough();
+    spyOn(instance, 'onNext');
+    instance.onScan();
+    tick();
+    expect(instance.stockpileData.scan).toHaveBeenCalled();
+    expect(instance.onNext).toHaveBeenCalled();
+    expect(instance.tag).toEqual(TestData.barcodeData.text);
+  }));
+
+  it('shows toast if error in onScan()', fakeAsync(() => {
+    instance.stockpileData.resolve = false;
+    spyOn(instance.stockpileData, 'showToast');
+    instance.onScan();
+    tick();
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+  }));
 });
