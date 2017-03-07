@@ -1,5 +1,5 @@
 import { fakeAsync, tick } from '@angular/core/testing';
-import { NavigatorMock } from '../mocks';
+import { NavigatorMock, PlatformMock } from '../mocks';
 
 import { StockpileData } from './stockpile-data';
 
@@ -8,7 +8,7 @@ let stockpileData: StockpileData = null;
 describe('StockpileData Provider', () => {
 
   beforeEach(() => {
-    stockpileData = new StockpileData(<any> new NavigatorMock);
+    stockpileData = new StockpileData(<any> new NavigatorMock, <any> new PlatformMock);
   });
 
   it('is created', () => {
