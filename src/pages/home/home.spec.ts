@@ -84,18 +84,6 @@ describe('Home Page', () => {
     });
   }));
 
-  it('pushes item page onNext() with \'Edit\'', fakeAsync(() => {
-    instance.segment = Actions.edit;
-    instance.tag = TestData.item.tag;
-    spyOn(instance.navCtrl, 'push');
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      instance.pushPage(1);
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.item.tag, action: Actions.edit });
-    });
-  }));
-
   it('does not change page if segment is rent and item is not available', () => {
     instance.segment = Actions.rent;
     spyOn(instance.navCtrl, 'push');
