@@ -27,18 +27,18 @@ export class HomePage {
   onNext() {
     if (this.tag) {
       if (this.segment === this.actions.add) {
-        this.pushPage('');
+        this.pushPage(true);
       } else {
-        this.inventoryData.getStatus(this.tag).subscribe(
-          res => this.pushPage(res.status),
+        this.inventoryData.getItem(this.tag).subscribe(
+          item => this.pushPage(item.available === 1),
           err => this.stockpileData.showToast(err.message)
         );
       }
     }
   }
 
-  pushPage(status: string) {
-    if (this.segment === this.actions.rent && status.toLowerCase() === Statuses.rented.toLowerCase()) {
+  pushPage(available: boolean) {
+    if (this.segment === this.actions.rent && !available) {
       let alert = this.alertCtrl.create({
         title: Messages.itemAlreadyRented,
         message: 'Do you want to return it instead?',
@@ -51,14 +51,14 @@ export class HomePage {
             text: 'Return Item',
             handler: () => {
               this.segment = this.actions.return;
-              this.pushPage(status);
+              this.pushPage(available);
             }
           }
         ]
       });
 
       alert.present();
-    } else if (this.segment === this.actions.return && status.toLowerCase() === Statuses.available.toLowerCase()) {
+    } else if (this.segment === this.actions.return && available) {
       let alert = this.alertCtrl.create({
         title: Messages.itemNotRented,
         subTitle: 'Cannot return the item',

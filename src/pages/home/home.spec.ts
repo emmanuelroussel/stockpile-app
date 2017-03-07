@@ -44,11 +44,11 @@ describe('Home Page', () => {
 
   it('calls pushPage onNext()', fakeAsync(() => {
     instance.tag = TestData.item.tag;
-    instance.inventoryData.status = TestData.status;
+    instance.inventoryData.item = TestData.apiItem;
     spyOn(instance, 'pushPage');
     instance.onNext();
     tick();
-    expect(instance.pushPage).toHaveBeenCalledWith(TestData.status.status);
+    expect(instance.pushPage).toHaveBeenCalledWith(true);
   }));
 
   it('shows toast if error in onNext()', fakeAsync(() => {
@@ -67,7 +67,7 @@ describe('Home Page', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      instance.pushPage(Statuses.available);
+      instance.pushPage(true);
       expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { tag: TestData.item.tag, action: Actions.rent });
     });
   }));
@@ -79,7 +79,7 @@ describe('Home Page', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      instance.pushPage(Statuses.rented);
+      instance.pushPage(false);
       expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { tag: TestData.item.tag, action: Actions.return });
     });
   }));
@@ -108,17 +108,17 @@ describe('Home Page', () => {
     });
   }));
 
-  it('does not change page if segment is rent and status is rented', () => {
+  it('does not change page if segment is rent and item is not available', () => {
     instance.segment = Actions.rent;
     spyOn(instance.navCtrl, 'push');
-    instance.pushPage(Statuses.rented);
+    instance.pushPage(false);
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   });
 
-  it('does not change page if segment is return and status is available', () => {
+  it('does not change page if segment is return and item is available', () => {
     instance.segment = Actions.return;
     spyOn(instance.navCtrl, 'push');
-    instance.pushPage(Statuses.available);
+    instance.pushPage(true);
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   });
 });

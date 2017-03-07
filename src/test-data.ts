@@ -7,8 +7,7 @@ export class TestData {
     modelID: 1,
     category: 'Camera',
     categoryID: 1,
-    status: 'Available',
-    statusID: 1
+    available: 1
   };
 
   public static item = {
@@ -23,28 +22,28 @@ export class TestData {
     brandID: 1,
     modelID: 1,
     categoryID: 1,
-    status: 'Available'
+    available: 1
   },
   {
     tag: 'banana',
     brandID: 2,
     modelID: 2,
     categoryID: 1,
-    status: 'Rented'
+    available: 0
   },
   {
     tag: 'mango',
     brandID: 3,
     modelID: 3,
     categoryID: 2,
-    status: 'Available'
+    available: 1
   },
   {
     tag: 'orange',
     brandID: 4,
     modelID: 4,
     categoryID: 2,
-    status: 'Rented'
+    available: 0
   }];
 
   public static details = {

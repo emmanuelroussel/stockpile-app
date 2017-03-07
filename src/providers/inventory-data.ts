@@ -81,10 +81,6 @@ export class InventoryData {
     return this.putEndpoint(Links.category, body);
   }
 
-  getStatus(tag: string) {
-    return this.getEndpoint(Links.item + '/' + tag + '/status');
-  }
-
   private getEndpoint(endpoint: string) {
     return this.authHttp.get(ApiUrl + endpoint)
       .map(this.extractData);
