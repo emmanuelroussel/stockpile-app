@@ -29,6 +29,10 @@ export class StockpileData {
   }
 
   showToast(message: string) {
-    Toast.show(message, '5000', 'bottom').subscribe(toast => {});
+    if (this.platform.is('cordova')) {
+      Toast.show(message, '5000', 'bottom').subscribe(toast => {});
+    } else {
+      console.log(message);
+    }
   }
 }
