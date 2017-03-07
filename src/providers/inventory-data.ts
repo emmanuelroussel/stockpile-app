@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
+import { Response, URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import { StockpileData } from './stockpile-data';
 import { Links, ApiUrl } from '../constants';
@@ -31,25 +31,27 @@ export class InventoryData {
   }
 
   filterItems(brandID?: number, modelID?: number, categoryID?: number, available?: number) {
-    let query = '?';
+    let params: URLSearchParams = new URLSearchParams();
 
     if (Math.sign(brandID) > 0) {
-      query += 'brandID=' + brandID + '&';
+      params.set('brandID', brandID.toString());
     }
 
     if (Math.sign(modelID) > 0) {
-      query += 'modelID=' + modelID + '&';
+      params.set('modelID', modelID.toString());
     }
 
     if (Math.sign(categoryID) > 0) {
-      query += 'categoryID=' + categoryID + '&';
+      params.set('categoryID', categoryID.toString());
     }
 
     if (Math.sign(available) > -1) {
-      query += 'available=' + available;
+      params.set('available', available.toString());
     }
 
-    return this.getEndpoint(Links.item + query);
+    return this.getEndpoint(Links.item, {
+      search: params
+    });
   }
 
   rent(rental: Object) {
@@ -97,8 +99,8 @@ export class InventoryData {
     return this.putEndpoint(Links.category, body);
   }
 
-  private getEndpoint(endpoint: string) {
-    return this.authHttp.get(ApiUrl + endpoint)
+  private getEndpoint(endpoint: string, params?: Object) {
+    return this.authHttp.get(ApiUrl + endpoint, params)
       .map(this.extractData);
   }
 
