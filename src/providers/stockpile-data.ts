@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Platform } from 'ionic-angular';
 import { Navigator, HalDocument } from 'ng-hal';
 import { ApiUrl } from '../constants';
 import { Toast } from 'ionic-native';
@@ -7,7 +8,7 @@ import { Toast } from 'ionic-native';
 export class StockpileData {
   hal: HalDocument;
 
-  constructor(public navigator: Navigator) { }
+  constructor(public navigator: Navigator, public platform: Platform) { }
 
   initHal() {
     return new Promise((resolve, reject) => {
@@ -28,6 +29,6 @@ export class StockpileData {
   }
 
   showToast(message: string) {
-    Toast.show(message, '5000', 'bottom');
+    Toast.show(message, '5000', 'bottom').subscribe(toast => {});
   }
 }
