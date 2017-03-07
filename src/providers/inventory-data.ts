@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
 import { AuthHttp } from 'angular2-jwt';
 import { StockpileData } from './stockpile-data';
 import { Links, ApiUrl } from '../constants';
-import { TestData } from '../test-data';
 import 'rxjs/Rx';
 
 @Injectable()
@@ -32,8 +30,26 @@ export class InventoryData {
     return this.deleteEndpoint(Links.item + '/' + tag);
   }
 
-  filterItems(categoryIDs: Array<number>, status) {
-    return Observable.fromPromise(Promise.resolve(TestData.items));
+  filterItems(brandID?: number, modelID?: number, categoryID?: number, available?: number) {
+    let query = '?';
+
+    if (Math.sign(brandID) > 0) {
+      query += 'brandID=' + brandID + '&';
+    }
+
+    if (Math.sign(modelID) > 0) {
+      query += 'modelID=' + modelID + '&';
+    }
+
+    if (Math.sign(categoryID) > 0) {
+      query += 'categoryID=' + categoryID + '&';
+    }
+
+    if (Math.sign(available) > -1) {
+      query += 'available=' + available;
+    }
+
+    return this.getEndpoint(Links.item + query);
   }
 
   rent(rental: Object) {

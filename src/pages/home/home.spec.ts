@@ -1,6 +1,6 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { TestUtils } from '../../test';
-import { Actions, Statuses } from '../../constants';
+import { Actions } from '../../constants';
 import { TestData } from '../../test-data';
 
 import { HomePage } from './home';
@@ -103,7 +103,7 @@ describe('Home Page', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      instance.pushPage(Statuses.available);
+      instance.pushPage(1);
       expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.item.tag, action: Actions.edit });
     });
   }));
