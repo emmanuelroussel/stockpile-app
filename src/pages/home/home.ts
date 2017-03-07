@@ -25,14 +25,10 @@ export class HomePage {
 
   onNext() {
     if (this.tag) {
-      if (this.segment === this.actions.add) {
-        this.pushPage(true);
-      } else {
-        this.inventoryData.getItem(this.tag).subscribe(
-          item => this.pushPage(item.available === 1),
-          err => this.stockpileData.showToast(err.message)
-        );
-      }
+      this.inventoryData.getItem(this.tag).subscribe(
+        item => this.pushPage(item.available === 1),
+        err => this.stockpileData.showToast(err.message)
+      );
     }
   }
 
@@ -70,7 +66,7 @@ export class HomePage {
 
       if (this.segment === this.actions.rent || this.segment === this.actions.return) {
         page = RentalPage;
-      } else if (this.segment === this.actions.edit || this.segment === this.actions.add) {
+      } else if (this.segment === this.actions.edit) {
         page = ItemPage;
       }
 
