@@ -115,4 +115,22 @@ describe('Rental Page', () => {
     expect(instance.navCtrl.pop).toHaveBeenCalled();
     expect(instance.inventoryData.return).toHaveBeenCalledWith(TestData.item.tag);
   }));
+
+  it('calls stockpileData.scan() onScan()', fakeAsync(() => {
+    spyOn(instance.stockpileData, 'scan').and.callThrough();
+    spyOn(instance, 'onAdd');
+    instance.onScan();
+    tick();
+    expect(instance.stockpileData.scan).toHaveBeenCalled();
+    expect(instance.onAdd).toHaveBeenCalled();
+    expect(instance.tag).toEqual(TestData.barcodeData.text);
+  }));
+
+  it('shows toast if error in onScan()', fakeAsync(() => {
+    instance.stockpileData.resolve = false;
+    spyOn(instance.stockpileData, 'showToast');
+    instance.onScan();
+    tick();
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+  }));
 });

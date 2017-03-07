@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
-import { BarcodeScanner } from 'ionic-native';
 
 import { ItemPage } from '../item/item';
 import { RentalPage } from '../rental/rental';
@@ -86,7 +85,7 @@ export class HomePage {
   }
 
   onScan() {
-    BarcodeScanner.scan().then(
+    this.stockpileData.scan().then(
       barcodeData => {
         this.tag = barcodeData.text;
         this.onNext();
