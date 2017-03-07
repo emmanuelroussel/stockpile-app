@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
 import { StockpileData } from '../../providers/stockpile-data';
-import { Statuses, Actions } from '../../constants';
+import { Actions } from '../../constants';
 import { ItemPage } from '../item/item';
 
 @Component({
@@ -11,10 +11,14 @@ import { ItemPage } from '../item/item';
   templateUrl: 'inventory.html'
 })
 export class InventoryPage {
-  statuses = Statuses;
-  segment = Statuses.all;
+  segment = -1;
+  allBrands;
+  selectedBrandID = -1;
+  allModels;
+  filteredModels;
+  selectedModelID = -1;
   allCategories;
-  selectedCategoryIDs;
+  selectedCategoryID = -1;
   allItems;
   filteredItems;
 
@@ -25,6 +29,16 @@ export class InventoryPage {
   ) { }
 
   ngOnInit() {
+    this.inventoryData.getBrands().subscribe(
+      brands => this.allBrands = brands.results,
+      err => this.stockpileData.showToast(err.message)
+    );
+
+    this.inventoryData.getModels().subscribe(
+      models => this.allModels = models.results,
+      err => this.stockpileData.showToast(err.message)
+    );
+
     this.inventoryData.getCategories().subscribe(
       categories => this.allCategories = categories.results,
       err => this.stockpileData.showToast(err.message)
@@ -40,10 +54,29 @@ export class InventoryPage {
   }
 
   filterItems() {
-    this.inventoryData.filterItems(this.selectedCategoryIDs, this.segment).subscribe(
-      items => this.filteredItems = items,
+    this.filterModels();
+
+    if (Math.sign(this.selectedBrandID) < 0) {
+      this.selectedModelID = -1;
+    }
+
+    this.inventoryData.filterItems(
+      this.selectedBrandID,
+      this.selectedModelID,
+      this.selectedCategoryID,
+      this.segment
+    ).subscribe(
+      items => {
+        this.filteredItems = items.results;
+      },
       err => this.stockpileData.showToast(err.message)
     );
+  }
+
+  filterModels() {
+    this.filteredModels = this.allModels.filter((model) => {
+      return (model.brandID === this.selectedBrandID);
+    });
   }
 
   viewItem(item) {

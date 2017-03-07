@@ -7,7 +7,6 @@ import { TestData } from '../test-data';
 import { InventoryData } from './inventory-data';
 import { StockpileData } from './stockpile-data';
 import { StockpileDataMock } from '../mocks';
-import { Statuses } from '../constants';
 
 describe('InventoryData Provider', () => {
 
@@ -100,7 +99,7 @@ describe('InventoryData Provider', () => {
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.items) })))
     );
     tick();
-    inventoryData.filterItems(TestData.selectedCategoryIDs, Statuses.rented).subscribe(res => {
+    inventoryData.filterItems(TestData.item.brandID, TestData.item.modelID, TestData.item.categoryID, 0).subscribe(res => {
       expect(res).toEqual(TestData.items);
     });
   })));

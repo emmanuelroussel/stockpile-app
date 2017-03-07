@@ -5,12 +5,6 @@ export class Actions {
   public static edit = 'Edit';
 };
 
-export class Statuses {
-  public static all = 'All';
-  public static available = 'Available';
-  public static rented = 'Rented';
-}
-
 export const ApiUrl = 'https://stockpile.adamvig.com/api';
 
 export class Links {

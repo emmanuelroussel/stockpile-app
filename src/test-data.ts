@@ -46,6 +46,23 @@ export class TestData {
     available: 0
   }];
 
+  public static filteredItems = {
+    results: [{
+      tag: 'apple',
+      brandID: 1,
+      modelID: 1,
+      categoryID: 1,
+      available: 1
+    },
+    {
+      tag: 'banana',
+      brandID: 2,
+      modelID: 2,
+      categoryID: 1,
+      available: 0
+    }]
+  };
+
   public static details = {
     startDate: '01/01/2017',
     endDate: '01/02/2017'
@@ -87,8 +104,6 @@ export class TestData {
   public static status = {
     status: 'available'
   };
-
-  public static selectedCategoryIDs = [2, 3];
 
   public static credentials = {
     email: 'luke@rebellion.com',

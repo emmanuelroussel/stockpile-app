@@ -3,7 +3,7 @@ import { NavController, AlertController } from 'ionic-angular';
 
 import { ItemPage } from '../item/item';
 import { RentalPage } from '../rental/rental';
-import { Actions, Statuses, Messages } from '../../constants';
+import { Actions, Messages } from '../../constants';
 import { StockpileData } from '../../providers/stockpile-data';
 import { InventoryData } from '../../providers/inventory-data';
 
