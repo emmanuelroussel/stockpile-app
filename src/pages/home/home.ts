@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 
-import { ItemPage } from '../item/item';
 import { RentalPage } from '../rental/rental';
 import { Actions, Messages } from '../../constants';
 import { StockpileData } from '../../providers/stockpile-data';
@@ -25,14 +24,10 @@ export class HomePage {
 
   onNext() {
     if (this.tag) {
-      if (this.segment === this.actions.add) {
-        this.pushPage(true);
-      } else {
-        this.inventoryData.getItem(this.tag).subscribe(
-          item => this.pushPage(item.available === 1),
-          err => this.stockpileData.showToast(err.message)
-        );
-      }
+      this.inventoryData.getItem(this.tag).subscribe(
+        item => this.pushPage(item.available === 1),
+        err => this.stockpileData.showToast(err.message)
+      );
     }
   }
 
@@ -66,15 +61,7 @@ export class HomePage {
 
       alert.present();
     } else {
-      let page;
-
-      if (this.segment === this.actions.rent || this.segment === this.actions.return) {
-        page = RentalPage;
-      } else if (this.segment === this.actions.edit || this.segment === this.actions.add) {
-        page = ItemPage;
-      }
-
-      this.navCtrl.push(page, {
+      this.navCtrl.push(RentalPage, {
         tag: this.tag,
         action: this.segment
       });

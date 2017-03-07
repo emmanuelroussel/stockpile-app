@@ -4,7 +4,6 @@ import { Actions } from '../../constants';
 import { TestData } from '../../test-data';
 
 import { HomePage } from './home';
-import { ItemPage } from '../item/item';
 import { RentalPage } from '../rental/rental';
 
 let fixture: ComponentFixture<HomePage> = null;
@@ -81,30 +80,6 @@ describe('Home Page', () => {
       fixture.detectChanges();
       instance.pushPage(false);
       expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { tag: TestData.item.tag, action: Actions.return });
-    });
-  }));
-
-  it('pushes item page onNext() with \'Add\'', fakeAsync(() => {
-    instance.segment = Actions.add;
-    instance.tag = TestData.item.tag;
-    spyOn(instance.navCtrl, 'push');
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      instance.onNext();
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.item.tag, action: Actions.add });
-    });
-  }));
-
-  it('pushes item page onNext() with \'Edit\'', fakeAsync(() => {
-    instance.segment = Actions.edit;
-    instance.tag = TestData.item.tag;
-    spyOn(instance.navCtrl, 'push');
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      instance.pushPage(1);
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.item.tag, action: Actions.edit });
     });
   }));
 
