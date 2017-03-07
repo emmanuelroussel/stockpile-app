@@ -4,7 +4,6 @@ import { Actions } from '../../constants';
 import { TestData } from '../../test-data';
 
 import { HomePage } from './home';
-import { ItemPage } from '../item/item';
 import { RentalPage } from '../rental/rental';
 
 let fixture: ComponentFixture<HomePage> = null;
