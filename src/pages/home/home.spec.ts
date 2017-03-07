@@ -108,14 +108,14 @@ describe('Home Page', () => {
     });
   }));
 
-  it('does not change page if segment is rent and status is rented', () => {
+  it('does not change page if segment is rent and item is not available', () => {
     instance.segment = Actions.rent;
     spyOn(instance.navCtrl, 'push');
     instance.pushPage(false);
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   });
 
-  it('does not change page if segment is return and status is available', () => {
+  it('does not change page if segment is return and item is available', () => {
     instance.segment = Actions.return;
     spyOn(instance.navCtrl, 'push');
     instance.pushPage(true);

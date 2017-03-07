@@ -37,8 +37,8 @@ export class HomePage {
     }
   }
 
-  pushPage(status: boolean) {
-    if (this.segment === this.actions.rent && !status) {
+  pushPage(available: boolean) {
+    if (this.segment === this.actions.rent && !available) {
       let alert = this.alertCtrl.create({
         title: Messages.itemAlreadyRented,
         message: 'Do you want to return it instead?',
@@ -51,14 +51,14 @@ export class HomePage {
             text: 'Return Item',
             handler: () => {
               this.segment = this.actions.return;
-              this.pushPage(status);
+              this.pushPage(available);
             }
           }
         ]
       });
 
       alert.present();
-    } else if (this.segment === this.actions.return && status) {
+    } else if (this.segment === this.actions.return && available) {
       let alert = this.alertCtrl.create({
         title: Messages.itemNotRented,
         subTitle: 'Cannot return the item',
