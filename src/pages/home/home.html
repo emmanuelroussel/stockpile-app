@@ -13,10 +13,10 @@
   </div>
 
   <ion-segment [(ngModel)]="segment">
-    <ion-segment-button value="{{actions.rent}}">
+    <ion-segment-button [value]="actions.rent">
       {{actions.rent}}
     </ion-segment-button>
-    <ion-segment-button value="{{actions.return}}">
+    <ion-segment-button [value]="actions.return">
       {{actions.return}}
     </ion-segment-button>
   </ion-segment>
