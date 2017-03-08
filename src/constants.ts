@@ -5,7 +5,7 @@ export class Actions {
   public static edit = 'Edit';
 };
 
-export const ApiUrl = 'https://stockpile.adamvig.com/api';
+export const ApiUrl = '/api';
 
 export class Links {
   public static authenticate = '/auth';
