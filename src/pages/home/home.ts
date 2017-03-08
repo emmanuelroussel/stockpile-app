@@ -26,7 +26,7 @@ export class HomePage {
     if (this.tag) {
       this.inventoryData.getItem(this.tag).subscribe(
         (item: any) => this.pushPage(item.available === 1),
-        err => this.stockpileData.showToast(err.message)
+        err => this.stockpileData.showToast(err)
       );
     }
   }
