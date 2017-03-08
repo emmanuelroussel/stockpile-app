@@ -160,7 +160,7 @@ describe('Item Page', () => {
 
   it('filter models on filterModels()', () => {
     instance.allModels = TestData.models.results;
-    instance.item = TestData.item;
+    instance.selectedBrandID = TestData.apiItem.brandID;
     instance.filterModels();
     expect(instance.filteredModels).toEqual(TestData.filteredModels);
   });

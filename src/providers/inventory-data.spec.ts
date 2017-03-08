@@ -99,7 +99,7 @@ describe('InventoryData Provider', () => {
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.items) })))
     );
     tick();
-    inventoryData.filterItems(TestData.item.brandID, TestData.item.modelID, TestData.item.categoryID, 0).subscribe(res => {
+    inventoryData.filterItems(TestData.apiItem.brandID, TestData.item.modelID, TestData.item.categoryID, 0).subscribe(res => {
       expect(res).toEqual(TestData.items);
     });
   })));

@@ -94,7 +94,7 @@ export class InventoryPage {
           action: Actions.add
         });
       },
-      err => this.stockpileData.showToast(err.message)
+      err => this.stockpileData.showToast(err)
     );
   }
 }

@@ -85,7 +85,7 @@ describe('Inventory Page', () => {
 
   it('filters models on filterModels()', () => {
     instance.allModels = TestData.models.results;
-    instance.selectedBrandID = TestData.item.brandID;
+    instance.selectedBrandID = TestData.apiItem.brandID;
     instance.filterModels();
     expect(instance.filteredModels).toEqual(TestData.filteredModels);
   });
@@ -105,7 +105,7 @@ describe('Inventory Page', () => {
     spyOn(instance.navCtrl, 'push');
     instance.onAdd();
     tick();
-    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   }));
 });

@@ -16,7 +16,8 @@ export class ItemPage {
   actions = Actions;
   itemProperties = ItemProperties;
   action: Actions = '';
-  item: {brandID?: number, modelID?: number, categoryID?: number, tag?: string} = {};
+  item: {modelID?: number, categoryID?: number, tag?: string} = {};
+  selectedBrandID: number;
   selectedBrand: string;
   allBrands;
   selectedModel: string;
@@ -50,10 +51,10 @@ export class ItemPage {
     if (this.action === this.actions.edit) {
       this.inventoryData.getItem(this.item.tag).subscribe(
         (item: any) => {
-          this.item.brandID = item.brandID;
           this.item.modelID = item.modelID;
           this.item.categoryID = item.categoryID;
           this.item.tag = item.tag;
+          this.selectedBrandID = item.brandID;
           this.selectedBrand = item.brand;
           this.selectedModel = item.model;
           this.selectedCategory = item.category;
@@ -111,7 +112,7 @@ export class ItemPage {
 
   filterModels() {
     this.filteredModels = this.allModels.filter((model) => {
-      return (model.brandID === this.item.brandID);
+      return (model.brandID === this.selectedBrandID);
     });
   }
 
@@ -133,7 +134,7 @@ export class ItemPage {
                     name: element
                   };
 
-                  this.item.brandID = newBrand.brandID;
+                  this.selectedBrandID = newBrand.brandID;
                   this.selectedBrand = newBrand.name;
                   this.allBrands.push(newBrand);
                   this.selectedModel = '';
@@ -143,7 +144,7 @@ export class ItemPage {
               );
               break;
             case this.itemProperties.model:
-              this.inventoryData.addModel(element, this.item.brandID).subscribe(
+              this.inventoryData.addModel(element, this.selectedBrandID).subscribe(
                 (model: any) => {
                   const newModel = {
                     modelID: model.id,
@@ -176,7 +177,7 @@ export class ItemPage {
         } else {
           switch (type) {
             case this.itemProperties.brand:
-              this.item.brandID = element.brandID;
+              this.selectedBrandID = element.brandID;
               this.selectedBrand = element.name;
               this.selectedModel = '';
               this.filterModels();

@@ -17,7 +17,7 @@
         <ion-input (click)="presentModal(allBrands, itemProperties.brand)" value="{{ selectedBrand }}"></ion-input>
       </ion-item>
 
-      <ion-item [hidden]="!item.brandID">
+      <ion-item [hidden]="!selectedBrandID">
         <ion-label stacked color="primary">Model</ion-label>
         <ion-input (click)="presentModal(filteredModels, itemProperties.model)" value="{{ selectedModel }}"></ion-input>
       </ion-item>
