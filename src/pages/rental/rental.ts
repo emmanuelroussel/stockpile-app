@@ -54,13 +54,13 @@ export class RentalPage {
   }
 
   onReturn() {
-    let promises = [];
+    let returns = [];
 
     for (const item of this.items) {
-      promises.push(this.inventoryData.return(item.tag).toPromise());
+      returns.push(this.inventoryData.return(item.tag).toPromise());
     }
 
-    Promise.all(promises).then(
+    Promise.all(returns).then(
       success => {
         this.stockpileData.showToast(Messages.itemsReturned);
         this.navCtrl.pop();

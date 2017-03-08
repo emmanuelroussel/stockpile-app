@@ -24,7 +24,7 @@ export class UserData {
     };
 
     return new Promise((resolve, reject) => {
-      this.http.post(ApiUrl + Links.authenticate, creds)
+        this.http.post(`${ApiUrl}${Links.authenticate}`, creds)
         .map(this.extractData)
         .catch((err, caught) => this.handleError(err, caught))
         .subscribe(
