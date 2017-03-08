@@ -1,5 +1,4 @@
-import { TestBed, inject } from '@angular/core/testing';
-import { async } from '@angular/core/testing';
+import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { Storage } from '@ionic/storage';
@@ -47,7 +46,7 @@ describe('UserData Provider', () => {
     expect(userData).not.toBeNull();
   }));
 
-  it('returns a login response on login()', async(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
+  it('returns a login response on login()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
     mockBackend.connections.subscribe(
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.loginResponse) })))
     );
@@ -69,4 +68,17 @@ describe('UserData Provider', () => {
       err => expect(false).toBeTruthy()
     );
   }));
+
+  it('returns an error message if error on login()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockError(new Response(new ResponseOptions({ body: { message: TestData.error } })))
+    );
+    tick();
+    userData.login(TestData.credentials.email, TestData.credentials.password).then(res => {
+      fail('Callback has been called');
+    },
+    err => {
+      expect(err).toEqual(TestData.error);
+    });
+  })));
 });

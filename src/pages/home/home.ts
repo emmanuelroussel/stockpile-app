@@ -25,8 +25,8 @@ export class HomePage {
   onNext() {
     if (this.tag) {
       this.inventoryData.getItem(this.tag).subscribe(
-        item => this.pushPage(item.available === 1),
-        err => this.stockpileData.showToast(err.message)
+        (item: any) => this.pushPage(item.available === 1),
+        err => this.stockpileData.showToast(err)
       );
     }
   }
@@ -77,7 +77,7 @@ export class HomePage {
         this.tag = barcodeData.text;
         this.onNext();
       },
-      err => this.stockpileData.showToast(err.message)
+      err => this.stockpileData.showToast(err)
     );
   }
 }

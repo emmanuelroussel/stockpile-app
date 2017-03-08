@@ -183,4 +183,43 @@ describe('InventoryData Provider', () => {
       expect(res).toEqual(TestData.response);
     });
   })));
+
+  it('returns an error message if error on getEndpoint', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockError(new Response(new ResponseOptions({ body: { message: TestData.error } })))
+    );
+    tick();
+    inventoryData.getAllItems().subscribe(res => {
+      fail('Callback has been called');
+    },
+    err => {
+      expect(err).toEqual(TestData.error);
+    });
+  })));
+
+  it('returns an error message if error on putEndpoint', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockError(new Response(new ResponseOptions({ body: { message: TestData.error } })))
+    );
+    tick();
+    inventoryData.addItem(TestData.item).subscribe(res => {
+      fail('Callback has been called');
+    },
+    err => {
+      expect(err).toEqual(TestData.error);
+    });
+  })));
+
+  it('returns an error message if error on deleteEndpoint', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockError(new Response(new ResponseOptions({ body: { message: TestData.error } })))
+    );
+    tick();
+    inventoryData.deleteItem(TestData.item.tag).subscribe(res => {
+      fail('Callback has been called');
+    },
+    err => {
+      expect(err).toEqual(TestData.error);
+    });
+  })));
 });

@@ -52,7 +52,7 @@ export class RentalDetailsPage {
           this.stockpileData.showToast(Messages.itemsRented);
           this.navCtrl.popToRoot();
         },
-        err => this.stockpileData.showToast(err.message)
+        err => this.stockpileData.showToast(err)
       );
     }
   }

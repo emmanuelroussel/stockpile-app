@@ -25,10 +25,10 @@ export class LoginPage {
 
     if (form.valid) {
       this.userData.login(this.login.email, this.login.password).then(
-        data => this.navCtrl.setRoot(TabsPage),
+        (data: any) => this.navCtrl.setRoot(TabsPage),
         err => {
           this.login.password = '';
-          this.stockpileData.showToast(err.message);
+          this.stockpileData.showToast(err);
         }
       );
     }

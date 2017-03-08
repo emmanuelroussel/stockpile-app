@@ -30,26 +30,26 @@ export class InventoryPage {
 
   ngOnInit() {
     this.inventoryData.getBrands().subscribe(
-      brands => this.allBrands = brands.results,
-      err => this.stockpileData.showToast(err.message)
+      (brands: any) => this.allBrands = brands.results,
+      err => this.stockpileData.showToast(err)
     );
 
     this.inventoryData.getModels().subscribe(
-      models => this.allModels = models.results,
-      err => this.stockpileData.showToast(err.message)
+      (models: any) => this.allModels = models.results,
+      err => this.stockpileData.showToast(err)
     );
 
     this.inventoryData.getCategories().subscribe(
-      categories => this.allCategories = categories.results,
-      err => this.stockpileData.showToast(err.message)
+      (categories: any) => this.allCategories = categories.results,
+      err => this.stockpileData.showToast(err)
     );
 
     this.inventoryData.getAllItems().subscribe(
-      items => {
+      (items: any) => {
         this.allItems = items.results;
         this.filteredItems = this.allItems;
       },
-      err => this.stockpileData.showToast(err.message)
+      err => this.stockpileData.showToast(err)
     );
   }
 
@@ -66,10 +66,10 @@ export class InventoryPage {
       this.selectedCategoryID,
       this.segment
     ).subscribe(
-      items => {
+      (items: any) => {
         this.filteredItems = items.results;
       },
-      err => this.stockpileData.showToast(err.message)
+      err => this.stockpileData.showToast(err)
     );
   }
 
