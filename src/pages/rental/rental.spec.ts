@@ -72,7 +72,7 @@ describe('Rental Page', () => {
     spyOn(instance.stockpileData, 'showToast');
     instance.onAdd();
     tick();
-    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('pushes ItemPage on nav on viewItem()', () => {
@@ -103,7 +103,7 @@ describe('Rental Page', () => {
     spyOn(instance.stockpileData, 'showToast');
     instance.onReturn();
     tick();
-    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('calls inventoryData.return() and pops nav onReturn()', fakeAsync(() => {
@@ -131,6 +131,6 @@ describe('Rental Page', () => {
     spyOn(instance.stockpileData, 'showToast');
     instance.onScan();
     tick();
-    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 });

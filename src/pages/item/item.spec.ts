@@ -122,7 +122,7 @@ describe('Item Page', () => {
       let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
       instance.onSave(form);
       tick();
-      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
     });
   }));
 
@@ -148,7 +148,7 @@ describe('Item Page', () => {
       fixture.detectChanges();
       instance.onDelete();
       tick();
-      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
     });
   }));
 

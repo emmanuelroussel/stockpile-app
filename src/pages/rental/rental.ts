@@ -34,7 +34,7 @@ export class RentalPage {
   onAdd() {
     this.inventoryData.getItem(this.tag).subscribe(
       item => this.items.push(item),
-      err => this.stockpileData.showToast(err.message)
+      err => this.stockpileData.showToast(err)
     );
 
     this.tag = '';
@@ -65,7 +65,7 @@ export class RentalPage {
         this.stockpileData.showToast(Messages.itemsReturned);
         this.navCtrl.pop();
       },
-      err => this.stockpileData.showToast(err.message)
+      err => this.stockpileData.showToast(err)
     );
   }
 
@@ -75,7 +75,7 @@ export class RentalPage {
         this.tag = barcodeData.text;
         this.onAdd();
       },
-      err => this.stockpileData.showToast(err.message)
+      err => this.stockpileData.showToast(err)
     );
   }
 }

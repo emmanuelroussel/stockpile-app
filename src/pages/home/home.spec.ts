@@ -57,7 +57,7 @@ describe('Home Page', () => {
     spyOn(instance.stockpileData, 'showToast');
     instance.onNext();
     tick();
-    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('pushes rental page on pushPage() with \'Rent\'', fakeAsync(() => {
@@ -137,6 +137,6 @@ describe('Home Page', () => {
     spyOn(instance.stockpileData, 'showToast');
     instance.onScan();
     tick();
-    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 });

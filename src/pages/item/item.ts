@@ -38,18 +38,18 @@ export class ItemPage {
     this.action = this.navParams.get('action');
 
     this.inventoryData.getBrands().subscribe(
-      brands => this.allBrands = brands.results,
-      err => this.stockpileData.showToast(err.message)
+      (brands: any) => this.allBrands = brands.results,
+      err => this.stockpileData.showToast(err)
     );
 
     this.inventoryData.getCategories().subscribe(
-      categories => this.allCategories = categories.results,
-      err => this.stockpileData.showToast(err.message)
+      (categories: any) => this.allCategories = categories.results,
+      err => this.stockpileData.showToast(err)
     );
 
     if (this.action === this.actions.edit) {
       this.inventoryData.getItem(this.item.tag).subscribe(
-        item => {
+        (item: any) => {
           this.item.brandID = item.brandID;
           this.item.modelID = item.modelID;
           this.item.categoryID = item.categoryID;
@@ -59,19 +59,19 @@ export class ItemPage {
           this.selectedCategory = item.category;
 
           this.inventoryData.getModels().subscribe(
-            models => {
+            (models: any) => {
               this.allModels = models.results;
               this.filterModels();
             },
-            err => this.stockpileData.showToast(err.message)
+            err => this.stockpileData.showToast(err)
           );
         },
-        err => this.stockpileData.showToast(err.message)
+        err => this.stockpileData.showToast(err)
       );
     } else {
       this.inventoryData.getModels().subscribe(
-        models => this.allModels = models.results,
-        err => this.stockpileData.showToast(err.message)
+        (models: any) => this.allModels = models.results,
+        err => this.stockpileData.showToast(err)
       );
     }
   }
@@ -94,7 +94,7 @@ export class ItemPage {
           this.stockpileData.showToast(message);
           this.navCtrl.pop();
         },
-        err => this.stockpileData.showToast(err.message)
+        err => this.stockpileData.showToast(err)
       );
     }
   }
@@ -105,7 +105,7 @@ export class ItemPage {
         this.stockpileData.showToast(Messages.itemDeleted);
         this.navCtrl.pop();
       },
-      err => this.stockpileData.showToast(err.message)
+      err => this.stockpileData.showToast(err)
     );
   }
 
@@ -127,7 +127,7 @@ export class ItemPage {
           switch (type) {
             case this.itemProperties.brand:
               this.inventoryData.addBrand(element).subscribe(
-                brand => {
+                (brand: any) => {
                   const newBrand = {
                     brandID: brand.id,
                     name: element
@@ -139,12 +139,12 @@ export class ItemPage {
                   this.selectedModel = '';
                   this.filterModels();
                 },
-                err => this.stockpileData.showToast(err.message)
+                err => this.stockpileData.showToast(err)
               );
               break;
             case this.itemProperties.model:
               this.inventoryData.addModel(element, this.item.brandID).subscribe(
-                model => {
+                (model: any) => {
                   const newModel = {
                     modelID: model.id,
                     name: element
@@ -154,12 +154,12 @@ export class ItemPage {
                   this.selectedModel = newModel.name;
                   this.allModels.push(newModel);
                 },
-                err => this.stockpileData.showToast(err.message)
+                err => this.stockpileData.showToast(err)
               );
               break;
             case this.itemProperties.category:
               this.inventoryData.addCategory(element).subscribe(
-                category => {
+                (category: any) => {
                   const newCategory = {
                     categoryID: category.id,
                     name: element
@@ -169,7 +169,7 @@ export class ItemPage {
                   this.selectedCategory = newCategory.name;
                   this.allCategories.push(newCategory);
                 },
-                err => this.stockpileData.showToast(err.message)
+                err => this.stockpileData.showToast(err)
               );
               break;
           }

@@ -3,6 +3,7 @@ import { Response, URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import { StockpileData } from './stockpile-data';
 import { Links, ApiUrl } from '../constants';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
 @Injectable()
@@ -101,21 +102,37 @@ export class InventoryData {
 
   private getEndpoint(endpoint: string, params?: Object) {
     return this.authHttp.get(ApiUrl + endpoint, params)
-      .map(this.extractData);
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 
   private putEndpoint(endpoint: string, body: Object) {
     return this.authHttp.put(ApiUrl + endpoint, body)
-      .map(this.extractData);
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 
   private deleteEndpoint(endpoint: string) {
     return this.authHttp.delete(ApiUrl + endpoint)
-      .map(this.extractData);
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 
   private extractData(res: Response) {
     let body = res.json();
     return body || { };
+  }
+
+  private handleError(error: Response | any, caught: any) {
+    let message: string;
+
+    if (error instanceof Response) {
+      const body = error.json() || '';
+      message = body.message || JSON.stringify(body);
+    } else {
+      message = error.message ? error.message : error.toString();
+    }
+
+    return Observable.throw(message);
   }
 }

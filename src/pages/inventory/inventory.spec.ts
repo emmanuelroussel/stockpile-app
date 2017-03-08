@@ -74,7 +74,7 @@ describe('Inventory Page', () => {
     spyOn(instance.stockpileData, 'showToast');
     instance.filterItems();
     tick();
-    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('pushes ItemPage on nav on viewItem()', () => {

@@ -122,9 +122,7 @@ export class TestData {
     message: 'Successful operation'
   };
 
-  public static error = {
-    message: 'Error message'
-  };
+  public static error = 'Error message';
 
   public static barcodeData = {
     text: 'I am a barcode'

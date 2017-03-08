@@ -74,7 +74,7 @@ describe('RentalDetails Page', () => {
       let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
       instance.onRent(form);
       tick();
-      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
     });
   }));
 });

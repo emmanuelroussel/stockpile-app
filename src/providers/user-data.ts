@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { AuthHttp, tokenNotExpired } from 'angular2-jwt';
 import { StockpileData } from './stockpile-data';
 import { Links, ApiUrl } from '../constants';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -25,6 +26,7 @@ export class UserData {
     return new Promise((resolve, reject) => {
       this.http.post(ApiUrl + Links.authenticate, creds)
         .map(this.extractData)
+        .catch((err, caught) => this.handleError(err, caught))
         .subscribe(
           data => {
             this.storage.set('id_token', data.token);
@@ -50,5 +52,18 @@ export class UserData {
   private extractData(res: Response) {
     let body = res.json();
     return body || { };
+  }
+
+  private handleError (error: Response | any, caught: any) {
+    let message: string;
+
+    if (error instanceof Response) {
+      const body = error.json() || '';
+      message = body.message || JSON.stringify(body);
+    } else {
+      message = error.message ? error.message : error.toString();
+    }
+
+    return Observable.throw(message);
   }
 }
