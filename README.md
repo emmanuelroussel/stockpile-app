@@ -17,8 +17,6 @@ See [Stockpile API](https://github.com/AdamVig/stockpile-api) for the Restful AP
 **Note:** If your build is slow, update `npm` to 3.x: `npm install -g npm`.
 
 ## Running in a Browser
-Running in the browser is very simple. However, running the app in `localhost` causes CORS issues. You can install an extension in your browser and allow them for `https://stockpile.adamvig.com` while we fix the issue with the proxy.
-
 - Run `ionic serve` to preview the app in your browser
 - You can also run `ionic serve --lab` to preview different platforms side-by-side
 
