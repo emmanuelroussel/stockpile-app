@@ -12,7 +12,6 @@ export class TestData {
 
   public static item = {
     tag: 'banana',
-    brandID: 1,
     modelID: 1,
     categoryID: 1
   };
