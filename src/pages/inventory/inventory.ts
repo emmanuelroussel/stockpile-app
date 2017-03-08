@@ -85,4 +85,16 @@ export class InventoryPage {
       action: Actions.edit
     });
   }
+
+  onAdd() {
+    this.stockpileData.scan().then(
+      barcodeData => {
+        this.navCtrl.push(ItemPage, {
+          tag: barcodeData.text,
+          action: Actions.add
+        });
+      },
+      err => this.stockpileData.showToast(err.message)
+    );
+  }
 }

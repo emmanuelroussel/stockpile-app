@@ -89,4 +89,23 @@ describe('Inventory Page', () => {
     instance.filterModels();
     expect(instance.filteredModels).toEqual(TestData.filteredModels);
   });
+
+  it('pushes ItemPage on nav onAdd()', fakeAsync(() => {
+    spyOn(instance.stockpileData, 'scan').and.callThrough();
+    spyOn(instance.navCtrl, 'push');
+    instance.onAdd();
+    tick();
+    expect(instance.stockpileData.scan).toHaveBeenCalled();
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.barcodeData.text, action: Actions.add });
+  }));
+
+  it('shows toast if error in onAdd()', fakeAsync(() => {
+    instance.stockpileData.resolve = false;
+    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.navCtrl, 'push');
+    instance.onAdd();
+    tick();
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error.message);
+    expect(instance.navCtrl.push).not.toHaveBeenCalled();
+  }));
 });
