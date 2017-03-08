@@ -12,7 +12,7 @@ export class InventoryData {
   constructor(public authHttp: AuthHttp, public stockpileData: StockpileData) { }
 
   getItem(tag: string) {
-    return this.getEndpoint(Links.item + '/' + tag);
+    return this.getEndpoint(`${Links.item}/${tag}`);
   }
 
   getAllItems() {
@@ -24,11 +24,11 @@ export class InventoryData {
   }
 
   editItem(item: Object, tag: string) {
-    return this.putEndpoint(Links.item + '/' + tag, item);
+    return this.putEndpoint(`${Links.item}/${tag}`, item);
   }
 
   deleteItem(tag: string) {
-    return this.deleteEndpoint(Links.item + '/' + tag);
+    return this.deleteEndpoint(`${Links.item}/${tag}`);
   }
 
   filterItems(brandID?: number, modelID?: number, categoryID?: number, available?: number) {
@@ -60,7 +60,7 @@ export class InventoryData {
   }
 
   return(tag: string) {
-    return this.deleteEndpoint(Links.rental + '/' + tag);
+      return this.deleteEndpoint(`${Links.rental}/${tag}`);
   }
 
   getBrands() {
@@ -101,19 +101,19 @@ export class InventoryData {
   }
 
   private getEndpoint(endpoint: string, params?: Object) {
-    return this.authHttp.get(ApiUrl + endpoint, params)
+    return this.authHttp.get(`${ApiUrl}${endpoint}`, params)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   private putEndpoint(endpoint: string, body: Object) {
-    return this.authHttp.put(ApiUrl + endpoint, body)
+    return this.authHttp.put(`${ApiUrl}${endpoint}`, body)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   private deleteEndpoint(endpoint: string) {
-    return this.authHttp.delete(ApiUrl + endpoint)
+    return this.authHttp.delete(`${ApiUrl}${endpoint}`)
       .map(this.extractData)
       .catch(this.handleError);
   }
