@@ -40,14 +40,14 @@ export class RentalDetailsPage {
       this.details.startDate = new Date(this.details.startDate).toISOString().substring(0, 10);
       this.details.endDate = new Date(this.details.endDate).toISOString().substring(0, 10);
 
-      let promises = [];
+      let rentals = [];
 
       for (const item of this.items) {
         this.details.itemID = item.itemID;
-        promises.push(this.inventoryData.rent(this.details).toPromise());
+        rentals.push(this.inventoryData.rent(this.details).toPromise());
       }
 
-      Promise.all(promises).then(
+      Promise.all(rentals).then(
         success => {
           this.stockpileData.showToast(Messages.itemsRented);
           this.navCtrl.popToRoot();
