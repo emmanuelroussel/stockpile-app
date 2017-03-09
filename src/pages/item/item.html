@@ -11,20 +11,23 @@
 
 <ion-content padding>
   <form #itemForm="ngForm" novalidate>
-		<ion-list no-line>
+		<ion-list>
       <ion-item>
         <ion-label stacked color="primary">Brand</ion-label>
-        <ion-input (click)="presentModal(allBrands, itemProperties.brand)" [value]="selectedBrand"></ion-input>
+        <ion-input [value]="selectedBrand" readonly></ion-input>
+        <button ion-button clear item-right (click)="presentModal(allBrands, itemProperties.brand)">Edit</button>
       </ion-item>
 
       <ion-item [hidden]="!selectedBrandID">
         <ion-label stacked color="primary">Model</ion-label>
-        <ion-input (click)="presentModal(filteredModels, itemProperties.model)" [value]="selectedModel"></ion-input>
+        <ion-input [value]="selectedModel" readonly></ion-input>
+        <button ion-button clear item-right (click)="presentModal(filteredModels, itemProperties.model)">Edit</button>
       </ion-item>
 
       <ion-item>
         <ion-label stacked color="primary">Category</ion-label>
-        <ion-input (click)="presentModal(allCategories, itemProperties.category)" [value]="selectedCategory"></ion-input>
+        <ion-input [value]="selectedCategory" readonly></ion-input>
+        <button ion-button clear item-right (click)="presentModal(allCategories, itemProperties.category)">Edit</button>
       </ion-item>
 		</ion-list>
 
