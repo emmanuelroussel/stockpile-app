@@ -25,13 +25,9 @@ See [Stockpile API](https://github.com/AdamVig/stockpile-api) for the Restful AP
 ## Running on a Device or Emulator
 Running apps on a device or emulator requires you to build the app on your computer. To do this, you have to set up the Android SDK and Apple's Xcode. For detailed instructions on how to do this, follow [this guide for Mac](https://ionicframework.com/docs/v2/resources/platform-setup/mac-setup.html) or [this one for Windows](https://ionicframework.com/docs/v2/resources/platform-setup/windows-setup.html).
 
-- Run `ionic platform add ios` and/or `ionic platform add android`
-- Run `ionic plugin add phonegap-plugin-barcodescanner`
-- Run `ionic plugin add cordova-plugin-x-toast`
+- Run `ionic state restore` to prepare the iOS and Android platforms and install the correct plugins for each
 - Run `ionic emulate ios` or `ionic emulate android` to emulate
 - Run `ionic run ios` or `ionic run android` to run on real device
-
-
 
 ## Tests
 App tested with Jasmine and Karma on Chrome.
