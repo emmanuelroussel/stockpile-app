@@ -66,11 +66,7 @@
   ],
   "cordovaPlatforms": [
     "ios",
-    {
-      "platform": "ios",
-      "version": "",
-      "locator": "ios"
-    }
+    "android"
   ],
   "description": "Stockpile: An app that manages stuff for organizations"
 }
