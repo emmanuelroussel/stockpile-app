@@ -51,9 +51,6 @@
 
   <ion-list *ngIf="filteredItems">
     <button ion-item *ngFor="let item of filteredItems" (click)="viewItem(item)">
-      <ion-avatar item-left>
-        <img src="img/fake.png">
-      </ion-avatar>
       <h2>{{ item.brand }} {{ item.model }}</h2>
     </button>
   </ion-list>
