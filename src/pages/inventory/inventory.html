@@ -26,7 +26,7 @@
   </ion-segment>
 
   <ion-item>
-    <ion-label floating>Brand</ion-label>
+    <ion-label color="primary">Brand</ion-label>
     <ion-select [(ngModel)]="selectedBrandID" (ionChange)="filterItems()">
       <ion-option [value]="-1">All</ion-option>
       <ion-option *ngFor="let brand of allBrands" [value]="brand.brandID">{{ brand.name }}</ion-option>
@@ -34,7 +34,7 @@
   </ion-item>
 
   <ion-item>
-    <ion-label floating>Model</ion-label>
+    <ion-label color="primary">Model</ion-label>
     <ion-select [(ngModel)]="selectedModelID" (ionChange)="filterItems()">
       <ion-option [value]="-1">All</ion-option>
       <ion-option *ngFor="let model of filteredModels" [value]="model.modelID">{{ model.name }}</ion-option>
@@ -42,7 +42,7 @@
   </ion-item>
 
   <ion-item>
-    <ion-label floating>Category</ion-label>
+    <ion-label color="primary">Category</ion-label>
     <ion-select [(ngModel)]="selectedCategoryID" (ionChange)="filterItems()">
       <ion-option [value]="-1">All</ion-option>
       <ion-option *ngFor="let category of allCategories" [value]="category.categoryID">{{ category.name }}</ion-option>
