@@ -150,7 +150,7 @@ export class InventoryDataMock {
 
   public addItem(): any {
     if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve());
+      return Observable.fromPromise(Promise.resolve(this.item));
     } else {
       return Observable.fromPromise(Promise.reject(TestData.error));
     }
@@ -174,7 +174,7 @@ export class InventoryDataMock {
 
   public editItem(): any {
     if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve());
+      return Observable.fromPromise(Promise.resolve(this.item));
     } else {
       return Observable.fromPromise(Promise.reject(TestData.error));
     }

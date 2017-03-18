@@ -28,7 +28,7 @@ export class InventoryPage {
     public stockpileData: StockpileData
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.inventoryData.getBrands().subscribe(
       (brands: any) => this.allBrands = brands.results,
       err => this.stockpileData.showToast(err)

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, Events } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
 
@@ -31,7 +31,8 @@ export class ItemPage {
     public navParams: NavParams,
     public inventoryData: InventoryData,
     public modalCtrl: ModalController,
-    public stockpileData: StockpileData
+    public stockpileData: StockpileData,
+    public events: Events
   ) { }
 
   ngOnInit() {
@@ -91,8 +92,9 @@ export class ItemPage {
       }
 
       observable.subscribe(
-        success => {
+        item => {
           this.stockpileData.showToast(message);
+          this.events.publish('item:edited', item.tag);
           this.navCtrl.pop();
         },
         err => this.stockpileData.showToast(err)
