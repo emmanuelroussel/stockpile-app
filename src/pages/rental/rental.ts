@@ -33,7 +33,17 @@ export class RentalPage {
 
   onAdd() {
     this.inventoryData.getItem(this.tag).subscribe(
-      item => this.items.push(item),
+      item => {
+        if (item.available === 0 && this.action === Actions.rent) {
+          this.stockpileData.showToast(Messages.itemAlreadyRented);
+        } else if (item.available === 1 && this.action === Actions.return) {
+          this.stockpileData.showToast(Messages.itemNotRented);
+        } else if (this.items.some(listItem => listItem.tag === item.tag)) {
+          this.stockpileData.showToast(Messages.itemAlreadyAdded);
+        } else {
+          this.items.push(item);
+        }
+      },
       err => this.stockpileData.showToast(err)
     );
 

@@ -75,6 +75,33 @@ describe('Rental Page', () => {
     expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
+  it('shows toast if item is rented and wants to rent onAdd()', fakeAsync(() => {
+    instance.inventoryData.item = TestData.rentedApiItem;
+    instance.action = Actions.rent;
+    spyOn(instance.stockpileData, 'showToast');
+    instance.onAdd();
+    tick();
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemAlreadyRented);
+  }));
+
+  it('shows toast if item is available and wants to return onAdd()', fakeAsync(() => {
+    instance.inventoryData.item = TestData.apiItem;
+    instance.action = Actions.return;
+    spyOn(instance.stockpileData, 'showToast');
+    instance.onAdd();
+    tick();
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemNotRented);
+  }));
+
+  it('shows toast if item is already added', fakeAsync(() => {
+    instance.items = TestData.items;
+    instance.inventoryData.item = TestData.items[0];
+    spyOn(instance.stockpileData, 'showToast');
+    instance.onAdd();
+    tick();
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemAlreadyAdded);
+  }));
+
   it('pushes ItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.viewItem(TestData.item);

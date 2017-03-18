@@ -10,6 +10,17 @@ export class TestData {
     available: 1
   };
 
+  public static rentedApiItem = {
+    tag: 'banana',
+    brand: 'Canon',
+    brandID: 1,
+    model: 'T5i',
+    modelID: 1,
+    category: 'Camera',
+    categoryID: 1,
+    available: 0
+  };
+
   public static item = {
     tag: 'banana',
     modelID: 1,
