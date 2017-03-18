@@ -7,6 +7,12 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { TestData } from './test-data';
 
+export class ApiUrlMock {
+  public getUrl(): string {
+    return '';
+  }
+}
+
 export class ConfigMock {
 
   public get(): any {
@@ -82,6 +88,18 @@ export class PlatformMock {
 
   public raf(callback: any): number {
     return 1;
+  }
+}
+
+export class PlatformMockIsCore {
+  public is(platform: string): Boolean {
+    return platform === 'core'
+  }
+}
+
+export class PlatformMockIsAndroid {
+  public is(platform: string): Boolean {
+    return platform === 'android'
   }
 }
 

@@ -4,16 +4,18 @@ import { MockBackend } from '@angular/http/testing';
 import { Storage } from '@ionic/storage';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
+import { ApiUrl } from './api-url';
 import { UserData } from './user-data';
 import { TestData } from '../test-data';
 import { StockpileData } from './stockpile-data';
-import { StockpileDataMock, StorageMock } from '../mocks';
+import { ApiUrlMock, StockpileDataMock, StorageMock } from '../mocks';
 
 describe('UserData Provider', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        { provide: ApiUrl, useClass: ApiUrlMock },
         UserData,
         { provide: Storage, useClass: StorageMock },
         { provide: StockpileData, useClass: StockpileDataMock },
