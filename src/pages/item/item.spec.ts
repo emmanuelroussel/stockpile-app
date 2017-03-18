@@ -84,6 +84,7 @@ describe('Item Page', () => {
     instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
     spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.events, 'publish');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
@@ -92,6 +93,7 @@ describe('Item Page', () => {
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
       expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemAdded);
+      expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.tag);
     });
   }));
 
@@ -101,6 +103,7 @@ describe('Item Page', () => {
     instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
     spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.events, 'publish');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
@@ -109,6 +112,7 @@ describe('Item Page', () => {
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
       expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemEdited);
+      expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.tag);
     });
   }));
 

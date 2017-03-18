@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
 import { StockpileData } from '../../providers/stockpile-data';
@@ -21,12 +21,22 @@ export class RentalPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public inventoryData: InventoryData,
-    public stockpileData: StockpileData
+    public stockpileData: StockpileData,
+    public events: Events
   ) { }
 
   ngOnInit() {
     this.tag = this.navParams.get('tag');
     this.action = this.navParams.get('action');
+
+    this.events.subscribe('item:edited', tag => {
+      const index = this.items.findIndex(item => item.tag === tag);
+
+      this.inventoryData.getItem(tag).subscribe(
+        item => this.items.splice(index, 1, item),
+        err => this.stockpileData.showToast(err)
+      );
+    });
 
     this.onAdd();
   }
