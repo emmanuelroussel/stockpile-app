@@ -35,7 +35,7 @@ describe('Inventory Page', () => {
     instance.inventoryData.models = TestData.models;
     instance.inventoryData.categories = TestData.categories;
     instance.inventoryData.allItems = response;
-    instance.ngOnInit();
+    instance.ionViewWillEnter();
     tick();
     expect(instance.allBrands).toEqual(TestData.brands.results);
     expect(instance.allModels).toEqual(TestData.models.results);
@@ -47,7 +47,7 @@ describe('Inventory Page', () => {
   it('shows toast if error while getting brands, models, categories or items', fakeAsync(() => {
     instance.inventoryData.resolve = false;
     spyOn(instance.stockpileData, 'showToast');
-    instance.ngOnInit();
+    instance.ionViewWillEnter();
     tick();
     expect(instance.stockpileData.showToast).toHaveBeenCalledTimes(4);
   }));
