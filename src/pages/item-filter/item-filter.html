@@ -11,7 +11,8 @@
   <ion-toolbar>
     <ion-searchbar [(ngModel)]="queryText"
                    (ionInput)="getElements()"
-                   placeholder="Filter {{ type }}">
+                   placeholder="Filter {{ type }}"
+                   showCancelButton="true">
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
