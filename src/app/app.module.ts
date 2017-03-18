@@ -48,7 +48,14 @@ const cloudSettings: CloudSettings = {
   ],
   imports: [
     IonicModule.forRoot(MyApp, {
-      tabsHideOnSubPages: true
+      tabsHideOnSubPages: true,
+      platforms: {
+        android: {
+          tabsPlacement: 'top',
+          tabsHighlight: true,
+          tabsLayout: 'icon-hide'
+        }
+      }
     }),
     CloudModule.forRoot(cloudSettings),
     HalModule
