@@ -133,4 +133,15 @@ describe('Rental Page', () => {
     tick();
     expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
   }));
+
+  it('it does nothing if scan is cancelled', fakeAsync(() => {
+    instance.stockpileData.cancel = true;
+    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance, 'onAdd');
+    instance.onScan();
+    tick();
+    expect(instance.onAdd).not.toHaveBeenCalled();
+    expect(instance.stockpileData.showToast).not.toHaveBeenCalled();
+    expect(instance.tag).toEqual('');
+  }));
 });

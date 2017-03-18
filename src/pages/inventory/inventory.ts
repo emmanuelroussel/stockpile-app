@@ -89,10 +89,12 @@ export class InventoryPage {
   onAdd() {
     this.stockpileData.scan().then(
       barcodeData => {
-        this.navCtrl.push(ItemPage, {
-          tag: barcodeData.text,
-          action: Actions.add
-        });
+        if (!barcodeData.cancelled) {
+          this.navCtrl.push(ItemPage, {
+            tag: barcodeData.text,
+            action: Actions.add
+          });
+        }
       },
       err => this.stockpileData.showToast(err)
     );
