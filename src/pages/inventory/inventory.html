@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>View</ion-title>
+    <ion-title>Inventory</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="onAdd()">
         <ion-icon name="add"></ion-icon>
@@ -25,35 +25,41 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-item>
-    <ion-label floating>Brand</ion-label>
-    <ion-select [(ngModel)]="selectedBrandID" (ionChange)="filterItems()">
-      <ion-option [value]="-1">All</ion-option>
-      <ion-option *ngFor="let brand of allBrands" [value]="brand.brandID">{{ brand.name }}</ion-option>
-    </ion-select>
-  </ion-item>
+  <ion-list>
+    <ion-list-header>
+      Filters
+    </ion-list-header>
 
-  <ion-item>
-    <ion-label floating>Model</ion-label>
-    <ion-select [(ngModel)]="selectedModelID" (ionChange)="filterItems()">
-      <ion-option [value]="-1">All</ion-option>
-      <ion-option *ngFor="let model of filteredModels" [value]="model.modelID">{{ model.name }}</ion-option>
-    </ion-select>
-  </ion-item>
+    <ion-item>
+      <ion-label color="primary">Brand</ion-label>
+      <ion-select [(ngModel)]="selectedBrandID" (ionChange)="filterItems()">
+        <ion-option [value]="-1">All</ion-option>
+        <ion-option *ngFor="let brand of allBrands" [value]="brand.brandID">{{ brand.name }}</ion-option>
+      </ion-select>
+    </ion-item>
 
-  <ion-item>
-    <ion-label floating>Category</ion-label>
-    <ion-select [(ngModel)]="selectedCategoryID" (ionChange)="filterItems()">
-      <ion-option [value]="-1">All</ion-option>
-      <ion-option *ngFor="let category of allCategories" [value]="category.categoryID">{{ category.name }}</ion-option>
-    </ion-select>
-  </ion-item>
+    <ion-item>
+      <ion-label color="primary">Model</ion-label>
+      <ion-select [(ngModel)]="selectedModelID" (ionChange)="filterItems()">
+        <ion-option [value]="-1">All</ion-option>
+        <ion-option *ngFor="let model of filteredModels" [value]="model.modelID">{{ model.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Category</ion-label>
+      <ion-select [(ngModel)]="selectedCategoryID" (ionChange)="filterItems()">
+        <ion-option [value]="-1">All</ion-option>
+        <ion-option *ngFor="let category of allCategories" [value]="category.categoryID">{{ category.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 
   <ion-list *ngIf="filteredItems">
+    <ion-list-header>
+      Items
+    </ion-list-header>
     <button ion-item *ngFor="let item of filteredItems" (click)="viewItem(item)">
-      <ion-avatar item-left>
-        <img src="img/fake.png">
-      </ion-avatar>
       <h2>{{ item.brand }} {{ item.model }}</h2>
     </button>
   </ion-list>

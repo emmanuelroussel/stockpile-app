@@ -22,9 +22,6 @@
 
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="viewItem(item)" detail-push>
-      <ion-avatar item-left>
-        <img src="img/fake.png">
-      </ion-avatar>
       <h2>{{ item.brand }} {{ item.model }}</h2>
     </button>
   </ion-list>

@@ -30,7 +30,14 @@ export class StockpileData {
 
   showToast(message: string) {
     if (this.platform.is('cordova')) {
-      Toast.show(message, '5000', 'bottom').subscribe(toast => {});
+      Toast.showWithOptions(
+        {
+          message,
+          duration: 5000,
+          position: 'bottom',
+          addPixelsY: -50
+        }
+      ).subscribe(toast => {});
     } else {
       console.log(message);
     }

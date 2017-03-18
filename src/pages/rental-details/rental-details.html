@@ -10,19 +10,21 @@
       <ion-list-header>Rental Details</ion-list-header>
 
       <ion-item>
-				<ion-label floating color="primary">Start Date</ion-label>
+				<ion-label fixed color="primary">Start Date</ion-label>
         <!-- Displays date in the following format: Sun 01 Jan, 2017 -->
         <ion-datetime displayFormat="DDD D MMM, YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="details.startDate"  name="startDate" #date="ngModel" required>
         </ion-datetime>
 			</ion-item>
 
       <ion-item>
-				<ion-label floating color="primary">Return Date</ion-label>
+				<ion-label fixed color="primary">Return Date</ion-label>
         <!-- Displays date in the following format: Sun 01 Jan, 2017 -->
         <ion-datetime displayFormat="DDD D MMM, YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="details.endDate"  name="endDate" #date="ngModel" required>
         </ion-datetime>
 			</ion-item>
+    </ion-list>
 
+    <ion-list>
       <ion-list-header>Scanned Items</ion-list-header>
 
       <ion-item *ngFor="let item of items">
