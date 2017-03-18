@@ -38,7 +38,7 @@ export class RentalPage {
           this.stockpileData.showToast(Messages.itemAlreadyRented);
         } else if (item.available === 1 && this.action === Actions.return) {
           this.stockpileData.showToast(Messages.itemNotRented);
-        } else if (this.items.find(he => he.tag === item.tag)) {
+        } else if (this.items.find(listItem => listItem.tag === item.tag)) {
           this.stockpileData.showToast(Messages.itemAlreadyAdded);
         } else {
           this.items.push(item);
