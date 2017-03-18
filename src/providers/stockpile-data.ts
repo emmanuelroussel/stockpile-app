@@ -32,7 +32,7 @@ export class StockpileData {
     if (this.platform.is('cordova')) {
       Toast.showWithOptions(
         {
-          message: message,
+          message,
           duration: 5000,
           position: 'bottom',
           addPixelsY: -50
