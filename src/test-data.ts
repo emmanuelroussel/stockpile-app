@@ -124,6 +124,12 @@ export class TestData {
   public static error = 'Error message';
 
   public static barcodeData = {
-    text: 'I am a barcode'
+    text: 'I am a barcode',
+    cancelled: false
   };
+
+  public static barcodeDataCancelled = {
+    text: 'I am a barcode',
+    cancelled: true
+  }
 }

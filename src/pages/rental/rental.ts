@@ -72,8 +72,10 @@ export class RentalPage {
   onScan() {
     this.stockpileData.scan().then(
       barcodeData => {
-        this.tag = barcodeData.text;
-        this.onAdd();
+        if (!barcodeData.cancelled) {
+          this.tag = barcodeData.text;
+          this.onAdd();
+        }
       },
       err => this.stockpileData.showToast(err)
     );

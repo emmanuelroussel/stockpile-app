@@ -107,6 +107,17 @@ describe('Home Page', () => {
     expect(instance.tag).toEqual(TestData.barcodeData.text);
   }));
 
+  it('does nothing if scan is cancelled', fakeAsync(() => {
+    instance.stockpileData.cancel = true;
+    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance, 'onNext');
+    instance.onScan();
+    tick();
+    expect(instance.onNext).not.toHaveBeenCalled();
+    expect(instance.stockpileData.showToast).not.toHaveBeenCalled();
+    expect(instance.tag).toEqual('');
+  }));
+
   it('shows toast if error in onScan()', fakeAsync(() => {
     instance.stockpileData.resolve = false;
     spyOn(instance.stockpileData, 'showToast');

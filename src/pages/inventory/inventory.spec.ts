@@ -108,4 +108,14 @@ describe('Inventory Page', () => {
     expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   }));
+
+  it('does nothing if scan is cancelled', fakeAsync(() => {
+    instance.stockpileData.cancel = true;
+    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.navCtrl, 'push');
+    instance.onAdd();
+    tick();
+    expect(instance.stockpileData.showToast).not.toHaveBeenCalled();
+    expect(instance.navCtrl.push).not.toHaveBeenCalled();
+  }));
 });

@@ -247,6 +247,7 @@ export class InventoryDataMock {
 
 export class StockpileDataMock {
   resolve: boolean = true;
+  cancel: boolean = false;
 
   public initHal(): any {
     return Promise.resolve();
@@ -258,7 +259,11 @@ export class StockpileDataMock {
 
   public scan(): any {
     if (this.resolve) {
-      return Promise.resolve(TestData.barcodeData);
+      if (this.cancel) {
+        return Promise.resolve(TestData.barcodeDataCancelled);
+      } else {
+        return Promise.resolve(TestData.barcodeData);
+      }
     } else {
       return Promise.reject(TestData.error);
     }

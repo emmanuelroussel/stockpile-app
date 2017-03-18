@@ -74,8 +74,10 @@ export class HomePage {
   onScan() {
     this.stockpileData.scan().then(
       barcodeData => {
-        this.tag = barcodeData.text;
-        this.onNext();
+        if (!barcodeData.cancelled) {
+          this.tag = barcodeData.text;
+          this.onNext();
+        }
       },
       err => this.stockpileData.showToast(err)
     );
