@@ -31,6 +31,6 @@
       </ion-item>
 		</ion-list>
 
-		<button ion-button (click)="onSave(itemForm)" type="submit" block>Save</button>
+		<button ion-button (click)="onSave(itemForm)" type="submit" block [disabled]="!selectedBrand || !selectedModel || !selectedCategory">Save</button>
 	</form>
 </ion-content>
