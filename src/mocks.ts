@@ -62,6 +62,8 @@ export class NavMock {
 }
 
 export class PlatformMock {
+  currPlatform: string = 'core';
+
   public ready(): Promise<{String}> {
     return Promise.resolve('READY');
   }
@@ -89,17 +91,9 @@ export class PlatformMock {
   public raf(callback: any): number {
     return 1;
   }
-}
 
-export class PlatformMockIsCore {
   public is(platform: string): Boolean {
-    return platform === 'core'
-  }
-}
-
-export class PlatformMockIsAndroid {
-  public is(platform: string): Boolean {
-    return platform === 'android'
+    return platform === this.currPlatform;
   }
 }
 
