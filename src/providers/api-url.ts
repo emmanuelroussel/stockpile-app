@@ -6,10 +6,10 @@ export class ApiUrl {
   constructor(public platform: Platform) { }
   getUrl() {
     // Core platform is desktop web browser
-    if (this.platform.is('core')) {
-      return '/api';
-    } else {
+    if (this.platform.is('cordova')) {
       return 'https://stockpile.adamvig.com/api';
+    } else {
+      return '/api';
     }
   }
 };

@@ -91,9 +91,17 @@ export class PlatformMock {
   public raf(callback: any): number {
     return 1;
   }
+}
 
+export class PlatformMockIsCordova {
   public is(platform: string): Boolean {
-    return platform === this.currPlatform;
+    return platform === 'cordova'
+  }
+}
+
+export class PlatformMockIsCore {
+  public is(platform: string): Boolean {
+    return platform === 'core'
   }
 }
 
