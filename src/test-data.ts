@@ -142,5 +142,5 @@ export class TestData {
   public static barcodeDataCancelled = {
     text: 'I am a barcode',
     cancelled: true
-  }
+  };
 }

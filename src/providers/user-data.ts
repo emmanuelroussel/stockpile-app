@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 import { AuthHttp, tokenNotExpired } from 'angular2-jwt';
 import { StockpileData } from './stockpile-data';
 import { Links } from '../constants';
-import { ApiUrl } from './api-url'
+import { ApiUrl } from './api-url';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
