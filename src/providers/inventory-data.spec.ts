@@ -3,16 +3,18 @@ import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from 
 import { MockBackend } from '@angular/http/testing';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
+import { ApiUrl } from './api-url';
 import { TestData } from '../test-data';
 import { InventoryData } from './inventory-data';
 import { StockpileData } from './stockpile-data';
-import { StockpileDataMock } from '../mocks';
+import { ApiUrlMock, StockpileDataMock } from '../mocks';
 
 describe('InventoryData Provider', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        { provide: ApiUrl, useClass: ApiUrlMock },
         InventoryData,
         { provide: StockpileData, useClass: StockpileDataMock },
         MockBackend,

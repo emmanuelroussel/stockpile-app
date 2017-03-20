@@ -5,8 +5,6 @@ export class Actions {
   public static edit = 'Edit';
 };
 
-export const ApiUrl = '/api';
-
 export class Links {
   public static authenticate = '/auth';
   public static item = '/item';

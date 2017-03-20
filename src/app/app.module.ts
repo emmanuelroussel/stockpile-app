@@ -16,6 +16,7 @@ import { RentalPage } from '../pages/rental/rental';
 import { RentalDetailsPage } from '../pages/rental-details/rental-details';
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { ApiUrl } from '../providers/api-url';
 import { InventoryData } from '../providers/inventory-data';
 import { StockpileData } from '../providers/stockpile-data';
 import { UserData } from '../providers/user-data';
@@ -74,6 +75,7 @@ const cloudSettings: CloudSettings = {
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
+    ApiUrl,
     InventoryData,
     StockpileData,
     UserData,

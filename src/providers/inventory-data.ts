@@ -2,14 +2,19 @@ import { Injectable } from '@angular/core';
 import { Response, URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import { StockpileData } from './stockpile-data';
-import { Links, ApiUrl } from '../constants';
+import { Links } from '../constants';
+import { ApiUrl } from './api-url';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
 @Injectable()
 export class InventoryData {
 
-  constructor(public authHttp: AuthHttp, public stockpileData: StockpileData) { }
+  constructor(
+    public apiUrl: ApiUrl,
+    public authHttp: AuthHttp,
+    public stockpileData: StockpileData
+  ) { }
 
   getItem(tag: string) {
     return this.getEndpoint(`${Links.item}/${tag}`);
@@ -101,19 +106,19 @@ export class InventoryData {
   }
 
   private getEndpoint(endpoint: string, params?: Object) {
-    return this.authHttp.get(`${ApiUrl}${endpoint}`, params)
+    return this.authHttp.get(`${this.apiUrl.getUrl()}${endpoint}`, params)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   private putEndpoint(endpoint: string, body: Object) {
-    return this.authHttp.put(`${ApiUrl}${endpoint}`, body)
+    return this.authHttp.put(`${this.apiUrl.getUrl()}${endpoint}`, body)
       .map(this.extractData)
       .catch(this.handleError);
   }
 
   private deleteEndpoint(endpoint: string) {
-    return this.authHttp.delete(`${ApiUrl}${endpoint}`)
+    return this.authHttp.delete(`${this.apiUrl.getUrl()}${endpoint}`)
       .map(this.extractData)
       .catch(this.handleError);
   }
