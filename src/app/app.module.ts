@@ -4,7 +4,6 @@ import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
-import { HalModule } from 'ng-hal';
 import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
@@ -58,8 +57,7 @@ const cloudSettings: CloudSettings = {
         }
       }
     }),
-    CloudModule.forRoot(cloudSettings),
-    HalModule
+    CloudModule.forRoot(cloudSettings)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
