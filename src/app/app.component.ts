@@ -22,16 +22,14 @@ export class MyApp {
   ) { }
 
   ngOnInit() {
-    this.stockpileData.initHal().then(() => {
-      this.userData.isLoggedIn().then(loggedIn => {
-        if (loggedIn) {
-          this.rootPage = TabsPage;
-        } else {
-          this.rootPage = LoginPage;
-        }
+    this.userData.isLoggedIn().then(loggedIn => {
+      if (loggedIn) {
+        this.rootPage = TabsPage;
+      } else {
+        this.rootPage = LoginPage;
+      }
 
-        this.initializeApp();
-      });
+      this.initializeApp();
     });
   }
 

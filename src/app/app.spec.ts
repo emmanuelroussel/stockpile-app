@@ -17,13 +17,11 @@ describe('Root Component', () => {
     expect(instance).toBeTruthy();
   });
 
-  it('calls initHal(), isLoggedIn and platform.ready() in ngOnInit', fakeAsync(() => {
-    spyOn(instance.stockpileData, 'initHal').and.callThrough();
+  it('calls isLoggedIn and platform.ready() in ngOnInit', fakeAsync(() => {
     spyOn(instance.userData, 'isLoggedIn').and.callThrough();
     spyOn(instance.platform, 'ready').and.callThrough();
     instance.ngOnInit();
     tick();
-    expect(instance.stockpileData.initHal).toHaveBeenCalled();
     expect(instance.userData.isLoggedIn).toHaveBeenCalled();
     expect(instance.platform.ready).toHaveBeenCalled();
   }));
