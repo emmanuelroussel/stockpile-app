@@ -42,6 +42,9 @@
     "codeCoverage": {
       "exclude": [
         "src/polyfills.ts",
+        "src/constants.ts",
+        "src/mocks.ts",
+        "src/test-data.ts",
         "**/test.ts"
       ]
     },
