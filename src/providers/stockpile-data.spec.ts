@@ -1,4 +1,3 @@
-import { fakeAsync, tick } from '@angular/core/testing';
 import { PlatformMock } from '../mocks';
 
 import { StockpileData } from './stockpile-data';
