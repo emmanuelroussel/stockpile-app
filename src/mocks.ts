@@ -269,10 +269,6 @@ export class StockpileDataMock {
   resolve: boolean = true;
   cancel: boolean = false;
 
-  public initHal(): any {
-    return Promise.resolve();
-  }
-
   public getUrl(): any { }
 
   public showToast(): any { }
