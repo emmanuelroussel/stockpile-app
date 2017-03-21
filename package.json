@@ -36,6 +36,7 @@
     "@ionic/app-scripts": "1.1.4",
     "@types/jasmine": "2.5.41",
     "@types/node": "^7.0.8",
+    "@types/lodash": "ts2.0",
     "@angular/cli": "^1.0.0-rc.0",
     "codeclimate-test-reporter": "^0.4.1",
     "codecov": "^1.0.1",
