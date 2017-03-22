@@ -44,6 +44,13 @@ describe('ItemFilter Page', () => {
     expect(itemFilterPage.filteredElements).toEqual(TestData.brands.results);
   });
 
+  it('sets showNew to true if there is no match', () => {
+    itemFilterPage.queryText = TestData.queryText;
+    itemFilterPage.allElements = TestData.models.results;
+    itemFilterPage.getElements();
+    expect(itemFilterPage.showNew).toEqual(true);
+  });
+
   it('calls viewCtrl.dismiss on dismiss()', () => {
     spyOn(itemFilterPage.viewCtrl, 'dismiss');
     itemFilterPage.dismiss(TestData.brands[0]);

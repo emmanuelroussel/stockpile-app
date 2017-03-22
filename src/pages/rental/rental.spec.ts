@@ -38,6 +38,24 @@ describe('Rental Page', () => {
     expect(instance.items[0]).toEqual(TestData.item);
   }));
 
+  it('updates item when event is published', fakeAsync(() => {
+    instance.items = TestData.items;
+    instance.inventoryData.item = TestData.modifiedItem;
+    instance.ngOnInit();
+    instance.events.publish('item:edited', TestData.modifiedItem.tag);
+    tick();
+    expect(instance.items).toEqual(TestData.modifiedItems);
+  }));
+
+  it('shows toast if error while updating item in event.subscribe', fakeAsync(() => {
+    instance.inventoryData.resolve = false;
+    instance.ngOnInit();
+    spyOn(instance.stockpileData, 'showToast');
+    instance.events.publish('item:edited', TestData.modifiedItem.tag);
+    tick();
+    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
+  }));
+
   it('calls onAdd() on click on add button', () => {
     spyOn(instance, 'onAdd');
     TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
