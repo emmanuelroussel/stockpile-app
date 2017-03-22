@@ -53,9 +53,10 @@ describe('UserData Provider', () => {
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.loginResponse) })))
     );
 
-    userData.login(TestData.credentials.email, TestData.credentials.password).then(res => {
-      expect(res).toEqual(TestData.loginResponse);
-    });
+    userData.login(TestData.credentials.email, TestData.credentials.password).then(
+      res => expect(res).toEqual(TestData.loginResponse),
+      err => fail(err)
+    );
   })));
 
   it('deletes id_token on logout()', inject([UserData, Storage], (userData: UserData, storage: Storage) => {
@@ -67,7 +68,7 @@ describe('UserData Provider', () => {
   it('returns a promise on isLoggedIn', inject([UserData], (userData: UserData) => {
     userData.isLoggedIn().then(
       data => expect(data).toBeTruthy(),
-      err => expect(false).toBeTruthy()
+      err => fail(err)
     );
   }));
 
@@ -76,11 +77,9 @@ describe('UserData Provider', () => {
       conn => conn.mockError(new Response(new ResponseOptions({ body: { message: TestData.error } })))
     );
     tick();
-    userData.login(TestData.credentials.email, TestData.credentials.password).then(res => {
-      fail('Callback has been called');
-    },
-    err => {
-      expect(err).toEqual(TestData.error);
-    });
+    userData.login(TestData.credentials.email, TestData.credentials.password).then(
+      res => fail('Callback has been called'),
+      err => expect(err).toEqual(TestData.error)
+    );
   })));
 });
