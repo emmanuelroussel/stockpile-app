@@ -3,6 +3,7 @@ import { ViewController } from 'ionic-angular';
 import { NavParamsMock } from '../../mocks';
 
 import { ItemFilterPage } from './item-filter';
+import { ItemProperties } from '../../constants';
 
 let itemFilterPage: ItemFilterPage = null;
 
@@ -14,6 +15,19 @@ describe('ItemFilter Page', () => {
 
   it('is created', () => {
     expect(itemFilterPage).not.toBeNull();
+  });
+
+  it('gets navParam elements', () => {
+    itemFilterPage.navParams.param = TestData.brands.results;
+    itemFilterPage.ngOnInit();
+    expect(itemFilterPage.allElements).toEqual(TestData.brands.results);
+    expect(itemFilterPage.filteredElements).toEqual(TestData.brands.results);
+  });
+
+  it('gets navParam type', () => {
+    itemFilterPage.navParams.param = ItemProperties.brand;
+    itemFilterPage.ngOnInit();
+    expect(itemFilterPage.type).toEqual(ItemProperties.brand);
   });
 
   it('filters elements on getElements()', () => {
