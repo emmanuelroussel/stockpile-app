@@ -13,7 +13,7 @@ describe('ItemFilter Page', () => {
   });
 
   it('is created', () => {
-    expect(itemFilterPage).not.toBeNull();
+    expect(itemFilterPage).toBeTruthy();
   });
 
   it('filters elements on getElements()', () => {
