@@ -27,6 +27,43 @@ export class TestData {
     categoryID: 1
   };
 
+  public static modifiedItem = {
+    tag: 'mango',
+    brandID: 2,
+    modelID: 3,
+    categoryID: 3,
+    available: 1
+  };
+
+  public static modifiedItems = [{
+    tag: 'apple',
+    brandID: 1,
+    modelID: 1,
+    categoryID: 1,
+    available: 1
+  },
+  {
+    tag: 'banana',
+    brandID: 2,
+    modelID: 2,
+    categoryID: 1,
+    available: 0
+  },
+  {
+    tag: 'mango',
+    brandID: 2,
+    modelID: 3,
+    categoryID: 3,
+    available: 1
+  },
+  {
+    tag: 'orange',
+    brandID: 4,
+    modelID: 4,
+    categoryID: 2,
+    available: 0
+  }];
+
   public static items = [{
     tag: 'apple',
     brandID: 1,
