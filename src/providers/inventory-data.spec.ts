@@ -206,7 +206,7 @@ describe('InventoryData Provider', () => {
     );
     tick();
     inventoryData.getAllItems().subscribe(
-      res => fail('Callback has been called'),
+      res => fail('Did not return an error'),
       err => expect(err).toEqual(TestData.error)
     );
   })));
@@ -217,7 +217,7 @@ describe('InventoryData Provider', () => {
     );
     tick();
     inventoryData.addItem(TestData.item).subscribe(
-      res => fail('Callback has been called'),
+      res => fail('Did not return an error'),
       err => expect(err).toEqual(TestData.error)
     );
   })));
@@ -228,7 +228,7 @@ describe('InventoryData Provider', () => {
     );
     tick();
     inventoryData.deleteItem(TestData.item.tag).subscribe(
-      res => fail('Callback has been called'),
+      res => fail('Did not return an error'),
       err => expect(err).toEqual(TestData.error)
     );
   })));

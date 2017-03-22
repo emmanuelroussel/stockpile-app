@@ -78,7 +78,7 @@ describe('UserData Provider', () => {
     );
     tick();
     userData.login(TestData.credentials.email, TestData.credentials.password).then(
-      res => fail('Callback has been called'),
+      res => fail('Did not return an error'),
       err => expect(err).toEqual(TestData.error)
     );
   })));
