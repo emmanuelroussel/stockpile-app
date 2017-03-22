@@ -45,7 +45,7 @@ describe('UserData Provider', () => {
   });
 
   it('is created', inject([UserData], (userData: UserData) => {
-    expect(userData).not.toBeNull();
+    expect(userData).toBeTruthy();
   }));
 
   it('returns a login response on login()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {

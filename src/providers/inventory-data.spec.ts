@@ -43,7 +43,7 @@ describe('InventoryData Provider', () => {
   });
 
   it('is created', inject([InventoryData], (inventoryData: InventoryData) => {
-    expect(InventoryData).not.toBeNull();
+    expect(InventoryData).toBeTruthy();
   }));
 
   it('returns an item on getItem()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {

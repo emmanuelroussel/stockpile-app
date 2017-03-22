@@ -11,6 +11,6 @@ describe('StockpileData Provider', () => {
   });
 
   it('is created', () => {
-    expect(stockpileData).not.toBeNull();
+    expect(stockpileData).toBeTruthy();
   });
 });
