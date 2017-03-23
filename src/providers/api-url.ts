@@ -3,9 +3,14 @@ import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class ApiUrl {
+
   constructor(public platform: Platform) { }
+
+  /**
+   * Returns full url if on mobile device and relative url to use proxy in
+   * browser.
+   */
   getUrl() {
-    // Core platform is desktop web browser
     if (this.platform.is('cordova')) {
       return 'https://stockpile.adamvig.com/api';
     } else {
