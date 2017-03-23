@@ -1,4 +1,4 @@
-import { IonicErrorHandler } from 'ionic-angular';
+import { IonicErrorHandler, Platform } from 'ionic-angular';
 import * as Raven from 'raven-js';
 
 Raven
@@ -6,8 +6,12 @@ Raven
   .install();
 
 export class RavenErrorHandler extends IonicErrorHandler {
+  platform: Platform = new Platform();
+
   handleError(err: any): void {
     super.handleError(err);
-    Raven.captureException(err.originalError || err);
+    if (this.platform.is('cordova')) {
+      Raven.captureException(err.originalError || err);
+    }
   }
 }
