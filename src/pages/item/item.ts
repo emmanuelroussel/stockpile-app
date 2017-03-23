@@ -80,18 +80,18 @@ export class ItemPage {
 
   onSave(form: NgForm) {
     if (form.valid) {
-      let observable;
+      let apiCall;
       let message;
 
       if (this.action === this.actions.add) {
-        observable = this.inventoryData.addItem(this.item);
+        apiCall = this.inventoryData.addItem(this.item);
         message = Messages.itemAdded;
       } else if (this.action === this.actions.edit) {
-        observable = this.inventoryData.editItem(this.item, this.item.tag);
+        apiCall = this.inventoryData.editItem(this.item, this.item.tag);
         message = Messages.itemEdited;
       }
 
-      observable.subscribe(
+      apiCall.subscribe(
         item => {
           this.ionicPlugins.showToast(message);
           this.events.publish('item:edited', item.tag);
