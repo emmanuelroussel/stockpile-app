@@ -53,10 +53,10 @@ describe('Home Page', () => {
   it('shows toast if error in onNext()', fakeAsync(() => {
     instance.tag = TestData.item.tag;
     instance.inventoryData.resolve = false;
-    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.ionicPlugins, 'showToast');
     instance.onNext();
     tick();
-    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('pushes rental page on pushPage() with \'Rent\'', fakeAsync(() => {
@@ -97,32 +97,32 @@ describe('Home Page', () => {
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   });
 
-  it('calls stockpileData.scan() onScan()', fakeAsync(() => {
-    spyOn(instance.stockpileData, 'scan').and.callThrough();
+  it('calls ionicPlugins.scan() onScan()', fakeAsync(() => {
+    spyOn(instance.ionicPlugins, 'scan').and.callThrough();
     spyOn(instance, 'onNext');
     instance.onScan();
     tick();
-    expect(instance.stockpileData.scan).toHaveBeenCalled();
+    expect(instance.ionicPlugins.scan).toHaveBeenCalled();
     expect(instance.onNext).toHaveBeenCalled();
     expect(instance.tag).toEqual(TestData.barcodeData.text);
   }));
 
   it('does nothing if scan is cancelled', fakeAsync(() => {
-    instance.stockpileData.cancel = true;
-    spyOn(instance.stockpileData, 'showToast');
+    instance.ionicPlugins.cancel = true;
+    spyOn(instance.ionicPlugins, 'showToast');
     spyOn(instance, 'onNext');
     instance.onScan();
     tick();
     expect(instance.onNext).not.toHaveBeenCalled();
-    expect(instance.stockpileData.showToast).not.toHaveBeenCalled();
+    expect(instance.ionicPlugins.showToast).not.toHaveBeenCalled();
     expect(instance.tag).toEqual('');
   }));
 
   it('shows toast if error in onScan()', fakeAsync(() => {
-    instance.stockpileData.resolve = false;
-    spyOn(instance.stockpileData, 'showToast');
+    instance.ionicPlugins.resolve = false;
+    spyOn(instance.ionicPlugins, 'showToast');
     instance.onScan();
     tick();
-    expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 });

@@ -66,10 +66,10 @@ describe('Item Page', () => {
   it('shows toast if error while getting item, brands, models and categories', fakeAsync(() => {
     instance.navParams.param = Actions.edit;
     instance.inventoryData.resolve = false;
-    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.ionicPlugins, 'showToast');
     instance.ngOnInit();
     tick();
-    expect(instance.stockpileData.showToast).toHaveBeenCalledTimes(3);
+    expect(instance.ionicPlugins.showToast).toHaveBeenCalledTimes(3);
   }));
 
   it('calls onSave() on click on save button', () => {
@@ -83,7 +83,7 @@ describe('Item Page', () => {
     instance.navParams.param = Actions.add;
     instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
-    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.ionicPlugins, 'showToast');
     spyOn(instance.events, 'publish');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -92,7 +92,7 @@ describe('Item Page', () => {
       instance.onSave(form);
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
-      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemAdded);
+      expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(Messages.itemAdded);
       expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.tag);
     });
   }));
@@ -102,7 +102,7 @@ describe('Item Page', () => {
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
-    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.ionicPlugins, 'showToast');
     spyOn(instance.events, 'publish');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -111,7 +111,7 @@ describe('Item Page', () => {
       instance.onSave(form);
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
-      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemEdited);
+      expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(Messages.itemEdited);
       expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.tag);
     });
   }));
@@ -119,40 +119,40 @@ describe('Item Page', () => {
   it('shows toast if error onSave()', fakeAsync(() => {
     instance.inventoryData.resolve = false;
     instance.navParams.param = Actions.edit;
-    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.ionicPlugins, 'showToast');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
       instance.onSave(form);
       tick();
-      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
+      expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
     });
   }));
 
   it('pops nav onDelete()', fakeAsync(() => {
     instance.action = Actions.edit;
     spyOn(instance.navCtrl, 'pop');
-    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.ionicPlugins, 'showToast');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onDelete();
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
-      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemDeleted);
+      expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(Messages.itemDeleted);
     });
   }));
 
   it('shows toast if error onDelete()', fakeAsync(() => {
     instance.inventoryData.resolve = false;
-    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.ionicPlugins, 'showToast');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onDelete();
       tick();
-      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
+      expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
     });
   }));
 

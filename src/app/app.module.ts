@@ -17,7 +17,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { ApiUrl } from '../providers/api-url';
 import { InventoryData } from '../providers/inventory-data';
-import { StockpileData } from '../providers/stockpile-data';
+import { IonicPlugins } from '../providers/ionic-plugins';
 import { UserData } from '../providers/user-data';
 
 let storage = new Storage();
@@ -75,7 +75,7 @@ const cloudSettings: CloudSettings = {
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ApiUrl,
     InventoryData,
-    StockpileData,
+    IonicPlugins,
     UserData,
     { provide: AuthHttp, useFactory: getAuthHttp, deps: [Http] }
   ]

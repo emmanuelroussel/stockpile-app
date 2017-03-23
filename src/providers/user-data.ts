@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { AuthHttp, tokenNotExpired } from 'angular2-jwt';
-import { StockpileData } from './stockpile-data';
 import { Links } from '../constants';
 import { ApiUrl } from './api-url';
 import { Observable } from 'rxjs/Observable';
@@ -15,7 +14,6 @@ export class UserData {
   constructor(
     public apiUrl: ApiUrl,
     public authHttp: AuthHttp,
-    public stockpileData: StockpileData,
     public http: Http,
   ) { }
 

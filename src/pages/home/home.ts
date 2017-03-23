@@ -3,7 +3,7 @@ import { NavController, AlertController } from 'ionic-angular';
 
 import { RentalPage } from '../rental/rental';
 import { Actions, Messages } from '../../constants';
-import { StockpileData } from '../../providers/stockpile-data';
+import { IonicPlugins } from '../../providers/ionic-plugins';
 import { InventoryData } from '../../providers/inventory-data';
 
 @Component({
@@ -18,7 +18,7 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public stockpileData: StockpileData,
+    public ionicPlugins: IonicPlugins,
     public inventoryData: InventoryData
   ) { }
 
@@ -26,7 +26,7 @@ export class HomePage {
     if (this.tag) {
       this.inventoryData.getItem(this.tag).subscribe(
         (item: any) => this.pushPage(item.available === 1),
-        err => this.stockpileData.showToast(err)
+        err => this.ionicPlugins.showToast(err)
       );
     }
   }
@@ -72,14 +72,14 @@ export class HomePage {
   }
 
   onScan() {
-    this.stockpileData.scan().then(
+    this.ionicPlugins.scan().then(
       barcodeData => {
         if (!barcodeData.cancelled) {
           this.tag = barcodeData.text;
           this.onNext();
         }
       },
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
   }
 }

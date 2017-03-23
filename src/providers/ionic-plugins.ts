@@ -3,7 +3,7 @@ import { Platform } from 'ionic-angular';
 import { BarcodeScanner, Toast } from 'ionic-native';
 
 @Injectable()
-export class StockpileData {
+export class IonicPlugins {
 
   constructor(public platform: Platform) { }
 

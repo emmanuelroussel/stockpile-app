@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
-import { StockpileData } from '../../providers/stockpile-data';
+import { IonicPlugins } from '../../providers/ionic-plugins';
 import { Messages } from '../../constants';
 
 @Component({
@@ -19,7 +19,7 @@ export class RentalDetailsPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public inventoryData: InventoryData,
-    public stockpileData: StockpileData
+    public ionicPlugins: IonicPlugins
   ) { }
 
   ngOnInit() {
@@ -49,10 +49,10 @@ export class RentalDetailsPage {
 
       Promise.all(rentals).then(
         success => {
-          this.stockpileData.showToast(Messages.itemsRented);
+          this.ionicPlugins.showToast(Messages.itemsRented);
           this.navCtrl.popToRoot();
         },
-        err => this.stockpileData.showToast(err)
+        err => this.ionicPlugins.showToast(err)
       );
     }
   }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
-import { StockpileData } from '../../providers/stockpile-data';
+import { IonicPlugins } from '../../providers/ionic-plugins';
 import { Actions } from '../../constants';
 import { ItemPage } from '../item/item';
 
@@ -25,23 +25,23 @@ export class InventoryPage {
   constructor(
     public navCtrl: NavController,
     public inventoryData: InventoryData,
-    public stockpileData: StockpileData
+    public ionicPlugins: IonicPlugins
   ) { }
 
   ionViewWillEnter() {
     this.inventoryData.getBrands().subscribe(
       (brands: any) => this.allBrands = brands.results,
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
 
     this.inventoryData.getModels().subscribe(
       (models: any) => this.allModels = models.results,
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
 
     this.inventoryData.getCategories().subscribe(
       (categories: any) => this.allCategories = categories.results,
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
 
     this.inventoryData.getAllItems().subscribe(
@@ -49,7 +49,7 @@ export class InventoryPage {
         this.allItems = items.results;
         this.filteredItems = this.allItems;
       },
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
   }
 
@@ -69,7 +69,7 @@ export class InventoryPage {
       (items: any) => {
         this.filteredItems = items.results;
       },
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
   }
 
@@ -87,7 +87,7 @@ export class InventoryPage {
   }
 
   onAdd() {
-    this.stockpileData.scan().then(
+    this.ionicPlugins.scan().then(
       barcodeData => {
         if (!barcodeData.cancelled) {
           this.navCtrl.push(ItemPage, {
@@ -96,7 +96,7 @@ export class InventoryPage {
           });
         }
       },
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
   }
 }
