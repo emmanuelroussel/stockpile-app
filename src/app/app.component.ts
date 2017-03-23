@@ -24,6 +24,7 @@ export class MyApp {
   ngOnInit() {
     this.userData.isLoggedIn().then(loggedIn => {
       if (loggedIn) {
+        this.userData.setUser();
         this.rootPage = TabsPage;
       } else {
         this.rootPage = LoginPage;
