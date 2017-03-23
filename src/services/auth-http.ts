@@ -33,6 +33,6 @@ export function handleError(error: Response | any, caught: any) {
 }
 
 export function extractData(res: Response) {
-  let body = res.json();
+  const body = res.json();
   return body || { };
 }

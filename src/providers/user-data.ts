@@ -19,7 +19,7 @@ export class UserData {
   ) { }
 
   login(email: string, password: string) {
-    let creds = {
+    const creds = {
       email: email,
       password: password
     };
