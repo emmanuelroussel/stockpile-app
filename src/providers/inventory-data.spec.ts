@@ -6,8 +6,7 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { ApiUrl } from './api-url';
 import { TestData } from '../test-data';
 import { InventoryData } from './inventory-data';
-import { StockpileData } from './stockpile-data';
-import { ApiUrlMock, StockpileDataMock } from '../mocks';
+import { ApiUrlMock } from '../mocks';
 
 describe('InventoryData Provider', () => {
 
@@ -16,7 +15,6 @@ describe('InventoryData Provider', () => {
       providers: [
         { provide: ApiUrl, useClass: ApiUrlMock },
         InventoryData,
-        { provide: StockpileData, useClass: StockpileDataMock },
         MockBackend,
         BaseRequestOptions,
         {

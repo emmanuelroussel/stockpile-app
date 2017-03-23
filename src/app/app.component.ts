@@ -4,7 +4,6 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
-import { StockpileData } from '../providers/stockpile-data';
 import { UserData } from '../providers/user-data';
 
 @Component({
@@ -16,7 +15,6 @@ export class MyApp {
 
   constructor(
     public platform: Platform,
-    public stockpileData: StockpileData,
     public userData: UserData,
     public menuCtrl: MenuController
   ) { }

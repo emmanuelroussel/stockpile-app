@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
-import { StockpileData } from '../../providers/stockpile-data';
+import { IonicPlugins } from '../../providers/ionic-plugins';
 import { ItemPage } from '../item/item';
 import { RentalDetailsPage } from '../rental-details/rental-details';
 import { Actions, Messages } from '../../constants';
@@ -21,7 +21,7 @@ export class RentalPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public inventoryData: InventoryData,
-    public stockpileData: StockpileData,
+    public ionicPlugins: IonicPlugins,
     public events: Events
   ) { }
 
@@ -34,7 +34,7 @@ export class RentalPage {
 
       this.inventoryData.getItem(tag).subscribe(
         item => this.items.splice(index, 1, item),
-        err => this.stockpileData.showToast(err)
+        err => this.ionicPlugins.showToast(err)
       );
     });
 
@@ -45,16 +45,16 @@ export class RentalPage {
     this.inventoryData.getItem(this.tag).subscribe(
       item => {
         if (item.available === 0 && this.action === Actions.rent) {
-          this.stockpileData.showToast(Messages.itemAlreadyRented);
+          this.ionicPlugins.showToast(Messages.itemAlreadyRented);
         } else if (item.available === 1 && this.action === Actions.return) {
-          this.stockpileData.showToast(Messages.itemNotRented);
+          this.ionicPlugins.showToast(Messages.itemNotRented);
         } else if (this.items.some(listItem => listItem.tag === item.tag)) {
-          this.stockpileData.showToast(Messages.itemAlreadyAdded);
+          this.ionicPlugins.showToast(Messages.itemAlreadyAdded);
         } else {
           this.items.push(item);
         }
       },
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
 
     this.tag = '';
@@ -82,22 +82,22 @@ export class RentalPage {
 
     Promise.all(returns).then(
       success => {
-        this.stockpileData.showToast(Messages.itemsReturned);
+        this.ionicPlugins.showToast(Messages.itemsReturned);
         this.navCtrl.pop();
       },
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
   }
 
   onScan() {
-    this.stockpileData.scan().then(
+    this.ionicPlugins.scan().then(
       barcodeData => {
         if (!barcodeData.cancelled) {
           this.tag = barcodeData.text;
           this.onAdd();
         }
       },
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
   }
 }

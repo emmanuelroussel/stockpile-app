@@ -6,7 +6,7 @@ import { InventoryData } from '../../providers/inventory-data';
 
 import { Actions, ItemProperties, Messages } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
-import { StockpileData } from '../../providers/stockpile-data';
+import { IonicPlugins } from '../../providers/ionic-plugins';
 
 @Component({
   selector: 'page-item',
@@ -31,7 +31,7 @@ export class ItemPage {
     public navParams: NavParams,
     public inventoryData: InventoryData,
     public modalCtrl: ModalController,
-    public stockpileData: StockpileData,
+    public ionicPlugins: IonicPlugins,
     public events: Events
   ) { }
 
@@ -41,12 +41,12 @@ export class ItemPage {
 
     this.inventoryData.getBrands().subscribe(
       (brands: any) => this.allBrands = brands.results,
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
 
     this.inventoryData.getCategories().subscribe(
       (categories: any) => this.allCategories = categories.results,
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
 
     if (this.action === this.actions.edit) {
@@ -65,15 +65,15 @@ export class ItemPage {
               this.allModels = models.results;
               this.filterModels();
             },
-            err => this.stockpileData.showToast(err)
+            err => this.ionicPlugins.showToast(err)
           );
         },
-        err => this.stockpileData.showToast(err)
+        err => this.ionicPlugins.showToast(err)
       );
     } else {
       this.inventoryData.getModels().subscribe(
         (models: any) => this.allModels = models.results,
-        err => this.stockpileData.showToast(err)
+        err => this.ionicPlugins.showToast(err)
       );
     }
   }
@@ -93,11 +93,11 @@ export class ItemPage {
 
       observable.subscribe(
         item => {
-          this.stockpileData.showToast(message);
+          this.ionicPlugins.showToast(message);
           this.events.publish('item:edited', item.tag);
           this.navCtrl.pop();
         },
-        err => this.stockpileData.showToast(err)
+        err => this.ionicPlugins.showToast(err)
       );
     }
   }
@@ -105,10 +105,10 @@ export class ItemPage {
   onDelete() {
     this.inventoryData.deleteItem(this.item.tag).subscribe(
       success => {
-        this.stockpileData.showToast(Messages.itemDeleted);
+        this.ionicPlugins.showToast(Messages.itemDeleted);
         this.navCtrl.pop();
       },
-      err => this.stockpileData.showToast(err)
+      err => this.ionicPlugins.showToast(err)
     );
   }
 
@@ -142,7 +142,7 @@ export class ItemPage {
                   this.selectedModel = '';
                   this.filterModels();
                 },
-                err => this.stockpileData.showToast(err)
+                err => this.ionicPlugins.showToast(err)
               );
               break;
             case this.itemProperties.model:
@@ -157,7 +157,7 @@ export class ItemPage {
                   this.selectedModel = newModel.name;
                   this.allModels.push(newModel);
                 },
-                err => this.stockpileData.showToast(err)
+                err => this.ionicPlugins.showToast(err)
               );
               break;
             case this.itemProperties.category:
@@ -172,7 +172,7 @@ export class ItemPage {
                   this.selectedCategory = newCategory.name;
                   this.allCategories.push(newCategory);
                 },
-                err => this.stockpileData.showToast(err)
+                err => this.ionicPlugins.showToast(err)
               );
               break;
           }

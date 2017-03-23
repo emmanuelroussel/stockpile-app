@@ -16,7 +16,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { ApiUrl } from '../providers/api-url';
 import { InventoryData } from '../providers/inventory-data';
-import { StockpileData } from '../providers/stockpile-data';
+import { IonicPlugins } from '../providers/ionic-plugins';
 import { UserData } from '../providers/user-data';
 
 import { RavenErrorHandler } from '../services/raven-error-handler';
@@ -63,7 +63,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http';
     { provide: ErrorHandler, useClass: RavenErrorHandler },
     ApiUrl,
     InventoryData,
-    StockpileData,
+    IonicPlugins,
     UserData,
     { provide: AuthHttp, useFactory: getAuthHttp, deps: [Http] }
   ]

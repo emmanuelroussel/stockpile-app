@@ -7,8 +7,7 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { ApiUrl } from './api-url';
 import { UserData } from './user-data';
 import { TestData } from '../test-data';
-import { StockpileData } from './stockpile-data';
-import { ApiUrlMock, StockpileDataMock, StorageMock } from '../mocks';
+import { ApiUrlMock, StorageMock } from '../mocks';
 
 describe('UserData Provider', () => {
 
@@ -18,7 +17,6 @@ describe('UserData Provider', () => {
         { provide: ApiUrl, useClass: ApiUrlMock },
         UserData,
         { provide: Storage, useClass: StorageMock },
-        { provide: StockpileData, useClass: StockpileDataMock },
         MockBackend,
         BaseRequestOptions,
         {

@@ -54,14 +54,14 @@ describe('RentalDetails Page', () => {
     instance.items = TestData.items;
     spyOn(instance.navCtrl, 'popToRoot');
     spyOn(instance.inventoryData, 'rent').and.callThrough();
-    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.ionicPlugins, 'showToast');
     fixture.whenStable().then(() => {
       let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
       instance.onRent(form);
       tick();
       expect(instance.inventoryData.rent).toHaveBeenCalled();
       expect(instance.navCtrl.popToRoot).toHaveBeenCalled();
-      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(Messages.itemsRented);
+      expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(Messages.itemsRented);
     });
   }));
 
@@ -69,12 +69,12 @@ describe('RentalDetails Page', () => {
     instance.details = TestData.details;
     instance.inventoryData.resolve = false;
     instance.items = TestData.items;
-    spyOn(instance.stockpileData, 'showToast');
+    spyOn(instance.ionicPlugins, 'showToast');
     fixture.whenStable().then(() => {
       let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
       instance.onRent(form);
       tick();
-      expect(instance.stockpileData.showToast).toHaveBeenCalledWith(TestData.error);
+      expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
     });
   }));
 });
