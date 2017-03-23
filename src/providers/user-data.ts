@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Response, Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
-import { AuthHttp, tokenNotExpired } from 'angular2-jwt';
+import * as Raven from 'raven-js';
+import { AuthHttp, tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { StockpileData } from './stockpile-data';
 import { Links } from '../constants';
 import { ApiUrl } from './api-url';
@@ -11,12 +12,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UserData {
   storage = new Storage();
+  jwtHelper: JwtHelper = new JwtHelper();
 
   constructor(
     public apiUrl: ApiUrl,
     public authHttp: AuthHttp,
     public stockpileData: StockpileData,
-    public http: Http,
+    public http: Http
   ) { }
 
   login(email: string, password: string) {
@@ -32,6 +34,10 @@ export class UserData {
         .subscribe(
           data => {
             this.storage.set('id_token', data.token);
+            Raven.setUserContext({
+              id: data.id
+            });
+
             resolve(data);
           },
           err => reject(err)
@@ -49,6 +55,16 @@ export class UserData {
         resolve(tokenNotExpired(null, token));
       });
     });
+  }
+
+  setUser() {
+    this.storage.get('id_token').then(
+      token => {
+        Raven.setUserContext({
+          id: this.jwtHelper.decodeToken(token).sub
+        });
+      }
+    );
   }
 
   private extractData(res: Response) {
