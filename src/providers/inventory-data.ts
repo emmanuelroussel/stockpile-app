@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Response, URLSearchParams } from '@angular/http';
+import { URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import { Links } from '../constants';
 import { ApiUrl } from './api-url';
 import { Observable } from 'rxjs/Observable';
+import { extractData, handleError } from '../services/auth-http';
 import 'rxjs/Rx';
 
 @Injectable()
@@ -105,37 +106,19 @@ export class InventoryData {
 
   private getEndpoint(endpoint: string, params?: Object) {
     return this.authHttp.get(`${this.apiUrl.getUrl()}${endpoint}`, params)
-      .map(this.extractData)
-      .catch(this.handleError);
+      .map(extractData)
+      .catch(handleError);
   }
 
   private putEndpoint(endpoint: string, body: Object) {
     return this.authHttp.put(`${this.apiUrl.getUrl()}${endpoint}`, body)
-      .map(this.extractData)
-      .catch(this.handleError);
+      .map(extractData)
+      .catch(handleError);
   }
 
   private deleteEndpoint(endpoint: string) {
     return this.authHttp.delete(`${this.apiUrl.getUrl()}${endpoint}`)
-      .map(this.extractData)
-      .catch(this.handleError);
-  }
-
-  private extractData(res: Response) {
-    let body = res.json();
-    return body || { };
-  }
-
-  private handleError(error: Response | any, caught: any) {
-    let message: string;
-
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      message = body.message || JSON.stringify(body);
-    } else {
-      message = error.message ? error.message : error.toString();
-    }
-
-    return Observable.throw(message);
+      .map(extractData)
+      .catch(handleError);
   }
 }
