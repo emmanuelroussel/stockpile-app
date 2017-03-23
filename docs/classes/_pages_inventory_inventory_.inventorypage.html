@@ -90,7 +90,29 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#allbrands" class="tsd-kind-icon">all<wbr>Brands</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#allcategories" class="tsd-kind-icon">all<wbr>Categories</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#allitems" class="tsd-kind-icon">all<wbr>Items</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#allmodels" class="tsd-kind-icon">all<wbr>Models</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#filtereditems" class="tsd-kind-icon">filtered<wbr>Items</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#filteredmodels" class="tsd-kind-icon">filtered<wbr>Models</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#inventorydata" class="tsd-kind-icon">inventory<wbr>Data</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#navctrl" class="tsd-kind-icon">nav<wbr>Ctrl</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#segment" class="tsd-kind-icon">segment</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#selectedbrandid" class="tsd-kind-icon">selected<wbr>BrandID</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#selectedcategoryid" class="tsd-kind-icon">selected<wbr>CategoryID</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#selectedmodelid" class="tsd-kind-icon">selected<wbr>ModelID</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#stockpiledata" class="tsd-kind-icon">stockpile<wbr>Data</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#filteritems" class="tsd-kind-icon">filter<wbr>Items</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#filtermodels" class="tsd-kind-icon">filter<wbr>Models</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#ionviewwillenter" class="tsd-kind-icon">ion<wbr>View<wbr>Will<wbr>Enter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#onadd" class="tsd-kind-icon">on<wbr>Add</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_pages_inventory_inventory_.inventorypage.html#viewitem" class="tsd-kind-icon">view<wbr>Item</a></li>
 							</ul>
 						</section>
 					</div>
@@ -102,19 +124,25 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Inventory<wbr>Page<span class="tsd-signature-symbol">(</span>navCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavController</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_pages_inventory_inventory_.inventorypage.html" class="tsd-signature-type">InventoryPage</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Inventory<wbr>Page<span class="tsd-signature-symbol">(</span>navCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavController</span>, inventoryData<span class="tsd-signature-symbol">: </span><a href="_providers_inventory_data_.inventorydata.html" class="tsd-signature-type">InventoryData</a>, stockpileData<span class="tsd-signature-symbol">: </span><a href="_providers_stockpile_data_.stockpiledata.html" class="tsd-signature-type">StockpileData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_pages_inventory_inventory_.inventorypage.html" class="tsd-signature-type">InventoryPage</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5b5dae0/src/pages/inventory/inventory.ts#L9">pages/inventory/inventory.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L23">pages/inventory/inventory.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>navCtrl: <span class="tsd-signature-type">NavController</span></h5>
+								</li>
+								<li>
+									<h5>inventoryData: <a href="_providers_inventory_data_.inventorydata.html" class="tsd-signature-type">InventoryData</a></h5>
+								</li>
+								<li>
+									<h5>stockpileData: <a href="_providers_stockpile_data_.stockpiledata.html" class="tsd-signature-type">StockpileData</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_pages_inventory_inventory_.inventorypage.html" class="tsd-signature-type">InventoryPage</a></h4>
@@ -125,14 +153,228 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="allbrands" class="tsd-anchor"></a>
+					<h3>all<wbr>Brands</h3>
+					<div class="tsd-signature tsd-kind-icon">all<wbr>Brands<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L15">pages/inventory/inventory.ts:15</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="allcategories" class="tsd-anchor"></a>
+					<h3>all<wbr>Categories</h3>
+					<div class="tsd-signature tsd-kind-icon">all<wbr>Categories<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L20">pages/inventory/inventory.ts:20</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="allitems" class="tsd-anchor"></a>
+					<h3>all<wbr>Items</h3>
+					<div class="tsd-signature tsd-kind-icon">all<wbr>Items<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L22">pages/inventory/inventory.ts:22</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="allmodels" class="tsd-anchor"></a>
+					<h3>all<wbr>Models</h3>
+					<div class="tsd-signature tsd-kind-icon">all<wbr>Models<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L17">pages/inventory/inventory.ts:17</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="filtereditems" class="tsd-anchor"></a>
+					<h3>filtered<wbr>Items</h3>
+					<div class="tsd-signature tsd-kind-icon">filtered<wbr>Items<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L23">pages/inventory/inventory.ts:23</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="filteredmodels" class="tsd-anchor"></a>
+					<h3>filtered<wbr>Models</h3>
+					<div class="tsd-signature tsd-kind-icon">filtered<wbr>Models<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L18">pages/inventory/inventory.ts:18</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="inventorydata" class="tsd-anchor"></a>
+					<h3>inventory<wbr>Data</h3>
+					<div class="tsd-signature tsd-kind-icon">inventory<wbr>Data<span class="tsd-signature-symbol">:</span> <a href="_providers_inventory_data_.inventorydata.html" class="tsd-signature-type">InventoryData</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L27">pages/inventory/inventory.ts:27</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="navctrl" class="tsd-anchor"></a>
 					<h3>nav<wbr>Ctrl</h3>
 					<div class="tsd-signature tsd-kind-icon">nav<wbr>Ctrl<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NavController</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5b5dae0/src/pages/inventory/inventory.ts#L11">pages/inventory/inventory.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L26">pages/inventory/inventory.ts:26</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="segment" class="tsd-anchor"></a>
+					<h3>segment</h3>
+					<div class="tsd-signature tsd-kind-icon">segment<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;-1</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L14">pages/inventory/inventory.ts:14</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="selectedbrandid" class="tsd-anchor"></a>
+					<h3>selected<wbr>BrandID</h3>
+					<div class="tsd-signature tsd-kind-icon">selected<wbr>BrandID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;-1</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L16">pages/inventory/inventory.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="selectedcategoryid" class="tsd-anchor"></a>
+					<h3>selected<wbr>CategoryID</h3>
+					<div class="tsd-signature tsd-kind-icon">selected<wbr>CategoryID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;-1</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L21">pages/inventory/inventory.ts:21</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="selectedmodelid" class="tsd-anchor"></a>
+					<h3>selected<wbr>ModelID</h3>
+					<div class="tsd-signature tsd-kind-icon">selected<wbr>ModelID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;-1</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L19">pages/inventory/inventory.ts:19</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="stockpiledata" class="tsd-anchor"></a>
+					<h3>stockpile<wbr>Data</h3>
+					<div class="tsd-signature tsd-kind-icon">stockpile<wbr>Data<span class="tsd-signature-symbol">:</span> <a href="_providers_stockpile_data_.stockpiledata.html" class="tsd-signature-type">StockpileData</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L28">pages/inventory/inventory.ts:28</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="filteritems" class="tsd-anchor"></a>
+					<h3>filter<wbr>Items</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">filter<wbr>Items<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L56">pages/inventory/inventory.ts:56</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="filtermodels" class="tsd-anchor"></a>
+					<h3>filter<wbr>Models</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">filter<wbr>Models<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L76">pages/inventory/inventory.ts:76</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="ionviewwillenter" class="tsd-anchor"></a>
+					<h3>ion<wbr>View<wbr>Will<wbr>Enter</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">ion<wbr>View<wbr>Will<wbr>Enter<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L31">pages/inventory/inventory.ts:31</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="onadd" class="tsd-anchor"></a>
+					<h3>on<wbr>Add</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Add<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L89">pages/inventory/inventory.ts:89</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="viewitem" class="tsd-anchor"></a>
+					<h3>view<wbr>Item</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">view<wbr>Item<span class="tsd-signature-symbol">(</span>item<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/inventory/inventory.ts#L82">pages/inventory/inventory.ts:82</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>item: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -142,8 +384,68 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_app_app_component_.html">"app/app.component"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_app_app_module_.html">"app/app.module"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_app_main_.html">"app/main"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_constants_.html">"constants"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_environments_environment_.html">"environments/environment"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_environments_environment_prod_.html">"environments/environment.prod"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_mocks_.html">"mocks"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_home_home_.html">"pages/home/home"</a>
+					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/_pages_inventory_inventory_.html">"pages/inventory/inventory"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_item_filter_item_filter_.html">"pages/item-<wbr>filter/item-<wbr>filter"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_item_item_.html">"pages/item/item"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_login_login_.html">"pages/login/login"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_rental_details_rental_details_.html">"pages/rental-<wbr>details/rental-<wbr>details"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_rental_rental_.html">"pages/rental/rental"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_tabs_tabs_.html">"pages/tabs/tabs"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_polyfills_.html">"polyfills"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_providers_api_url_.html">"providers/api-<wbr>url"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_providers_inventory_data_.html">"providers/inventory-<wbr>data"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_providers_stockpile_data_.html">"providers/stockpile-<wbr>data"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_providers_user_data_.html">"providers/user-<wbr>data"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_test_data_.html">"test-<wbr>data"</a>
 					</li>
 				</ul>
 			</nav>
@@ -158,7 +460,58 @@
 								<a href="_pages_inventory_inventory_.inventorypage.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#allbrands" class="tsd-kind-icon">all<wbr>Brands</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#allcategories" class="tsd-kind-icon">all<wbr>Categories</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#allitems" class="tsd-kind-icon">all<wbr>Items</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#allmodels" class="tsd-kind-icon">all<wbr>Models</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#filtereditems" class="tsd-kind-icon">filtered<wbr>Items</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#filteredmodels" class="tsd-kind-icon">filtered<wbr>Models</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#inventorydata" class="tsd-kind-icon">inventory<wbr>Data</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_pages_inventory_inventory_.inventorypage.html#navctrl" class="tsd-kind-icon">nav<wbr>Ctrl</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#segment" class="tsd-kind-icon">segment</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#selectedbrandid" class="tsd-kind-icon">selected<wbr>BrandID</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#selectedcategoryid" class="tsd-kind-icon">selected<wbr>CategoryID</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#selectedmodelid" class="tsd-kind-icon">selected<wbr>ModelID</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#stockpiledata" class="tsd-kind-icon">stockpile<wbr>Data</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#filteritems" class="tsd-kind-icon">filter<wbr>Items</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#filtermodels" class="tsd-kind-icon">filter<wbr>Models</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#ionviewwillenter" class="tsd-kind-icon">ion<wbr>View<wbr>Will<wbr>Enter</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#onadd" class="tsd-kind-icon">on<wbr>Add</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_pages_inventory_inventory_.inventorypage.html#viewitem" class="tsd-kind-icon">view<wbr>Item</a>
 							</li>
 						</ul>
 					</li>

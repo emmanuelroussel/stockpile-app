@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Actions | Stockpile</title>
+	<title>Messages | Stockpile</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -59,10 +59,10 @@
 					<a href="../modules/_constants_.html">&quot;constants&quot;</a>
 				</li>
 				<li>
-					<a href="_constants_.actions.html">Actions</a>
+					<a href="_constants_.messages.html">Messages</a>
 				</li>
 			</ul>
-			<h1>Class Actions</h1>
+			<h1>Class Messages</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Actions</span>
+						<span class="target">Messages</span>
 					</li>
 				</ul>
 			</section>
@@ -84,10 +84,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_constants_.actions.html#add" class="tsd-kind-icon">add</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_constants_.actions.html#edit" class="tsd-kind-icon">edit</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_constants_.actions.html#rent" class="tsd-kind-icon">rent</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_constants_.actions.html#return" class="tsd-kind-icon">return</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static"><a href="_constants_.messages.html#baseplural" class="tsd-kind-icon">base<wbr>Plural</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static"><a href="_constants_.messages.html#basesingular" class="tsd-kind-icon">base<wbr>Singular</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_constants_.messages.html#itemadded" class="tsd-kind-icon">item<wbr>Added</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_constants_.messages.html#itemalreadyadded" class="tsd-kind-icon">item<wbr>Already<wbr>Added</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_constants_.messages.html#itemalreadyrented" class="tsd-kind-icon">item<wbr>Already<wbr>Rented</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_constants_.messages.html#itemdeleted" class="tsd-kind-icon">item<wbr>Deleted</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_constants_.messages.html#itemedited" class="tsd-kind-icon">item<wbr>Edited</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_constants_.messages.html#itemnotrented" class="tsd-kind-icon">item<wbr>Not<wbr>Rented</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_constants_.messages.html#itemsrented" class="tsd-kind-icon">items<wbr>Rented</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_constants_.messages.html#itemsreturned" class="tsd-kind-icon">items<wbr>Returned</a></li>
 							</ul>
 						</section>
 					</div>
@@ -95,43 +101,103 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="add" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> add</h3>
-					<div class="tsd-signature tsd-kind-icon">add<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Add&quot;</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static">
+					<a name="baseplural" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> base<wbr>Plural</h3>
+					<div class="tsd-signature tsd-kind-icon">base<wbr>Plural<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Item(s) successfully &quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L4">constants.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L20">constants.ts:20</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static">
+					<a name="basesingular" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> base<wbr>Singular</h3>
+					<div class="tsd-signature tsd-kind-icon">base<wbr>Singular<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Item successfully &quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L19">constants.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="edit" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> edit</h3>
-					<div class="tsd-signature tsd-kind-icon">edit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Edit&quot;</span></div>
+					<a name="itemadded" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> item<wbr>Added</h3>
+					<div class="tsd-signature tsd-kind-icon">item<wbr>Added<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;${Messages.baseSingular} added!&#x60;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L5">constants.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L21">constants.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="rent" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> rent</h3>
-					<div class="tsd-signature tsd-kind-icon">rent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Rent&quot;</span></div>
+					<a name="itemalreadyadded" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> item<wbr>Already<wbr>Added</h3>
+					<div class="tsd-signature tsd-kind-icon">item<wbr>Already<wbr>Added<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Item is already added to the list!&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L2">constants.ts:2</a></li>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L28">constants.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
-					<a name="return" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagStatic">Static</span> return</h3>
-					<div class="tsd-signature tsd-kind-icon">return<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Return&quot;</span></div>
+					<a name="itemalreadyrented" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> item<wbr>Already<wbr>Rented</h3>
+					<div class="tsd-signature tsd-kind-icon">item<wbr>Already<wbr>Rented<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Item is already rented!&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L3">constants.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L26">constants.ts:26</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="itemdeleted" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> item<wbr>Deleted</h3>
+					<div class="tsd-signature tsd-kind-icon">item<wbr>Deleted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;${Messages.baseSingular} deleted!&#x60;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L23">constants.ts:23</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="itemedited" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> item<wbr>Edited</h3>
+					<div class="tsd-signature tsd-kind-icon">item<wbr>Edited<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;${Messages.baseSingular} edited!&#x60;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L22">constants.ts:22</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="itemnotrented" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> item<wbr>Not<wbr>Rented</h3>
+					<div class="tsd-signature tsd-kind-icon">item<wbr>Not<wbr>Rented<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;Item is not currently rented!&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L27">constants.ts:27</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="itemsrented" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> items<wbr>Rented</h3>
+					<div class="tsd-signature tsd-kind-icon">items<wbr>Rented<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;${Messages.basePlural} rented!&#x60;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L25">constants.ts:25</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="itemsreturned" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> items<wbr>Returned</h3>
+					<div class="tsd-signature tsd-kind-icon">items<wbr>Returned<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;${Messages.basePlural} returned!&#x60;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/constants.ts#L24">constants.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -210,36 +276,54 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="_constants_.actions.html" class="tsd-kind-icon">Actions</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_constants_.actions.html#add" class="tsd-kind-icon">add</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_constants_.actions.html#edit" class="tsd-kind-icon">edit</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_constants_.actions.html#rent" class="tsd-kind-icon">rent</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
-								<a href="_constants_.actions.html#return" class="tsd-kind-icon">return</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="_constants_.itemproperties.html" class="tsd-kind-icon">Item<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module">
 						<a href="_constants_.links.html" class="tsd-kind-icon">Links</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-external-module">
 						<a href="_constants_.messages.html" class="tsd-kind-icon">Messages</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static">
+								<a href="_constants_.messages.html#baseplural" class="tsd-kind-icon">base<wbr>Plural</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-static">
+								<a href="_constants_.messages.html#basesingular" class="tsd-kind-icon">base<wbr>Singular</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_constants_.messages.html#itemadded" class="tsd-kind-icon">item<wbr>Added</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_constants_.messages.html#itemalreadyadded" class="tsd-kind-icon">item<wbr>Already<wbr>Added</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_constants_.messages.html#itemalreadyrented" class="tsd-kind-icon">item<wbr>Already<wbr>Rented</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_constants_.messages.html#itemdeleted" class="tsd-kind-icon">item<wbr>Deleted</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_constants_.messages.html#itemedited" class="tsd-kind-icon">item<wbr>Edited</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_constants_.messages.html#itemnotrented" class="tsd-kind-icon">item<wbr>Not<wbr>Rented</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_constants_.messages.html#itemsrented" class="tsd-kind-icon">items<wbr>Rented</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_constants_.messages.html#itemsreturned" class="tsd-kind-icon">items<wbr>Returned</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 				</ul>
 			</nav>
 		</div>

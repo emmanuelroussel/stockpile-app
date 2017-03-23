@@ -76,10 +76,21 @@
 					<li>Clone this repo</li>
 					<li>Make sure you have the latest version of Ionic and Cordova installed <code>npm install -g ionic cordova</code></li>
 					<li>Run <code>npm install</code> from the project root</li>
+				</ul>
+				<p><strong>Note:</strong> If your build is slow, update <code>npm</code> to 3.x: <code>npm install -g npm</code>.</p>
+				<h2 id="running-in-a-browser">Running in a Browser</h2>
+				<ul>
 					<li>Run <code>ionic serve</code> to preview the app in your browser</li>
 					<li>You can also run <code>ionic serve --lab</code> to preview different platforms side-by-side</li>
 				</ul>
-				<p><strong>Note:</strong> If your build is slow, update <code>npm</code> to 3.x: <code>npm install -g npm</code>.</p>
+				<p><strong>Note:</strong> Some native functionality like scanning won&#39;t be available in the browser. You have to run the app on an emulator or device for the full experience.</p>
+				<h2 id="running-on-a-device-or-emulator">Running on a Device or Emulator</h2>
+				<p>Running apps on a device or emulator requires you to build the app on your computer. To do this, you have to set up the Android SDK and Apple&#39;s Xcode. For detailed instructions on how to do this, follow <a href="https://ionicframework.com/docs/v2/resources/platform-setup/mac-setup.html">this guide for Mac</a> or <a href="https://ionicframework.com/docs/v2/resources/platform-setup/windows-setup.html">this one for Windows</a>.</p>
+				<ul>
+					<li>Run <code>ionic state restore</code> to prepare the iOS and Android platforms and install the correct plugins for each</li>
+					<li>Run <code>ionic emulate ios</code> or <code>ionic emulate android</code> to emulate</li>
+					<li>Run <code>ionic run ios</code> or <code>ionic run android</code> to run on real device</li>
+				</ul>
 				<h2 id="tests">Tests</h2>
 				<p>App tested with Jasmine and Karma on Chrome.</p>
 				<p>Unit tests located with every testable <code>.ts</code> file in <code>src/pages/</code> and <code>src/app/</code> (unit test files end with <code>.spec.ts</code>).</p>
@@ -103,9 +114,6 @@
 						<a href="modules/_app_app_module_.html">"app/app.module"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_app_app_spec_.html">"app/app.spec"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="modules/_app_main_.html">"app/main"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -124,37 +132,22 @@
 						<a href="modules/_pages_home_home_.html">"pages/home/home"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_pages_home_home_spec_.html">"pages/home/home.spec"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="modules/_pages_inventory_inventory_.html">"pages/inventory/inventory"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_pages_inventory_inventory_spec_.html">"pages/inventory/inventory.spec"</a>
+						<a href="modules/_pages_item_filter_item_filter_.html">"pages/item-<wbr>filter/item-<wbr>filter"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_pages_item_item_.html">"pages/item/item"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_pages_item_item_spec_.html">"pages/item/item.spec"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="modules/_pages_login_login_.html">"pages/login/login"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_pages_login_login_spec_.html">"pages/login/login.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_pages_rental_details_rental_details_.html">"pages/rental-<wbr>details/rental-<wbr>details"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_pages_rental_details_rental_details_spec_.html">"pages/rental-<wbr>details/rental-<wbr>details.spec"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="modules/_pages_rental_rental_.html">"pages/rental/rental"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_pages_rental_rental_spec_.html">"pages/rental/rental.spec"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_pages_tabs_tabs_.html">"pages/tabs/tabs"</a>
@@ -163,25 +156,16 @@
 						<a href="modules/_polyfills_.html">"polyfills"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_providers_inventory_data_.html">"providers/inventory-<wbr>data"</a>
+						<a href="modules/_providers_api_url_.html">"providers/api-<wbr>url"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_providers_inventory_data_spec_.html">"providers/inventory-<wbr>data.spec"</a>
+						<a href="modules/_providers_inventory_data_.html">"providers/inventory-<wbr>data"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_providers_stockpile_data_.html">"providers/stockpile-<wbr>data"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_providers_stockpile_data_spec_.html">"providers/stockpile-<wbr>data.spec"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="modules/_providers_user_data_.html">"providers/user-<wbr>data"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_providers_user_data_spec_.html">"providers/user-<wbr>data.spec"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_test_.html">"test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_test_data_.html">"test-<wbr>data"</a>

@@ -95,6 +95,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_rental_details_rental_details_.rentaldetailspage.html#items" class="tsd-kind-icon">items</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_rental_details_rental_details_.rentaldetailspage.html#navctrl" class="tsd-kind-icon">nav<wbr>Ctrl</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_rental_details_rental_details_.rentaldetailspage.html#navparams" class="tsd-kind-icon">nav<wbr>Params</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_rental_details_rental_details_.rentaldetailspage.html#stockpiledata" class="tsd-kind-icon">stockpile<wbr>Data</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_pages_rental_details_rental_details_.rentaldetailspage.html#submitted" class="tsd-kind-icon">submitted</a></li>
 							</ul>
 						</section>
@@ -114,13 +115,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Rental<wbr>Details<wbr>Page<span class="tsd-signature-symbol">(</span>navCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavController</span>, navParams<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavParams</span>, inventoryData<span class="tsd-signature-symbol">: </span><a href="_providers_inventory_data_.inventorydata.html" class="tsd-signature-type">InventoryData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_pages_rental_details_rental_details_.rentaldetailspage.html" class="tsd-signature-type">RentalDetailsPage</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Rental<wbr>Details<wbr>Page<span class="tsd-signature-symbol">(</span>navCtrl<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavController</span>, navParams<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NavParams</span>, inventoryData<span class="tsd-signature-symbol">: </span><a href="_providers_inventory_data_.inventorydata.html" class="tsd-signature-type">InventoryData</a>, stockpileData<span class="tsd-signature-symbol">: </span><a href="_providers_stockpile_data_.stockpiledata.html" class="tsd-signature-type">StockpileData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_pages_rental_details_rental_details_.rentaldetailspage.html" class="tsd-signature-type">RentalDetailsPage</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5b5dae0/src/pages/rental-details/rental-details.ts#L13">pages/rental-details/rental-details.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/rental-details/rental-details.ts#L16">pages/rental-details/rental-details.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -133,6 +134,9 @@
 								</li>
 								<li>
 									<h5>inventoryData: <a href="_providers_inventory_data_.inventorydata.html" class="tsd-signature-type">InventoryData</a></h5>
+								</li>
+								<li>
+									<h5>stockpileData: <a href="_providers_stockpile_data_.stockpiledata.html" class="tsd-signature-type">StockpileData</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_pages_rental_details_rental_details_.rentaldetailspage.html" class="tsd-signature-type">RentalDetailsPage</a></h4>
@@ -148,20 +152,20 @@
 					<div class="tsd-signature tsd-kind-icon">details<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5b5dae0/src/pages/rental-details/rental-details.ts#L12">pages/rental-details/rental-details.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/rental-details/rental-details.ts#L15">pages/rental-details/rental-details.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> date<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> end<wbr>Date<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> person<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> itemID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 							<li class="tsd-parameter">
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> purpose<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> start<wbr>Date<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span></h5>
 							</li>
 						</ul>
 					</div>
@@ -172,17 +176,17 @@
 					<div class="tsd-signature tsd-kind-icon">inventory<wbr>Data<span class="tsd-signature-symbol">:</span> <a href="_providers_inventory_data_.inventorydata.html" class="tsd-signature-type">InventoryData</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5b5dae0/src/pages/rental-details/rental-details.ts#L18">pages/rental-details/rental-details.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/rental-details/rental-details.ts#L21">pages/rental-details/rental-details.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="items" class="tsd-anchor"></a>
 					<h3>items</h3>
-					<div class="tsd-signature tsd-kind-icon">items<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">items<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5b5dae0/src/pages/rental-details/rental-details.ts#L11">pages/rental-details/rental-details.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/rental-details/rental-details.ts#L14">pages/rental-details/rental-details.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -192,7 +196,7 @@
 					<div class="tsd-signature tsd-kind-icon">nav<wbr>Ctrl<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NavController</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5b5dae0/src/pages/rental-details/rental-details.ts#L16">pages/rental-details/rental-details.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/rental-details/rental-details.ts#L19">pages/rental-details/rental-details.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -202,7 +206,17 @@
 					<div class="tsd-signature tsd-kind-icon">nav<wbr>Params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NavParams</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5b5dae0/src/pages/rental-details/rental-details.ts#L17">pages/rental-details/rental-details.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/rental-details/rental-details.ts#L20">pages/rental-details/rental-details.ts:20</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="stockpiledata" class="tsd-anchor"></a>
+					<h3>stockpile<wbr>Data</h3>
+					<div class="tsd-signature tsd-kind-icon">stockpile<wbr>Data<span class="tsd-signature-symbol">:</span> <a href="_providers_stockpile_data_.stockpiledata.html" class="tsd-signature-type">StockpileData</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/rental-details/rental-details.ts#L22">pages/rental-details/rental-details.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -212,7 +226,7 @@
 					<div class="tsd-signature tsd-kind-icon">submitted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5b5dae0/src/pages/rental-details/rental-details.ts#L13">pages/rental-details/rental-details.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/rental-details/rental-details.ts#L16">pages/rental-details/rental-details.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -229,7 +243,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5b5dae0/src/pages/rental-details/rental-details.ts#L21">pages/rental-details/rental-details.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/rental-details/rental-details.ts#L25">pages/rental-details/rental-details.ts:25</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -246,7 +260,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5b5dae0/src/pages/rental-details/rental-details.ts#L25">pages/rental-details/rental-details.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/emmanuelroussel/stockpile-app/blob/5526549/src/pages/rental-details/rental-details.ts#L35">pages/rental-details/rental-details.ts:35</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -267,8 +281,68 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_app_app_component_.html">"app/app.component"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_app_app_module_.html">"app/app.module"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_app_main_.html">"app/main"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_constants_.html">"constants"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_environments_environment_.html">"environments/environment"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_environments_environment_prod_.html">"environments/environment.prod"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_mocks_.html">"mocks"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_home_home_.html">"pages/home/home"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_inventory_inventory_.html">"pages/inventory/inventory"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_item_filter_item_filter_.html">"pages/item-<wbr>filter/item-<wbr>filter"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_item_item_.html">"pages/item/item"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_login_login_.html">"pages/login/login"</a>
+					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/_pages_rental_details_rental_details_.html">"pages/rental-<wbr>details/rental-<wbr>details"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_rental_rental_.html">"pages/rental/rental"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_tabs_tabs_.html">"pages/tabs/tabs"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_polyfills_.html">"polyfills"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_providers_api_url_.html">"providers/api-<wbr>url"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_providers_inventory_data_.html">"providers/inventory-<wbr>data"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_providers_stockpile_data_.html">"providers/stockpile-<wbr>data"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_providers_user_data_.html">"providers/user-<wbr>data"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_test_data_.html">"test-<wbr>data"</a>
 					</li>
 				</ul>
 			</nav>
@@ -296,6 +370,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_pages_rental_details_rental_details_.rentaldetailspage.html#navparams" class="tsd-kind-icon">nav<wbr>Params</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_pages_rental_details_rental_details_.rentaldetailspage.html#stockpiledata" class="tsd-kind-icon">stockpile<wbr>Data</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_pages_rental_details_rental_details_.rentaldetailspage.html#submitted" class="tsd-kind-icon">submitted</a>
