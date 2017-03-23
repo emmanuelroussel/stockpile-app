@@ -35,9 +35,11 @@ describe('Root Component', () => {
 
   it('sets TabsPage as a root page if user is logged in', fakeAsync(() => {
     instance.userData.loggedIn = true;
+    spyOn(instance.userData, 'setUser');
     instance.ngOnInit();
     tick();
     expect(instance.rootPage).toEqual(TabsPage);
+    expect(instance.userData.setUser).toHaveBeenCalled();
   }));
 
   it('calls logout(), closes side menu and sets nav root to LoginPage', () => {

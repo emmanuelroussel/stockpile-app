@@ -1,9 +1,8 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import { IonicApp, IonicModule } from 'ionic-angular';
+import { CloudModule } from '@ionic/cloud-angular';
 import { Http } from '@angular/http';
-import { Storage } from '@ionic/storage';
-import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { AuthHttp } from 'angular2-jwt';
 import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
@@ -20,19 +19,8 @@ import { InventoryData } from '../providers/inventory-data';
 import { IonicPlugins } from '../providers/ionic-plugins';
 import { UserData } from '../providers/user-data';
 
-let storage = new Storage();
-
-export function getAuthHttp(http) {
-  return new AuthHttp(new AuthConfig({
-    tokenGetter: (() => storage.get('id_token')),
-  }), http);
-}
-
-const cloudSettings: CloudSettings = {
-  'core': {
-    'app_id': 'APP_ID'
-  }
-};
+import { RavenErrorHandler } from '../services/raven-error-handler';
+import { getAuthHttp, cloudSettings } from '../services/auth-http';
 
 @NgModule({
   declarations: [
@@ -72,7 +60,7 @@ const cloudSettings: CloudSettings = {
     TabsPage
   ],
   providers: [
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: ErrorHandler, useClass: RavenErrorHandler },
     ApiUrl,
     InventoryData,
     IonicPlugins,

@@ -303,6 +303,8 @@ export class UserDataMock {
   public isLoggedIn(): any {
     return Promise.resolve(this.loggedIn);
   }
+
+  public setUser(): any { }
 }
 
 /* tslint:enable */

@@ -57,7 +57,7 @@ describe('UserData Provider', () => {
     );
   })));
 
-  it('deletes id_token on logout()', inject([UserData, Storage], (userData: UserData, storage: Storage) => {
+  it('deletes id_token on logout()', inject([UserData], (userData: UserData) => {
     spyOn(userData.storage, 'remove');
     userData.logout();
     expect(userData.storage.remove).toHaveBeenCalledWith('id_token');
@@ -80,4 +80,10 @@ describe('UserData Provider', () => {
       err => expect(err).toEqual(TestData.error)
     );
   })));
+
+  it('gets token from storage', inject([UserData], (userData: UserData) => {
+    spyOn(userData.storage, 'get').and.callThrough();
+    userData.setUser();
+    expect(userData.storage.get).toHaveBeenCalledWith('id_token');
+  }));
 });
