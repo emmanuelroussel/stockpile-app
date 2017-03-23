@@ -1,9 +1,10 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule } from 'ionic-angular';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import * as Raven from 'raven-js';
 import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
@@ -33,6 +34,16 @@ const cloudSettings: CloudSettings = {
     'app_id': 'APP_ID'
   }
 };
+
+Raven
+  .config('https://a64af160cb8746709c9743f23f666b9b@sentry.io/150943')
+  .install();
+
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err: any): void {
+    Raven.captureException(err.originalError);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -72,7 +83,7 @@ const cloudSettings: CloudSettings = {
     TabsPage
   ],
   providers: [
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: ErrorHandler, useClass: RavenErrorHandler },
     ApiUrl,
     InventoryData,
     StockpileData,
