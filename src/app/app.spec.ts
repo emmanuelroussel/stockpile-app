@@ -1,6 +1,6 @@
 import { fakeAsync, tick } from '@angular/core/testing';
 import { PlatformMock, UserDataMock, MenuMock, NavMock } from '../mocks';
-import { MyApp } from './app.component';
+import { StockpileApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -9,7 +9,7 @@ let instance: any = null;
 describe('Root Component', () => {
 
   beforeEach(() => {
-    instance = new MyApp((<any> new PlatformMock), (<any> new UserDataMock), (<any> new MenuMock));
+    instance = new StockpileApp((<any> new PlatformMock), (<any> new UserDataMock), (<any> new MenuMock));
     instance.nav = (<any> new NavMock);
   });
 

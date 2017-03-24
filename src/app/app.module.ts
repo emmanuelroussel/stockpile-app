@@ -3,7 +3,7 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { CloudModule } from '@ionic/cloud-angular';
 import { Http } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
-import { MyApp } from './app.component';
+import { StockpileApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
 import { InventoryPage } from '../pages/inventory/inventory';
@@ -24,7 +24,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
 
 @NgModule({
   declarations: [
-    MyApp,
+    StockpileApp,
     HomePage,
     InventoryPage,
     ItemPage,
@@ -35,7 +35,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     TabsPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp, {
+    IonicModule.forRoot(StockpileApp, {
       tabsHideOnSubPages: true,
       platforms: {
         android: {
@@ -49,7 +49,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    StockpileApp,
     HomePage,
     InventoryPage,
     ItemPage,
