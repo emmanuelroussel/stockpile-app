@@ -1,4 +1,4 @@
-import { PlatformMock, PlatformMockIsCore } from '../mocks';
+import { PlatformMock, PlatformMockIsCore, BarcodeScannerMock, ToastMock } from '../mocks';
 
 import { IonicPlugins } from './ionic-plugins';
 import { TestData } from '../test-data';
@@ -8,7 +8,7 @@ let ionicPlugins: IonicPlugins = null;
 describe('IonicPlugins Provider', () => {
 
   beforeEach(() => {
-    ionicPlugins = new IonicPlugins(<any> new PlatformMock);
+    ionicPlugins = new IonicPlugins((<any> new PlatformMock), (<any> new BarcodeScannerMock), (<any> new ToastMock));
   });
 
   it('is created', () => {
