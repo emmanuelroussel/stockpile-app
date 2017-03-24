@@ -163,8 +163,11 @@ export class InventoryDataMock {
   allItems = TestData.items;
   item = TestData.apiItem;
   brands = TestData.brands;
+  brand = TestData.brand;
   models = TestData.models;
+  model = TestData.model;
   categories = TestData.categories;
+  category = TestData.category;
   status = TestData.status;
   resolve: boolean = true;
 
@@ -214,6 +217,18 @@ export class InventoryDataMock {
 
   public getStatus(): any {
     return this.returnValue(this.status);
+  }
+
+  public addBrand(): any {
+    return this.returnValue(TestData.response);
+  }
+
+  public addModel(): any {
+    return this.returnValue(TestData.response);
+  }
+
+  public addCategory(): any {
+    return this.returnValue(TestData.response);
   }
 
   private returnValue(value?: any): any {
