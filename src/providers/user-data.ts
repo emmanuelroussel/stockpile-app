@@ -19,13 +19,13 @@ export class UserData {
   ) { }
 
   login(email: string, password: string) {
-    const creds = {
+    const credentials = {
       email: email,
       password: password
     };
 
     return new Promise((resolve, reject) => {
-        this.http.post(`${this.apiUrl.getUrl()}${Links.authenticate}`, creds)
+        this.http.post(`${this.apiUrl.getUrl()}${Links.authenticate}`, credentials)
         .map(extractData)
         .catch(handleError)
         .subscribe(
