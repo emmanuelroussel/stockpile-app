@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { InventoryData } from '../../providers/inventory-data';
 import { IonicPlugins } from '../../providers/ionic-plugins';
@@ -25,7 +26,8 @@ export class InventoryPage {
   constructor(
     public navCtrl: NavController,
     public inventoryData: InventoryData,
-    public ionicPlugins: IonicPlugins
+    public ionicPlugins: IonicPlugins,
+    public barcodeScanner: BarcodeScanner
   ) { }
 
   ionViewWillEnter() {
@@ -87,7 +89,7 @@ export class InventoryPage {
   }
 
   onAdd() {
-    this.ionicPlugins.scan().then(
+    this.barcodeScanner.scan().then(
       barcodeData => {
         if (!barcodeData.cancelled) {
           this.navCtrl.push(ItemPage, {

@@ -91,16 +91,16 @@ describe('Inventory Page', () => {
   });
 
   it('pushes ItemPage on nav onAdd()', fakeAsync(() => {
-    spyOn(instance.ionicPlugins, 'scan').and.callThrough();
+    spyOn(instance.barcodeScanner, 'scan').and.callThrough();
     spyOn(instance.navCtrl, 'push');
     instance.onAdd();
     tick();
-    expect(instance.ionicPlugins.scan).toHaveBeenCalled();
+    expect(instance.barcodeScanner.scan).toHaveBeenCalled();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.barcodeData.text, action: Actions.add });
   }));
 
   it('shows toast if error in onAdd()', fakeAsync(() => {
-    instance.ionicPlugins.resolve = false;
+    instance.barcodeScanner.resolve = false;
     spyOn(instance.ionicPlugins, 'showToast');
     spyOn(instance.navCtrl, 'push');
     instance.onAdd();
@@ -110,7 +110,7 @@ describe('Inventory Page', () => {
   }));
 
   it('does nothing if scan is cancelled', fakeAsync(() => {
-    instance.ionicPlugins.cancel = true;
+    instance.barcodeScanner.cancel = true;
     spyOn(instance.ionicPlugins, 'showToast');
     spyOn(instance.navCtrl, 'push');
     instance.onAdd();

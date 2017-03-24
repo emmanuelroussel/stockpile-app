@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { RentalPage } from '../rental/rental';
 import { Actions, Messages } from '../../constants';
@@ -19,7 +20,8 @@ export class HomePage {
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     public ionicPlugins: IonicPlugins,
-    public inventoryData: InventoryData
+    public inventoryData: InventoryData,
+    public barcodeScanner: BarcodeScanner
   ) { }
 
   onNext() {
@@ -72,7 +74,7 @@ export class HomePage {
   }
 
   onScan() {
-    this.ionicPlugins.scan().then(
+    this.barcodeScanner.scan().then(
       barcodeData => {
         if (!barcodeData.cancelled) {
           this.tag = barcodeData.text;

@@ -10,9 +10,10 @@ import 'zone.js/dist/fake-async-test';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, GestureController, NavParams, ModalController, AlertController, Events } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
-import { ConfigMock, PlatformMock, NavMock, NavParamsMock, InventoryDataMock, UserDataMock, ModalMock, IonicPluginsMock, AlertMock } from './mocks';
+import { ConfigMock, PlatformMock, NavMock, NavParamsMock, InventoryDataMock, UserDataMock, ModalMock, IonicPluginsMock, AlertMock, BarcodeScannerMock } from './mocks';
 import { InventoryData } from './providers/inventory-data';
 import { UserData } from './providers/user-data';
 import { IonicPlugins } from './providers/ionic-plugins';
@@ -67,7 +68,8 @@ export class TestUtils {
         { provide: UserData, useClass: UserDataMock },
         { provide: ModalController, useClass: ModalMock },
         { provide: IonicPlugins, useClass: IonicPluginsMock },
-        { provide: AlertController, useClass: AlertMock }
+        { provide: AlertController, useClass: AlertMock },
+        { provide: BarcodeScanner, useClass: BarcodeScannerMock }
       ],
       imports: [
         FormsModule,

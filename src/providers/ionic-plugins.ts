@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Toast } from '@ionic-native/toast';
 
 @Injectable()
 export class IonicPlugins {
 
-  constructor(public platform: Platform, public barcodeScanner: BarcodeScanner, public toast: Toast) { }
+  constructor(public platform: Platform, public toast: Toast) { }
 
   /**
    * Shows message as a Toast notification if you are on mobile or logs it to
@@ -25,9 +24,5 @@ export class IonicPlugins {
     } else {
       console.log(message);
     }
-  }
-
-  scan() {
-    return this.barcodeScanner.scan();
   }
 }

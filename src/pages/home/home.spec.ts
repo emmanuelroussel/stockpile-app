@@ -97,18 +97,18 @@ describe('Home Page', () => {
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   });
 
-  it('calls ionicPlugins.scan() onScan()', fakeAsync(() => {
-    spyOn(instance.ionicPlugins, 'scan').and.callThrough();
+  it('calls barcodeScanner.scan() onScan()', fakeAsync(() => {
+    spyOn(instance.barcodeScanner, 'scan').and.callThrough();
     spyOn(instance, 'onNext');
     instance.onScan();
     tick();
-    expect(instance.ionicPlugins.scan).toHaveBeenCalled();
+    expect(instance.barcodeScanner.scan).toHaveBeenCalled();
     expect(instance.onNext).toHaveBeenCalled();
     expect(instance.tag).toEqual(TestData.barcodeData.text);
   }));
 
   it('does nothing if scan is cancelled', fakeAsync(() => {
-    instance.ionicPlugins.cancel = true;
+    instance.barcodeScanner.cancel = true;
     spyOn(instance.ionicPlugins, 'showToast');
     spyOn(instance, 'onNext');
     instance.onScan();
@@ -119,7 +119,7 @@ describe('Home Page', () => {
   }));
 
   it('shows toast if error in onScan()', fakeAsync(() => {
-    instance.ionicPlugins.resolve = false;
+    instance.barcodeScanner.resolve = false;
     spyOn(instance.ionicPlugins, 'showToast');
     instance.onScan();
     tick();
