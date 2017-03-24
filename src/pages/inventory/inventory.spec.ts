@@ -46,10 +46,10 @@ describe('Inventory Page', () => {
 
   it('shows toast if error while getting brands, models, categories or items', fakeAsync(() => {
     instance.inventoryData.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.ionViewWillEnter();
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledTimes(4);
+    expect(instance.notifications.showToast).toHaveBeenCalledTimes(4);
   }));
 
   it('calls inventoryData.filterItems on filterItems()', fakeAsync(() => {
@@ -71,10 +71,10 @@ describe('Inventory Page', () => {
     instance.segment = 0;
     instance.allModels = TestData.models.results;
     instance.inventoryData.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.filterItems();
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('pushes ItemPage on nav on viewItem()', () => {
@@ -91,31 +91,31 @@ describe('Inventory Page', () => {
   });
 
   it('pushes ItemPage on nav onAdd()', fakeAsync(() => {
-    spyOn(instance.ionicPlugins, 'scan').and.callThrough();
+    spyOn(instance.barcodeScanner, 'scan').and.callThrough();
     spyOn(instance.navCtrl, 'push');
     instance.onAdd();
     tick();
-    expect(instance.ionicPlugins.scan).toHaveBeenCalled();
+    expect(instance.barcodeScanner.scan).toHaveBeenCalled();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.barcodeData.text, action: Actions.add });
   }));
 
   it('shows toast if error in onAdd()', fakeAsync(() => {
-    instance.ionicPlugins.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    instance.barcodeScanner.resolve = false;
+    spyOn(instance.notifications, 'showToast');
     spyOn(instance.navCtrl, 'push');
     instance.onAdd();
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   }));
 
   it('does nothing if scan is cancelled', fakeAsync(() => {
-    instance.ionicPlugins.cancel = true;
-    spyOn(instance.ionicPlugins, 'showToast');
+    instance.barcodeScanner.cancel = true;
+    spyOn(instance.notifications, 'showToast');
     spyOn(instance.navCtrl, 'push');
     instance.onAdd();
     tick();
-    expect(instance.ionicPlugins.showToast).not.toHaveBeenCalled();
+    expect(instance.notifications.showToast).not.toHaveBeenCalled();
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   }));
 });

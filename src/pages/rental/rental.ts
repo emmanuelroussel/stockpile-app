@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { InventoryData } from '../../providers/inventory-data';
-import { IonicPlugins } from '../../providers/ionic-plugins';
+import { Notifications } from '../../providers/notifications';
 import { ItemPage } from '../item/item';
 import { RentalDetailsPage } from '../rental-details/rental-details';
 import { Actions, Messages } from '../../constants';
@@ -21,8 +22,9 @@ export class RentalPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public inventoryData: InventoryData,
-    public ionicPlugins: IonicPlugins,
-    public events: Events
+    public notifications: Notifications,
+    public events: Events,
+    public barcodeScanner: BarcodeScanner
   ) { }
 
   ngOnInit() {
@@ -34,7 +36,7 @@ export class RentalPage {
 
       this.inventoryData.getItem(tag).subscribe(
         item => this.items.splice(index, 1, item),
-        err => this.ionicPlugins.showToast(err)
+        err => this.notifications.showToast(err)
       );
     });
 
@@ -45,16 +47,16 @@ export class RentalPage {
     this.inventoryData.getItem(this.tag).subscribe(
       item => {
         if (item.available === 0 && this.action === Actions.rent) {
-          this.ionicPlugins.showToast(Messages.itemAlreadyRented);
+          this.notifications.showToast(Messages.itemAlreadyRented);
         } else if (item.available === 1 && this.action === Actions.return) {
-          this.ionicPlugins.showToast(Messages.itemNotRented);
+          this.notifications.showToast(Messages.itemNotRented);
         } else if (this.items.some(listItem => listItem.tag === item.tag)) {
-          this.ionicPlugins.showToast(Messages.itemAlreadyAdded);
+          this.notifications.showToast(Messages.itemAlreadyAdded);
         } else {
           this.items.push(item);
         }
       },
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
 
     this.tag = '';
@@ -82,22 +84,22 @@ export class RentalPage {
 
     Promise.all(returns).then(
       success => {
-        this.ionicPlugins.showToast(Messages.itemsReturned);
+        this.notifications.showToast(Messages.itemsReturned);
         this.navCtrl.pop();
       },
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
   }
 
   onScan() {
-    this.ionicPlugins.scan().then(
+    this.barcodeScanner.scan().then(
       barcodeData => {
         if (!barcodeData.cancelled) {
           this.tag = barcodeData.text;
           this.onAdd();
         }
       },
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
   }
 }

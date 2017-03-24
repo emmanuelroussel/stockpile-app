@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { RentalPage } from '../rental/rental';
 import { Actions, Messages } from '../../constants';
-import { IonicPlugins } from '../../providers/ionic-plugins';
+import { Notifications } from '../../providers/notifications';
 import { InventoryData } from '../../providers/inventory-data';
 
 @Component({
@@ -18,15 +19,16 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public ionicPlugins: IonicPlugins,
-    public inventoryData: InventoryData
+    public notifications: Notifications,
+    public inventoryData: InventoryData,
+    public barcodeScanner: BarcodeScanner
   ) { }
 
   onNext() {
     if (this.tag) {
       this.inventoryData.getItem(this.tag).subscribe(
         (item: any) => this.pushPage(item.available === 1),
-        err => this.ionicPlugins.showToast(err)
+        err => this.notifications.showToast(err)
       );
     }
   }
@@ -72,14 +74,14 @@ export class HomePage {
   }
 
   onScan() {
-    this.ionicPlugins.scan().then(
+    this.barcodeScanner.scan().then(
       barcodeData => {
         if (!barcodeData.cancelled) {
           this.tag = barcodeData.text;
           this.onNext();
         }
       },
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
   }
 }

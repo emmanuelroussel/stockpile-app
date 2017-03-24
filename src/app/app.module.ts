@@ -2,6 +2,10 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { CloudModule } from '@ionic/cloud-angular';
 import { Http } from '@angular/http';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Toast } from '@ionic-native/toast';
 import { AuthHttp } from 'angular2-jwt';
 import { StockpileApp } from './app.component';
 
@@ -16,7 +20,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { ApiUrl } from '../providers/api-url';
 import { InventoryData } from '../providers/inventory-data';
-import { IonicPlugins } from '../providers/ionic-plugins';
+import { Notifications } from '../providers/notifications';
 import { UserData } from '../providers/user-data';
 
 import { RavenErrorHandler } from '../services/raven-error-handler';
@@ -63,8 +67,12 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     { provide: ErrorHandler, useClass: RavenErrorHandler },
     ApiUrl,
     InventoryData,
-    IonicPlugins,
+    Notifications,
     UserData,
+    SplashScreen,
+    StatusBar,
+    BarcodeScanner,
+    Toast,
     { provide: AuthHttp, useFactory: getAuthHttp, deps: [Http] }
   ]
 })

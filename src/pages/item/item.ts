@@ -6,7 +6,7 @@ import { InventoryData } from '../../providers/inventory-data';
 
 import { Actions, ItemProperties, Messages } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
-import { IonicPlugins } from '../../providers/ionic-plugins';
+import { Notifications } from '../../providers/notifications';
 
 @Component({
   selector: 'page-item',
@@ -31,7 +31,7 @@ export class ItemPage {
     public navParams: NavParams,
     public inventoryData: InventoryData,
     public modalCtrl: ModalController,
-    public ionicPlugins: IonicPlugins,
+    public notifications: Notifications,
     public events: Events
   ) { }
 
@@ -41,12 +41,12 @@ export class ItemPage {
 
     this.inventoryData.getBrands().subscribe(
       (brands: any) => this.allBrands = brands.results,
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
 
     this.inventoryData.getCategories().subscribe(
       (categories: any) => this.allCategories = categories.results,
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
 
     if (this.action === this.actions.edit) {
@@ -62,7 +62,7 @@ export class ItemPage {
 
           this.getModels();
         },
-        err => this.ionicPlugins.showToast(err)
+        err => this.notifications.showToast(err)
       );
     } else {
       this.getModels();
@@ -75,7 +75,7 @@ export class ItemPage {
         this.allModels = models.results;
         this.filterModels();
       },
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
   }
 
@@ -94,11 +94,11 @@ export class ItemPage {
 
       apiCall.subscribe(
         item => {
-          this.ionicPlugins.showToast(message);
+          this.notifications.showToast(message);
           this.events.publish('item:edited', item.tag);
           this.navCtrl.pop();
         },
-        err => this.ionicPlugins.showToast(err)
+        err => this.notifications.showToast(err)
       );
     }
   }
@@ -106,10 +106,10 @@ export class ItemPage {
   onDelete() {
     this.inventoryData.deleteItem(this.item.tag).subscribe(
       success => {
-        this.ionicPlugins.showToast(Messages.itemDeleted);
+        this.notifications.showToast(Messages.itemDeleted);
         this.navCtrl.pop();
       },
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
   }
 
@@ -151,7 +151,7 @@ export class ItemPage {
             this.allBrands.push(newBrand);
             this.assignElement(type, newBrand);
           },
-          err => this.ionicPlugins.showToast(err)
+          err => this.notifications.showToast(err)
         );
         break;
       case this.itemProperties.model:
@@ -165,7 +165,7 @@ export class ItemPage {
             this.allModels.push(newModel);
             this.assignElement(type, newModel);
           },
-          err => this.ionicPlugins.showToast(err)
+          err => this.notifications.showToast(err)
         );
         break;
       case this.itemProperties.category:
@@ -179,7 +179,7 @@ export class ItemPage {
             this.allCategories.push(newCategory);
             this.assignElement(type, newCategory);
           },
-          err => this.ionicPlugins.showToast(err)
+          err => this.notifications.showToast(err)
         );
         break;
     }

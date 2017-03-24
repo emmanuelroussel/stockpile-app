@@ -66,10 +66,10 @@ describe('Item Page', () => {
   it('shows toast if error while getting item, brands, models and categories', fakeAsync(() => {
     instance.navParams.param = Actions.edit;
     instance.inventoryData.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.ngOnInit();
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledTimes(3);
+    expect(instance.notifications.showToast).toHaveBeenCalledTimes(3);
   }));
 
   it('calls onSave() on click on save button', () => {
@@ -83,7 +83,7 @@ describe('Item Page', () => {
     instance.navParams.param = Actions.add;
     instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     spyOn(instance.events, 'publish');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -92,7 +92,7 @@ describe('Item Page', () => {
       instance.onSave(form);
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
-      expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(Messages.itemAdded);
+      expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemAdded);
       expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.tag);
     });
   }));
@@ -102,7 +102,7 @@ describe('Item Page', () => {
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     spyOn(instance.events, 'publish');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -111,7 +111,7 @@ describe('Item Page', () => {
       instance.onSave(form);
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
-      expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(Messages.itemEdited);
+      expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemEdited);
       expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.tag);
     });
   }));
@@ -119,40 +119,40 @@ describe('Item Page', () => {
   it('shows toast if error onSave()', fakeAsync(() => {
     instance.inventoryData.resolve = false;
     instance.navParams.param = Actions.edit;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
       instance.onSave(form);
       tick();
-      expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+      expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
     });
   }));
 
   it('pops nav onDelete()', fakeAsync(() => {
     instance.action = Actions.edit;
     spyOn(instance.navCtrl, 'pop');
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onDelete();
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
-      expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(Messages.itemDeleted);
+      expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemDeleted);
     });
   }));
 
   it('shows toast if error onDelete()', fakeAsync(() => {
     instance.inventoryData.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       instance.onDelete();
       tick();
-      expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+      expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
     });
   }));
 
@@ -212,26 +212,26 @@ describe('Item Page', () => {
 
   it('shows toast if error on createElement with brand', fakeAsync(() => {
     instance.inventoryData.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.createElement(ItemProperties.brand, TestData.brand.name);
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('shows toast if error on createElement with model', fakeAsync(() => {
     instance.inventoryData.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.createElement(ItemProperties.model, TestData.model.name);
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('shows toast if error on createElement with category', fakeAsync(() => {
     instance.inventoryData.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.createElement(ItemProperties.category, TestData.category.name);
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('assigns a brand', () => {

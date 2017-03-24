@@ -129,6 +129,37 @@ export class StorageMock {
   }
 }
 
+export class SplashScreenMock {
+  public hide(): any { }
+}
+
+export class StatusBarMock {
+  public styleDefault(): any { }
+}
+
+export class BarcodeScannerMock {
+  resolve: boolean = true;
+  cancel: boolean = false;
+
+  public scan(): any {
+    if (this.resolve) {
+      if (this.cancel) {
+        return Promise.resolve(TestData.barcodeDataCancelled);
+      } else {
+        return Promise.resolve(TestData.barcodeData);
+      }
+    } else {
+      return Promise.reject(TestData.error);
+    }
+  }
+}
+
+export class ToastMock {
+  public showWithOptions(): any {
+    return Observable.fromPromise(Promise.resolve());
+  }
+}
+
 export class ModalMock {
   public create(): any {
     return new ModalMock;
@@ -232,7 +263,7 @@ export class InventoryDataMock {
   }
 }
 
-export class IonicPluginsMock {
+export class NotificationsMock {
   resolve: boolean = true;
   cancel: boolean = false;
 

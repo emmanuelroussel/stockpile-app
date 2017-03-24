@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, MenuController } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -16,7 +17,9 @@ export class StockpileApp {
   constructor(
     public platform: Platform,
     public userData: UserData,
-    public menuCtrl: MenuController
+    public menuCtrl: MenuController,
+    public splashScreen: SplashScreen,
+    public statusBar: StatusBar
   ) { }
 
   ngOnInit() {
@@ -34,8 +37,8 @@ export class StockpileApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      StatusBar.styleDefault();
-      Splashscreen.hide();
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
     });
   }
 

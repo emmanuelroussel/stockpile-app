@@ -53,10 +53,10 @@ describe('Home Page', () => {
   it('shows toast if error in onNext()', fakeAsync(() => {
     instance.tag = TestData.item.tag;
     instance.inventoryData.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.onNext();
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('pushes rental page on pushPage() with \'Rent\'', fakeAsync(() => {
@@ -97,32 +97,32 @@ describe('Home Page', () => {
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   });
 
-  it('calls ionicPlugins.scan() onScan()', fakeAsync(() => {
-    spyOn(instance.ionicPlugins, 'scan').and.callThrough();
+  it('calls barcodeScanner.scan() onScan()', fakeAsync(() => {
+    spyOn(instance.barcodeScanner, 'scan').and.callThrough();
     spyOn(instance, 'onNext');
     instance.onScan();
     tick();
-    expect(instance.ionicPlugins.scan).toHaveBeenCalled();
+    expect(instance.barcodeScanner.scan).toHaveBeenCalled();
     expect(instance.onNext).toHaveBeenCalled();
     expect(instance.tag).toEqual(TestData.barcodeData.text);
   }));
 
   it('does nothing if scan is cancelled', fakeAsync(() => {
-    instance.ionicPlugins.cancel = true;
-    spyOn(instance.ionicPlugins, 'showToast');
+    instance.barcodeScanner.cancel = true;
+    spyOn(instance.notifications, 'showToast');
     spyOn(instance, 'onNext');
     instance.onScan();
     tick();
     expect(instance.onNext).not.toHaveBeenCalled();
-    expect(instance.ionicPlugins.showToast).not.toHaveBeenCalled();
+    expect(instance.notifications.showToast).not.toHaveBeenCalled();
     expect(instance.tag).toEqual('');
   }));
 
   it('shows toast if error in onScan()', fakeAsync(() => {
-    instance.ionicPlugins.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    instance.barcodeScanner.resolve = false;
+    spyOn(instance.notifications, 'showToast');
     instance.onScan();
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 });

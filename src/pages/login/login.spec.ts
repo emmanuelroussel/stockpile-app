@@ -50,7 +50,7 @@ describe('Login Page', () => {
     instance.login.email = TestData.credentials.email;
     instance.login.password = TestData.credentials.password;
     instance.userData.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
@@ -58,7 +58,7 @@ describe('Login Page', () => {
       instance.onLogin(form);
       tick();
       expect(instance.login.password).toEqual('');
-      expect(instance.ionicPlugins.showToast).toHaveBeenCalled();
+      expect(instance.notifications.showToast).toHaveBeenCalled();
     });
   }));
 

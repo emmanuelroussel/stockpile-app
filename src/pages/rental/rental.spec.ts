@@ -50,10 +50,10 @@ describe('Rental Page', () => {
   it('shows toast if error while updating item in event.subscribe', fakeAsync(() => {
     instance.inventoryData.resolve = false;
     instance.ngOnInit();
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.events.publish('item:edited', TestData.modifiedItem.tag);
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('calls onAdd() on click on add button', () => {
@@ -87,37 +87,37 @@ describe('Rental Page', () => {
 
   it('shows toast if error onAdd()', fakeAsync(() => {
     instance.inventoryData.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.onAdd();
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('shows toast if item is rented and wants to rent onAdd()', fakeAsync(() => {
     instance.inventoryData.item = TestData.rentedApiItem;
     instance.action = Actions.rent;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.onAdd();
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(Messages.itemAlreadyRented);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemAlreadyRented);
   }));
 
   it('shows toast if item is available and wants to return onAdd()', fakeAsync(() => {
     instance.inventoryData.item = TestData.apiItem;
     instance.action = Actions.return;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.onAdd();
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(Messages.itemNotRented);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemNotRented);
   }));
 
   it('shows toast if item is already added', fakeAsync(() => {
     instance.items = TestData.items;
     instance.inventoryData.item = TestData.items[0];
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.onAdd();
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(Messages.itemAlreadyAdded);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemAlreadyAdded);
   }));
 
   it('pushes ItemPage on nav on viewItem()', () => {
@@ -135,20 +135,20 @@ describe('Rental Page', () => {
   it('calls inventoryData.return for each item', fakeAsync(() => {
     instance.items = TestData.items;
     spyOn(instance.inventoryData, 'return').and.callThrough();
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.onReturn();
     tick();
     expect(instance.inventoryData.return).toHaveBeenCalledTimes(TestData.items.length);
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(Messages.itemsReturned);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemsReturned);
   }));
 
   it('shows toast if error onReturn()', fakeAsync(() => {
     instance.inventoryData.resolve = false;
     instance.items = TestData.items;
-    spyOn(instance.ionicPlugins, 'showToast');
+    spyOn(instance.notifications, 'showToast');
     instance.onReturn();
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('calls inventoryData.return() and pops nav onReturn()', fakeAsync(() => {
@@ -161,32 +161,32 @@ describe('Rental Page', () => {
     expect(instance.inventoryData.return).toHaveBeenCalledWith(TestData.item.tag);
   }));
 
-  it('calls ionicPlugins.scan() onScan()', fakeAsync(() => {
-    spyOn(instance.ionicPlugins, 'scan').and.callThrough();
+  it('calls barcodeScanner.scan() onScan()', fakeAsync(() => {
+    spyOn(instance.barcodeScanner, 'scan').and.callThrough();
     spyOn(instance, 'onAdd');
     instance.onScan();
     tick();
-    expect(instance.ionicPlugins.scan).toHaveBeenCalled();
+    expect(instance.barcodeScanner.scan).toHaveBeenCalled();
     expect(instance.onAdd).toHaveBeenCalled();
     expect(instance.tag).toEqual(TestData.barcodeData.text);
   }));
 
   it('shows toast if error in onScan()', fakeAsync(() => {
-    instance.ionicPlugins.resolve = false;
-    spyOn(instance.ionicPlugins, 'showToast');
+    instance.barcodeScanner.resolve = false;
+    spyOn(instance.notifications, 'showToast');
     instance.onScan();
     tick();
-    expect(instance.ionicPlugins.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('it does nothing if scan is cancelled', fakeAsync(() => {
-    instance.ionicPlugins.cancel = true;
-    spyOn(instance.ionicPlugins, 'showToast');
+    instance.barcodeScanner.cancel = true;
+    spyOn(instance.notifications, 'showToast');
     spyOn(instance, 'onAdd');
     instance.onScan();
     tick();
     expect(instance.onAdd).not.toHaveBeenCalled();
-    expect(instance.ionicPlugins.showToast).not.toHaveBeenCalled();
+    expect(instance.notifications.showToast).not.toHaveBeenCalled();
     expect(instance.tag).toEqual('');
   }));
 });
