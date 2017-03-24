@@ -3,7 +3,7 @@ import { Platform } from 'ionic-angular';
 import { Toast } from '@ionic-native/toast';
 
 @Injectable()
-export class IonicPlugins {
+export class Notifications {
 
   constructor(public platform: Platform, public toast: Toast) { }
 

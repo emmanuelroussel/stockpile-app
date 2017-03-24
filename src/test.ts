@@ -13,10 +13,10 @@ import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@ang
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, GestureController, NavParams, ModalController, AlertController, Events } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
-import { ConfigMock, PlatformMock, NavMock, NavParamsMock, InventoryDataMock, UserDataMock, ModalMock, IonicPluginsMock, AlertMock, BarcodeScannerMock } from './mocks';
+import { ConfigMock, PlatformMock, NavMock, NavParamsMock, InventoryDataMock, UserDataMock, ModalMock, NotificationsMock, AlertMock, BarcodeScannerMock } from './mocks';
 import { InventoryData } from './providers/inventory-data';
 import { UserData } from './providers/user-data';
-import { IonicPlugins } from './providers/ionic-plugins';
+import { Notifications } from './providers/notifications';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare var __karma__: any;
@@ -67,7 +67,7 @@ export class TestUtils {
         { provide: InventoryData, useClass: InventoryDataMock },
         { provide: UserData, useClass: UserDataMock },
         { provide: ModalController, useClass: ModalMock },
-        { provide: IonicPlugins, useClass: IonicPluginsMock },
+        { provide: Notifications, useClass: NotificationsMock },
         { provide: AlertController, useClass: AlertMock },
         { provide: BarcodeScanner, useClass: BarcodeScannerMock }
       ],

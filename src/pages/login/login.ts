@@ -4,7 +4,7 @@ import { NavController } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
 import { UserData } from '../../providers/user-data';
-import { IonicPlugins } from '../../providers/ionic-plugins';
+import { Notifications } from '../../providers/notifications';
 
 @Component({
   selector: 'page-login',
@@ -17,7 +17,7 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController,
     public userData: UserData,
-    public ionicPlugins: IonicPlugins
+    public notifications: Notifications
   ) { }
 
   onLogin(form: NgForm) {
@@ -28,7 +28,7 @@ export class LoginPage {
         (data: any) => this.navCtrl.setRoot(TabsPage),
         err => {
           this.login.password = '';
-          this.ionicPlugins.showToast(err);
+          this.notifications.showToast(err);
         }
       );
     }

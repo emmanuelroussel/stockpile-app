@@ -263,7 +263,7 @@ export class InventoryDataMock {
   }
 }
 
-export class IonicPluginsMock {
+export class NotificationsMock {
   resolve: boolean = true;
   cancel: boolean = false;
 

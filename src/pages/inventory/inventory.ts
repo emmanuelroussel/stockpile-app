@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { InventoryData } from '../../providers/inventory-data';
-import { IonicPlugins } from '../../providers/ionic-plugins';
+import { Notifications } from '../../providers/notifications';
 import { Actions } from '../../constants';
 import { ItemPage } from '../item/item';
 
@@ -26,24 +26,24 @@ export class InventoryPage {
   constructor(
     public navCtrl: NavController,
     public inventoryData: InventoryData,
-    public ionicPlugins: IonicPlugins,
+    public notifications: Notifications,
     public barcodeScanner: BarcodeScanner
   ) { }
 
   ionViewWillEnter() {
     this.inventoryData.getBrands().subscribe(
       (brands: any) => this.allBrands = brands.results,
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
 
     this.inventoryData.getModels().subscribe(
       (models: any) => this.allModels = models.results,
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
 
     this.inventoryData.getCategories().subscribe(
       (categories: any) => this.allCategories = categories.results,
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
 
     this.inventoryData.getAllItems().subscribe(
@@ -51,7 +51,7 @@ export class InventoryPage {
         this.allItems = items.results;
         this.filteredItems = this.allItems;
       },
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
   }
 
@@ -71,7 +71,7 @@ export class InventoryPage {
       (items: any) => {
         this.filteredItems = items.results;
       },
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
   }
 
@@ -98,7 +98,7 @@ export class InventoryPage {
           });
         }
       },
-      err => this.ionicPlugins.showToast(err)
+      err => this.notifications.showToast(err)
     );
   }
 }

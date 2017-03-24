@@ -20,7 +20,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { ApiUrl } from '../providers/api-url';
 import { InventoryData } from '../providers/inventory-data';
-import { IonicPlugins } from '../providers/ionic-plugins';
+import { Notifications } from '../providers/notifications';
 import { UserData } from '../providers/user-data';
 
 import { RavenErrorHandler } from '../services/raven-error-handler';
@@ -67,7 +67,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     { provide: ErrorHandler, useClass: RavenErrorHandler },
     ApiUrl,
     InventoryData,
-    IonicPlugins,
+    Notifications,
     UserData,
     SplashScreen,
     StatusBar,
