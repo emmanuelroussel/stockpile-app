@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { BarcodeScanner, Toast } from 'ionic-native';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Toast } from '@ionic-native/toast';
 
 @Injectable()
 export class IonicPlugins {
 
-  constructor(public platform: Platform) { }
+  constructor(public platform: Platform, public barcodeScanner: BarcodeScanner, public toast: Toast) { }
 
   /**
    * Shows message as a Toast notification if you are on mobile or logs it to
@@ -13,7 +14,7 @@ export class IonicPlugins {
    */
   showToast(message: string) {
     if (this.platform.is('cordova')) {
-      Toast.showWithOptions(
+      this.toast.showWithOptions(
         {
           message,
           duration: 5000,
@@ -27,6 +28,6 @@ export class IonicPlugins {
   }
 
   scan() {
-    return BarcodeScanner.scan();
+    return this.barcodeScanner.scan();
   }
 }

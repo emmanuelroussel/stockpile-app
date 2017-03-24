@@ -2,6 +2,10 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { CloudModule } from '@ionic/cloud-angular';
 import { Http } from '@angular/http';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Toast } from '@ionic-native/toast';
 import { AuthHttp } from 'angular2-jwt';
 import { StockpileApp } from './app.component';
 
@@ -65,6 +69,10 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     InventoryData,
     IonicPlugins,
     UserData,
+    SplashScreen,
+    StatusBar,
+    BarcodeScanner,
+    Toast,
     { provide: AuthHttp, useFactory: getAuthHttp, deps: [Http] }
   ]
 })
