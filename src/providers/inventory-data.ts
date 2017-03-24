@@ -3,7 +3,7 @@ import { URLSearchParams } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
 import { Links } from '../constants';
 import { ApiUrl } from './api-url';
-import { extractData, handleError } from '../services/auth-http';
+import { extractData, handleError } from '../services/auth-http-helpers';
 import 'rxjs/Rx';
 
 @Injectable()

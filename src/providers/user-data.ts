@@ -5,7 +5,7 @@ import * as Raven from 'raven-js';
 import { AuthHttp, tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { Links } from '../constants';
 import { ApiUrl } from './api-url';
-import { extractData, handleError } from '../services/auth-http';
+import { extractData, handleError } from '../services/auth-http-helpers';
 
 @Injectable()
 export class UserData {
