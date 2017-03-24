@@ -151,14 +151,6 @@ export class AlertMock {
   public present(): any {}
 }
 
-export class NavigatorMock {
-  hal = {};
-
-  public get(): any {
-    return Observable.fromPromise(Promise.resolve(this.hal));
-  }
-}
-
 export class InventoryDataMock {
   allItems = TestData.items;
   item = TestData.apiItem;
