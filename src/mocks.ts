@@ -169,96 +169,56 @@ export class InventoryDataMock {
   resolve: boolean = true;
 
   public addItem(): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve(this.item));
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+    return this.returnValue(this.item);
   }
 
   public getAllItems(): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve(this.allItems));
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+    return this.returnValue(this.allItems);
   }
 
   public getItem(): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve(this.item));
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+    return this.returnValue(this.item);
   }
 
   public editItem(): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve(this.item));
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+    return this.returnValue(this.item);
   }
 
   public deleteItem(): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve());
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+    return this.returnValue();
   }
 
   public filterItems(): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve(this.allItems));
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+    return this.returnValue(this.allItems);
   }
 
   public rent(): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve());
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+    return this.returnValue();
   }
 
   public return(): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve());
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+    return this.returnValue();
   }
 
   public getBrands(): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve(this.brands));
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+    return this.returnValue(this.brands);
   }
 
   public getModels(): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve(this.models));
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+    return this.returnValue(this.models);
   }
 
   public getCategories(): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve(this.categories));
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+    return this.returnValue(this.categories);
   }
 
   public getStatus(): any {
+    return this.returnValue(this.status);
+  }
+
+  private returnValue(value?: any): any {
     if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve(this.status));
+      return Observable.fromPromise(Promise.resolve(value));
     } else {
       return Observable.fromPromise(Promise.reject(TestData.error));
     }
