@@ -9,7 +9,7 @@ import { UserData } from '../providers/user-data';
 @Component({
   templateUrl: './app.html'
 })
-export class MyApp {
+export class StockpileApp {
   @ViewChild(Nav) nav: Nav;
   rootPage: any;
 

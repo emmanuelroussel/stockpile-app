@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Response, Http } from '@angular/http';
+import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import * as Raven from 'raven-js';
 import { AuthHttp, tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { Links } from '../constants';
 import { ApiUrl } from './api-url';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { extractData, handleError } from '../services/auth-http-helpers';
 
 @Injectable()
 export class UserData {
@@ -20,15 +19,15 @@ export class UserData {
   ) { }
 
   login(email: string, password: string) {
-    let creds = {
+    const credentials = {
       email: email,
       password: password
     };
 
     return new Promise((resolve, reject) => {
-        this.http.post(`${this.apiUrl.getUrl()}${Links.authenticate}`, creds)
-        .map(this.extractData)
-        .catch((err, caught) => this.handleError(err, caught))
+        this.http.post(`${this.apiUrl.getUrl()}${Links.authenticate}`, credentials)
+        .map(extractData)
+        .catch(handleError)
         .subscribe(
           data => {
             this.storage.set('id_token', data.token);
@@ -63,23 +62,5 @@ export class UserData {
         });
       }
     );
-  }
-
-  private extractData(res: Response) {
-    let body = res.json();
-    return body || { };
-  }
-
-  private handleError (error: Response | any, caught: any) {
-    let message: string;
-
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      message = body.message || JSON.stringify(body);
-    } else {
-      message = error.message ? error.message : error.toString();
-    }
-
-    return Observable.throw(message);
   }
 }

@@ -60,38 +60,39 @@ export class ItemPage {
           this.selectedModel = item.model;
           this.selectedCategory = item.category;
 
-          this.inventoryData.getModels().subscribe(
-            (models: any) => {
-              this.allModels = models.results;
-              this.filterModels();
-            },
-            err => this.ionicPlugins.showToast(err)
-          );
+          this.getModels();
         },
         err => this.ionicPlugins.showToast(err)
       );
     } else {
-      this.inventoryData.getModels().subscribe(
-        (models: any) => this.allModels = models.results,
-        err => this.ionicPlugins.showToast(err)
-      );
+      this.getModels();
     }
+  }
+
+  private getModels() {
+    this.inventoryData.getModels().subscribe(
+      (models: any) => {
+        this.allModels = models.results;
+        this.filterModels();
+      },
+      err => this.ionicPlugins.showToast(err)
+    );
   }
 
   onSave(form: NgForm) {
     if (form.valid) {
-      let observable;
+      let apiCall;
       let message;
 
       if (this.action === this.actions.add) {
-        observable = this.inventoryData.addItem(this.item);
+        apiCall = this.inventoryData.addItem(this.item);
         message = Messages.itemAdded;
       } else if (this.action === this.actions.edit) {
-        observable = this.inventoryData.editItem(this.item, this.item.tag);
+        apiCall = this.inventoryData.editItem(this.item, this.item.tag);
         message = Messages.itemEdited;
       }
 
-      observable.subscribe(
+      apiCall.subscribe(
         item => {
           this.ionicPlugins.showToast(message);
           this.events.publish('item:edited', item.tag);
@@ -127,76 +128,79 @@ export class ItemPage {
     modal.onDidDismiss((element, isNew) => {
       if (element) {
         if (isNew) {
-          switch (type) {
-            case this.itemProperties.brand:
-              this.inventoryData.addBrand(element).subscribe(
-                (brand: any) => {
-                  const newBrand = {
-                    brandID: brand.id,
-                    name: element
-                  };
-
-                  this.selectedBrandID = newBrand.brandID;
-                  this.selectedBrand = newBrand.name;
-                  this.allBrands.push(newBrand);
-                  this.selectedModel = '';
-                  this.filterModels();
-                },
-                err => this.ionicPlugins.showToast(err)
-              );
-              break;
-            case this.itemProperties.model:
-              this.inventoryData.addModel(element, this.selectedBrandID).subscribe(
-                (model: any) => {
-                  const newModel = {
-                    modelID: model.id,
-                    name: element
-                  };
-
-                  this.item.modelID = newModel.modelID;
-                  this.selectedModel = newModel.name;
-                  this.allModels.push(newModel);
-                },
-                err => this.ionicPlugins.showToast(err)
-              );
-              break;
-            case this.itemProperties.category:
-              this.inventoryData.addCategory(element).subscribe(
-                (category: any) => {
-                  const newCategory = {
-                    categoryID: category.id,
-                    name: element
-                  };
-
-                  this.item.categoryID = newCategory.categoryID;
-                  this.selectedCategory = newCategory.name;
-                  this.allCategories.push(newCategory);
-                },
-                err => this.ionicPlugins.showToast(err)
-              );
-              break;
-          }
+          this.createElement(type, element);
         } else {
-          switch (type) {
-            case this.itemProperties.brand:
-              this.selectedBrandID = element.brandID;
-              this.selectedBrand = element.name;
-              this.selectedModel = '';
-              this.filterModels();
-              break;
-            case this.itemProperties.model:
-              this.item.modelID = element.modelID;
-              this.selectedModel = element.name;
-              break;
-            case this.itemProperties.category:
-              this.item.categoryID = element.categoryID;
-              this.selectedCategory = element.name;
-              break;
-          }
+          this.assignElement(type, element);
         }
       }
    });
 
     modal.present();
+  }
+
+  createElement(type, element) {
+    switch (type) {
+      case this.itemProperties.brand:
+        this.inventoryData.addBrand(element).subscribe(
+          (brand: any) => {
+            const newBrand = {
+              brandID: brand.id,
+              name: element
+            };
+
+            this.allBrands.push(newBrand);
+            this.assignElement(type, newBrand);
+          },
+          err => this.ionicPlugins.showToast(err)
+        );
+        break;
+      case this.itemProperties.model:
+        this.inventoryData.addModel(element, this.selectedBrandID).subscribe(
+          (model: any) => {
+            const newModel = {
+              modelID: model.id,
+              name: element
+            };
+
+            this.allModels.push(newModel);
+            this.assignElement(type, newModel);
+          },
+          err => this.ionicPlugins.showToast(err)
+        );
+        break;
+      case this.itemProperties.category:
+        this.inventoryData.addCategory(element).subscribe(
+          (category: any) => {
+            const newCategory = {
+              categoryID: category.id,
+              name: element
+            };
+
+            this.allCategories.push(newCategory);
+            this.assignElement(type, newCategory);
+          },
+          err => this.ionicPlugins.showToast(err)
+        );
+        break;
+    }
+  }
+
+  assignElement(type, element) {
+    switch (type) {
+      case this.itemProperties.brand:
+        this.selectedBrandID = element.brandID;
+        this.selectedBrand = element.name;
+        this.selectedModel = '';
+        this.filterModels();
+        break;
+      case this.itemProperties.model:
+        this.item.modelID = element.modelID;
+        this.selectedModel = element.name;
+        break;
+      case this.itemProperties.category:
+        this.item.categoryID = element.categoryID;
+        this.selectedCategory = element.name;
+        break;
+    }
   }
 }

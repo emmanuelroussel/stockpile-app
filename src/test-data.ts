@@ -123,6 +123,10 @@ export class TestData {
     ]
   };
 
+  public static brand = {
+    name: 'Canon', brandID: 1
+  };
+
   public static filteredBrands = [
     { name: 'Canon', id: 1 }
   ];
@@ -136,6 +140,12 @@ export class TestData {
     ]
   };
 
+  public static model = {
+    name: 'T5i',
+    modelID: 1,
+    brandID: 1
+  };
+
   public static filteredModels = [
     { name: 'T5i', id: 5, brandID: 1 }
   ];
@@ -146,6 +156,11 @@ export class TestData {
       { name: 'Mic', id: 2 },
       { name: 'Light', id: 3 }
     ]
+  };
+
+  public static category = {
+    name: 'Camera',
+    categoryID: 1
   };
 
   public static status = {
@@ -166,7 +181,8 @@ export class TestData {
   };
 
   public static response = {
-    message: 'Successful operation'
+    message: 'Successful operation',
+    id: 1
   };
 
   public static error = 'Error message';
