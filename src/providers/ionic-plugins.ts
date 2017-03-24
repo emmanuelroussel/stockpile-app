@@ -7,6 +7,10 @@ export class IonicPlugins {
 
   constructor(public platform: Platform) { }
 
+  /**
+   * Shows message as a Toast notification if you are on mobile or logs it to
+   * the console when cordova is not be available.
+   */
   showToast(message: string) {
     if (this.platform.is('cordova')) {
       Toast.showWithOptions(

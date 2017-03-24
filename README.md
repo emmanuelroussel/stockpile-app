@@ -35,10 +35,3 @@ App tested with Jasmine and Karma on Chrome.
 Unit tests located with every testable `.ts` file in `src/pages/` and `src/app/` (unit test files end with `.spec.ts`).
 
 To run the tests: `npm test`.
-
-## Docs
-Documentation generated with [TypeDoc](https://github.com/TypeStrong/typedoc).
-
-To update the docs: `npm run docs`.
-
-**Note:** The script to generate the docs is currently ugly because TypeDoc has [a known issue with promises](https://github.com/TypeStrong/typedoc/issues/327) . The workaround is to ignore compile errors.
