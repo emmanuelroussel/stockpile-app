@@ -102,4 +102,10 @@ export class RentalPage {
       err => this.notifications.showToast(err)
     );
   }
+
+  onRemoveItem(tag) {
+    const index = this.items.findIndex(item => item.tag === tag);
+
+    this.items.splice(index, 1);
+  }
 }

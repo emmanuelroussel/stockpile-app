@@ -189,4 +189,10 @@ describe('Rental Page', () => {
     expect(instance.notifications.showToast).not.toHaveBeenCalled();
     expect(instance.tag).toEqual('');
   }));
+
+  it('removes item from the list onRemoveItem()', () => {
+    instance.items = TestData.items;
+    instance.onRemoveItem(TestData.tag);
+    expect(instance.items).toEqual(TestData.itemsMinusOne);
+  });
 });
