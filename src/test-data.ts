@@ -93,6 +93,30 @@ export class TestData {
     available: 0
   }];
 
+  public static tag = 'mango';
+
+  public static itemsMinusOne = [{
+    tag: 'apple',
+    brandID: 1,
+    modelID: 1,
+    categoryID: 1,
+    available: 1
+  },
+  {
+    tag: 'banana',
+    brandID: 2,
+    modelID: 2,
+    categoryID: 1,
+    available: 0
+  },
+  {
+    tag: 'orange',
+    brandID: 4,
+    modelID: 4,
+    categoryID: 2,
+    available: 0
+  }];
+
   public static filteredItems = {
     results: [{
       tag: 'apple',
