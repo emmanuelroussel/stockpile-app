@@ -104,9 +104,7 @@ export class RentalPage {
   }
 
   onRemoveItem(tag) {
-    const index = this.items.findIndex((item) => {
-      return (item.tag === tag);
-    });
+    const index = this.items.findIndex(item => item.tag === tag);
 
     this.items.splice(index, 1);
   }
