@@ -43,8 +43,13 @@ export class RentalDetailsPage {
       let rentals = [];
 
       for (const item of this.items) {
-        this.details.itemID = item.itemID;
-        rentals.push(this.inventoryData.rent(this.details).toPromise());
+        const rental = {
+          itemID: item.itemID,
+          startDate: this.details.startDate,
+          endDate: this.details.endDate
+        };
+
+        rentals.push(this.inventoryData.rent(rental).toPromise());
       }
 
       Promise.all(rentals).then(
