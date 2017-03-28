@@ -47,7 +47,7 @@ describe('Home Page', () => {
     spyOn(instance, 'pushPage');
     instance.onNext();
     tick();
-    expect(instance.pushPage).toHaveBeenCalledWith(true);
+    expect(instance.pushPage).toHaveBeenCalledWith(TestData.apiItem, true);
   }));
 
   it('shows toast if error in onNext()', fakeAsync(() => {
@@ -62,38 +62,40 @@ describe('Home Page', () => {
   it('pushes rental page on pushPage() with \'Rent\'', fakeAsync(() => {
     instance.segment = Actions.rent;
     instance.tag = TestData.item.tag;
+    instance.inventoryData.item = TestData.item;
     spyOn(instance.navCtrl, 'push');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      instance.pushPage(true);
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { tag: TestData.item.tag, action: Actions.rent });
+      instance.pushPage(TestData.item, true);
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { item: TestData.item, action: Actions.rent });
     });
   }));
 
   it('pushes rental page on pushPage() with \'Return\'', fakeAsync(() => {
     instance.segment = Actions.return;
     instance.tag = TestData.item.tag;
+    instance.inventoryData.item = TestData.item;
     spyOn(instance.navCtrl, 'push');
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      instance.pushPage(false);
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { tag: TestData.item.tag, action: Actions.return });
+      instance.pushPage(TestData.item, false);
+      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { item: TestData.item, action: Actions.return });
     });
   }));
 
   it('does not change page if segment is rent and item is not available', () => {
     instance.segment = Actions.rent;
     spyOn(instance.navCtrl, 'push');
-    instance.pushPage(false);
+    instance.pushPage(TestData.item, false);
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   });
 
   it('does not change page if segment is return and item is available', () => {
     instance.segment = Actions.return;
     spyOn(instance.navCtrl, 'push');
-    instance.pushPage(true);
+    instance.pushPage(TestData.item, true);
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   });
 

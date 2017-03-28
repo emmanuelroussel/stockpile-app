@@ -28,8 +28,9 @@ export class RentalPage {
   ) { }
 
   ngOnInit() {
-    this.tag = this.navParams.get('tag');
     this.action = this.navParams.get('action');
+    const item = this.navParams.get('item');
+    this.items.push(item);
 
     this.events.subscribe('item:edited', tag => {
       const index = this.items.findIndex(item => item.tag === tag);
@@ -39,8 +40,6 @@ export class RentalPage {
         err => this.notifications.showToast(err)
       );
     });
-
-    this.onAdd();
   }
 
   onAdd() {

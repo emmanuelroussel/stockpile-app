@@ -27,13 +27,13 @@ export class HomePage {
   onNext() {
     if (this.tag) {
       this.inventoryData.getItem(this.tag).subscribe(
-        (item: any) => this.pushPage(item.available === 1),
+        (item: any) => this.pushPage(item, item.available === 1),
         err => this.notifications.showToast(err)
       );
     }
   }
 
-  pushPage(available: boolean) {
+  pushPage(item, available: boolean) {
     if (this.segment === this.actions.rent && !available) {
       let alert = this.alertCtrl.create({
         title: Messages.itemAlreadyRented,
@@ -47,7 +47,7 @@ export class HomePage {
             text: 'Return Item',
             handler: () => {
               this.segment = this.actions.return;
-              this.pushPage(available);
+              this.pushPage(item, available);
             }
           }
         ]
@@ -64,7 +64,7 @@ export class HomePage {
       alert.present();
     } else {
       this.navCtrl.push(RentalPage, {
-        tag: this.tag,
+        item: item,
         action: this.segment
       });
 
