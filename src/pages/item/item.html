@@ -15,19 +15,16 @@
       <ion-item (click)="presentModal(allBrands, itemProperties.brand)">
         <ion-label fixed color="primary">Brand</ion-label>
         <ion-input [ngModel]="selectedBrand" readonly required name="brand" #brand="ngModel"></ion-input>
-        <button ion-button clear item-right>Edit</button>
       </ion-item>
 
       <ion-item [hidden]="!selectedBrandID" (click)="presentModal(filteredModels, itemProperties.model)">
         <ion-label fixed color="primary">Model</ion-label>
         <ion-input [ngModel]="selectedModel" readonly required name="model" #model="ngModel"></ion-input>
-        <button ion-button clear item-right>Edit</button>
       </ion-item>
 
       <ion-item (click)="presentModal(allCategories, itemProperties.category)">
         <ion-label fixed color="primary">Category</ion-label>
         <ion-input [ngModel]="selectedCategory" readonly required name="category" #category="ngModel"></ion-input>
-        <button ion-button clear item-right>Edit</button>
       </ion-item>
 		</ion-list>
 
