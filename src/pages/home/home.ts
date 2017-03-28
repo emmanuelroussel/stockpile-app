@@ -64,7 +64,7 @@ export class HomePage {
       alert.present();
     } else {
       this.navCtrl.push(RentalPage, {
-        item: item,
+        item,
         action: this.segment
       });
 
