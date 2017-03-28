@@ -31,17 +31,16 @@ describe('Rental Page', () => {
     expect(instance.action).toEqual(Actions.rent);
   });
 
-  it('gets initial item info', fakeAsync(() => {
-    instance.inventoryData.item = TestData.item;
+  it('gets initial item info', () => {
+    instance.navParams.param = TestData.item;
     instance.ngOnInit();
-    tick();
     expect(instance.items[0]).toEqual(TestData.item);
-  }));
+  });
 
   it('updates item when event is published', fakeAsync(() => {
-    instance.items = TestData.items;
     instance.inventoryData.item = TestData.modifiedItem;
     instance.ngOnInit();
+    instance.items = TestData.items;
     instance.events.publish('item:edited', TestData.modifiedItem.tag);
     tick();
     expect(instance.items).toEqual(TestData.modifiedItems);
@@ -50,6 +49,7 @@ describe('Rental Page', () => {
   it('shows toast if error while updating item in event.subscribe', fakeAsync(() => {
     instance.inventoryData.resolve = false;
     instance.ngOnInit();
+    instance.items = TestData.items;
     spyOn(instance.notifications, 'showToast');
     instance.events.publish('item:edited', TestData.modifiedItem.tag);
     tick();
@@ -69,8 +69,8 @@ describe('Rental Page', () => {
   });
 
   it('calls viewItem() on click on an item', fakeAsync(() => {
+    instance.navParams.param = TestData.item;
     spyOn(instance, 'viewItem');
-    instance.items.push(TestData.item);
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
