@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Scan</ion-title>
+    <ion-title>Rental</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -12,24 +12,10 @@
     <img src="assets/img/stockpile_tipi.svg" alt="Stockpile logo">
   </div>
 
-  <ion-segment [(ngModel)]="segment">
-    <ion-segment-button [value]="actions.rent">
-      {{actions.rent}}
-    </ion-segment-button>
-    <ion-segment-button [value]="actions.return">
-      {{actions.return}}
-    </ion-segment-button>
-  </ion-segment>
-
-	<ion-item>
-		<ion-input [(ngModel)]="tag" name="tag" type="text" placeholder="Tag">
-		</ion-input>
-	</ion-item>
-
-	<button ion-button class="tag-button" (click)="onNext()" type="submit" block [disabled]="!tag">
-    {{segment}}
+  <button ion-button (click)="onType()" block outline>
+    Type Barcode
   </button>
-  <button ion-button (click)="onScan()" block>
-    Scan
+  <button ion-button (click)="onScan()" block *ngIf="platform.is('cordova')">
+    Scan Barcode
   </button>
 </ion-content>

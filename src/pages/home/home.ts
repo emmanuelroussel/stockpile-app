@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, Platform } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { RentalPage } from '../rental/rental';
@@ -12,76 +12,72 @@ import { InventoryData } from '../../providers/inventory-data';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  actions = Actions;
-  segment: Actions = this.actions.rent;
-  tag: string = '';
 
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     public notifications: Notifications,
     public inventoryData: InventoryData,
-    public barcodeScanner: BarcodeScanner
+    public barcodeScanner: BarcodeScanner,
+    public platform: Platform
   ) { }
 
-  onNext() {
-    if (this.tag) {
-      this.inventoryData.getItem(this.tag).subscribe(
-        (item: any) => this.pushPage(item, item.available === 1),
-        err => this.notifications.showToast(err)
-      );
-    }
-  }
+  pushPage(tag: string) {
+    this.inventoryData.getItem(tag).subscribe(
+      (item: any) => {
+        let action;
 
-  pushPage(item, available: boolean) {
-    if (this.segment === this.actions.rent && !available) {
-      let alert = this.alertCtrl.create({
-        title: Messages.itemAlreadyRented,
-        message: 'Do you want to return it instead?',
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel'
-          },
-          {
-            text: 'Return Item',
-            handler: () => {
-              this.segment = this.actions.return;
-              this.pushPage(item, available);
-            }
-          }
-        ]
-      });
+        // If item is not available (i.e. rented), return it
+        // Else, if item is available, rent it
+        if (item.available === 0) {
+          action = Actions.return;
+        } else {
+          action = Actions.rent;
+        }
 
-      alert.present();
-    } else if (this.segment === this.actions.return && available) {
-      let alert = this.alertCtrl.create({
-        title: Messages.itemNotRented,
-        subTitle: 'Cannot return the item',
-        buttons: ['OK']
-      });
-
-      alert.present();
-    } else {
-      this.navCtrl.push(RentalPage, {
-        item,
-        action: this.segment
-      });
-
-      this.segment = this.actions.rent;
-      this.tag = '';
-    }
+        this.navCtrl.push(RentalPage, {
+          item,
+          action
+        });
+      },
+      err => this.notifications.showToast(err)
+    );
   }
 
   onScan() {
     this.barcodeScanner.scan().then(
       barcodeData => {
         if (!barcodeData.cancelled) {
-          this.tag = barcodeData.text;
-          this.onNext();
+          this.pushPage(barcodeData.text);
         }
       },
       err => this.notifications.showToast(err)
     );
+  }
+
+  onType() {
+    let alert = this.alertCtrl.create({
+      title: 'Type Barcode',
+      inputs: [
+        {
+          name: 'barcode',
+          placeholder: 'Barcode'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Next',
+          handler: form => {
+            this.pushPage(form.barcode);
+          }
+        }
+      ]
+    });
+
+    alert.present();
   }
 }
