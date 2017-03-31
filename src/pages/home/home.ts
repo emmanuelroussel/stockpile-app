@@ -3,7 +3,7 @@ import { NavController, AlertController, Platform } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { RentalPage } from '../rental/rental';
-import { Actions, Messages } from '../../constants';
+import { Actions } from '../../constants';
 import { Notifications } from '../../providers/notifications';
 import { InventoryData } from '../../providers/inventory-data';
 

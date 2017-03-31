@@ -6,18 +6,6 @@
 
 <ion-content padding>
 
-	<ion-item>
-		<ion-input [(ngModel)]="tag" name="tag" type="text" placeholder="Tag">
-		</ion-input>
-	</ion-item>
-
-	<button ion-button class="tag-button" (click)="onAdd()" type="submit" block [disabled]="!tag">
-    Add
-  </button>
-  <button ion-button (click)="onScan()" block>
-    Scan
-  </button>
-
   <ion-list-header>Scanned Items</ion-list-header>
 
   <ion-list>
@@ -29,6 +17,12 @@
     </ion-item>
   </ion-list>
 
+  <button ion-button (click)="onType()" block outline>
+    Add More Items
+  </button>
+  <button ion-button (click)="onScan()" block outline *ngIf="platform.is('cordova')">
+    Scan More Items
+  </button>
   <button ion-button *ngIf="action === actions.rent" (click)="onContinue()" block>
     Continue
   </button>

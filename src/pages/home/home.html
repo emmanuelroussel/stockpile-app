@@ -12,7 +12,7 @@
     <img src="assets/img/stockpile_tipi.svg" alt="Stockpile logo">
   </div>
 
-  <button ion-button (click)="onType()" block outline>
+  <button ion-button (click)="onType()" block [outline]="platform.is('cordova')">
     Type Barcode
   </button>
   <button ion-button (click)="onScan()" block *ngIf="platform.is('cordova')">

@@ -56,31 +56,9 @@ describe('Rental Page', () => {
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
-  it('calls onAdd() on click on add button', () => {
-    spyOn(instance, 'onAdd');
-    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
-    expect(instance.onAdd).toHaveBeenCalled();
-  });
-
-  it('calls onScan() on click on add button', () => {
-    spyOn(instance, 'onScan');
-    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button')[3], 'click');
-    expect(instance.onScan).toHaveBeenCalled();
-  });
-
-  it('calls viewItem() on click on an item', fakeAsync(() => {
-    instance.navParams.param = TestData.item;
-    spyOn(instance, 'viewItem');
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button')[4], 'click');
-      expect(instance.viewItem).toHaveBeenCalledWith(TestData.item);
-    });
-  }));
-
   it('pushes item onAdd()', fakeAsync(() => {
-    instance.onAdd();
+    instance.inventoryData.item = TestData.apiItem;
+    instance.onAdd(TestData.apiItem.tag);
     tick();
     expect(instance.items).toEqual([TestData.apiItem]);
   }));
@@ -167,8 +145,7 @@ describe('Rental Page', () => {
     instance.onScan();
     tick();
     expect(instance.barcodeScanner.scan).toHaveBeenCalled();
-    expect(instance.onAdd).toHaveBeenCalled();
-    expect(instance.tag).toEqual(TestData.barcodeData.text);
+    expect(instance.onAdd).toHaveBeenCalledWith(TestData.barcodeData.text);
   }));
 
   it('shows toast if error in onScan()', fakeAsync(() => {
@@ -187,8 +164,13 @@ describe('Rental Page', () => {
     tick();
     expect(instance.onAdd).not.toHaveBeenCalled();
     expect(instance.notifications.showToast).not.toHaveBeenCalled();
-    expect(instance.tag).toEqual('');
   }));
+
+  it('creates an alert onType()', () => {
+    spyOn(instance.alertCtrl, 'create').and.callThrough();
+    instance.onType();
+    expect(instance.alertCtrl.create).toHaveBeenCalled();
+  });
 
   it('removes item from the list onRemoveItem()', () => {
     instance.items = TestData.items;

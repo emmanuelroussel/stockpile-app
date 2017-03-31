@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events, Platform, AlertController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { InventoryData } from '../../providers/inventory-data';
@@ -14,7 +14,6 @@ import { Actions, Messages } from '../../constants';
 })
 export class RentalPage {
   actions = Actions;
-  tag: string = '';
   action: Actions = '';
   items = [];
 
@@ -24,7 +23,9 @@ export class RentalPage {
     public inventoryData: InventoryData,
     public notifications: Notifications,
     public events: Events,
-    public barcodeScanner: BarcodeScanner
+    public barcodeScanner: BarcodeScanner,
+    public platform: Platform,
+    public alertCtrl: AlertController
   ) { }
 
   ngOnInit() {
@@ -42,8 +43,8 @@ export class RentalPage {
     });
   }
 
-  onAdd() {
-    this.inventoryData.getItem(this.tag).subscribe(
+  onAdd(tag: string) {
+    this.inventoryData.getItem(tag).subscribe(
       item => {
         if (item.available === 0 && this.action === Actions.rent) {
           this.notifications.showToast(Messages.itemAlreadyRented);
@@ -57,14 +58,12 @@ export class RentalPage {
       },
       err => this.notifications.showToast(err)
     );
-
-    this.tag = '';
   }
 
   viewItem(item) {
     this.navCtrl.push(ItemPage, {
       tag: item.tag,
-      action: this.actions.edit
+      action: Actions.edit
     });
   }
 
@@ -94,12 +93,37 @@ export class RentalPage {
     this.barcodeScanner.scan().then(
       barcodeData => {
         if (!barcodeData.cancelled) {
-          this.tag = barcodeData.text;
-          this.onAdd();
+          this.onAdd(barcodeData.text);
         }
       },
       err => this.notifications.showToast(err)
     );
+  }
+
+  onType() {
+    let alert = this.alertCtrl.create({
+      title: 'Type Barcode',
+      inputs: [
+        {
+          name: 'barcode',
+          placeholder: 'Barcode'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Next',
+          handler: form => {
+            this.onAdd(form.barcode);
+          }
+        }
+      ]
+    });
+
+    alert.present();
   }
 
   onRemoveItem(tag) {
