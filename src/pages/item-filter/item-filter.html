@@ -18,11 +18,15 @@
 </ion-header>
 <ion-content>
   <ion-list>
-    <button ion-item detail-none *ngFor="let element of filteredElements" (click)="dismiss(element)">
-      {{ element.name }}
+    <button ion-item detail-none *ngIf="!showNew" (click)="onCreate()">
+       Create new {{ type.toLowerCase() }}
+       <ion-icon name="add" item-right></ion-icon>
     </button>
     <button ion-item detail-none *ngIf="showNew" (click)="dismiss(queryText, true)">
        Create new {{ type.toLowerCase() }}: {{ queryText }}
+    </button>
+    <button ion-item detail-none *ngFor="let element of filteredElements" (click)="dismiss(element)">
+      {{ element.name }}
     </button>
   </ion-list>
 </ion-content>
