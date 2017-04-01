@@ -5,6 +5,9 @@
     </button>
     <ion-title>Inventory</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only (click)="onOpenFilters($event)">
+        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="onAdd()">
         <ion-icon name="add"></ion-icon>
       </button>
@@ -25,12 +28,18 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-list>
+  <!--<ion-list>
     <ion-list-header>
       Filters
+      <button ion-button clear item-right (click)="toggleFilters()" *ngIf="!showFilters">
+        Show Filters
+      </button>
+      <button ion-button clear item-right (click)="toggleFilters()" *ngIf="showFilters">
+        Hide Filters
+      </button>
     </ion-list-header>
 
-    <ion-item>
+    <ion-item [hidden]="!showFilters">
       <ion-label color="primary">Brand</ion-label>
       <ion-select [(ngModel)]="selectedBrandID" (ionChange)="filterItems()">
         <ion-option [value]="-1">All</ion-option>
@@ -38,7 +47,7 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <ion-item [hidden]="!showFilters">
       <ion-label color="primary">Model</ion-label>
       <ion-select [(ngModel)]="selectedModelID" (ionChange)="filterItems()">
         <ion-option [value]="-1">All</ion-option>
@@ -46,19 +55,17 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <ion-item [hidden]="!showFilters">
       <ion-label color="primary">Category</ion-label>
       <ion-select [(ngModel)]="selectedCategoryID" (ionChange)="filterItems()">
         <ion-option [value]="-1">All</ion-option>
         <ion-option *ngFor="let category of allCategories" [value]="category.categoryID">{{ category.name }}</ion-option>
       </ion-select>
     </ion-item>
-  </ion-list>
+  </ion-list>-->
 
   <ion-list *ngIf="filteredItems">
-    <ion-list-header>
-      Items
-    </ion-list-header>
+    <ion-list-header>Items</ion-list-header>
     <button ion-item *ngFor="let item of filteredItems" (click)="viewItem(item)">
       <h2>{{ item.brand }} {{ item.model }}</h2>
     </button>

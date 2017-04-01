@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Cancel</button>
+    </ion-buttons>
+
+    <ion-title>
+      Filter Inventory
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button (click)="applyFilters()" strong>Done</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label color="primary">Brand</ion-label>
+      <ion-select [(ngModel)]="selectedBrandID" (ionChange)="filterModels()">
+        <ion-option [value]="-1">All</ion-option>
+        <ion-option *ngFor="let brand of brands" [value]="brand.brandID">{{ brand.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Model</ion-label>
+      <ion-select [(ngModel)]="selectedModelID">
+        <ion-option [value]="-1">All</ion-option>
+        <ion-option *ngFor="let model of filteredModels" [value]="model.modelID">{{ model.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Category</ion-label>
+      <ion-select [(ngModel)]="selectedCategoryID">
+        <ion-option [value]="-1">All</ion-option>
+        <ion-option *ngFor="let category of categories" [value]="category.categoryID">{{ category.name }}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <button ion-item (click)="resetFilters()" detail-none>
+      Reset All Filters
+    </button>
+  </ion-list>
+</ion-content>
