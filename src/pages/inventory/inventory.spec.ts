@@ -80,7 +80,7 @@ describe('Inventory Page', () => {
   it('pushes ItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.viewItem(TestData.item);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.item.tag, action: Actions.edit });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { barcode: TestData.item.barcode, action: Actions.edit });
   });
 
   it('filters models on filterModels()', () => {
@@ -96,7 +96,7 @@ describe('Inventory Page', () => {
     instance.onAdd();
     tick();
     expect(instance.barcodeScanner.scan).toHaveBeenCalled();
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.barcodeData.text, action: Actions.add });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { barcode: TestData.barcodeData.text, action: Actions.add });
   }));
 
   it('shows toast if error in onAdd()', fakeAsync(() => {

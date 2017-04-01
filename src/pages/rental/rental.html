@@ -11,7 +11,7 @@
   <ion-list>
     <ion-item *ngFor="let item of items" (click)="viewItem(item)">
       <h2>{{ item.brand }} {{ item.model }}</h2>
-      <button ion-button clear item-right color="dark" (click)="onRemoveItem(item.tag)">
+      <button ion-button clear item-right color="dark" (click)="onRemoveItem(item.barcode)">
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-item>

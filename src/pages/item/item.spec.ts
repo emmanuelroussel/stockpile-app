@@ -26,10 +26,10 @@ describe('Item Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('gets navParam tag', () => {
-    instance.navParams.param = TestData.item.tag;
+  it('gets navParam barcode', () => {
+    instance.navParams.param = TestData.item.barcode;
     instance.ngOnInit();
-    expect(instance.item.tag).toEqual(TestData.item.tag);
+    expect(instance.item.barcode).toEqual(TestData.item.barcode);
   });
 
   it('gets navParam action', () => {
@@ -93,7 +93,7 @@ describe('Item Page', () => {
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
       expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemAdded);
-      expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.tag);
+      expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.barcode);
     });
   }));
 
@@ -112,7 +112,7 @@ describe('Item Page', () => {
       tick();
       expect(instance.navCtrl.pop).toHaveBeenCalled();
       expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemEdited);
-      expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.tag);
+      expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.barcode);
     });
   }));
 

@@ -33,24 +33,24 @@ export class RentalPage {
     const item = this.navParams.get('item');
     this.items.push(item);
 
-    this.events.subscribe('item:edited', tag => {
-      const index = this.items.findIndex(item => item.tag === tag);
+    this.events.subscribe('item:edited', barcode => {
+      const index = this.items.findIndex(item => item.barcode === barcode);
 
-      this.inventoryData.getItem(tag).subscribe(
+      this.inventoryData.getItem(barcode).subscribe(
         item => this.items.splice(index, 1, item),
         err => this.notifications.showToast(err)
       );
     });
   }
 
-  onAdd(tag: string) {
-    this.inventoryData.getItem(tag).subscribe(
+  onAdd(barcode: string) {
+    this.inventoryData.getItem(barcode).subscribe(
       item => {
         if (item.available === 0 && this.action === Actions.rent) {
           this.notifications.showToast(Messages.itemAlreadyRented);
         } else if (item.available === 1 && this.action === Actions.return) {
           this.notifications.showToast(Messages.itemNotRented);
-        } else if (this.items.some(listItem => listItem.tag === item.tag)) {
+        } else if (this.items.some(listItem => listItem.barcode === item.barcode)) {
           this.notifications.showToast(Messages.itemAlreadyAdded);
         } else {
           this.items.push(item);
@@ -62,7 +62,7 @@ export class RentalPage {
 
   viewItem(item) {
     this.navCtrl.push(ItemPage, {
-      tag: item.tag,
+      barcode: item.barcode,
       action: Actions.edit
     });
   }
@@ -77,7 +77,7 @@ export class RentalPage {
     let returns = [];
 
     for (const item of this.items) {
-      returns.push(this.inventoryData.return(item.tag).toPromise());
+      returns.push(this.inventoryData.return(item.barcode).toPromise());
     }
 
     Promise.all(returns).then(
@@ -126,8 +126,8 @@ export class RentalPage {
     alert.present();
   }
 
-  onRemoveItem(tag) {
-    const index = this.items.findIndex(item => item.tag === tag);
+  onRemoveItem(barcode) {
+    const index = this.items.findIndex(item => item.barcode === barcode);
 
     this.items.splice(index, 1);
   }

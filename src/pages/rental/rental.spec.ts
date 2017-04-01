@@ -41,7 +41,7 @@ describe('Rental Page', () => {
     instance.inventoryData.item = TestData.modifiedItem;
     instance.ngOnInit();
     instance.items = TestData.items;
-    instance.events.publish('item:edited', TestData.modifiedItem.tag);
+    instance.events.publish('item:edited', TestData.modifiedItem.barcode);
     tick();
     expect(instance.items).toEqual(TestData.modifiedItems);
   }));
@@ -51,14 +51,14 @@ describe('Rental Page', () => {
     instance.ngOnInit();
     instance.items = TestData.items;
     spyOn(instance.notifications, 'showToast');
-    instance.events.publish('item:edited', TestData.modifiedItem.tag);
+    instance.events.publish('item:edited', TestData.modifiedItem.barcode);
     tick();
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('pushes item onAdd()', fakeAsync(() => {
     instance.inventoryData.item = TestData.apiItem;
-    instance.onAdd(TestData.apiItem.tag);
+    instance.onAdd(TestData.apiItem.barcode);
     tick();
     expect(instance.items).toEqual([TestData.apiItem]);
   }));
@@ -101,7 +101,7 @@ describe('Rental Page', () => {
   it('pushes ItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.viewItem(TestData.item);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.item.tag, action: Actions.edit });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { barcode: TestData.item.barcode, action: Actions.edit });
   });
 
   it('pushes RentalDetailsPage on nav onContinue()', () => {
@@ -136,7 +136,7 @@ describe('Rental Page', () => {
     instance.onReturn();
     tick();
     expect(instance.navCtrl.pop).toHaveBeenCalled();
-    expect(instance.inventoryData.return).toHaveBeenCalledWith(TestData.item.tag);
+    expect(instance.inventoryData.return).toHaveBeenCalledWith(TestData.item.barcode);
   }));
 
   it('calls barcodeScanner.scan() onScanBarcode()', fakeAsync(() => {
@@ -174,7 +174,7 @@ describe('Rental Page', () => {
 
   it('removes item from the list onRemoveItem()', () => {
     instance.items = TestData.items;
-    instance.onRemoveItem(TestData.tag);
+    instance.onRemoveItem(TestData.barcode);
     expect(instance.items).toEqual(TestData.itemsMinusOne);
   });
 });

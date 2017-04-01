@@ -22,8 +22,8 @@ export class HomePage {
     public platform: Platform
   ) { }
 
-  pushPage(tag: string) {
-    this.inventoryData.getItem(tag).subscribe(
+  pushPage(barcode: string) {
+    this.inventoryData.getItem(barcode).subscribe(
       (item: any) => {
         let action;
 

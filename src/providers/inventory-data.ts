@@ -14,8 +14,8 @@ export class InventoryData {
     public authHttp: AuthHttp
   ) { }
 
-  getItem(tag: string) {
-    return this.getEndpoint(`${Links.item}/${tag}`);
+  getItem(barcode: string) {
+    return this.getEndpoint(`${Links.item}/${barcode}`);
   }
 
   getAllItems() {
@@ -26,12 +26,12 @@ export class InventoryData {
     return this.putEndpoint(Links.item, item);
   }
 
-  editItem(item: Object, tag: string) {
-    return this.putEndpoint(`${Links.item}/${tag}`, item);
+  editItem(item: Object, barcode: string) {
+    return this.putEndpoint(`${Links.item}/${barcode}`, item);
   }
 
-  deleteItem(tag: string) {
-    return this.deleteEndpoint(`${Links.item}/${tag}`);
+  deleteItem(barcode: string) {
+    return this.deleteEndpoint(`${Links.item}/${barcode}`);
   }
 
   filterItems(brandID?: number, modelID?: number, categoryID?: number, available?: number) {
@@ -62,8 +62,8 @@ export class InventoryData {
     return this.putEndpoint(Links.rental, rental);
   }
 
-  return(tag: string) {
-      return this.deleteEndpoint(`${Links.rental}/${tag}`);
+  return(barcode: string) {
+      return this.deleteEndpoint(`${Links.rental}/${barcode}`);
   }
 
   getBrands() {

@@ -28,7 +28,7 @@ describe('Home Page', () => {
   it('pushes rental page on pushPage() with \'Rent\' if item is avaiable', fakeAsync(() => {
     instance.inventoryData.item = TestData.apiItem;
     spyOn(instance.navCtrl, 'push');
-    instance.pushPage(TestData.apiItem.tag);
+    instance.pushPage(TestData.apiItem.barcode);
     tick();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { item: TestData.apiItem, action: Actions.rent });
   }));
@@ -36,7 +36,7 @@ describe('Home Page', () => {
   it('pushes rental page on pushPage() with \'Return\' if item is not available', fakeAsync(() => {
     instance.inventoryData.item = TestData.rentedApiItem;
     spyOn(instance.navCtrl, 'push');
-    instance.pushPage(TestData.rentedApiItem.tag);
+    instance.pushPage(TestData.rentedApiItem.barcode);
     tick();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { item: TestData.rentedApiItem, action: Actions.return });
   }));
@@ -44,7 +44,7 @@ describe('Home Page', () => {
   it('shows toast if error in pushPage()', fakeAsync(() => {
     instance.inventoryData.resolve = false;
     spyOn(instance.notifications, 'showToast');
-    instance.pushPage(TestData.item.tag);
+    instance.pushPage(TestData.item.barcode);
     tick();
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
