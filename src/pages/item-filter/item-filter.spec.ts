@@ -1,6 +1,6 @@
 import { TestData } from '../../test-data';
 import { ViewController } from 'ionic-angular';
-import { NavParamsMock } from '../../mocks';
+import { NavParamsMock, AlertMock } from '../../mocks';
 
 import { ItemFilterPage } from './item-filter';
 import { ItemProperties } from '../../constants';
@@ -10,7 +10,11 @@ let itemFilterPage: ItemFilterPage = null;
 describe('ItemFilter Page', () => {
 
   beforeEach(() => {
-    itemFilterPage = new ItemFilterPage(<any> new ViewController, <any> new NavParamsMock);
+    itemFilterPage = new ItemFilterPage(
+      <any> new ViewController,
+      <any> new NavParamsMock,
+      <any> new AlertMock
+    );
   });
 
   it('is created', () => {
@@ -55,5 +59,12 @@ describe('ItemFilter Page', () => {
     spyOn(itemFilterPage.viewCtrl, 'dismiss');
     itemFilterPage.dismiss(TestData.brands[0]);
     expect(itemFilterPage.viewCtrl.dismiss).toHaveBeenCalledWith(TestData.brands[0], false);
+  });
+
+  it('creates an alert onCreate()', () => {
+    spyOn(itemFilterPage.alertCtrl, 'create').and.callThrough();
+    itemFilterPage.type = '';
+    itemFilterPage.onCreate();
+    expect(itemFilterPage.alertCtrl.create).toHaveBeenCalled();
   });
 });
