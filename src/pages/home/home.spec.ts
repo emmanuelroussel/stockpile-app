@@ -49,10 +49,10 @@ describe('Home Page', () => {
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
-  it('calls barcodeScanner.scan() onScan()', fakeAsync(() => {
+  it('calls barcodeScanner.scan() onScanBarcode()', fakeAsync(() => {
     spyOn(instance.barcodeScanner, 'scan').and.callThrough();
     spyOn(instance, 'pushPage');
-    instance.onScan();
+    instance.onScanBarcode();
     tick();
     expect(instance.barcodeScanner.scan).toHaveBeenCalled();
     expect(instance.pushPage).toHaveBeenCalledWith(TestData.barcodeData.text);
@@ -62,23 +62,23 @@ describe('Home Page', () => {
     instance.barcodeScanner.cancel = true;
     spyOn(instance.notifications, 'showToast');
     spyOn(instance, 'pushPage');
-    instance.onScan();
+    instance.onScanBarcode();
     tick();
     expect(instance.pushPage).not.toHaveBeenCalled();
     expect(instance.notifications.showToast).not.toHaveBeenCalled();
   }));
 
-  it('shows toast if error in onScan()', fakeAsync(() => {
+  it('shows toast if error in onScanBarcode()', fakeAsync(() => {
     instance.barcodeScanner.resolve = false;
     spyOn(instance.notifications, 'showToast');
-    instance.onScan();
+    instance.onScanBarcode();
     tick();
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
-  it('creates an alert onType()', () => {
+  it('creates an alert onTypeBarcode()', () => {
     spyOn(instance.alertCtrl, 'create').and.callThrough();
-    instance.onType();
+    instance.onTypeBarcode();
     expect(instance.alertCtrl.create).toHaveBeenCalled();
   });
 });

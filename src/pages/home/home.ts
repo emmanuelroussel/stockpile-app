@@ -44,7 +44,7 @@ export class HomePage {
     );
   }
 
-  onScan() {
+  onScanBarcode() {
     this.barcodeScanner.scan().then(
       barcodeData => {
         if (!barcodeData.cancelled) {
@@ -55,7 +55,7 @@ export class HomePage {
     );
   }
 
-  onType() {
+  onTypeBarcode() {
     let alert = this.alertCtrl.create({
       title: 'Type Barcode',
       inputs: [

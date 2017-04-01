@@ -139,19 +139,19 @@ describe('Rental Page', () => {
     expect(instance.inventoryData.return).toHaveBeenCalledWith(TestData.item.tag);
   }));
 
-  it('calls barcodeScanner.scan() onScan()', fakeAsync(() => {
+  it('calls barcodeScanner.scan() onScanBarcode()', fakeAsync(() => {
     spyOn(instance.barcodeScanner, 'scan').and.callThrough();
     spyOn(instance, 'onAdd');
-    instance.onScan();
+    instance.onScanBarcode();
     tick();
     expect(instance.barcodeScanner.scan).toHaveBeenCalled();
     expect(instance.onAdd).toHaveBeenCalledWith(TestData.barcodeData.text);
   }));
 
-  it('shows toast if error in onScan()', fakeAsync(() => {
+  it('shows toast if error in onScanBarcode()', fakeAsync(() => {
     instance.barcodeScanner.resolve = false;
     spyOn(instance.notifications, 'showToast');
-    instance.onScan();
+    instance.onScanBarcode();
     tick();
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
@@ -160,15 +160,15 @@ describe('Rental Page', () => {
     instance.barcodeScanner.cancel = true;
     spyOn(instance.notifications, 'showToast');
     spyOn(instance, 'onAdd');
-    instance.onScan();
+    instance.onScanBarcode();
     tick();
     expect(instance.onAdd).not.toHaveBeenCalled();
     expect(instance.notifications.showToast).not.toHaveBeenCalled();
   }));
 
-  it('creates an alert onType()', () => {
+  it('creates an alert onTypeBarcode()', () => {
     spyOn(instance.alertCtrl, 'create').and.callThrough();
-    instance.onType();
+    instance.onTypeBarcode();
     expect(instance.alertCtrl.create).toHaveBeenCalled();
   });
 
