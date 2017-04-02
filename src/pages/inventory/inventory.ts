@@ -83,7 +83,7 @@ export class InventoryPage {
 
   viewItem(item) {
     this.navCtrl.push(ItemPage, {
-      tag: item.tag,
+      barcode: item.barcode,
       action: Actions.edit
     });
   }
@@ -93,7 +93,7 @@ export class InventoryPage {
       barcodeData => {
         if (!barcodeData.cancelled) {
           this.navCtrl.push(ItemPage, {
-            tag: barcodeData.text,
+            barcode: barcodeData.text,
             action: Actions.add
           });
         }

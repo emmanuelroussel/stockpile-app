@@ -6,29 +6,23 @@
 
 <ion-content padding>
 
-	<ion-item>
-		<ion-input [(ngModel)]="tag" name="tag" type="text" placeholder="Tag">
-		</ion-input>
-	</ion-item>
-
-	<button ion-button class="tag-button" (click)="onAdd()" type="submit" block [disabled]="!tag">
-    Add
-  </button>
-  <button ion-button (click)="onScan()" block>
-    Scan
-  </button>
-
   <ion-list-header>Scanned Items</ion-list-header>
 
   <ion-list>
     <ion-item *ngFor="let item of items" (click)="viewItem(item)">
       <h2>{{ item.brand }} {{ item.model }}</h2>
-      <button ion-button clear item-right color="dark" (click)="onRemoveItem(item.tag)">
+      <button ion-button clear item-right color="dark" (click)="onRemoveItem(item.barcode)">
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-item>
   </ion-list>
 
+  <button ion-button (click)="onTypeBarcode()" block outline>
+    Add More Items
+  </button>
+  <button ion-button (click)="onScanBarcode()" block outline *ngIf="platform.is('cordova')">
+    Scan More Items
+  </button>
   <button ion-button *ngIf="action === actions.rent" (click)="onContinue()" block>
     Continue
   </button>

@@ -1,6 +1,6 @@
 export class TestData {
   public static apiItem = {
-    tag: 'banana',
+    barcode: 'banana',
     brand: 'Canon',
     brandID: 1,
     model: 'T5i',
@@ -11,7 +11,7 @@ export class TestData {
   };
 
   public static rentedApiItem = {
-    tag: 'banana',
+    barcode: 'banana',
     brand: 'Canon',
     brandID: 1,
     model: 'T5i',
@@ -22,13 +22,13 @@ export class TestData {
   };
 
   public static item = {
-    tag: 'banana',
+    barcode: 'banana',
     modelID: 1,
     categoryID: 1
   };
 
   public static modifiedItem = {
-    tag: 'mango',
+    barcode: 'mango',
     brandID: 2,
     modelID: 3,
     categoryID: 3,
@@ -36,28 +36,28 @@ export class TestData {
   };
 
   public static modifiedItems = [{
-    tag: 'apple',
+    barcode: 'apple',
     brandID: 1,
     modelID: 1,
     categoryID: 1,
     available: 1
   },
   {
-    tag: 'banana',
+    barcode: 'banana',
     brandID: 2,
     modelID: 2,
     categoryID: 1,
     available: 0
   },
   {
-    tag: 'mango',
+    barcode: 'mango',
     brandID: 2,
     modelID: 3,
     categoryID: 3,
     available: 1
   },
   {
-    tag: 'orange',
+    barcode: 'orange',
     brandID: 4,
     modelID: 4,
     categoryID: 2,
@@ -65,52 +65,52 @@ export class TestData {
   }];
 
   public static items = [{
-    tag: 'apple',
+    barcode: 'apple',
     brandID: 1,
     modelID: 1,
     categoryID: 1,
     available: 1
   },
   {
-    tag: 'banana',
+    barcode: 'banana',
     brandID: 2,
     modelID: 2,
     categoryID: 1,
     available: 0
   },
   {
-    tag: 'mango',
+    barcode: 'mango',
     brandID: 3,
     modelID: 3,
     categoryID: 2,
     available: 1
   },
   {
-    tag: 'orange',
+    barcode: 'orange',
     brandID: 4,
     modelID: 4,
     categoryID: 2,
     available: 0
   }];
 
-  public static tag = 'mango';
+  public static barcode = 'mango';
 
   public static itemsMinusOne = [{
-    tag: 'apple',
+    barcode: 'apple',
     brandID: 1,
     modelID: 1,
     categoryID: 1,
     available: 1
   },
   {
-    tag: 'banana',
+    barcode: 'banana',
     brandID: 2,
     modelID: 2,
     categoryID: 1,
     available: 0
   },
   {
-    tag: 'orange',
+    barcode: 'orange',
     brandID: 4,
     modelID: 4,
     categoryID: 2,
@@ -119,14 +119,14 @@ export class TestData {
 
   public static filteredItems = {
     results: [{
-      tag: 'apple',
+      barcode: 'apple',
       brandID: 1,
       modelID: 1,
       categoryID: 1,
       available: 1
     },
     {
-      tag: 'banana',
+      barcode: 'banana',
       brandID: 2,
       modelID: 2,
       categoryID: 1,

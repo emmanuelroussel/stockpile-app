@@ -25,106 +25,60 @@ describe('Home Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('initializes with a segment of Rent', () => {
-    expect(instance.segment).toEqual('Rent');
-  });
-
-  it('calls onNext() on click', () => {
-    spyOn(instance, 'onNext');
-    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
-    expect(instance.onNext).toHaveBeenCalled();
-  });
-
-  it('calls onScan() on click', () => {
-    spyOn(instance, 'onScan');
-    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button')[4], 'click');
-    expect(instance.onScan).toHaveBeenCalled();
-  });
-
-  it('calls pushPage onNext()', fakeAsync(() => {
-    instance.tag = TestData.item.tag;
+  it('pushes rental page on pushPage() with \'Rent\' if item is avaiable', fakeAsync(() => {
     instance.inventoryData.item = TestData.apiItem;
-    spyOn(instance, 'pushPage');
-    instance.onNext();
+    spyOn(instance.navCtrl, 'push');
+    instance.pushPage(TestData.apiItem.barcode);
     tick();
-    expect(instance.pushPage).toHaveBeenCalledWith(TestData.apiItem, true);
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { item: TestData.apiItem, action: Actions.rent });
   }));
 
-  it('shows toast if error in onNext()', fakeAsync(() => {
-    instance.tag = TestData.item.tag;
+  it('pushes rental page on pushPage() with \'Return\' if item is not available', fakeAsync(() => {
+    instance.inventoryData.item = TestData.rentedApiItem;
+    spyOn(instance.navCtrl, 'push');
+    instance.pushPage(TestData.rentedApiItem.barcode);
+    tick();
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { item: TestData.rentedApiItem, action: Actions.return });
+  }));
+
+  it('shows toast if error in pushPage()', fakeAsync(() => {
     instance.inventoryData.resolve = false;
     spyOn(instance.notifications, 'showToast');
-    instance.onNext();
+    instance.pushPage(TestData.item.barcode);
     tick();
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
-  it('pushes rental page on pushPage() with \'Rent\'', fakeAsync(() => {
-    instance.segment = Actions.rent;
-    instance.tag = TestData.item.tag;
-    instance.inventoryData.item = TestData.item;
-    spyOn(instance.navCtrl, 'push');
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      instance.pushPage(TestData.item, true);
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { item: TestData.item, action: Actions.rent });
-    });
-  }));
-
-  it('pushes rental page on pushPage() with \'Return\'', fakeAsync(() => {
-    instance.segment = Actions.return;
-    instance.tag = TestData.item.tag;
-    instance.inventoryData.item = TestData.item;
-    spyOn(instance.navCtrl, 'push');
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      instance.pushPage(TestData.item, false);
-      expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { item: TestData.item, action: Actions.return });
-    });
-  }));
-
-  it('does not change page if segment is rent and item is not available', () => {
-    instance.segment = Actions.rent;
-    spyOn(instance.navCtrl, 'push');
-    instance.pushPage(TestData.item, false);
-    expect(instance.navCtrl.push).not.toHaveBeenCalled();
-  });
-
-  it('does not change page if segment is return and item is available', () => {
-    instance.segment = Actions.return;
-    spyOn(instance.navCtrl, 'push');
-    instance.pushPage(TestData.item, true);
-    expect(instance.navCtrl.push).not.toHaveBeenCalled();
-  });
-
-  it('calls barcodeScanner.scan() onScan()', fakeAsync(() => {
+  it('calls barcodeScanner.scan() onScanBarcode()', fakeAsync(() => {
     spyOn(instance.barcodeScanner, 'scan').and.callThrough();
-    spyOn(instance, 'onNext');
-    instance.onScan();
+    spyOn(instance, 'pushPage');
+    instance.onScanBarcode();
     tick();
     expect(instance.barcodeScanner.scan).toHaveBeenCalled();
-    expect(instance.onNext).toHaveBeenCalled();
-    expect(instance.tag).toEqual(TestData.barcodeData.text);
+    expect(instance.pushPage).toHaveBeenCalledWith(TestData.barcodeData.text);
   }));
 
   it('does nothing if scan is cancelled', fakeAsync(() => {
     instance.barcodeScanner.cancel = true;
     spyOn(instance.notifications, 'showToast');
-    spyOn(instance, 'onNext');
-    instance.onScan();
+    spyOn(instance, 'pushPage');
+    instance.onScanBarcode();
     tick();
-    expect(instance.onNext).not.toHaveBeenCalled();
+    expect(instance.pushPage).not.toHaveBeenCalled();
     expect(instance.notifications.showToast).not.toHaveBeenCalled();
-    expect(instance.tag).toEqual('');
   }));
 
-  it('shows toast if error in onScan()', fakeAsync(() => {
+  it('shows toast if error in onScanBarcode()', fakeAsync(() => {
     instance.barcodeScanner.resolve = false;
     spyOn(instance.notifications, 'showToast');
-    instance.onScan();
+    instance.onScanBarcode();
     tick();
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
+
+  it('creates an alert onTypeBarcode()', () => {
+    spyOn(instance.alertCtrl, 'create').and.callThrough();
+    instance.onTypeBarcode();
+    expect(instance.alertCtrl.create).toHaveBeenCalled();
+  });
 });

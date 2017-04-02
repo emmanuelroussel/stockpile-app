@@ -49,7 +49,7 @@ describe('InventoryData Provider', () => {
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.item) })))
     );
     tick();
-    inventoryData.getItem(TestData.item.tag).subscribe(
+    inventoryData.getItem(TestData.item.barcode).subscribe(
       item => expect(item).toEqual(TestData.item),
       err => fail(err)
     );
@@ -82,7 +82,7 @@ describe('InventoryData Provider', () => {
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
     );
     tick();
-    inventoryData.editItem(TestData.item, TestData.item.tag).subscribe(
+    inventoryData.editItem(TestData.item, TestData.item.barcode).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
     );
@@ -93,7 +93,7 @@ describe('InventoryData Provider', () => {
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
     );
     tick();
-    inventoryData.deleteItem(TestData.item.tag).subscribe(
+    inventoryData.deleteItem(TestData.item.barcode).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
     );
@@ -126,7 +126,7 @@ describe('InventoryData Provider', () => {
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
     );
     tick();
-    inventoryData.return(TestData.item.tag).subscribe(
+    inventoryData.return(TestData.item.barcode).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
     );
@@ -225,7 +225,7 @@ describe('InventoryData Provider', () => {
       conn => conn.mockError(new Response(new ResponseOptions({ body: { message: TestData.error } })))
     );
     tick();
-    inventoryData.deleteItem(TestData.item.tag).subscribe(
+    inventoryData.deleteItem(TestData.item.barcode).subscribe(
       res => fail('Did not return an error'),
       err => expect(err).toEqual(TestData.error)
     );

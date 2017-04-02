@@ -16,7 +16,7 @@ export class ItemPage {
   actions = Actions;
   itemProperties = ItemProperties;
   action: Actions = '';
-  item: {modelID?: number, categoryID?: number, tag?: string} = {};
+  item: {modelID?: number, categoryID?: number, barcode?: string} = {};
   selectedBrandID: number;
   selectedBrand: string;
   allBrands;
@@ -36,7 +36,7 @@ export class ItemPage {
   ) { }
 
   ngOnInit() {
-    this.item.tag = this.navParams.get('tag');
+    this.item.barcode = this.navParams.get('barcode');
     this.action = this.navParams.get('action');
 
     this.inventoryData.getBrands().subscribe(
@@ -50,11 +50,11 @@ export class ItemPage {
     );
 
     if (this.action === this.actions.edit) {
-      this.inventoryData.getItem(this.item.tag).subscribe(
+      this.inventoryData.getItem(this.item.barcode).subscribe(
         (item: any) => {
           this.item.modelID = item.modelID;
           this.item.categoryID = item.categoryID;
-          this.item.tag = item.tag;
+          this.item.barcode = item.barcode;
           this.selectedBrandID = item.brandID;
           this.selectedBrand = item.brand;
           this.selectedModel = item.model;
@@ -88,14 +88,14 @@ export class ItemPage {
         apiCall = this.inventoryData.addItem(this.item);
         message = Messages.itemAdded;
       } else if (this.action === this.actions.edit) {
-        apiCall = this.inventoryData.editItem(this.item, this.item.tag);
+        apiCall = this.inventoryData.editItem(this.item, this.item.barcode);
         message = Messages.itemEdited;
       }
 
       apiCall.subscribe(
         item => {
           this.notifications.showToast(message);
-          this.events.publish('item:edited', item.tag);
+          this.events.publish('item:edited', item.barcode);
           this.navCtrl.pop();
         },
         err => this.notifications.showToast(err)
@@ -104,7 +104,7 @@ export class ItemPage {
   }
 
   onDelete() {
-    this.inventoryData.deleteItem(this.item.tag).subscribe(
+    this.inventoryData.deleteItem(this.item.barcode).subscribe(
       success => {
         this.notifications.showToast(Messages.itemDeleted);
         this.navCtrl.pop();

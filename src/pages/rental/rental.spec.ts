@@ -41,7 +41,7 @@ describe('Rental Page', () => {
     instance.inventoryData.item = TestData.modifiedItem;
     instance.ngOnInit();
     instance.items = TestData.items;
-    instance.events.publish('item:edited', TestData.modifiedItem.tag);
+    instance.events.publish('item:edited', TestData.modifiedItem.barcode);
     tick();
     expect(instance.items).toEqual(TestData.modifiedItems);
   }));
@@ -51,36 +51,14 @@ describe('Rental Page', () => {
     instance.ngOnInit();
     instance.items = TestData.items;
     spyOn(instance.notifications, 'showToast');
-    instance.events.publish('item:edited', TestData.modifiedItem.tag);
+    instance.events.publish('item:edited', TestData.modifiedItem.barcode);
     tick();
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
-  it('calls onAdd() on click on add button', () => {
-    spyOn(instance, 'onAdd');
-    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
-    expect(instance.onAdd).toHaveBeenCalled();
-  });
-
-  it('calls onScan() on click on add button', () => {
-    spyOn(instance, 'onScan');
-    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button')[3], 'click');
-    expect(instance.onScan).toHaveBeenCalled();
-  });
-
-  it('calls viewItem() on click on an item', fakeAsync(() => {
-    instance.navParams.param = TestData.item;
-    spyOn(instance, 'viewItem');
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button')[4], 'click');
-      expect(instance.viewItem).toHaveBeenCalledWith(TestData.item);
-    });
-  }));
-
   it('pushes item onAdd()', fakeAsync(() => {
-    instance.onAdd();
+    instance.inventoryData.item = TestData.apiItem;
+    instance.onAdd(TestData.apiItem.barcode);
     tick();
     expect(instance.items).toEqual([TestData.apiItem]);
   }));
@@ -123,7 +101,7 @@ describe('Rental Page', () => {
   it('pushes ItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.viewItem(TestData.item);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { tag: TestData.item.tag, action: Actions.edit });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { barcode: TestData.item.barcode, action: Actions.edit });
   });
 
   it('pushes RentalDetailsPage on nav onContinue()', () => {
@@ -158,23 +136,22 @@ describe('Rental Page', () => {
     instance.onReturn();
     tick();
     expect(instance.navCtrl.pop).toHaveBeenCalled();
-    expect(instance.inventoryData.return).toHaveBeenCalledWith(TestData.item.tag);
+    expect(instance.inventoryData.return).toHaveBeenCalledWith(TestData.item.barcode);
   }));
 
-  it('calls barcodeScanner.scan() onScan()', fakeAsync(() => {
+  it('calls barcodeScanner.scan() onScanBarcode()', fakeAsync(() => {
     spyOn(instance.barcodeScanner, 'scan').and.callThrough();
     spyOn(instance, 'onAdd');
-    instance.onScan();
+    instance.onScanBarcode();
     tick();
     expect(instance.barcodeScanner.scan).toHaveBeenCalled();
-    expect(instance.onAdd).toHaveBeenCalled();
-    expect(instance.tag).toEqual(TestData.barcodeData.text);
+    expect(instance.onAdd).toHaveBeenCalledWith(TestData.barcodeData.text);
   }));
 
-  it('shows toast if error in onScan()', fakeAsync(() => {
+  it('shows toast if error in onScanBarcode()', fakeAsync(() => {
     instance.barcodeScanner.resolve = false;
     spyOn(instance.notifications, 'showToast');
-    instance.onScan();
+    instance.onScanBarcode();
     tick();
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
@@ -183,16 +160,21 @@ describe('Rental Page', () => {
     instance.barcodeScanner.cancel = true;
     spyOn(instance.notifications, 'showToast');
     spyOn(instance, 'onAdd');
-    instance.onScan();
+    instance.onScanBarcode();
     tick();
     expect(instance.onAdd).not.toHaveBeenCalled();
     expect(instance.notifications.showToast).not.toHaveBeenCalled();
-    expect(instance.tag).toEqual('');
   }));
+
+  it('creates an alert onTypeBarcode()', () => {
+    spyOn(instance.alertCtrl, 'create').and.callThrough();
+    instance.onTypeBarcode();
+    expect(instance.alertCtrl.create).toHaveBeenCalled();
+  });
 
   it('removes item from the list onRemoveItem()', () => {
     instance.items = TestData.items;
-    instance.onRemoveItem(TestData.tag);
+    instance.onRemoveItem(TestData.barcode);
     expect(instance.items).toEqual(TestData.itemsMinusOne);
   });
 });
