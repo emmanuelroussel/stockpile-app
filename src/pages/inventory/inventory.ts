@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { InventoryData } from '../../providers/inventory-data';
 import { Notifications } from '../../providers/notifications';
 import { Actions } from '../../constants';
 import { ItemPage } from '../item/item';
+import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
 
 @Component({
   selector: 'page-inventory',
@@ -22,12 +23,14 @@ export class InventoryPage {
   selectedCategoryID = -1;
   allItems;
   filteredItems;
+  showFilters = false;
 
   constructor(
     public navCtrl: NavController,
     public inventoryData: InventoryData,
     public notifications: Notifications,
-    public barcodeScanner: BarcodeScanner
+    public barcodeScanner: BarcodeScanner,
+    public modalCtrl: ModalController
   ) { }
 
   ionViewWillEnter() {
@@ -55,9 +58,11 @@ export class InventoryPage {
     );
   }
 
-  filterItems() {
-    this.filterModels();
+  toggleFilters() {
+    this.showFilters = !this.showFilters;
+  }
 
+  filterItems() {
     if (Math.sign(this.selectedBrandID) < 0) {
       this.selectedModelID = -1;
     }
@@ -73,12 +78,6 @@ export class InventoryPage {
       },
       err => this.notifications.showToast(err)
     );
-  }
-
-  filterModels() {
-    this.filteredModels = this.allModels.filter((model) => {
-      return (model.brandID === this.selectedBrandID);
-    });
   }
 
   viewItem(item) {
@@ -100,5 +99,29 @@ export class InventoryPage {
       },
       err => this.notifications.showToast(err)
     );
+  }
+
+  onOpenFilters(event) {
+    let modal = this.modalCtrl.create(InventoryFilterPage, {
+      brands: this.allBrands,
+      models: this.allModels,
+      categories: this.allCategories,
+      selectedBrandID: this.selectedBrandID,
+      selectedModelID: this.selectedModelID,
+      selectedCategoryID: this.selectedCategoryID
+    });
+
+    modal.onDidDismiss((ids) => {
+      if (ids) {
+        this.selectedBrandID = ids.selectedBrandID;
+        this.selectedModelID = ids.selectedModelID;
+        this.selectedCategoryID = ids.selectedCategoryID;
+        this.filterItems();
+      }
+   });
+
+    modal.present({
+      ev: event
+    });
   }
 }

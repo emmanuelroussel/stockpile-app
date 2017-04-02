@@ -25,40 +25,8 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-list>
-    <ion-list-header>
-      Filters
-    </ion-list-header>
-
-    <ion-item>
-      <ion-label color="primary">Brand</ion-label>
-      <ion-select [(ngModel)]="selectedBrandID" (ionChange)="filterItems()">
-        <ion-option [value]="-1">All</ion-option>
-        <ion-option *ngFor="let brand of allBrands" [value]="brand.brandID">{{ brand.name }}</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label color="primary">Model</ion-label>
-      <ion-select [(ngModel)]="selectedModelID" (ionChange)="filterItems()">
-        <ion-option [value]="-1">All</ion-option>
-        <ion-option *ngFor="let model of filteredModels" [value]="model.modelID">{{ model.name }}</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label color="primary">Category</ion-label>
-      <ion-select [(ngModel)]="selectedCategoryID" (ionChange)="filterItems()">
-        <ion-option [value]="-1">All</ion-option>
-        <ion-option *ngFor="let category of allCategories" [value]="category.categoryID">{{ category.name }}</ion-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
-
   <ion-list *ngIf="filteredItems">
-    <ion-list-header>
-      Items
-    </ion-list-header>
+    <ion-list-header>Items</ion-list-header>
     <button ion-item *ngFor="let item of filteredItems" (click)="viewItem(item)">
       <h2>{{ item.brand }} {{ item.model }}</h2>
     </button>
@@ -66,4 +34,8 @@
   <ion-item *ngIf="!filteredItems">
     No items found
   </ion-item>
+
+  <ion-fab right bottom>
+    <button ion-fab color="secondary" (click)="onOpenFilters($event)"><ion-icon name="options"></ion-icon></button>
+  </ion-fab>
 </ion-content>

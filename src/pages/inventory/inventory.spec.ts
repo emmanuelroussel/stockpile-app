@@ -5,6 +5,7 @@ import { TestData } from '../../test-data';
 import { InventoryPage } from './inventory';
 import { Actions } from '../../constants';
 import { ItemPage } from '../item/item';
+import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
 
 let fixture: ComponentFixture<InventoryPage> = null;
 let instance: any = null;
@@ -58,11 +59,9 @@ describe('Inventory Page', () => {
     instance.selectedCategoryID = TestData.apiItem.categoryID;
     instance.segment = 0;
     instance.inventoryData.allItems = TestData.filteredItems;
-    spyOn(instance, 'filterModels');
     spyOn(instance.inventoryData, 'filterItems').and.callThrough();
     instance.filterItems();
     tick();
-    expect(instance.filterModels).toHaveBeenCalled();
     expect(instance.inventoryData.filterItems).toHaveBeenCalledWith(TestData.apiItem.brandID, TestData.apiItem.modelID, TestData.apiItem.categoryID, 0);
     expect(instance.filteredItems).toEqual(TestData.filteredItems.results);
   }));
@@ -81,13 +80,6 @@ describe('Inventory Page', () => {
     spyOn(instance.navCtrl, 'push');
     instance.viewItem(TestData.item);
     expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { barcode: TestData.item.barcode, action: Actions.edit });
-  });
-
-  it('filters models on filterModels()', () => {
-    instance.allModels = TestData.models.results;
-    instance.selectedBrandID = TestData.apiItem.brandID;
-    instance.filterModels();
-    expect(instance.filteredModels).toEqual(TestData.filteredModels);
   });
 
   it('pushes ItemPage on nav onAdd()', fakeAsync(() => {
@@ -118,4 +110,23 @@ describe('Inventory Page', () => {
     expect(instance.notifications.showToast).not.toHaveBeenCalled();
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   }));
+
+  it('creates a modal onOpenFilters()', () => {
+    instance.allBrands = TestData.brands.results;
+    instance.allModels = TestData.models.results;
+    instance.allCategories = TestData.categories.results;
+    instance.selectedBrandID = TestData.apiItem.brandID;
+    instance.selectedModelID = TestData.apiItem.modelID;
+    instance.selectedCategoryID = TestData.apiItem.categoryID;
+    spyOn(instance.modalCtrl, 'create').and.callThrough();
+    instance.onOpenFilters();
+    expect(instance.modalCtrl.create).toHaveBeenCalledWith(InventoryFilterPage, {
+      brands: TestData.brands.results,
+      models: TestData.models.results,
+      categories: TestData.categories.results,
+      selectedBrandID: TestData.apiItem.brandID,
+      selectedModelID: TestData.apiItem.modelID,
+      selectedCategoryID: TestData.apiItem.categoryID
+    });
+  });
 });
