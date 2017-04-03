@@ -58,7 +58,7 @@ export class UserData {
     this.storage.get('id_token').then(
       token => {
         Raven.setUserContext({
-          id: this.jwtHelper.decodeToken(token).sub
+          id: this.jwtHelper.decodeToken(token).userID
         });
       }
     );
