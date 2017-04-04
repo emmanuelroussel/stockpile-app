@@ -101,7 +101,7 @@ describe('Rental Page', () => {
   it('pushes ItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.viewItem(TestData.item);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewItemPage, { barcode: TestData.item.barcode });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewItemPage, { item: TestData.item });
   });
 
   it('pushes RentalDetailsPage on nav onContinue()', () => {

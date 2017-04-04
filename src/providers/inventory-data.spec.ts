@@ -44,17 +44,6 @@ describe('InventoryData Provider', () => {
     expect(InventoryData).toBeTruthy();
   }));
 
-  it('returns an item on getItem()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
-    mockBackend.connections.subscribe(
-      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.item) })))
-    );
-    tick();
-    inventoryData.getItem(TestData.item.barcode).subscribe(
-      item => expect(item).toEqual(TestData.item),
-      err => fail(err)
-    );
-  })));
-
   it('returns items on getAllItems()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
     mockBackend.connections.subscribe(
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.items) })))

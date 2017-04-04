@@ -26,36 +26,16 @@ describe('Item Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('gets navParam barcode', () => {
-    instance.navParams.param = TestData.item.barcode;
-    instance.ngOnInit();
-    expect(instance.item.barcode).toEqual(TestData.item.barcode);
-  });
-
   it('gets navParam action', () => {
     instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     expect(instance.action).toEqual(Actions.edit);
   });
 
-  it('gets item if action === \'Edit\'', fakeAsync(() => {
-    instance.inventoryData.item = TestData.apiItem;
-    instance.navParams.param = Actions.edit;
-    spyOn(instance, 'filterModels');
-    instance.ngOnInit();
-    tick();
-    expect(instance.item).toEqual(TestData.item);
-    expect(instance.selectedBrand).toEqual(TestData.apiItem.brand);
-    expect(instance.selectedModel).toEqual(TestData.apiItem.model);
-    expect(instance.selectedCategory).toEqual(TestData.apiItem.category);
-    expect(instance.filterModels).toHaveBeenCalled();
-  }));
-
   it('gets brands, models and categories', fakeAsync(() => {
     instance.inventoryData.brands = TestData.brands;
     instance.inventoryData.models = TestData.models;
     instance.inventoryData.categories = TestData.categories;
-    instance.navParams.param = Actions.edit;
     instance.ngOnInit();
     tick();
     expect(instance.allBrands).toEqual(TestData.brands.results);
@@ -63,8 +43,7 @@ describe('Item Page', () => {
     expect(instance.allCategories).toEqual(TestData.categories.results);
   }));
 
-  it('shows toast if error while getting item, brands, models and categories', fakeAsync(() => {
-    instance.navParams.param = Actions.edit;
+  it('shows toast if error while getting brands, models and categories', fakeAsync(() => {
     instance.inventoryData.resolve = false;
     spyOn(instance.notifications, 'showToast');
     instance.ngOnInit();
@@ -81,7 +60,6 @@ describe('Item Page', () => {
   it('pops nav onSave() if form is valid and action is add', fakeAsync(() => {
     instance.item = TestData.item;
     instance.navParams.param = Actions.add;
-    instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
     spyOn(instance.notifications, 'showToast');
     spyOn(instance.events, 'publish');
@@ -100,7 +78,6 @@ describe('Item Page', () => {
   it('pops nav onSave() if form is valid and action is edit', fakeAsync(() => {
     instance.item = TestData.item;
     instance.navParams.param = Actions.edit;
-    instance.ngOnInit();
     spyOn(instance.navCtrl, 'pop');
     spyOn(instance.notifications, 'showToast');
     spyOn(instance.events, 'publish');

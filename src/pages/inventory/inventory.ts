@@ -83,7 +83,7 @@ export class InventoryPage {
 
   viewItem(item) {
     this.navCtrl.push(ViewItemPage, {
-      barcode: item.barcode
+      item: item
     });
   }
 

@@ -36,7 +36,6 @@ export class ItemPage {
   ) { }
 
   ngOnInit() {
-    this.item.barcode = this.navParams.get('barcode');
     this.action = this.navParams.get('action');
 
     this.inventoryData.getBrands().subscribe(
@@ -50,26 +49,17 @@ export class ItemPage {
     );
 
     if (this.action === this.actions.edit) {
-      this.inventoryData.getItem(this.item.barcode).subscribe(
-        (item: any) => {
-          this.item.modelID = item.modelID;
-          this.item.categoryID = item.categoryID;
-          this.item.barcode = item.barcode;
-          this.selectedBrandID = item.brandID;
-          this.selectedBrand = item.brand;
-          this.selectedModel = item.model;
-          this.selectedCategory = item.category;
+      const item = this.navParams.get('item');
 
-          this.getModels();
-        },
-        err => this.notifications.showToast(err)
-      );
-    } else {
-      this.getModels();
+      this.item.modelID = item.modelID;
+      this.item.categoryID = item.categoryID;
+      this.item.barcode = item.barcode;
+      this.selectedBrandID = item.brandID;
+      this.selectedBrand = item.brand;
+      this.selectedModel = item.model;
+      this.selectedCategory = item.category;
     }
-  }
 
-  private getModels() {
     this.inventoryData.getModels().subscribe(
       (models: any) => {
         this.allModels = models.results;

@@ -1,4 +1,4 @@
-import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { Actions } from '../../constants';
@@ -25,27 +25,16 @@ describe('ViewItem Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('gets item in ngOnInit', fakeAsync(() => {
-    instance.inventoryData.item = TestData.apiItem;
+  it('gets item in ngOnInit', () => {
+    instance.navParams.param = TestData.apiItem;
     instance.ngOnInit();
-    tick();
     expect(instance.item).toEqual(TestData.apiItem);
-  }));
+  });
 
-  it('shows toast if error while getting item', fakeAsync(() => {
-    instance.inventoryData.resolve = false;
-    spyOn(instance.notifications, 'showToast');
-    instance.ngOnInit();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
-
-  it('pushes ItemPage on nav onEdit()', fakeAsync(() => {
-    instance.inventoryData.item = TestData.item;
-    instance.ngOnInit();
-    tick();
+  it('pushes ItemPage on nav onEdit()', () => {
+    instance.item = TestData.item;
     spyOn(instance.navCtrl, 'push');
     instance.editItem();
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { barcode: TestData.item.barcode, action: Actions.edit });
-  }));
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { item: TestData.item, action: Actions.edit });
+  });
 });
