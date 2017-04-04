@@ -112,6 +112,12 @@ describe('Inventory Page', () => {
     expect(instance.navCtrl.push).not.toHaveBeenCalled();
   }));
 
+  it('toggles showFilters on toggleFilters()', () => {
+    instance.showFilters = true;
+    instance.toggleFilters();
+    expect(instance.showFilters).toEqual(false);
+  });
+
   it('creates a modal onOpenFilters()', () => {
     instance.allBrands = TestData.brands.results;
     instance.allModels = TestData.models.results;
