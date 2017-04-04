@@ -4,7 +4,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { InventoryData } from '../../providers/inventory-data';
 import { Notifications } from '../../providers/notifications';
-import { ItemPage } from '../item/item';
+import { ViewItemPage } from '../view-item/view-item';
 import { RentalDetailsPage } from '../rental-details/rental-details';
 import { Actions, Messages } from '../../constants';
 
@@ -61,9 +61,8 @@ export class RentalPage {
   }
 
   viewItem(item) {
-    this.navCtrl.push(ItemPage, {
-      barcode: item.barcode,
-      action: Actions.edit
+    this.navCtrl.push(ViewItemPage, {
+      barcode: item.barcode
     });
   }
 

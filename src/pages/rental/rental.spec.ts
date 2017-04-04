@@ -4,7 +4,7 @@ import { Actions, Messages } from '../../constants';
 import { TestData } from '../../test-data';
 
 import { RentalPage } from './rental';
-import { ItemPage } from '../item/item';
+import { ViewItemPage } from '../view-item/view-item';
 
 let fixture: ComponentFixture<RentalPage> = null;
 let instance: any = null;
@@ -101,7 +101,7 @@ describe('Rental Page', () => {
   it('pushes ItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.viewItem(TestData.item);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { barcode: TestData.item.barcode, action: Actions.edit });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewItemPage, { barcode: TestData.item.barcode });
   });
 
   it('pushes RentalDetailsPage on nav onContinue()', () => {
