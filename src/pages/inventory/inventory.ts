@@ -7,6 +7,7 @@ import { Notifications } from '../../providers/notifications';
 import { Actions } from '../../constants';
 import { ItemPage } from '../item/item';
 import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
+import { ViewItemPage } from '../view-item/view-item';
 
 @Component({
   selector: 'page-inventory',
@@ -81,9 +82,8 @@ export class InventoryPage {
   }
 
   viewItem(item) {
-    this.navCtrl.push(ItemPage, {
-      barcode: item.barcode,
-      action: Actions.edit
+    this.navCtrl.push(ViewItemPage, {
+      item: item
     });
   }
 

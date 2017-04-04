@@ -18,6 +18,7 @@ import { LoginPage } from '../pages/login/login';
 import { RentalPage } from '../pages/rental/rental';
 import { RentalDetailsPage } from '../pages/rental-details/rental-details';
 import { TabsPage } from '../pages/tabs/tabs';
+import { ViewItemPage } from '../pages/view-item/view-item';
 
 import { ApiUrl } from '../providers/api-url';
 import { InventoryData } from '../providers/inventory-data';
@@ -38,7 +39,8 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     LoginPage,
     RentalPage,
     RentalDetailsPage,
-    TabsPage
+    TabsPage,
+    ViewItemPage
   ],
   imports: [
     IonicModule.forRoot(StockpileApp, {
@@ -64,7 +66,8 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     LoginPage,
     RentalPage,
     RentalDetailsPage,
-    TabsPage
+    TabsPage,
+    ViewItemPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: RavenErrorHandler },

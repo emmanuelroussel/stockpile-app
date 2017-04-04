@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>View Item</ion-title>
+    <ion-buttons *ngIf="platform.is('ios')" end>
+      <button ion-button clear (click)="editItem()">
+        Edit
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-list>
+    <ion-item>
+      <ion-label fixed color="primary">Brand</ion-label>
+      <ion-input [ngModel]="item?.brand" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed color="primary">Model</ion-label>
+      <ion-input [ngModel]="item?.model" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed color="primary">Category</ion-label>
+      <ion-input [ngModel]="item?.category" readonly></ion-input>
+    </ion-item>
+	</ion-list>
+
+  <ion-fab right bottom *ngIf="platform.is('android')">
+    <button ion-fab color="secondary" (click)="editItem()"><ion-icon name="create"></ion-icon></button>
+  </ion-fab>
+</ion-content>
