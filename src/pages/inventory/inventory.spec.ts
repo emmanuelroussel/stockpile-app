@@ -5,6 +5,7 @@ import { TestData } from '../../test-data';
 import { InventoryPage } from './inventory';
 import { Actions } from '../../constants';
 import { ItemPage } from '../item/item';
+import { ViewItemPage } from '../view-item/view-item';
 import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
 
 let fixture: ComponentFixture<InventoryPage> = null;
@@ -79,7 +80,7 @@ describe('Inventory Page', () => {
   it('pushes ItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.viewItem(TestData.item);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { barcode: TestData.item.barcode, action: Actions.edit });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewItemPage, { barcode: TestData.item.barcode });
   });
 
   it('pushes ItemPage on nav onAdd()', fakeAsync(() => {
