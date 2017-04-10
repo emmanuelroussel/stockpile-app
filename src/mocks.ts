@@ -287,22 +287,36 @@ export class NotificationsMock {
 export class UserDataMock {
   resolve: boolean = true;
   loggedIn: boolean;
+  user = TestData.user;
+  organization = TestData.organization;
 
   public login(): any {
-    if (this.resolve) {
-      return Promise.resolve();
-    } else {
-      return Promise.reject(TestData.error);
-    }
+    return this.returnValue();
   }
 
   public logout(): any { }
 
   public isLoggedIn(): any {
-    return Promise.resolve(this.loggedIn);
+    return this.returnValue(this.loggedIn);
   }
 
   public setUser(): any { }
+
+  public getUser(): any {
+    return this.returnValue(this.user);
+  }
+
+  public getOrganization(): any {
+    return this.returnValue(this.organization);
+  }
+
+  private returnValue(value?: any): any {
+    if (this.resolve) {
+      return Promise.resolve(value);
+    } else {
+      return Promise.reject(TestData.error);
+    }
+  }
 }
 
 /* tslint:enable */

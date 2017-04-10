@@ -220,4 +220,17 @@ export class TestData {
     text: 'I am a barcode',
     cancelled: true
   };
+
+  public static user = {
+    userID: 1,
+    firstName: 'Dark',
+    lastName: 'Vader',
+    email: 'vader@empire.xyz',
+    organizationID: 1
+  };
+
+  public static organization = {
+    organizationID: 1,
+    name: 'Empire'
+  };
 }

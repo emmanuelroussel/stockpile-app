@@ -1,12 +1,17 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Menu</ion-title>
+      <ion-title>Stockpile</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
     <ion-list>
+      <ion-item>
+        <h2>{{user?.firstName}} {{user?.lastName}}</h2>
+        <h3>{{user?.email}}</h3>
+        <p>{{organization?.name}}</p>
+      </ion-item>
       <button ion-item (click)="logout()">
         Logout
       </button>

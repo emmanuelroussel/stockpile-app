@@ -86,4 +86,37 @@ describe('UserData Provider', () => {
     userData.setUser();
     expect(userData.storage.get).toHaveBeenCalledWith('id_token');
   }));
+
+  it('returns a user on getUser()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.user) })))
+    );
+
+    userData.getUser().then(
+      res => expect(res).toEqual(TestData.user),
+      err => fail(err)
+    );
+  })));
+
+  it('returns an organization on getOrganization()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.organization) })))
+    );
+
+    userData.getOrganization().then(
+      res => expect(res).toEqual(TestData.organization),
+      err => fail(err)
+    );
+  })));
+
+  it('gets something on getInfo()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.organization) })))
+    );
+
+    userData.getInfo().then(
+      res => expect(res).toEqual(TestData.organization),
+      err => fail(err)
+    );
+  })));
 });

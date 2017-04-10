@@ -63,4 +63,46 @@ export class UserData {
       }
     );
   }
+
+  getUser() {
+    return new Promise((resolve, reject) => {
+      this.storage.get('id_token').then(
+        token => {
+          const id = this.jwtHelper.decodeToken(token).userID;
+
+          this.getInfo(Links.user, id).then(
+            data => resolve(data),
+            err => reject(err)
+          );
+        }
+      );
+    });
+  }
+
+  getOrganization() {
+    return new Promise((resolve, reject) => {
+      this.storage.get('id_token').then(
+        token => {
+          const id = this.jwtHelper.decodeToken(token).organizationID;
+
+          this.getInfo(Links.organization, id).then(
+            data => resolve(data),
+            err => reject(err)
+          );
+        }
+      );
+    });
+  }
+
+  private getInfo(endpoint, id) {
+    return new Promise((resolve, reject) => {
+      this.authHttp.get(`${this.apiUrl.getUrl()}${endpoint}/${id}`)
+      .map(extractData)
+      .catch(handleError)
+      .subscribe(
+        data => resolve(data),
+        err => reject(err)
+      );
+    });
+  }
 }
