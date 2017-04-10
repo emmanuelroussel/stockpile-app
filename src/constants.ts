@@ -13,6 +13,8 @@ export class Links {
   public static model = '/model';
   public static category = '/category';
   public static status = '/status';
+  public static user = '/user';
+  public static organization = '/organization';
 }
 
 export class Messages {

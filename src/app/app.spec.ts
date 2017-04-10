@@ -1,8 +1,10 @@
 import { fakeAsync, tick } from '@angular/core/testing';
-import { PlatformMock, UserDataMock, MenuMock, NavMock, SplashScreenMock, StatusBarMock } from '../mocks';
+import { PlatformMock, UserDataMock, MenuMock, NavMock, SplashScreenMock, StatusBarMock, NotificationsMock } from '../mocks';
+import { Events } from 'ionic-angular';
 import { StockpileApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
+import { TestData } from '../test-data';
 
 let instance: any = null;
 
@@ -14,7 +16,9 @@ describe('Root Component', () => {
       (<any> new UserDataMock),
       (<any> new MenuMock),
       (<any> new SplashScreenMock),
-      (<any> new StatusBarMock)
+      (<any> new StatusBarMock),
+      (<any> new NotificationsMock),
+      (<any> new Events)
     );
     instance.nav = (<any> new NavMock);
   });
@@ -41,11 +45,35 @@ describe('Root Component', () => {
 
   it('sets TabsPage as a root page if user is logged in', fakeAsync(() => {
     instance.userData.loggedIn = true;
+    instance.userData.user = TestData.user;
+    instance.userData.organization = TestData.organization;
     spyOn(instance.userData, 'setUser');
     instance.ngOnInit();
     tick();
     expect(instance.rootPage).toEqual(TabsPage);
     expect(instance.userData.setUser).toHaveBeenCalled();
+    expect(instance.user).toEqual(TestData.user);
+    expect(instance.organization).toEqual(TestData.organization);
+  }));
+
+  it('gets user info when \'user:login\' event is published', fakeAsync(() => {
+    instance.userData.user = TestData.user;
+    instance.userData.organization = TestData.organization;
+    instance.ngOnInit();
+    instance.user = {};
+    instance.organization = {};
+    instance.events.publish('user:login');
+    tick();
+    expect(instance.user).toEqual(TestData.user);
+    expect(instance.organization).toEqual(TestData.organization);
+  }));
+
+  it('shows toast if error while getting user and organization', fakeAsync(() => {
+    instance.userData.resolve = false;
+    spyOn(instance.notifications, 'showToast');
+    instance.getUserInfo();
+    tick();
+    expect(instance.notifications.showToast).toHaveBeenCalledTimes(2);
   }));
 
   it('calls logout(), closes side menu and sets nav root to LoginPage', () => {

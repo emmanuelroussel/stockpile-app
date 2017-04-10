@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
 import { UserData } from '../../providers/user-data';
@@ -17,7 +17,8 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController,
     public userData: UserData,
-    public notifications: Notifications
+    public notifications: Notifications,
+    public events: Events
   ) { }
 
   onLogin(form: NgForm) {
@@ -25,7 +26,10 @@ export class LoginPage {
 
     if (form.valid) {
       this.userData.login(this.login.email, this.login.password).then(
-        (data: any) => this.navCtrl.setRoot(TabsPage),
+        (data: any) => {
+          this.events.publish('user:login');
+          this.navCtrl.setRoot(TabsPage);
+        },
         err => {
           this.login.password = '';
           this.notifications.showToast(err);
