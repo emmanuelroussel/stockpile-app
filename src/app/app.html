@@ -7,11 +7,11 @@
 
   <ion-content>
     <ion-list>
-      <ion-item>
+      <button ion-item (click)="editInfo()">
         <h2>{{user?.firstName}} {{user?.lastName}}</h2>
         <h3>{{user?.email}}</h3>
         <p>{{organization?.name}}</p>
-      </ion-item>
+      </button>
       <button ion-item (click)="logout()">
         Logout
       </button>

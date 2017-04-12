@@ -233,4 +233,9 @@ export class TestData {
     organizationID: 1,
     name: 'Empire'
   };
+
+  public static decodedToken = {
+    userID: 1,
+    organizationID: 2
+  };
 }

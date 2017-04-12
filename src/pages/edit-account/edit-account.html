@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit Account</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form #userForm="ngForm">
+		<ion-list>
+      <ion-item>
+        <ion-label fixed color="primary">First Name</ion-label>
+        <ion-input [(ngModel)]="user.firstName" required name="firstName" #firstName="ngModel"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed color="primary">Last Name</ion-label>
+        <ion-input [(ngModel)]="user.lastName" required name="lastName" #lastName="ngModel"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed color="primary">Email</ion-label>
+        <ion-input [(ngModel)]="user.email" required name="email" type="email" #email="ngModel"></ion-input>
+      </ion-item>
+		</ion-list>
+
+		<button ion-button (click)="onSave(userForm)" type="submit" block [disabled]="!userForm.valid">Save</button>
+	</form>
+</ion-content>

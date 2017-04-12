@@ -4,6 +4,7 @@ import { Events } from 'ionic-angular';
 import { StockpileApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
+import { EditAccountPage } from '../pages/edit-account/edit-account';
 import { TestData } from '../test-data';
 
 let instance: any = null;
@@ -47,7 +48,7 @@ describe('Root Component', () => {
     instance.userData.loggedIn = true;
     instance.userData.user = TestData.user;
     instance.userData.organization = TestData.organization;
-    spyOn(instance.userData, 'setUser');
+    spyOn(instance.userData, 'setUser').and.callThrough();
     instance.ngOnInit();
     tick();
     expect(instance.rootPage).toEqual(TabsPage);
@@ -68,6 +69,13 @@ describe('Root Component', () => {
     expect(instance.organization).toEqual(TestData.organization);
   }));
 
+  it('updates user when \'user:edited\' event is published', () => {
+    instance.ngOnInit();
+    instance.user = {};
+    instance.events.publish('user:edited', TestData.user);
+    expect(instance.user).toEqual(TestData.user);
+  });
+
   it('shows toast if error while getting user and organization', fakeAsync(() => {
     instance.userData.resolve = false;
     spyOn(instance.notifications, 'showToast');
@@ -75,6 +83,15 @@ describe('Root Component', () => {
     tick();
     expect(instance.notifications.showToast).toHaveBeenCalledTimes(2);
   }));
+
+  it('pushes EditAccountPage on editInfo()', () => {
+    instance.user = TestData.user;
+    spyOn(instance.menuCtrl, 'close');
+    spyOn(instance.nav, 'push');
+    instance.editInfo();
+    expect(instance.menuCtrl.close).toHaveBeenCalled();
+    expect(instance.nav.push).toHaveBeenCalledWith(EditAccountPage, { user: TestData.user });
+  });
 
   it('calls logout(), closes side menu and sets nav root to LoginPage', () => {
     spyOn(instance.userData, 'logout');

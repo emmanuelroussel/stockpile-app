@@ -27,8 +27,12 @@ export class LoginPage {
     if (form.valid) {
       this.userData.login(this.login.email, this.login.password).then(
         (data: any) => {
-          this.events.publish('user:login');
-          this.navCtrl.setRoot(TabsPage);
+          this.userData.setUser().then(
+            data => {
+              this.events.publish('user:login');
+              this.navCtrl.setRoot(TabsPage);
+            }
+          );
         },
         err => {
           this.login.password = '';
