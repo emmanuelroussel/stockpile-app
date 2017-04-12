@@ -11,6 +11,8 @@ import { extractData, handleError } from '../services/auth-http-helpers';
 export class UserData {
   storage = new Storage();
   jwtHelper: JwtHelper = new JwtHelper();
+  userID;
+  organizationID;
 
   constructor(
     public apiUrl: ApiUrl,
@@ -31,9 +33,7 @@ export class UserData {
         .subscribe(
           data => {
             this.storage.set('id_token', data.token);
-            Raven.setUserContext({
-              id: data.id
-            });
+            this.setUser();
 
             resolve(data);
           },
@@ -48,18 +48,12 @@ export class UserData {
 
   editUser(user) {
     return new Promise((resolve, reject) => {
-      this.storage.get('id_token').then(
-        token => {
-          const id = this.jwtHelper.decodeToken(token).userID;
-
-          this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${id}`, user)
-          .map(extractData)
-          .catch(handleError)
-          .subscribe(
-            data => resolve(data),
-            err => reject(err)
-          );
-        }
+      this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${this.userID}`, user)
+      .map(extractData)
+      .catch(handleError)
+      .subscribe(
+        data => resolve(data),
+        err => reject(err)
       );
     });
   }
@@ -75,8 +69,11 @@ export class UserData {
   setUser() {
     this.storage.get('id_token').then(
       token => {
+        this.userID = this.jwtHelper.decodeToken(token).userID;
+        this.organizationID = this.jwtHelper.decodeToken(token).organizationID;
+
         Raven.setUserContext({
-          id: this.jwtHelper.decodeToken(token).userID
+          id: this.userID
         });
       }
     );
@@ -84,30 +81,18 @@ export class UserData {
 
   getUser() {
     return new Promise((resolve, reject) => {
-      this.storage.get('id_token').then(
-        token => {
-          const id = this.jwtHelper.decodeToken(token).userID;
-
-          this.getInfo(Links.user, id).then(
-            data => resolve(data),
-            err => reject(err)
-          );
-        }
+      this.getInfo(Links.user, this.userID).then(
+        data => resolve(data),
+        err => reject(err)
       );
     });
   }
 
   getOrganization() {
     return new Promise((resolve, reject) => {
-      this.storage.get('id_token').then(
-        token => {
-          const id = this.jwtHelper.decodeToken(token).organizationID;
-
-          this.getInfo(Links.organization, id).then(
-            data => resolve(data),
-            err => reject(err)
-          );
-        }
+      this.getInfo(Links.organization, this.organizationID).then(
+        data => resolve(data),
+        err => reject(err)
       );
     });
   }
