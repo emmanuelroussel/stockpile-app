@@ -31,10 +31,12 @@ export class StockpileApp {
   ngOnInit() {
     this.userData.isLoggedIn().then(loggedIn => {
       if (loggedIn) {
-        this.userData.setUser();
-        this.getUserInfo();
-
-        this.rootPage = TabsPage;
+        this.userData.setUser().then(
+          data => {
+            this.getUserInfo();
+            this.rootPage = TabsPage;
+          }
+        );
       } else {
         this.rootPage = LoginPage;
       }

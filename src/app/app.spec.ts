@@ -48,7 +48,7 @@ describe('Root Component', () => {
     instance.userData.loggedIn = true;
     instance.userData.user = TestData.user;
     instance.userData.organization = TestData.organization;
-    spyOn(instance.userData, 'setUser');
+    spyOn(instance.userData, 'setUser').and.callThrough();
     instance.ngOnInit();
     tick();
     expect(instance.rootPage).toEqual(TabsPage);

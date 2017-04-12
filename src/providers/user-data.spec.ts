@@ -1,13 +1,14 @@
 import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
+import { JwtHelper } from 'angular2-jwt';
 import { Storage } from '@ionic/storage';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
 import { ApiUrl } from './api-url';
 import { UserData } from './user-data';
 import { TestData } from '../test-data';
-import { ApiUrlMock, StorageMock } from '../mocks';
+import { ApiUrlMock, StorageMock, JwtHelperMock } from '../mocks';
 
 describe('UserData Provider', () => {
 
@@ -17,6 +18,7 @@ describe('UserData Provider', () => {
         { provide: ApiUrl, useClass: ApiUrlMock },
         UserData,
         { provide: Storage, useClass: StorageMock },
+        { provide: JwtHelper, useClass: JwtHelperMock },
         MockBackend,
         BaseRequestOptions,
         {

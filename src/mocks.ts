@@ -105,6 +105,12 @@ export class PlatformMockIsCore {
   }
 }
 
+export class JwtHelperMock {
+  public decodeToken() {
+    return Promise.resolve(TestData.decodedToken);
+  }
+}
+
 export class MenuMock {
   public close(): any {
     return Promise.resolve();
@@ -300,7 +306,9 @@ export class UserDataMock {
     return this.returnValue(this.loggedIn);
   }
 
-  public setUser(): any { }
+  public setUser(): any {
+    return this.returnValue();
+  }
 
   public getUser(): any {
     return this.returnValue(this.user);

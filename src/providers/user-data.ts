@@ -32,10 +32,9 @@ export class UserData {
         .catch(handleError)
         .subscribe(
           data => {
-            this.storage.set('id_token', data.token);
-            this.setUser();
-
-            resolve(data);
+            this.storage.set('id_token', data.token).then(
+              data => resolve(data)
+            );
           },
           err => reject(err)
         );
@@ -67,16 +66,20 @@ export class UserData {
   }
 
   setUser() {
-    this.storage.get('id_token').then(
-      token => {
-        this.userID = this.jwtHelper.decodeToken(token).userID;
-        this.organizationID = this.jwtHelper.decodeToken(token).organizationID;
+    return new Promise((resolve, reject) => {
+      this.storage.get('id_token').then(
+        token => {
+          this.userID = this.jwtHelper.decodeToken(token).userID;
+          this.organizationID = this.jwtHelper.decodeToken(token).organizationID;
 
-        Raven.setUserContext({
-          id: this.userID
-        });
-      }
-    );
+          Raven.setUserContext({
+            id: this.userID
+          });
+
+          resolve();
+        }
+      );
+    });
   }
 
   getUser() {
