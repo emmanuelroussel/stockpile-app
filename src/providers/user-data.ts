@@ -46,6 +46,24 @@ export class UserData {
     this.storage.remove('id_token');
   }
 
+  editUser(user) {
+    return new Promise((resolve, reject) => {
+      this.storage.get('id_token').then(
+        token => {
+          const id = this.jwtHelper.decodeToken(token).userID;
+
+          this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${id}`, user)
+          .map(extractData)
+          .catch(handleError)
+          .subscribe(
+            data => resolve(data),
+            err => reject(err)
+          );
+        }
+      );
+    });
+  }
+
   isLoggedIn() {
     return new Promise((resolve, reject) => {
       this.storage.get('id_token').then(token => {

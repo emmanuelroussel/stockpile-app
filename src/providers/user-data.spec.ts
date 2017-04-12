@@ -109,6 +109,17 @@ describe('UserData Provider', () => {
     );
   })));
 
+  it('returns a user on editUser()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.user) })))
+    );
+
+    userData.editUser(TestData.user).then(
+      res => expect(res).toEqual(TestData.user),
+      err => fail(err)
+    );
+  })));
+
   it('gets something on getInfo()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
     mockBackend.connections.subscribe(
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.organization) })))

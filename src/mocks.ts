@@ -310,6 +310,10 @@ export class UserDataMock {
     return this.returnValue(this.organization);
   }
 
+  public editUser() {
+    return this.returnValue(this.user);
+  }
+
   private returnValue(value?: any): any {
     if (this.resolve) {
       return Promise.resolve(value);

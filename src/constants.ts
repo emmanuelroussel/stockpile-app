@@ -28,6 +28,7 @@ export class Messages {
   public static itemAlreadyRented = 'Item is already rented!';
   public static itemNotRented = 'Item is not currently rented!';
   public static itemAlreadyAdded = 'Item is already added to the list!';
+  public static userEdited = 'User successfully edited!';
 }
 
 export class ItemProperties {

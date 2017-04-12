@@ -5,6 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
+import { EditAccountPage } from '../pages/edit-account/edit-account';
 import { UserData } from '../providers/user-data';
 import { Notifications } from '../providers/notifications';
 
@@ -44,6 +45,10 @@ export class StockpileApp {
     this.events.subscribe('user:login', () => {
       this.getUserInfo();
     });
+
+    this.events.subscribe('user:edited', user => {
+      this.user = user;
+    });
   }
 
   private getUserInfo() {
@@ -61,6 +66,15 @@ export class StockpileApp {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+    });
+  }
+
+  editInfo() {
+    this.menuCtrl.close();
+
+    // Cloning user object to avoid passing by reference
+    this.nav.push(EditAccountPage, {
+      user: Object.assign({}, this.user)
     });
   }
 

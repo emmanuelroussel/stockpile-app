@@ -9,6 +9,7 @@ import { Toast } from '@ionic-native/toast';
 import { AuthHttp } from 'angular2-jwt';
 import { StockpileApp } from './app.component';
 
+import { EditAccountPage } from '../pages/edit-account/edit-account';
 import { HomePage } from '../pages/home/home';
 import { InventoryFilterPage } from '../pages/inventory-filter/inventory-filter';
 import { InventoryPage } from '../pages/inventory/inventory';
@@ -31,6 +32,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
 @NgModule({
   declarations: [
     StockpileApp,
+    EditAccountPage,
     HomePage,
     InventoryFilterPage,
     InventoryPage,
@@ -58,6 +60,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
   bootstrap: [IonicApp],
   entryComponents: [
     StockpileApp,
+    EditAccountPage,
     HomePage,
     InventoryFilterPage,
     InventoryPage,
