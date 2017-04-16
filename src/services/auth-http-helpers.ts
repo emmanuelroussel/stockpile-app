@@ -23,7 +23,9 @@ export const cloudSettings: CloudSettings = {
 export function handleError(error: Response | any, caught: any) {
   let message: string;
 
-  if (error.status === 500) {
+  // Don't report 404s because they are a normal behavior of the api most of the time
+  // ex: user scan item not present in the database
+  if (error.status !== 404) {
     reportError(error);
   }
 
