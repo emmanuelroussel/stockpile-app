@@ -10,8 +10,12 @@ export class RavenErrorHandler extends IonicErrorHandler {
 
   handleError(err: any): void {
     super.handleError(err);
-    if (this.platform.is('cordova')) {
-      Raven.captureException(err.originalError || err);
-    }
+    reportError(err);
+  }
+}
+
+export function reportError(err: any): void {
+  if (this.platform.is('cordova')) {
+    Raven.captureException(err.originalError || err);
   }
 }

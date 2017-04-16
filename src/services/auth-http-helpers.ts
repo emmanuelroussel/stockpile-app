@@ -3,6 +3,7 @@ import { CloudSettings } from '@ionic/cloud-angular';
 import { Response } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
+import { reportError } from './raven-error-handler';
 import 'rxjs/Rx';
 
 let storage = new Storage();
@@ -21,6 +22,10 @@ export const cloudSettings: CloudSettings = {
 
 export function handleError(error: Response | any, caught: any) {
   let message: string;
+
+  if (error.status === 500) {
+    reportError(error);
+  }
 
   if (error instanceof Response) {
     const body = error.json() || '';
