@@ -1,4 +1,5 @@
 import { TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
+import { Platform } from 'ionic-angular';
 import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
 import { MockBackend } from '@angular/http/testing';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
@@ -6,7 +7,7 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { ApiUrl } from './api-url';
 import { TestData } from '../test-data';
 import { InventoryData } from './inventory-data';
-import { ApiUrlMock } from '../mocks';
+import { ApiUrlMock, PlatformMock } from '../mocks';
 
 describe('InventoryData Provider', () => {
 
@@ -14,6 +15,7 @@ describe('InventoryData Provider', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: ApiUrl, useClass: ApiUrlMock },
+        { provide: Platform, useClass: PlatformMock },
         InventoryData,
         MockBackend,
         BaseRequestOptions,
