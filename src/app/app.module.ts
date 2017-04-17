@@ -1,4 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
+import { IonicStorageModule, Storage } from '@ionic/storage';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { CloudModule } from '@ionic/cloud-angular';
 import { Http } from '@angular/http';
@@ -45,6 +48,8 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     ViewItemPage
   ],
   imports: [
+    BrowserModule,
+    HttpModule,
     IonicModule.forRoot(StockpileApp, {
       tabsHideOnSubPages: true,
       platforms: {
@@ -55,7 +60,8 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
         }
       }
     }),
-    CloudModule.forRoot(cloudSettings)
+    CloudModule.forRoot(cloudSettings),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -82,7 +88,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     StatusBar,
     BarcodeScanner,
     Toast,
-    { provide: AuthHttp, useFactory: getAuthHttp, deps: [Http] }
+    { provide: AuthHttp, useFactory: getAuthHttp, deps: [Http, Storage] }
   ]
 })
 export class AppModule {}

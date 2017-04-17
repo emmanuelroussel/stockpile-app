@@ -9,7 +9,6 @@ import { extractData, handleError } from '../services/auth-http-helpers';
 
 @Injectable()
 export class UserData {
-  storage = new Storage();
   jwtHelper: JwtHelper = new JwtHelper();
   userID;
   organizationID;
@@ -17,7 +16,8 @@ export class UserData {
   constructor(
     public apiUrl: ApiUrl,
     public authHttp: AuthHttp,
-    public http: Http
+    public http: Http,
+    public storage: Storage
   ) { }
 
   login(email: string, password: string) {

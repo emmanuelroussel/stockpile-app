@@ -50,17 +50,6 @@ describe('UserData Provider', () => {
     expect(userData).toBeTruthy();
   }));
 
-  it('returns a login response on login()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
-    mockBackend.connections.subscribe(
-      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.loginResponse) })))
-    );
-
-    userData.login(TestData.credentials.email, TestData.credentials.password).then(
-      res => expect(res).toEqual(TestData.loginResponse),
-      err => fail(err)
-    );
-  })));
-
   it('deletes id_token on logout()', inject([UserData], (userData: UserData) => {
     spyOn(userData.storage, 'remove');
     userData.logout();
@@ -92,6 +81,8 @@ describe('UserData Provider', () => {
   }));
 
   it('returns a user on getUser()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
+    userData.storage.return = TestData.token;
+
     mockBackend.connections.subscribe(
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.user) })))
     );
