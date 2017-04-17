@@ -234,8 +234,10 @@ export class TestData {
     name: 'Empire'
   };
 
+  public static token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySUQiOjc0LCJvcmdhbml6YXRpb25JRCI6NTM5LCJyb2xlSUQiOjJ9.6RmCILl0xuZcaRnZpBKn6OR_kFw09yBpB64aXuJYvbo';
+
   public static decodedToken = {
-    userID: 1,
-    organizationID: 2
+    userID: 74,
+    organizationID: 539
   };
 }

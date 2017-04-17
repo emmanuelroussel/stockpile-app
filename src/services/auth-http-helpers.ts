@@ -1,13 +1,10 @@
-import { Storage } from '@ionic/storage';
 import { CloudSettings } from '@ionic/cloud-angular';
 import { Response } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
-let storage = new Storage();
-
-export function getAuthHttp(http) {
+export function getAuthHttp(http, storage) {
   return new AuthHttp(new AuthConfig({
     tokenGetter: (() => storage.get('id_token')),
   }), http);
@@ -15,7 +12,7 @@ export function getAuthHttp(http) {
 
 export const cloudSettings: CloudSettings = {
   'core': {
-    'app_id': 'APP_ID'
+    'app_id': '1437b8f0'
   }
 };
 

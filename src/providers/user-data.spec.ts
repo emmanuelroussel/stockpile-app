@@ -8,7 +8,7 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { ApiUrl } from './api-url';
 import { UserData } from './user-data';
 import { TestData } from '../test-data';
-import { ApiUrlMock, StorageMock, JwtHelperMock } from '../mocks';
+import { ApiUrlMock, StorageMock } from '../mocks';
 
 describe('UserData Provider', () => {
 
@@ -18,7 +18,7 @@ describe('UserData Provider', () => {
         { provide: ApiUrl, useClass: ApiUrlMock },
         UserData,
         { provide: Storage, useClass: StorageMock },
-        { provide: JwtHelper, useClass: JwtHelperMock },
+        JwtHelper,
         MockBackend,
         BaseRequestOptions,
         {
@@ -47,17 +47,6 @@ describe('UserData Provider', () => {
   it('is created', inject([UserData], (userData: UserData) => {
     expect(userData).toBeTruthy();
   }));
-
-  it('returns a login response on login()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
-    mockBackend.connections.subscribe(
-      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.loginResponse) })))
-    );
-
-    userData.login(TestData.credentials.email, TestData.credentials.password).then(
-      res => expect(res).toEqual(TestData.loginResponse),
-      err => fail(err)
-    );
-  })));
 
   it('deletes id_token on logout()', inject([UserData], (userData: UserData) => {
     spyOn(userData.storage, 'remove');
@@ -90,6 +79,8 @@ describe('UserData Provider', () => {
   }));
 
   it('returns a user on getUser()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
+    userData.storage.return = TestData.token;
+
     mockBackend.connections.subscribe(
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.user) })))
     );

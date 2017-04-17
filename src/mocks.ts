@@ -26,6 +26,10 @@ export class ConfigMock {
   public getNumber(): number {
     return 1;
   }
+
+  public setTransition(): void {
+    return;
+  }
 }
 
 export class FormMock {
@@ -64,7 +68,7 @@ export class NavMock {
 export class PlatformMock {
   currPlatform: string = 'core';
 
-  public ready(): Promise<{String}> {
+  public ready(): Promise<String> {
     return Promise.resolve('READY');
   }
 
@@ -105,12 +109,6 @@ export class PlatformMockIsCore {
   }
 }
 
-export class JwtHelperMock {
-  public decodeToken() {
-    return Promise.resolve(TestData.decodedToken);
-  }
-}
-
 export class MenuMock {
   public close(): any {
     return Promise.resolve();
@@ -126,11 +124,17 @@ export class NavParamsMock {
 }
 
 export class StorageMock {
+  stored = TestData.token;
+
   public get(): any {
-    return Promise.resolve();
+    return Promise.resolve(this.stored);
   }
 
   public set(): any {
+    return Promise.resolve();
+  }
+
+  public remove(): any {
     return Promise.resolve();
   }
 }
