@@ -20,15 +20,16 @@ export class Links {
 export class Messages {
   private static baseSingular = 'Item successfully ';
   private static basePlural = 'Item(s) successfully ';
-  public static itemAdded = `${Messages.baseSingular} added!`;
-  public static itemEdited = `${Messages.baseSingular} edited!`;
-  public static itemDeleted = `${Messages.baseSingular} deleted!`;
-  public static itemsReturned = `${Messages.basePlural} returned!`;
-  public static itemsRented = `${Messages.basePlural} rented!`;
-  public static itemAlreadyRented = 'Item is already rented!';
-  public static itemNotRented = 'Item is not currently rented!';
-  public static itemAlreadyAdded = 'Item is already added to the list!';
-  public static userEdited = 'User successfully edited!';
+  private static already = 'Item is already ';
+  public static itemAdded = `${Messages.baseSingular} added`;
+  public static itemEdited = `${Messages.baseSingular} edited`;
+  public static itemDeleted = `${Messages.baseSingular} deleted`;
+  public static itemsReturned = `${Messages.basePlural} returned`;
+  public static itemsRented = `${Messages.basePlural} rented`;
+  public static itemAlreadyAdded = `${Messages.already} added to the list`;
+  public static itemAlreadyRented = `${Messages.already} rented`;
+  public static itemNotRented = 'Item is not currently rented';
+  public static userEdited = 'User successfully edited';
 }
 
 export class ItemProperties {
