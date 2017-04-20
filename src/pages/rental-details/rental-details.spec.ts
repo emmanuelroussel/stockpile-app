@@ -30,12 +30,6 @@ describe('RentalDetails Page', () => {
     expect(instance.items).toBeTruthy();
   });
 
-  it('calls onRent() on click on rent button', () => {
-    spyOn(instance, 'onRent');
-    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
-    expect(instance.onRent).toHaveBeenCalled();
-  });
-
   it('calls inventoryData.rent for each item', fakeAsync(() => {
     instance.details = TestData.details;
     instance.items = TestData.items;

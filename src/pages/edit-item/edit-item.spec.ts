@@ -50,12 +50,6 @@ describe('Item Page', () => {
     expect(instance.notifications.showToast).toHaveBeenCalledTimes(3);
   }));
 
-  it('calls onSave() on click on save button', () => {
-    spyOn(instance, 'onSave');
-    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
-    expect(instance.onSave).toHaveBeenCalled();
-  });
-
   it('pops nav onSave() if action is add', fakeAsync(() => {
     instance.item = TestData.item;
     instance.navParams.param = Actions.add;

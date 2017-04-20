@@ -24,12 +24,6 @@ describe('Login Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('calls onLogin() on click', () => {
-    spyOn(instance, 'onLogin');
-    TestUtils.eventFire(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0], 'click');
-    expect(instance.onLogin).toHaveBeenCalled();
-  });
-
   it('changes root nav to TabsPage onLogin() if form is valid', fakeAsync(() => {
     instance.login.email = TestData.credentials.email;
     instance.login.password = TestData.credentials.password;
@@ -49,14 +43,6 @@ describe('Login Page', () => {
     tick();
     expect(instance.login.password).toEqual('');
     expect(instance.notifications.showToast).toHaveBeenCalled();
-  }));
-
-  it('disables login button initially', fakeAsync(() => {
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0].disabled).toBe(true);
-    });
   }));
 
   it('keeps login button disabled of form is not valid', fakeAsync(() => {
