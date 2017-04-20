@@ -1,5 +1,4 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
-import { NgForm } from '@angular/forms';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { Actions, ItemProperties, Messages } from '../../constants';
@@ -57,40 +56,32 @@ describe('Item Page', () => {
     expect(instance.onSave).toHaveBeenCalled();
   });
 
-  it('pops nav onSave() if form is valid and action is add', fakeAsync(() => {
+  it('pops nav onSave() if action is add', fakeAsync(() => {
     instance.item = TestData.item;
     instance.navParams.param = Actions.add;
     spyOn(instance.navCtrl, 'pop');
     spyOn(instance.notifications, 'showToast');
     spyOn(instance.events, 'publish');
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
-      instance.onSave(form);
-      tick();
-      expect(instance.navCtrl.pop).toHaveBeenCalled();
-      expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemAdded);
-      expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.barcode);
-    });
+    instance.onSave();
+    tick();
+    expect(instance.navCtrl.pop).toHaveBeenCalled();
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemAdded);
+    expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.barcode);
   }));
 
-  it('pops nav onSave() if form is valid and action is edit', fakeAsync(() => {
+  it('pops nav onSave() if action is edit', fakeAsync(() => {
     instance.item = TestData.item;
     instance.navParams.param = Actions.edit;
     spyOn(instance.navCtrl, 'pop');
     spyOn(instance.notifications, 'showToast');
     spyOn(instance.events, 'publish');
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
-      instance.onSave(form);
-      tick();
-      expect(instance.navCtrl.pop).toHaveBeenCalled();
-      expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemEdited);
-      expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.barcode);
-    });
+    instance.onSave();
+    tick();
+    expect(instance.navCtrl.pop).toHaveBeenCalled();
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemEdited);
+    expect(instance.events.publish).toHaveBeenCalledWith('item:edited', instance.inventoryData.item.barcode);
   }));
 
   it('shows toast if error onSave()', fakeAsync(() => {
@@ -98,13 +89,9 @@ describe('Item Page', () => {
     instance.navParams.param = Actions.edit;
     spyOn(instance.notifications, 'showToast');
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      let form: NgForm = fixture.debugElement.children[0].injector.get(NgForm);
-      instance.onSave(form);
-      tick();
-      expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-    });
+    instance.onSave();
+    tick();
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('pops nav onDelete()', fakeAsync(() => {
@@ -112,25 +99,19 @@ describe('Item Page', () => {
     spyOn(instance.navCtrl, 'pop');
     spyOn(instance.notifications, 'showToast');
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      instance.onDelete();
-      tick();
-      expect(instance.navCtrl.pop).toHaveBeenCalled();
-      expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemDeleted);
-    });
+    instance.onDelete();
+    tick();
+    expect(instance.navCtrl.pop).toHaveBeenCalled();
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemDeleted);
   }));
 
   it('shows toast if error onDelete()', fakeAsync(() => {
     instance.inventoryData.resolve = false;
     spyOn(instance.notifications, 'showToast');
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      instance.onDelete();
-      tick();
-      expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-    });
+    instance.onDelete();
+    tick();
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('creates a modal on presentModal()', () => {

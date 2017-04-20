@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { NavController, NavParams, ModalController, Events } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
@@ -69,28 +68,26 @@ export class EditItemPage {
     );
   }
 
-  onSave(form: NgForm) {
-    if (form.valid) {
-      let apiCall;
-      let message;
+  onSave() {
+    let apiCall;
+    let message;
 
-      if (this.action === this.actions.add) {
-        apiCall = this.inventoryData.addItem(this.item);
-        message = Messages.itemAdded;
-      } else if (this.action === this.actions.edit) {
-        apiCall = this.inventoryData.editItem(this.item, this.item.barcode);
-        message = Messages.itemEdited;
-      }
-
-      apiCall.subscribe(
-        item => {
-          this.notifications.showToast(message);
-          this.events.publish('item:edited', item.barcode);
-          this.navCtrl.pop();
-        },
-        err => this.notifications.showToast(err)
-      );
+    if (this.action === this.actions.add) {
+      apiCall = this.inventoryData.addItem(this.item);
+      message = Messages.itemAdded;
+    } else if (this.action === this.actions.edit) {
+      apiCall = this.inventoryData.editItem(this.item, this.item.barcode);
+      message = Messages.itemEdited;
     }
+
+    apiCall.subscribe(
+      item => {
+        this.notifications.showToast(message);
+        this.events.publish('item:edited', item.barcode);
+        this.navCtrl.pop();
+      },
+      err => this.notifications.showToast(err)
+    );
   }
 
   onDelete() {

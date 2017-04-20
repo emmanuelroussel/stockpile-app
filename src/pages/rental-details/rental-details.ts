@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { InventoryData } from '../../providers/inventory-data';
@@ -13,7 +12,6 @@ import { Messages } from '../../constants';
 export class RentalDetailsPage {
   items = [];
   details: {itemID?: string, startDate?: string, endDate?: string} = {};
-  submitted = false;
 
   constructor(
     public navCtrl: NavController,
@@ -32,33 +30,29 @@ export class RentalDetailsPage {
     this.details.endDate = tomorrow.toISOString();
   }
 
-  onRent(form: NgForm) {
-    this.submitted = true;
+  onRent() {
+    // Transform date from ISO 8601 to MySQL date format
+    this.details.startDate = new Date(this.details.startDate).toISOString().substring(0, 10);
+    this.details.endDate = new Date(this.details.endDate).toISOString().substring(0, 10);
 
-    if (form.valid) {
-      // Transform date from ISO 8601 to MySQL date format
-      this.details.startDate = new Date(this.details.startDate).toISOString().substring(0, 10);
-      this.details.endDate = new Date(this.details.endDate).toISOString().substring(0, 10);
+    let rentals = [];
 
-      let rentals = [];
+    for (const item of this.items) {
+      const rental = {
+        itemID: item.itemID,
+        startDate: this.details.startDate,
+        endDate: this.details.endDate
+      };
 
-      for (const item of this.items) {
-        const rental = {
-          itemID: item.itemID,
-          startDate: this.details.startDate,
-          endDate: this.details.endDate
-        };
-
-        rentals.push(this.inventoryData.rent(rental).toPromise());
-      }
-
-      Promise.all(rentals).then(
-        success => {
-          this.notifications.showToast(Messages.itemsRented);
-          this.navCtrl.popToRoot();
-        },
-        err => this.notifications.showToast(err)
-      );
+      rentals.push(this.inventoryData.rent(rental).toPromise());
     }
+
+    Promise.all(rentals).then(
+      success => {
+        this.notifications.showToast(Messages.itemsRented);
+        this.navCtrl.popToRoot();
+      },
+      err => this.notifications.showToast(err)
+    );
   }
 }
