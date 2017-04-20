@@ -4,7 +4,7 @@ import { TestData } from '../../test-data';
 import { Actions } from '../../constants';
 
 import { ViewItemPage } from './view-item';
-import { ItemPage } from '../item/item';
+import { EditItemPage } from '../edit-item/edit-item';
 
 let fixture: ComponentFixture<ViewItemPage> = null;
 let instance: any = null;
@@ -31,10 +31,10 @@ describe('ViewItem Page', () => {
     expect(instance.item).toEqual(TestData.apiItem);
   });
 
-  it('pushes ItemPage on nav onEdit()', () => {
+  it('pushes EditItemPage on nav onEdit()', () => {
     instance.item = TestData.item;
     spyOn(instance.navCtrl, 'push');
     instance.editItem();
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { item: TestData.item, action: Actions.edit });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditItemPage, { item: TestData.item, action: Actions.edit });
   });
 });

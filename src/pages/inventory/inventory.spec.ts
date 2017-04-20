@@ -4,7 +4,7 @@ import { TestData } from '../../test-data';
 
 import { InventoryPage } from './inventory';
 import { Actions } from '../../constants';
-import { ItemPage } from '../item/item';
+import { EditItemPage } from '../edit-item/edit-item';
 import { ViewItemPage } from '../view-item/view-item';
 import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
 
@@ -77,19 +77,19 @@ describe('Inventory Page', () => {
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
-  it('pushes ItemPage on nav on viewItem()', () => {
+  it('pushes ViewItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.viewItem(TestData.item);
     expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewItemPage, { item: TestData.item });
   });
 
-  it('pushes ItemPage on nav onAdd()', fakeAsync(() => {
+  it('pushes EditItemPage on nav onAdd()', fakeAsync(() => {
     spyOn(instance.barcodeScanner, 'scan').and.callThrough();
     spyOn(instance.navCtrl, 'push');
     instance.onAdd();
     tick();
     expect(instance.barcodeScanner.scan).toHaveBeenCalled();
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ItemPage, { barcode: TestData.barcodeData.text, action: Actions.add });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditItemPage, { barcode: TestData.barcodeData.text, action: Actions.add });
   }));
 
   it('shows toast if error in onAdd()', fakeAsync(() => {

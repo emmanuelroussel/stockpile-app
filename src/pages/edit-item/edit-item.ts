@@ -9,10 +9,10 @@ import { ItemFilterPage } from '../item-filter/item-filter';
 import { Notifications } from '../../providers/notifications';
 
 @Component({
-  selector: 'page-item',
-  templateUrl: 'item.html'
+  selector: 'page-edit-item',
+  templateUrl: 'edit-item.html'
 })
-export class ItemPage {
+export class EditItemPage {
   actions = Actions;
   itemProperties = ItemProperties;
   action: Actions = '';

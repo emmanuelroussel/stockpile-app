@@ -4,15 +4,15 @@ import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { Actions, ItemProperties, Messages } from '../../constants';
 
-import { ItemPage } from './item';
+import { EditItemPage } from './edit-item';
 import { ItemFilterPage } from '../item-filter/item-filter';
 
-let fixture: ComponentFixture<ItemPage> = null;
+let fixture: ComponentFixture<EditItemPage> = null;
 let instance: any = null;
 
 describe('Item Page', () => {
 
-  beforeEach(async(() => TestUtils.beforeEachCompiler([ItemPage]).then(compiled => {
+  beforeEach(async(() => TestUtils.beforeEachCompiler([EditItemPage]).then(compiled => {
     fixture = compiled.fixture;
     instance = compiled.instance;
   })));

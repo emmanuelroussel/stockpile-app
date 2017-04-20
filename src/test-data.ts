@@ -148,11 +148,12 @@ export class TestData {
   };
 
   public static brand = {
-    name: 'Canon', brandID: 1
+    name: 'Canon',
+    brandID: 1
   };
 
   public static filteredBrands = [
-    { name: 'Canon', id: 1 }
+    { name: 'Nikon', id: 2 }
   ];
 
   public static models = {
@@ -167,7 +168,7 @@ export class TestData {
   public static model = {
     name: 'T5i',
     modelID: 1,
-    brandID: 1
+    brandID: 4
   };
 
   public static filteredModels = [
@@ -196,7 +197,7 @@ export class TestData {
     password: 'yodarocks'
   };
 
-  public static queryText = 'Can';
+  public static queryText = 'Nik';
 
   public static loginResponse = {
     id: 1,
