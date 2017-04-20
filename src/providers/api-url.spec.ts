@@ -7,7 +7,7 @@ describe('ApiUrl Provider', () => {
 
   it('is created', () => {
     instance = new ApiUrl(<any> new PlatformMock);
-    expect(instance).not.toBeNull();
+    expect(instance).toBeTruthy();
   });
 
   it('returns remote URL on cordova platform', () => {
