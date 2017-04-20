@@ -83,21 +83,11 @@ export class UserData {
   }
 
   getUser() {
-    return new Promise((resolve, reject) => {
-      this.getInfo(Links.user, this.userID).then(
-        data => resolve(data),
-        err => reject(err)
-      );
-    });
+    return this.getInfo(Links.user, this.userID);
   }
 
   getOrganization() {
-    return new Promise((resolve, reject) => {
-      this.getInfo(Links.organization, this.organizationID).then(
-        data => resolve(data),
-        err => reject(err)
-      );
-    });
+    return this.getInfo(Links.organization, this.organizationID);
   }
 
   private getInfo(endpoint, id) {
