@@ -26,8 +26,8 @@ export class Messages {
   public static itemDeleted = `${Messages.baseSingular} deleted`;
   public static itemsReturned = `${Messages.basePlural} returned`;
   public static itemsRented = `${Messages.basePlural} rented`;
-  public static itemAlreadyAdded = `${already} added to the list`;
-  public static itemAlreadyRented = `${already} rented`;
+  public static itemAlreadyAdded = `${Messages.already} added to the list`;
+  public static itemAlreadyRented = `${Messages.already} rented`;
   public static itemNotRented = 'Item is not currently rented';
   public static userEdited = 'User successfully edited';
 }
