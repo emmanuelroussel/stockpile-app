@@ -22,6 +22,7 @@ import { LoginPage } from '../pages/login/login';
 import { RentalPage } from '../pages/rental/rental';
 import { RentalDetailsPage } from '../pages/rental-details/rental-details';
 import { TabsPage } from '../pages/tabs/tabs';
+import { ViewAccountPage } from '../pages/view-account/view-account';
 import { ViewItemPage } from '../pages/view-item/view-item';
 
 import { ApiUrl } from '../providers/api-url';
@@ -45,6 +46,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     RentalPage,
     RentalDetailsPage,
     TabsPage,
+    ViewAccountPage,
     ViewItemPage
   ],
   imports: [
@@ -76,6 +78,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     RentalPage,
     RentalDetailsPage,
     TabsPage,
+    ViewAccountPage,
     ViewItemPage
   ],
   providers: [

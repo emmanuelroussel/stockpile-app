@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Account</ion-title>
+    <ion-buttons *ngIf="platform.is('ios')" end>
+      <button ion-button clear (click)="editUser()">
+        Edit
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-list>
+    <ion-item>
+      <ion-label fixed color="primary">First Name</ion-label>
+      <ion-input [ngModel]="user?.firstName" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed color="primary">Last Name</ion-label>
+      <ion-input [ngModel]="user?.lastName" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed color="primary">Email</ion-label>
+      <ion-input [ngModel]="user?.email" readonly></ion-input>
+    </ion-item>
+	</ion-list>
+
+  <ion-fab right bottom *ngIf="platform.is('android')">
+    <button ion-fab color="secondary" (click)="editUser()"><ion-icon name="create"></ion-icon></button>
+  </ion-fab>
+</ion-content>

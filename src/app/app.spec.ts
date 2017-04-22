@@ -4,7 +4,7 @@ import { Events } from 'ionic-angular';
 import { StockpileApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
-import { EditAccountPage } from '../pages/edit-account/edit-account';
+import { ViewAccountPage } from '../pages/view-account/view-account';
 import { TestData } from '../test-data';
 
 let instance: any = null;
@@ -84,13 +84,13 @@ describe('Root Component', () => {
     expect(instance.notifications.showToast).toHaveBeenCalledTimes(2);
   }));
 
-  it('pushes EditAccountPage on editInfo()', () => {
+  it('pushes ViewAccountPage on viewInfo()', () => {
     instance.user = TestData.user;
     spyOn(instance.menuCtrl, 'close');
     spyOn(instance.nav, 'push');
-    instance.editInfo();
+    instance.viewInfo();
     expect(instance.menuCtrl.close).toHaveBeenCalled();
-    expect(instance.nav.push).toHaveBeenCalledWith(EditAccountPage, { user: TestData.user });
+    expect(instance.nav.push).toHaveBeenCalledWith(ViewAccountPage, { user: TestData.user });
   });
 
   it('calls logout(), closes side menu and sets nav root to LoginPage', () => {
