@@ -13,10 +13,10 @@ import { AuthHttp } from 'angular2-jwt';
 import { StockpileApp } from './app.component';
 
 import { EditAccountPage } from '../pages/edit-account/edit-account';
+import { EditItemPage } from '../pages/edit-item/edit-item';
 import { HomePage } from '../pages/home/home';
 import { InventoryFilterPage } from '../pages/inventory-filter/inventory-filter';
 import { InventoryPage } from '../pages/inventory/inventory';
-import { ItemPage } from '../pages/item/item';
 import { ItemFilterPage } from '../pages/item-filter/item-filter';
 import { LoginPage } from '../pages/login/login';
 import { RentalPage } from '../pages/rental/rental';
@@ -36,10 +36,10 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
   declarations: [
     StockpileApp,
     EditAccountPage,
+    EditItemPage,
     HomePage,
     InventoryFilterPage,
     InventoryPage,
-    ItemPage,
     ItemFilterPage,
     LoginPage,
     RentalPage,
@@ -67,10 +67,10 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
   entryComponents: [
     StockpileApp,
     EditAccountPage,
+    EditItemPage,
     HomePage,
     InventoryFilterPage,
     InventoryPage,
-    ItemPage,
     ItemFilterPage,
     LoginPage,
     RentalPage,

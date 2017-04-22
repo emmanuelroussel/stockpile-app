@@ -274,24 +274,7 @@ export class InventoryDataMock {
 }
 
 export class NotificationsMock {
-  resolve: boolean = true;
-  cancel: boolean = false;
-
-  public getUrl(): any { }
-
   public showToast(): any { }
-
-  public scan(): any {
-    if (this.resolve) {
-      if (this.cancel) {
-        return Promise.resolve(TestData.barcodeDataCancelled);
-      } else {
-        return Promise.resolve(TestData.barcodeData);
-      }
-    } else {
-      return Promise.reject(TestData.error);
-    }
-  }
 }
 
 export class UserDataMock {

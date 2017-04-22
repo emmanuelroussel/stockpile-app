@@ -4,100 +4,100 @@ import { NavParamsMock } from '../../mocks';
 
 import { InventoryFilterPage } from './inventory-filter';
 
-let inventoryFilterPage: InventoryFilterPage = null;
+let instance: InventoryFilterPage = null;
 
 describe('InventoryFilter Page', () => {
 
   beforeEach(() => {
-    inventoryFilterPage = new InventoryFilterPage(
+    instance = new InventoryFilterPage(
       <any> new ViewController,
       <any> new NavParamsMock
     );
   });
 
   it('is created', () => {
-    expect(inventoryFilterPage).toBeTruthy();
+    expect(instance).toBeTruthy();
   });
 
   it('gets navParam brands', () => {
-    inventoryFilterPage.navParams.param = TestData.brands.results;
-    inventoryFilterPage.ngOnInit();
-    expect(inventoryFilterPage.brands).toEqual(TestData.brands.results);
+    instance.navParams.param = TestData.brands.results;
+    instance.ngOnInit();
+    expect(instance.brands).toEqual(TestData.brands.results);
   });
 
   it('gets navParam models', () => {
-    inventoryFilterPage.navParams.param = TestData.models.results;
-    inventoryFilterPage.ngOnInit();
-    expect(inventoryFilterPage.models).toEqual(TestData.models.results);
+    instance.navParams.param = TestData.models.results;
+    instance.ngOnInit();
+    expect(instance.models).toEqual(TestData.models.results);
   });
 
   it('gets navParam categories', () => {
-    inventoryFilterPage.navParams.param = TestData.categories.results;
-    inventoryFilterPage.ngOnInit();
-    expect(inventoryFilterPage.categories).toEqual(TestData.categories.results);
+    instance.navParams.param = TestData.categories.results;
+    instance.ngOnInit();
+    expect(instance.categories).toEqual(TestData.categories.results);
   });
 
   it('gets navParam selectedBrandID', () => {
-    spyOn(inventoryFilterPage, 'filterModels');
-    inventoryFilterPage.navParams.param = TestData.apiItem.brandID;
-    inventoryFilterPage.ngOnInit();
-    expect(inventoryFilterPage.selectedBrandID).toEqual(TestData.apiItem.brandID);
+    spyOn(instance, 'filterModels');
+    instance.navParams.param = TestData.apiItem.brandID;
+    instance.ngOnInit();
+    expect(instance.selectedBrandID).toEqual(TestData.apiItem.brandID);
   });
 
   it('gets navParam selectedModelID', () => {
-    spyOn(inventoryFilterPage, 'filterModels');
-    inventoryFilterPage.navParams.param = TestData.apiItem.modelID;
-    inventoryFilterPage.ngOnInit();
-    expect(inventoryFilterPage.selectedModelID).toEqual(TestData.apiItem.modelID);
+    spyOn(instance, 'filterModels');
+    instance.navParams.param = TestData.apiItem.modelID;
+    instance.ngOnInit();
+    expect(instance.selectedModelID).toEqual(TestData.apiItem.modelID);
   });
 
   it('gets navParam selectedCategoryID', () => {
-    spyOn(inventoryFilterPage, 'filterModels');
-    inventoryFilterPage.navParams.param = TestData.apiItem.categoryID;
-    inventoryFilterPage.ngOnInit();
-    expect(inventoryFilterPage.selectedCategoryID).toEqual(TestData.apiItem.categoryID);
+    spyOn(instance, 'filterModels');
+    instance.navParams.param = TestData.apiItem.categoryID;
+    instance.ngOnInit();
+    expect(instance.selectedCategoryID).toEqual(TestData.apiItem.categoryID);
   });
 
   it('calls filterModels if selectedBrandID is not -1', () => {
-    inventoryFilterPage.navParams.param = TestData.apiItem.brandID;
-    spyOn(inventoryFilterPage, 'filterModels');
-    inventoryFilterPage.ngOnInit();
-    expect(inventoryFilterPage.filterModels).toHaveBeenCalled();
+    instance.navParams.param = TestData.apiItem.brandID;
+    spyOn(instance, 'filterModels');
+    instance.ngOnInit();
+    expect(instance.filterModels).toHaveBeenCalled();
   });
 
   it('does not call filterModels if selectedBrandID is -1', () => {
-    inventoryFilterPage.navParams.param = -1;
-    spyOn(inventoryFilterPage, 'filterModels');
-    inventoryFilterPage.ngOnInit();
-    expect(inventoryFilterPage.filterModels).not.toHaveBeenCalled();
+    instance.navParams.param = -1;
+    spyOn(instance, 'filterModels');
+    instance.ngOnInit();
+    expect(instance.filterModels).not.toHaveBeenCalled();
   });
 
   it('filters models on filterModels()', () => {
-    inventoryFilterPage.models = TestData.models.results;
-    inventoryFilterPage.selectedBrandID = TestData.apiItem.brandID;
-    inventoryFilterPage.filterModels();
-    expect(inventoryFilterPage.filteredModels).toEqual(TestData.filteredModels);
+    instance.models = TestData.models.results;
+    instance.selectedBrandID = TestData.apiItem.brandID;
+    instance.filterModels();
+    expect(instance.filteredModels).toEqual(TestData.filteredModels);
   });
 
   it('resets filters on resetFilters()', () => {
-    spyOn(inventoryFilterPage, 'applyFilters');
-    inventoryFilterPage.resetFilters();
-    expect(inventoryFilterPage.selectedBrandID).toEqual(-1);
-    expect(inventoryFilterPage.selectedModelID).toEqual(-1);
-    expect(inventoryFilterPage.selectedCategoryID).toEqual(-1);
-    expect(inventoryFilterPage.applyFilters).toHaveBeenCalled();
+    spyOn(instance, 'applyFilters');
+    instance.resetFilters();
+    expect(instance.selectedBrandID).toEqual(-1);
+    expect(instance.selectedModelID).toEqual(-1);
+    expect(instance.selectedCategoryID).toEqual(-1);
+    expect(instance.applyFilters).toHaveBeenCalled();
   });
 
   it('dismisses modal on dismiss', () => {
-    spyOn(inventoryFilterPage.viewCtrl, 'dismiss');
-    inventoryFilterPage.dismiss();
-    expect(inventoryFilterPage.viewCtrl.dismiss).toHaveBeenCalled();
+    spyOn(instance.viewCtrl, 'dismiss');
+    instance.dismiss();
+    expect(instance.viewCtrl.dismiss).toHaveBeenCalled();
   });
 
   it('dismisses modal on applyFilters', () => {
-    inventoryFilterPage.selectedBrandID = TestData.apiItem.brandID;
-    inventoryFilterPage.selectedModelID = TestData.apiItem.modelID;
-    inventoryFilterPage.selectedCategoryID = TestData.apiItem.categoryID;
+    instance.selectedBrandID = TestData.apiItem.brandID;
+    instance.selectedModelID = TestData.apiItem.modelID;
+    instance.selectedCategoryID = TestData.apiItem.categoryID;
 
     const ids = {
       selectedBrandID: TestData.apiItem.brandID,
@@ -105,8 +105,8 @@ describe('InventoryFilter Page', () => {
       selectedCategoryID: TestData.apiItem.categoryID
     };
 
-    spyOn(inventoryFilterPage.viewCtrl, 'dismiss');
-    inventoryFilterPage.applyFilters();
-    expect(inventoryFilterPage.viewCtrl.dismiss).toHaveBeenCalledWith(ids);
+    spyOn(instance.viewCtrl, 'dismiss');
+    instance.applyFilters();
+    expect(instance.viewCtrl.dismiss).toHaveBeenCalledWith(ids);
   });
 });

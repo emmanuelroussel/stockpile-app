@@ -113,6 +113,17 @@ describe('UserData Provider', () => {
     );
   })));
 
+  it('returns error if error on editUser()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockError(new Error(TestData.error))
+    );
+
+    userData.editUser(TestData.user).then(
+      res => fail(res),
+      err => expect(err).toEqual(TestData.error)
+    );
+  })));
+
   it('gets something on getInfo()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
     mockBackend.connections.subscribe(
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.organization) })))
@@ -121,6 +132,17 @@ describe('UserData Provider', () => {
     userData.getInfo().then(
       res => expect(res).toEqual(TestData.organization),
       err => fail(err)
+    );
+  })));
+
+  it('returns error if error on getInfo()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockError(new Error(TestData.error))
+    );
+
+    userData.getInfo().then(
+      res => fail(res),
+      err => expect(err).toEqual(TestData.error)
     );
   })));
 });

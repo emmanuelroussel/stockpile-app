@@ -5,7 +5,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { InventoryData } from '../../providers/inventory-data';
 import { Notifications } from '../../providers/notifications';
 import { Actions } from '../../constants';
-import { ItemPage } from '../item/item';
+import { EditItemPage } from '../edit-item/edit-item';
 import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
 import { ViewItemPage } from '../view-item/view-item';
 
@@ -91,7 +91,7 @@ export class InventoryPage {
     this.barcodeScanner.scan().then(
       barcodeData => {
         if (!barcodeData.cancelled) {
-          this.navCtrl.push(ItemPage, {
+          this.navCtrl.push(EditItemPage, {
             barcode: barcodeData.text,
             action: Actions.add
           });

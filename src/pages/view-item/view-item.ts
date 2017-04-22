@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
 
 import { Actions } from '../../constants';
-import { ItemPage } from '../item/item';
+import { EditItemPage } from '../edit-item/edit-item';
 
 @Component({
   selector: 'page-view-item',
@@ -22,7 +22,7 @@ export class ViewItemPage {
   }
 
   editItem() {
-    this.navCtrl.push(ItemPage, {
+    this.navCtrl.push(EditItemPage, {
       item: this.item,
       action: Actions.edit
     });
