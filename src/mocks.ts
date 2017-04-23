@@ -298,7 +298,7 @@ export class UserDataMock {
   }
 
   public getUser(): any {
-    return this.returnPromise(this.user);
+    return this.returnObservable(this.user);
   }
 
   public changePassword(): any {
@@ -306,11 +306,11 @@ export class UserDataMock {
   }
 
   public getOrganization(): any {
-    return this.returnPromise(this.organization);
+    return this.returnObservable(this.organization);
   }
 
   public editUser() {
-    return this.returnPromise(this.user);
+    return this.returnObservable(this.user);
   }
 
   private returnObservable(value?: any): any {

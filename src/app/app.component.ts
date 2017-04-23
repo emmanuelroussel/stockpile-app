@@ -54,11 +54,11 @@ export class StockpileApp {
   }
 
   private getUserInfo() {
-    this.userData.getUser().then(
+    this.userData.getUser().subscribe(
       user => this.user = user,
       err => this.notifications.showToast(err)
     );
-    this.userData.getOrganization().then(
+    this.userData.getOrganization().subscribe(
       organization => this.organization = organization,
       err => this.notifications.showToast(err)
     );

@@ -85,7 +85,7 @@ describe('UserData Provider', () => {
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.user) })))
     );
 
-    userData.getUser().then(
+    userData.getUser().subscribe(
       res => expect(res).toEqual(TestData.user),
       err => fail(err)
     );
@@ -109,7 +109,7 @@ describe('UserData Provider', () => {
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.organization) })))
     );
 
-    userData.getOrganization().then(
+    userData.getOrganization().subscribe(
       res => expect(res).toEqual(TestData.organization),
       err => fail(err)
     );
@@ -120,7 +120,7 @@ describe('UserData Provider', () => {
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.user) })))
     );
 
-    userData.editUser(TestData.user).then(
+    userData.editUser(TestData.user).subscribe(
       res => expect(res).toEqual(TestData.user),
       err => fail(err)
     );
@@ -131,7 +131,7 @@ describe('UserData Provider', () => {
       conn => conn.mockError(new Error(TestData.error))
     );
 
-    userData.editUser(TestData.user).then(
+    userData.editUser(TestData.user).subscribe(
       res => fail(res),
       err => expect(err).toEqual(TestData.error)
     );
@@ -142,7 +142,7 @@ describe('UserData Provider', () => {
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.organization) })))
     );
 
-    userData.getInfo().then(
+    userData.getInfo().subscribe(
       res => expect(res).toEqual(TestData.organization),
       err => fail(err)
     );
@@ -153,7 +153,7 @@ describe('UserData Provider', () => {
       conn => conn.mockError(new Error(TestData.error))
     );
 
-    userData.getInfo().then(
+    userData.getInfo().subscribe(
       res => fail(res),
       err => expect(err).toEqual(TestData.error)
     );

@@ -46,15 +46,9 @@ export class UserData {
   }
 
   editUser(user) {
-    return new Promise((resolve, reject) => {
-      this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${this.userID}`, user)
-      .map(extractData)
-      .catch(handleError)
-      .subscribe(
-        data => resolve(data),
-        err => reject(err)
-      );
-    });
+    return this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${this.userID}`, user)
+    .map(extractData)
+    .catch(handleError);
   }
 
   changePassword(currentPassword: string, newPassword: string) {
@@ -102,14 +96,8 @@ export class UserData {
   }
 
   private getInfo(endpoint, id) {
-    return new Promise((resolve, reject) => {
-      this.authHttp.get(`${this.apiUrl.getUrl()}${endpoint}/${id}`)
-      .map(extractData)
-      .catch(handleError)
-      .subscribe(
-        data => resolve(data),
-        err => reject(err)
-      );
-    });
+    return this.authHttp.get(`${this.apiUrl.getUrl()}${endpoint}/${id}`)
+    .map(extractData)
+    .catch(handleError);
   }
 }
