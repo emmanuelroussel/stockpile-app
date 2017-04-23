@@ -11,20 +11,9 @@
 
 <ion-content padding>
 	<ion-list>
-    <ion-item>
-      <ion-label floating color="primary">First Name</ion-label>
-      <ion-input [ngModel]="user?.firstName" readonly></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating color="primary">Last Name</ion-label>
-      <ion-input [ngModel]="user?.lastName" readonly></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating color="primary">Email</ion-label>
-      <ion-input [ngModel]="user?.email" readonly></ion-input>
-    </ion-item>
+    <ion-item>{{user?.firstName}}</ion-item>
+    <ion-item>{{user?.lastName}}</ion-item>
+    <ion-item>{{user?.email}}</ion-item>
 	</ion-list>
 
   <button ion-button (click)="changePassword()" block>Change Password</button>
