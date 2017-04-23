@@ -57,6 +57,17 @@ export class UserData {
     });
   }
 
+  changePassword(currentPassword: string, newPassword: string) {
+    const passwords = {
+      currentPassword,
+      newPassword
+    };
+
+    return this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${this.userID}${Links.password}`, passwords)
+    .map(extractData)
+    .catch(handleError);
+  }
+
   isLoggedIn() {
     return new Promise((resolve, reject) => {
       this.storage.get('id_token').then(token => {

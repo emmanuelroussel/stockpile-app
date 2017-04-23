@@ -27,6 +27,8 @@
     </ion-item>
 	</ion-list>
 
+  <button ion-button (click)="changePassword()" block>Change Password</button>
+
   <ion-fab right bottom *ngIf="platform.is('android')">
     <button ion-fab color="secondary" (click)="editUser()"><ion-icon name="create"></ion-icon></button>
   </ion-fab>

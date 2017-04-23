@@ -91,6 +91,19 @@ describe('UserData Provider', () => {
     );
   })));
 
+  it('returns a message on changePassword()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
+    userData.storage.return = TestData.token;
+
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
+    );
+
+    userData.changePassword(TestData.passwords.currentPassword, TestData.passwords.newPassword).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  })));
+
   it('returns an organization on getOrganization()', fakeAsync(inject([UserData, MockBackend], (userData: UserData, mockBackend: MockBackend) => {
     mockBackend.connections.subscribe(
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.organization) })))

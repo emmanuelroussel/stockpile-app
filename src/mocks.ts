@@ -284,32 +284,44 @@ export class UserDataMock {
   organization = TestData.organization;
 
   public login(): any {
-    return this.returnValue();
+    return this.returnPromise();
   }
 
   public logout(): any { }
 
   public isLoggedIn(): any {
-    return this.returnValue(this.loggedIn);
+    return this.returnPromise(this.loggedIn);
   }
 
   public setUser(): any {
-    return this.returnValue();
+    return this.returnPromise();
   }
 
   public getUser(): any {
-    return this.returnValue(this.user);
+    return this.returnPromise(this.user);
+  }
+
+  public changePassword(): any {
+    return this.returnObservable(TestData.response);
   }
 
   public getOrganization(): any {
-    return this.returnValue(this.organization);
+    return this.returnPromise(this.organization);
   }
 
   public editUser() {
-    return this.returnValue(this.user);
+    return this.returnPromise(this.user);
   }
 
-  private returnValue(value?: any): any {
+  private returnObservable(value?: any): any {
+    if (this.resolve) {
+      return Observable.fromPromise(Promise.resolve(value));
+    } else {
+      return Observable.fromPromise(Promise.reject(TestData.error));
+    }
+  }
+
+  private returnPromise(value?: any): any {
     if (this.resolve) {
       return Promise.resolve(value);
     } else {
