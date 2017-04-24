@@ -31,7 +31,7 @@ export class Messages {
   public static itemAlreadyRented = `${Messages.already} rented`;
   public static itemNotRented = 'Item is not currently rented';
   public static userEdited = 'User successfully edited';
-  public static passwordDontMatch = 'Password don\'t match';
+  public static passwordsDontMatch = 'Passwords don\'t match';
 }
 
 export class ItemProperties {

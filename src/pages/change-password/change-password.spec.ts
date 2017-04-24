@@ -46,7 +46,7 @@ describe('ChangePassword Page', () => {
     instance.onSave();
     tick();
     expect(instance.userData.changePassword).not.toHaveBeenCalled();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.passwordDontMatch);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.passwordsDontMatch);
   }));
 
   it('it shows toast if error onSave()', fakeAsync(() => {

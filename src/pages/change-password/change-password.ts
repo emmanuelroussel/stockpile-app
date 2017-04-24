@@ -28,7 +28,7 @@ export class ChangePasswordPage {
         err => this.notifications.showToast(err)
       );
     } else {
-      this.notifications.showToast(Messages.passwordDontMatch);
+      this.notifications.showToast(Messages.passwordsDontMatch);
       this.passwords.newPassword = '';
       this.passwords.confirmPassword = '';
     }
