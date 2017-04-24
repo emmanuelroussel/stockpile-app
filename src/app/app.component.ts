@@ -5,7 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
-import { EditAccountPage } from '../pages/edit-account/edit-account';
+import { ViewAccountPage } from '../pages/view-account/view-account';
 import { UserData } from '../providers/user-data';
 import { Notifications } from '../providers/notifications';
 
@@ -54,11 +54,11 @@ export class StockpileApp {
   }
 
   private getUserInfo() {
-    this.userData.getUser().then(
+    this.userData.getUser().subscribe(
       user => this.user = user,
       err => this.notifications.showToast(err)
     );
-    this.userData.getOrganization().then(
+    this.userData.getOrganization().subscribe(
       organization => this.organization = organization,
       err => this.notifications.showToast(err)
     );
@@ -71,11 +71,11 @@ export class StockpileApp {
     });
   }
 
-  editInfo() {
+  viewInfo() {
     this.menuCtrl.close();
 
     // Cloning user object to avoid passing by reference
-    this.nav.push(EditAccountPage, {
+    this.nav.push(ViewAccountPage, {
       user: Object.assign({}, this.user)
     });
   }

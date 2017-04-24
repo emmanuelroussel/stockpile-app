@@ -230,6 +230,12 @@ export class TestData {
     organizationID: 1
   };
 
+  public static passwords = {
+    currentPassword: 'monkey',
+    newPassword: 'donkey',
+    confirmPassword: 'donkey'
+  };
+
   public static organization = {
     organizationID: 1,
     name: 'Empire'

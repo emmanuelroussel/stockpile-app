@@ -25,7 +25,7 @@ export class EditAccountPage {
   }
 
   onSave() {
-    this.userData.editUser(this.user).then(
+    this.userData.editUser(this.user).subscribe(
       data => {
         this.notifications.showToast(Messages.userEdited);
         this.events.publish('user:edited', data);

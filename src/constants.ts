@@ -15,6 +15,7 @@ export class Links {
   public static status = '/status';
   public static user = '/user';
   public static organization = '/organization';
+  public static password = '/password';
 }
 
 export class Messages {
@@ -30,6 +31,7 @@ export class Messages {
   public static itemAlreadyRented = `${Messages.already} rented`;
   public static itemNotRented = 'Item is not currently rented';
   public static userEdited = 'User successfully edited';
+  public static passwordsDontMatch = 'Passwords don\'t match';
 }
 
 export class ItemProperties {

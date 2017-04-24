@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Account</ion-title>
+    <ion-buttons *ngIf="platform.is('ios')" end>
+      <button ion-button clear (click)="editUser()">
+        Edit
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-list>
+    <ion-item>{{user?.firstName}}</ion-item>
+    <ion-item>{{user?.lastName}}</ion-item>
+    <ion-item>{{user?.email}}</ion-item>
+	</ion-list>
+
+  <button ion-button (click)="changePassword()" block>Change Password</button>
+
+  <ion-fab right bottom *ngIf="platform.is('android')">
+    <button ion-fab color="secondary" (click)="editUser()"><ion-icon name="create"></ion-icon></button>
+  </ion-fab>
+</ion-content>

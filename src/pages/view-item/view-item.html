@@ -11,20 +11,9 @@
 
 <ion-content padding>
 	<ion-list>
-    <ion-item>
-      <ion-label fixed color="primary">Brand</ion-label>
-      <ion-input [ngModel]="item?.brand" readonly></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label fixed color="primary">Model</ion-label>
-      <ion-input [ngModel]="item?.model" readonly></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label fixed color="primary">Category</ion-label>
-      <ion-input [ngModel]="item?.category" readonly></ion-input>
-    </ion-item>
+    <ion-item>{{item?.brand}}</ion-item>
+    <ion-item>{{item?.model}}</ion-item>
+    <ion-item>{{item?.category}}</ion-item>
 	</ion-list>
 
   <ion-fab right bottom *ngIf="platform.is('android')">
