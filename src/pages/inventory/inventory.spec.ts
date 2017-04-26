@@ -32,18 +32,16 @@ describe('Inventory Page', () => {
   });
 
   it('gets brands, models, categories and items', fakeAsync(() => {
-    const response = { results: TestData.items };
     instance.inventoryData.brands = TestData.brands;
     instance.inventoryData.models = TestData.models;
     instance.inventoryData.categories = TestData.categories;
-    instance.inventoryData.allItems = response;
+    spyOn(instance, 'filterItems');
     instance.ionViewWillEnter();
     tick();
     expect(instance.allBrands).toEqual(TestData.brands.results);
     expect(instance.allModels).toEqual(TestData.models.results);
     expect(instance.allCategories).toEqual(TestData.categories.results);
-    expect(instance.allItems).toEqual(TestData.items);
-    expect(instance.filteredItems).toEqual(TestData.items);
+    expect(instance.filterItems).toHaveBeenCalled();
   }));
 
   it('shows toast if error while getting brands, models, categories or items', fakeAsync(() => {
@@ -54,25 +52,36 @@ describe('Inventory Page', () => {
     expect(instance.notifications.showToast).toHaveBeenCalledTimes(4);
   }));
 
-  it('calls inventoryData.filterItems on filterItems()', fakeAsync(() => {
+  it('calls inventoryData.filterItems on loadItems()', fakeAsync(() => {
     instance.selectedBrandID = TestData.apiItem.brandID;
     instance.selectedModelID = TestData.apiItem.modelID;
     instance.selectedCategoryID = TestData.apiItem.categoryID;
     instance.segment = 0;
     instance.inventoryData.allItems = TestData.filteredItems;
+    instance.offset = 10;
+    instance.limit = 10;
+    instance.items = [];
     spyOn(instance.inventoryData, 'filterItems').and.callThrough();
-    instance.filterItems();
+    instance.loadItems();
     tick();
-    expect(instance.inventoryData.filterItems).toHaveBeenCalledWith(TestData.apiItem.brandID, TestData.apiItem.modelID, TestData.apiItem.categoryID, 0);
-    expect(instance.filteredItems).toEqual(TestData.filteredItems.results);
+    expect(instance.inventoryData.filterItems).toHaveBeenCalledWith(TestData.apiItem.brandID, TestData.apiItem.modelID, TestData.apiItem.categoryID, 0, 10, 10);
+    expect(instance.items).toEqual(TestData.filteredItems.results);
   }));
 
-  it('shows toast if error on filterItems()', fakeAsync(() => {
-    instance.segment = 0;
-    instance.allModels = TestData.models.results;
+  it('sets loadMoreItems to false if inventoryData.filterItems returns nothing', fakeAsync(() => {
+    instance.inventoryData.allItems = { results: [] };
+    instance.items = TestData.filteredItems.results;
+    instance.loadMoreItems = true;
+    instance.loadItems();
+    tick();
+    expect(instance.loadMoreItems).toEqual(false);
+    expect(instance.items).toEqual(TestData.filteredItems.results);
+  }));
+
+  it('shows toast if error on loadItems()', fakeAsync(() => {
     instance.inventoryData.resolve = false;
     spyOn(instance.notifications, 'showToast');
-    instance.filterItems();
+    instance.loadItems();
     tick();
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));

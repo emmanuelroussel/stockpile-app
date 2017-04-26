@@ -22,9 +22,11 @@ export class InventoryPage {
   selectedModelID = -1;
   allCategories;
   selectedCategoryID = -1;
-  allItems;
-  filteredItems;
+  items;
   showFilters = false;
+  limit = 10;
+  offset;
+  loadMoreItems = true;
 
   constructor(
     public navCtrl: NavController,
@@ -50,13 +52,8 @@ export class InventoryPage {
       err => this.notifications.showToast(err)
     );
 
-    this.inventoryData.getAllItems().subscribe(
-      (items: any) => {
-        this.allItems = items.results;
-        this.filteredItems = this.allItems;
-      },
-      err => this.notifications.showToast(err)
-    );
+    // No filters set, so gets all items
+    this.filterItems();
   }
 
   toggleFilters() {
@@ -68,17 +65,42 @@ export class InventoryPage {
       this.selectedModelID = -1;
     }
 
-    this.inventoryData.filterItems(
-      this.selectedBrandID,
-      this.selectedModelID,
-      this.selectedCategoryID,
-      this.segment
-    ).subscribe(
-      (items: any) => {
-        this.filteredItems = items.results;
-      },
-      err => this.notifications.showToast(err)
-    );
+    this.items = [];
+    this.offset = 0;
+    this.loadMoreItems = true;
+    this.loadItems();
+  }
+
+ /**
+  * Gets all items that match the filters and resolves a promise when done
+  * for the infinite scroll component.
+  */
+  loadItems() {
+    return new Promise(resolve => {
+      this.inventoryData.filterItems(
+        this.selectedBrandID,
+        this.selectedModelID,
+        this.selectedCategoryID,
+        this.segment,
+        this.limit,
+        this.offset
+      ).subscribe(
+        (items: any) => {
+          items.results.forEach(item => {
+            this.items.push(item);
+          });
+
+          if (!items.results.length) {
+            this.loadMoreItems = false;
+          } else {
+            this.offset += this.limit;
+          }
+
+          resolve();
+        },
+        err => this.notifications.showToast(err)
+      );
+    });
   }
 
   viewItem(item) {
