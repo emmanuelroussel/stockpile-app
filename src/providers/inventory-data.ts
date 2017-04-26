@@ -49,7 +49,7 @@ export class InventoryData {
       params.set('available', available.toString());
     }
 
-    if(limit) {
+    if (limit) {
       params.set('limit', limit.toString());
     }
 
