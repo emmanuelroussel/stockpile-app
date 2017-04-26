@@ -4,7 +4,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { InventoryData } from '../../providers/inventory-data';
 import { Notifications } from '../../providers/notifications';
-import { Actions } from '../../constants';
+import { Actions, paginationLimit } from '../../constants';
 import { EditItemPage } from '../edit-item/edit-item';
 import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
 import { ViewItemPage } from '../view-item/view-item';
@@ -24,7 +24,6 @@ export class InventoryPage {
   selectedCategoryID = -1;
   items;
   showFilters = false;
-  limit = 10;
   offset;
   loadMoreItems = true;
 
@@ -82,7 +81,7 @@ export class InventoryPage {
         this.selectedModelID,
         this.selectedCategoryID,
         this.segment,
-        this.limit,
+        paginationLimit,
         this.offset
       ).subscribe(
         (items: any) => {
@@ -93,7 +92,7 @@ export class InventoryPage {
           if (!items.results.length) {
             this.loadMoreItems = false;
           } else {
-            this.offset += this.limit;
+            this.offset += paginationLimit;
           }
 
           resolve();

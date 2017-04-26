@@ -59,7 +59,6 @@ describe('Inventory Page', () => {
     instance.segment = 0;
     instance.inventoryData.allItems = TestData.filteredItems;
     instance.offset = 10;
-    instance.limit = 10;
     instance.items = [];
     spyOn(instance.inventoryData, 'filterItems').and.callThrough();
     instance.loadItems();
