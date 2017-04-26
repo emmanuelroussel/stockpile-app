@@ -18,10 +18,6 @@ export class InventoryData {
     return this.getEndpoint(`${Links.item}/${barcode}`);
   }
 
-  getAllItems() {
-    return this.getEndpoint(Links.item);
-  }
-
   addItem(item: Object) {
     return this.putEndpoint(Links.item, item);
   }
@@ -34,7 +30,7 @@ export class InventoryData {
     return this.deleteEndpoint(`${Links.item}/${barcode}`);
   }
 
-  filterItems(brandID?: number, modelID?: number, categoryID?: number, available?: number) {
+  filterItems(brandID?: number, modelID?: number, categoryID?: number, available?: number, limit?: number, offset?: number) {
     let params: URLSearchParams = new URLSearchParams();
 
     if (Math.sign(brandID) > 0) {
@@ -51,6 +47,14 @@ export class InventoryData {
 
     if (Math.sign(available) > -1) {
       params.set('available', available.toString());
+    }
+
+    if (limit) {
+      params.set('limit', limit.toString());
+    }
+
+    if (offset) {
+      params.set('offset', offset.toString());
     }
 
     return this.getEndpoint(Links.item, {

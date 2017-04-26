@@ -42,3 +42,5 @@ export class ItemProperties {
   public static category = 'Category';
   public static status = 'Status';
 }
+
+export const paginationLimit = 10;

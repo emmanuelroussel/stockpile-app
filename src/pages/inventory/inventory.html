@@ -25,15 +25,20 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-list *ngIf="filteredItems">
+  <ion-list *ngIf="items">
     <ion-list-header>Items</ion-list-header>
-    <button ion-item *ngFor="let item of filteredItems" (click)="viewItem(item)">
+    <button ion-item *ngFor="let item of items" (click)="viewItem(item)">
       <h2>{{ item.brand }} {{ item.model }}</h2>
     </button>
+
+    <ion-item *ngIf="!items">
+      No items found
+    </ion-item>
   </ion-list>
-  <ion-item *ngIf="!filteredItems">
-    No items found
-  </ion-item>
+
+  <ion-infinite-scroll (ionInfinite)="$event.waitFor(loadItems())" [enabled]="loadMoreItems">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
   <ion-fab right bottom>
     <button ion-fab color="secondary" (click)="onOpenFilters($event)"><ion-icon name="options"></ion-icon></button>

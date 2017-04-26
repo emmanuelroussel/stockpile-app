@@ -46,17 +46,6 @@ describe('InventoryData Provider', () => {
     expect(InventoryData).toBeTruthy();
   }));
 
-  it('returns items on getAllItems()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
-    mockBackend.connections.subscribe(
-      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.items) })))
-    );
-    tick();
-    inventoryData.getAllItems().subscribe(
-      item => expect(item).toEqual(TestData.items),
-      err => fail(err)
-    );
-  })));
-
   it('returns a message on addItem()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
     mockBackend.connections.subscribe(
       conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
@@ -186,17 +175,6 @@ describe('InventoryData Provider', () => {
     inventoryData.addCategory(TestData.categories.results[0].name).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
-    );
-  })));
-
-  it('returns an error message if error on getEndpoint', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
-    mockBackend.connections.subscribe(
-      conn => conn.mockError(new Response(new ResponseOptions({ body: { message: TestData.error } })))
-    );
-    tick();
-    inventoryData.getAllItems().subscribe(
-      res => fail('Did not return an error'),
-      err => expect(err).toEqual(TestData.error)
     );
   })));
 
