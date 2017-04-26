@@ -16,6 +16,8 @@
     <ion-item>{{user?.email}}</ion-item>
 	</ion-list>
 
+  <button ion-button (click)="deleteAccount()" block outline>Delete Account</button>
+
   <button ion-button (click)="changePassword()" block>Change Password</button>
 
   <ion-fab right bottom *ngIf="platform.is('android')">

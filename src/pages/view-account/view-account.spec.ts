@@ -1,15 +1,17 @@
-import { ComponentFixture, async } from '@angular/core/testing';
+import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 
 import { ViewAccountPage } from './view-account';
 import { EditAccountPage } from '../edit-account/edit-account';
 import { ChangePasswordPage } from '../change-password/change-password';
+import { Messages } from '../../constants';
+import { LoginPage } from '../login/login';
 
 let fixture: ComponentFixture<ViewAccountPage> = null;
 let instance: any = null;
 
-describe('ViewItem Page', () => {
+describe('ViewAccount Page', () => {
 
   beforeEach(async(() => TestUtils.beforeEachCompiler([ViewAccountPage]).then(compiled => {
     fixture = compiled.fixture;
@@ -51,4 +53,36 @@ describe('ViewItem Page', () => {
     instance.changePassword();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(ChangePasswordPage);
   });
+
+  it('creates alerts on deleteAccount', () => {
+    spyOn(instance.alertCtrl, 'create').and.callThrough();
+    instance.deleteAccount();
+    expect(instance.alertCtrl.create).toHaveBeenCalled();
+  });
+
+  it('archives a user in archiveUser()', fakeAsync(() => {
+    const body = {
+      archived: new Date().toISOString().substring(0, 10)
+    };
+    spyOn(instance.userData, 'editUser').and.callThrough();
+    spyOn(instance.notifications, 'showToast');
+    spyOn(instance.userData, 'logout');
+    spyOn(instance.navCtrl, 'setRoot');
+    instance.archiveUser();
+    tick();
+    expect(instance.userData.editUser).toHaveBeenCalledWith(body);
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.userDeleted);
+    expect(instance.userData.logout).toHaveBeenCalled();
+    expect(instance.navCtrl.setRoot).toHaveBeenCalledWith(LoginPage);
+  }));
+
+  it('shows toast if error in archiveUser()', fakeAsync(() => {
+    instance.userData.resolve = false;
+    spyOn(instance.notifications, 'showToast');
+    spyOn(instance.navCtrl, 'setRoot');
+    instance.archiveUser();
+    tick();
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.navCtrl.setRoot).not.toHaveBeenCalled();
+  }));
 });
