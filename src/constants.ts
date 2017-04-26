@@ -32,6 +32,8 @@ export class Messages {
   public static itemNotRented = 'Item is not currently rented';
   public static userEdited = 'User successfully edited';
   public static passwordsDontMatch = 'Passwords don\'t match';
+  public static wrongPassword = 'Password is incorrect';
+  public static userDeleted = 'Account succesfully deleted';
 }
 
 export class ItemProperties {

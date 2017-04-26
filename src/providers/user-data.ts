@@ -43,6 +43,8 @@ export class UserData {
 
   logout() {
     this.storage.remove('id_token');
+    this.userID = '';
+    this.organizationID = '';
   }
 
   editUser(user) {

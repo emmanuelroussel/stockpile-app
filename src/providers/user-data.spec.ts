@@ -52,6 +52,8 @@ describe('UserData Provider', () => {
     spyOn(userData.storage, 'remove');
     userData.logout();
     expect(userData.storage.remove).toHaveBeenCalledWith('id_token');
+    expect(userData.userID).toEqual('');
+    expect(userData.organizationID).toEqual('');
   }));
 
   it('returns a promise on isLoggedIn', inject([UserData], (userData: UserData) => {
