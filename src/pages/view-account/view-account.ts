@@ -68,6 +68,7 @@ export class ViewAccountPage {
           handler: data => {
             this.userData.getUser().subscribe(
               user => {
+                // Calls login to verify the password
                 this.userData.login(user.email, data.password).then(
                   success => this.archiveUser(),
                   err => this.notifications.showToast(Messages.wrongPassword)
