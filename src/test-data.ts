@@ -247,4 +247,78 @@ export class TestData {
     userID: 74,
     organizationID: 539
   };
+
+  public static kits = {
+    results: [
+      { kitID: 1, name: 'Canon T5i', organizationID: 4 },
+      { kitID: 2, name: 'Shure SM 58', organizationID: 5 },
+      { kitID: 3, name: 'Sennheiser e609', organizationID: 6 }
+    ]
+  };
+
+  public static kit = {
+    kitID: 1,
+    name: 'Canon T7i',
+    organizationID: 4
+  };
+
+  public static updatedKits = {
+    results: [
+      { kitID: 1, name: 'Canon T7i', organizationID: 4 },
+      { kitID: 2, name: 'Shure SM 58', organizationID: 5 },
+      { kitID: 3, name: 'Sennheiser e609', organizationID: 6 }
+    ]
+  };
+
+  public static addedKits = {
+    results: [
+      { kitID: 1, name: 'Canon T5i', organizationID: 4 },
+      { kitID: 2, name: 'Shure SM 58', organizationID: 5 },
+      { kitID: 3, name: 'Sennheiser e609', organizationID: 6 },
+      { kitID: 1, name: 'Canon T7i', organizationID: 4 }
+    ]
+  };
+
+  public static deletedKits = {
+    results: [
+      { kitID: 2, name: 'Shure SM 58', organizationID: 5 },
+      { kitID: 3, name: 'Sennheiser e609', organizationID: 6 }
+    ]
+  };
+
+  public static kitItems = {
+    results: [
+      { kitID: 1, modelID: 2, model: 'T5i', brandID: 3, brand: 'Canon' },
+      { kitID: 1, modelID: 4, model: 'SM58', brandID: 5, brand: 'Shure' },
+      { kitID: 1, modelID: 6, model: 'e609', brandID: 7, brand: 'Sennheiser' }
+    ]
+  };
+
+  public static addedKitItems = {
+    results: [
+      { kitID: 1, modelID: 2, model: 'T5i', brandID: 3, brand: 'Canon' },
+      { kitID: 1, modelID: 4, model: 'SM58', brandID: 5, brand: 'Shure' },
+      { kitID: 1, modelID: 6, model: 'e609', brandID: 7, brand: 'Sennheiser' },
+      { kitID: 1, modelID: 2, model: 'T5i', brandID: 3, brand: 'Canon' }
+    ]
+  };
+
+  public static deletedKitItems = {
+    results: [
+      { kitID: 1, modelID: 4, model: 'SM58', brandID: 5, brand: 'Shure' },
+      { kitID: 1, modelID: 6, model: 'e609', brandID: 7, brand: 'Sennheiser' }
+    ]
+  };
+
+  public static kitItem = {
+    kitID: 1,
+    modelID: 2,
+    model: 'T5i',
+    brandID: 3,
+    brand: 'Canon'
+  };
+
+  public static modelsToDelete = [1, 2, 3, 4];
+
+  public static modelsToCreate = [5, 6, 7];
 }

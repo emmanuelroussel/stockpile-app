@@ -178,6 +178,83 @@ describe('InventoryData Provider', () => {
     );
   })));
 
+  it('returns kits on getKits()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.kits) })))
+    );
+    tick();
+    inventoryData.getKits().subscribe(
+      res => expect(res).toEqual(TestData.kits),
+      err => fail(err)
+    );
+  })));
+
+  it('returns kitItems on getKitItems()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.kitItems) })))
+    );
+    tick();
+    inventoryData.getKitItems(TestData.kit.kitID).subscribe(
+      res => expect(res).toEqual(TestData.kitItems),
+      err => fail(err)
+    );
+  })));
+
+  it('returns a message on addKitItem()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
+    );
+    tick();
+    inventoryData.addKitItem(TestData.kit.kitID, TestData.kitItem.modelID).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  })));
+
+  it('returns a message on deleteKitItem()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
+    );
+    tick();
+    inventoryData.deleteKitItem(TestData.kit.kitID, TestData.kitItem.modelID).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  })));
+
+  it('returns a message on addKit()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
+    );
+    tick();
+    inventoryData.addKit(TestData.kit.name).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  })));
+
+  it('returns a message on editKit()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
+    );
+    tick();
+    inventoryData.editKit(TestData.kit).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  })));
+
+  it('returns a message on deleteKit()', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
+    mockBackend.connections.subscribe(
+      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
+    );
+    tick();
+    inventoryData.deleteKit(TestData.kit.kitID).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  })));
+
   it('returns an error message if error on putEndpoint', fakeAsync(inject([InventoryData, MockBackend], (inventoryData: InventoryData, mockBackend: MockBackend) => {
     mockBackend.connections.subscribe(
       conn => conn.mockError(new Response(new ResponseOptions({ body: { message: TestData.error } })))

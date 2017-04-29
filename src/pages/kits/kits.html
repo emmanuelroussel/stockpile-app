@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Kits</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onAdd()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>Kits</ion-list-header>
+    <button ion-item *ngFor="let kit of kits" (click)="viewKit(kit)">
+      <h2>{{ kit.name }}</h2>
+    </button>
+
+    <ion-item *ngIf="!kits.length">
+      No kits found
+    </ion-item>
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="$event.waitFor(loadKits())" [enabled]="loadMoreItems">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ViewAccountPage } from '../pages/view-account/view-account';
+import { KitsPage } from '../pages/kits/kits';
 import { UserData } from '../providers/user-data';
 import { Notifications } from '../providers/notifications';
 
@@ -78,6 +79,11 @@ export class StockpileApp {
     this.nav.push(ViewAccountPage, {
       user: Object.assign({}, this.user)
     });
+  }
+
+  viewKits() {
+    this.menuCtrl.close();
+    this.nav.push(KitsPage);
   }
 
   logout() {

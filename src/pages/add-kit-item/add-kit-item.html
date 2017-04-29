@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Add Item to Kit</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form #itemForm="ngForm">
+		<ion-list>
+      <ion-item (click)="presentModal(allBrands, itemProperties.brand)">
+        <ion-label floating color="primary">Brand</ion-label>
+        <ion-input [ngModel]="item.brand" readonly required name="brand" #brand="ngModel"></ion-input>
+      </ion-item>
+
+      <ion-item [hidden]="!item.brandID" (click)="presentModal(filteredModels, itemProperties.model)">
+        <ion-label floating color="primary">Model</ion-label>
+        <ion-input [ngModel]="item.model" readonly required name="model" #model="ngModel"></ion-input>
+      </ion-item>
+		</ion-list>
+
+		<button ion-button (click)="onAdd(itemForm)" type="submit" block [disabled]="!itemForm.valid">Add</button>
+	</form>
+</ion-content>
