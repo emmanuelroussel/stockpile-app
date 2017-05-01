@@ -94,7 +94,11 @@ export class EditItemPage {
     this.inventoryData.deleteItem(this.item.barcode).subscribe(
       success => {
         this.notifications.showToast(Messages.itemDeleted);
-        this.navCtrl.pop();
+        this.events.publish('item:deleted', this.item.barcode);
+        const parentIndex = this.navCtrl.indexOf(this.navCtrl.getPrevious());
+        this.navCtrl.remove(parentIndex).then(
+          () => this.navCtrl.pop()
+        );
       },
       err => this.notifications.showToast(err)
     );

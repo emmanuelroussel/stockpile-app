@@ -1,4 +1,4 @@
-import { ComponentFixture, async } from '@angular/core/testing';
+import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { Actions } from '../../constants';
@@ -30,6 +30,17 @@ describe('ViewItem Page', () => {
     instance.ngOnInit();
     expect(instance.item).toEqual(TestData.apiItem);
   });
+
+  it('gets item when event \'item:edited\' is published', fakeAsync(() => {
+    instance.navParams.param = TestData.apiItem;
+    instance.inventoryData.item = TestData.apiItem;
+    instance.ngOnInit();
+    tick();
+    instance.item = {};
+    instance.events.publish('item:edited', TestData.apiItem.barcode);
+    tick();
+    expect(instance.item).toEqual(TestData.apiItem);
+  }));
 
   it('pushes EditItemPage on nav onEdit()', () => {
     instance.item = TestData.item;

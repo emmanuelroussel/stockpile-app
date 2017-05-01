@@ -63,6 +63,18 @@ export class NavMock {
   public popToRoot(): any {
     return Promise.resolve();
   }
+
+  public remove(): any {
+    return Promise.resolve();
+  }
+
+  public indexOf(): any {
+    return Promise.resolve();
+  }
+
+  public getPrevious(): any {
+    return Promise.resolve();
+  }
 }
 
 export class PlatformMock {

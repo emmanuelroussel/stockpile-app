@@ -9,7 +9,7 @@ import { ItemFilterPage } from '../item-filter/item-filter';
 let fixture: ComponentFixture<EditItemPage> = null;
 let instance: any = null;
 
-describe('Item Page', () => {
+describe('EditItem Page', () => {
 
   beforeEach(async(() => TestUtils.beforeEachCompiler([EditItemPage]).then(compiled => {
     fixture = compiled.fixture;
@@ -90,13 +90,16 @@ describe('Item Page', () => {
 
   it('pops nav onDelete()', fakeAsync(() => {
     instance.action = Actions.edit;
+    instance.item = TestData.item;
     spyOn(instance.navCtrl, 'pop');
     spyOn(instance.notifications, 'showToast');
+    spyOn(instance.events, 'publish');
     fixture.detectChanges();
     instance.onDelete();
     tick();
     expect(instance.navCtrl.pop).toHaveBeenCalled();
     expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemDeleted);
+    expect(instance.events.publish).toHaveBeenCalledWith('item:deleted', TestData.item.barcode);
   }));
 
   it('shows toast if error onDelete()', fakeAsync(() => {
