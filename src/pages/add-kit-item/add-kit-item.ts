@@ -53,10 +53,7 @@ export class AddKitItemPage {
   }
 
   presentModal(elements, type) {
-    let modal = this.modalCtrl.create(ItemFilterPage, {
-      elements: elements,
-      type: type
-    });
+    let modal = this.modalCtrl.create(ItemFilterPage, { elements, type });
 
     modal.onDidDismiss((element, isNew) => {
       if (element) {
