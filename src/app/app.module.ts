@@ -12,19 +12,23 @@ import { Toast } from '@ionic-native/toast';
 import { AuthHttp } from 'angular2-jwt';
 import { StockpileApp } from './app.component';
 
+import { AddKitItemPage } from '../pages/add-kit-item/add-kit-item';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { EditAccountPage } from '../pages/edit-account/edit-account';
 import { EditItemPage } from '../pages/edit-item/edit-item';
+import { EditKitPage } from '../pages/edit-kit/edit-kit';
 import { HomePage } from '../pages/home/home';
 import { InventoryFilterPage } from '../pages/inventory-filter/inventory-filter';
 import { InventoryPage } from '../pages/inventory/inventory';
 import { ItemFilterPage } from '../pages/item-filter/item-filter';
+import { KitsPage } from '../pages/kits/kits';
 import { LoginPage } from '../pages/login/login';
 import { RentalPage } from '../pages/rental/rental';
 import { RentalDetailsPage } from '../pages/rental-details/rental-details';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ViewAccountPage } from '../pages/view-account/view-account';
 import { ViewItemPage } from '../pages/view-item/view-item';
+import { ViewKitPage } from '../pages/view-kit/view-kit';
 
 import { ApiUrl } from '../providers/api-url';
 import { InventoryData } from '../providers/inventory-data';
@@ -37,19 +41,23 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
 @NgModule({
   declarations: [
     StockpileApp,
+    AddKitItemPage,
     ChangePasswordPage,
     EditAccountPage,
     EditItemPage,
+    EditKitPage,
     HomePage,
     InventoryFilterPage,
     InventoryPage,
     ItemFilterPage,
+    KitsPage,
     LoginPage,
     RentalPage,
     RentalDetailsPage,
     TabsPage,
     ViewAccountPage,
-    ViewItemPage
+    ViewItemPage,
+    ViewKitPage
   ],
   imports: [
     BrowserModule,
@@ -70,19 +78,23 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
   bootstrap: [IonicApp],
   entryComponents: [
     StockpileApp,
+    AddKitItemPage,
     ChangePasswordPage,
     EditAccountPage,
     EditItemPage,
+    EditKitPage,
     HomePage,
     InventoryFilterPage,
     InventoryPage,
     ItemFilterPage,
+    KitsPage,
     LoginPage,
     RentalPage,
     RentalDetailsPage,
     TabsPage,
     ViewAccountPage,
-    ViewItemPage
+    ViewItemPage,
+    ViewKitPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: RavenErrorHandler },

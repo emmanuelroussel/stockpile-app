@@ -5,6 +5,7 @@ import { StockpileApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ViewAccountPage } from '../pages/view-account/view-account';
+import { KitsPage } from '../pages/kits/kits';
 import { TestData } from '../test-data';
 
 let instance: any = null;
@@ -91,6 +92,14 @@ describe('Root Component', () => {
     instance.viewInfo();
     expect(instance.menuCtrl.close).toHaveBeenCalled();
     expect(instance.nav.push).toHaveBeenCalledWith(ViewAccountPage, { user: TestData.user });
+  });
+
+  it('pushes KitsPage on nav on viewKits()', () => {
+    spyOn(instance.menuCtrl, 'close');
+    spyOn(instance.nav, 'push');
+    instance.viewKits();
+    expect(instance.menuCtrl.close).toHaveBeenCalled();
+    expect(instance.nav.push).toHaveBeenCalledWith(KitsPage);
   });
 
   it('calls logout(), closes side menu and sets nav root to LoginPage', () => {

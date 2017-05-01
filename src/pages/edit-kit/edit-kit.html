@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ action }} kit</ion-title>
+    <ion-buttons *ngIf="action === actions.edit" end>
+      <button ion-button icon-only (click)="onDelete()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form #kitForm="ngForm">
+		<ion-list>
+      <ion-item>
+        <ion-label floating color="primary">Name</ion-label>
+        <ion-input [(ngModel)]="kit.name" required name="name" #name="ngModel"></ion-input>
+      </ion-item>
+
+      <ion-list-header>Items</ion-list-header>
+      <ion-item *ngFor="let kitItem of kitItems; let i = index">
+        {{ kitItem.brand }} {{ kitItem.model }}
+        <button ion-button clear item-right color="dark" (click)="onRemoveKitItem(i, kitItem)">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-item>
+
+      <ion-item *ngIf="!kitItems.length">
+        No items found
+      </ion-item>
+		</ion-list>
+
+    <button ion-button (click)="addItem()" block outline>Add Item to Kit</button>
+		<button ion-button (click)="onSave(kitForm)" type="submit" block [disabled]="!kitForm.valid">Save</button>
+	</form>
+</ion-content>

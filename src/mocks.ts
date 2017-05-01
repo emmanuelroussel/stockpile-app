@@ -202,6 +202,8 @@ export class InventoryDataMock {
   categories = TestData.categories;
   category = TestData.category;
   status = TestData.status;
+  kits = TestData.kits;
+  kitItems = TestData.kitItems;
   resolve: boolean = true;
 
   public addItem(): any {
@@ -221,7 +223,7 @@ export class InventoryDataMock {
   }
 
   public deleteItem(): any {
-    return this.returnValue();
+    return this.returnValue(TestData.response);
   }
 
   public filterItems(): any {
@@ -229,11 +231,11 @@ export class InventoryDataMock {
   }
 
   public rent(): any {
-    return this.returnValue();
+    return this.returnValue(TestData.response);
   }
 
   public return(): any {
-    return this.returnValue();
+    return this.returnValue(TestData.response);
   }
 
   public getBrands(): any {
@@ -261,6 +263,34 @@ export class InventoryDataMock {
   }
 
   public addCategory(): any {
+    return this.returnValue(TestData.response);
+  }
+
+  public getKits() {
+    return this.returnValue(this.kits);
+  }
+
+  public getKitItems() {
+    return this.returnValue(this.kitItems);
+  }
+
+  public addKitItem() {
+    return this.returnValue(TestData.response);
+  }
+
+  public deleteKitItem() {
+    return this.returnValue(TestData.response);
+  }
+
+  public addKit() {
+    return this.returnValue(TestData.response);
+  }
+
+  public editKit() {
+    return this.returnValue(TestData.response);
+  }
+
+  public deleteKit() {
     return this.returnValue(TestData.response);
   }
 

@@ -107,6 +107,54 @@ export class InventoryData {
     return this.putEndpoint(Links.category, body);
   }
 
+  getKits(limit?: number, offset?: number) {
+    let params: URLSearchParams = new URLSearchParams();
+
+    if (limit) {
+      params.set('limit', limit.toString());
+    }
+
+    if (offset) {
+      params.set('offset', offset.toString());
+    }
+
+    return this.getEndpoint(Links.kit, {
+      search: params
+    });
+  }
+
+  getKitItems(kitID: number) {
+    return this.getEndpoint(`${Links.kit}/${kitID}${Links.model}`);
+  }
+
+  addKitItem(kitID: number, modelID: number) {
+    const body = {
+      modelID
+    };
+
+    return this.putEndpoint(`${Links.kit}/${kitID}${Links.model}`, body);
+  }
+
+  deleteKitItem(kitID: number, modelID: number) {
+    return this.deleteEndpoint(`${Links.kit}/${kitID}${Links.model}/${modelID}`);
+  }
+
+  addKit(kitName: string) {
+    const body = {
+      name: kitName
+    };
+
+    return this.putEndpoint(Links.kit, body);
+  }
+
+  editKit(kit) {
+    return this.putEndpoint(`${Links.kit}/${kit.kitID}`, kit);
+  }
+
+  deleteKit(kitID: number) {
+    return this.deleteEndpoint(`${Links.kit}/${kitID}`);
+  }
+
   private getEndpoint(endpoint: string, params?: Object) {
     return this.authHttp.get(`${this.apiUrl.getUrl()}${endpoint}`, params)
       .map(extractData)
