@@ -37,7 +37,7 @@ describe('Rental Page', () => {
     expect(instance.items[0]).toEqual(TestData.item);
   });
 
-  it('updates item when event is published', fakeAsync(() => {
+  it('updates item when event \'item:edited\' is published', fakeAsync(() => {
     instance.inventoryData.item = TestData.modifiedItem;
     instance.ngOnInit();
     instance.items = TestData.items;

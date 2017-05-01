@@ -41,6 +41,12 @@ export class RentalPage {
         err => this.notifications.showToast(err)
       );
     });
+
+    this.events.subscribe('item:deleted', barcode => {
+      const index = this.items.findIndex(item => item.barcode === barcode);
+
+      this.items.splice(index, 1);
+    });
   }
 
   onAdd(barcode: string) {
