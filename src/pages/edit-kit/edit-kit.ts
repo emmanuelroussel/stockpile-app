@@ -100,7 +100,10 @@ export class EditKitPage {
       success => {
         this.notifications.showToast(Messages.kitDeleted);
         this.events.publish('kit:deleted', this.kit);
-        this.navCtrl.pop();
+        const parentIndex = this.navCtrl.indexOf(this.navCtrl.getPrevious());
+        this.navCtrl.remove(parentIndex).then(
+          () => this.navCtrl.pop()
+        );
       },
       err => this.notifications.showToast(err)
     );
