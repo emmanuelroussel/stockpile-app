@@ -41,8 +41,8 @@ export class ViewKitPage {
 
   onEditKit() {
     this.navCtrl.push(EditKitPage, {
-      kit: this.kit,
-      kitItems: this.kitItems,
+      kit: Object.assign({}, this.kit),
+      kitItems: this.kitItems.slice(),
       action: Actions.edit
     });
   }
