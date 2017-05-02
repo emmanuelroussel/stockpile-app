@@ -37,27 +37,27 @@ describe('ItemFilter Page', () => {
   it('filters elements on getElements()', () => {
     instance.queryText = TestData.queryText;
     instance.allElements = TestData.brands.results;
-    instance.getElements();
+    instance.onGetElements();
     expect(instance.filteredElements).toEqual(TestData.filteredBrands);
   });
 
   it('does not filter elements if queryText is empty', () => {
     instance.queryText = '';
     instance.allElements = TestData.brands.results;
-    instance.getElements();
+    instance.onGetElements();
     expect(instance.filteredElements).toEqual(TestData.brands.results);
   });
 
   it('sets showNew to true if there is no match', () => {
     instance.queryText = TestData.queryText;
     instance.allElements = TestData.models.results;
-    instance.getElements();
+    instance.onGetElements();
     expect(instance.showNew).toEqual(true);
   });
 
   it('calls viewCtrl.dismiss on dismiss()', () => {
     spyOn(instance.viewCtrl, 'dismiss');
-    instance.dismiss(TestData.brands[0]);
+    instance.onDismiss(TestData.brands[0]);
     expect(instance.viewCtrl.dismiss).toHaveBeenCalledWith(TestData.brands[0], false);
   });
 

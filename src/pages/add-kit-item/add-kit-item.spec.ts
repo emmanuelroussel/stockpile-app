@@ -60,7 +60,7 @@ describe('AddKitItem Page', () => {
 
   it('creates a modal on presentModal()', () => {
     spyOn(instance.modalCtrl, 'create').and.callThrough();
-    instance.presentModal(TestData.brands.results, ItemProperties.brand);
+    instance.onPresentModal(TestData.brands.results, ItemProperties.brand);
     expect(instance.modalCtrl.create).toHaveBeenCalledWith(ItemFilterPage, { elements: TestData.brands.results, type: ItemProperties.brand });
   });
 

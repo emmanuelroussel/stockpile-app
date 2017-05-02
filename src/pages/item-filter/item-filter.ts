@@ -24,7 +24,7 @@ export class ItemFilterPage {
     this.filteredElements = this.allElements;
   }
 
-  getElements() {
+  onGetElements() {
     this.filteredElements = this.allElements;
     this.showNew = false;
 
@@ -43,7 +43,7 @@ export class ItemFilterPage {
     }
   }
 
-  dismiss(element?: Object, isNew: boolean = false) {
+  onDismiss(element?: Object, isNew: boolean = false) {
     this.viewCtrl.dismiss(element, isNew);
   }
 
@@ -64,7 +64,7 @@ export class ItemFilterPage {
         {
           text: 'Create',
           handler: form => {
-            this.dismiss(form.elementName, true);
+            this.onDismiss(form.elementName, true);
           }
         }
       ]

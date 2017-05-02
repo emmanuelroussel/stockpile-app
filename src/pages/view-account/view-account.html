@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title>Account</ion-title>
     <ion-buttons *ngIf="platform.is('ios')" end>
-      <button ion-button clear (click)="editUser()">
+      <button ion-button clear (click)="onEditUser()">
         Edit
       </button>
     </ion-buttons>
@@ -16,11 +16,11 @@
     <ion-item>{{user?.email}}</ion-item>
 	</ion-list>
 
-  <button ion-button (click)="deleteAccount()" block outline>Delete Account</button>
+  <button ion-button (click)="onDeleteAccount()" block outline>Delete Account</button>
 
-  <button ion-button (click)="changePassword()" block>Change Password</button>
+  <button ion-button (click)="onChangePassword()" block>Change Password</button>
 
   <ion-fab right bottom *ngIf="platform.is('android')">
-    <button ion-fab color="secondary" (click)="editUser()"><ion-icon name="create"></ion-icon></button>
+    <button ion-fab color="secondary" (click)="onEditUser()"><ion-icon name="create"></ion-icon></button>
   </ion-fab>
 </ion-content>

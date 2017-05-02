@@ -52,14 +52,14 @@ export class InventoryPage {
     );
 
     // No filters set, so gets all items
-    this.filterItems();
+    this.onFilterItems();
   }
 
   toggleFilters() {
     this.showFilters = !this.showFilters;
   }
 
-  filterItems() {
+  onFilterItems() {
     if (Math.sign(this.selectedBrandID) < 0) {
       this.selectedModelID = -1;
     }
@@ -102,7 +102,7 @@ export class InventoryPage {
     });
   }
 
-  viewItem(item) {
+  onViewItem(item) {
     this.navCtrl.push(ViewItemPage, {
       item: item
     });
@@ -137,7 +137,7 @@ export class InventoryPage {
         this.selectedBrandID = ids.selectedBrandID;
         this.selectedModelID = ids.selectedModelID;
         this.selectedCategoryID = ids.selectedCategoryID;
-        this.filterItems();
+        this.onFilterItems();
       }
    });
 

@@ -89,7 +89,7 @@ describe('Root Component', () => {
     instance.user = TestData.user;
     spyOn(instance.menuCtrl, 'close');
     spyOn(instance.nav, 'push');
-    instance.viewInfo();
+    instance.onViewInfo();
     expect(instance.menuCtrl.close).toHaveBeenCalled();
     expect(instance.nav.push).toHaveBeenCalledWith(ViewAccountPage, { user: TestData.user });
   });
@@ -97,7 +97,7 @@ describe('Root Component', () => {
   it('pushes KitsPage on nav on viewKits()', () => {
     spyOn(instance.menuCtrl, 'close');
     spyOn(instance.nav, 'push');
-    instance.viewKits();
+    instance.onViewKits();
     expect(instance.menuCtrl.close).toHaveBeenCalled();
     expect(instance.nav.push).toHaveBeenCalledWith(KitsPage);
   });
@@ -106,7 +106,7 @@ describe('Root Component', () => {
     spyOn(instance.userData, 'logout');
     spyOn(instance.menuCtrl, 'close');
     spyOn(instance.nav, 'setRoot');
-    instance.logout();
+    instance.onLogout();
     expect(instance.userData.logout).toHaveBeenCalled();
     expect(instance.menuCtrl.close).toHaveBeenCalled();
     expect(instance.nav.setRoot).toHaveBeenCalledWith(LoginPage);

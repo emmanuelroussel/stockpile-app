@@ -28,28 +28,28 @@ export class InventoryFilterPage {
     this.selectedCategoryID = this.navParams.get('selectedCategoryID');
 
     if (this.selectedModelID !== -1) {
-      this.filterModels();
+      this.onFilterModels();
     }
   }
 
-  filterModels() {
+  onFilterModels() {
     this.filteredModels = this.models.filter((model) => {
       return (model.brandID === this.selectedBrandID);
     });
   }
 
-  resetFilters() {
+  onResetFilters() {
     this.selectedBrandID = -1;
     this.selectedModelID = -1;
     this.selectedCategoryID = -1;
-    this.applyFilters();
+    this.onApplyFilters();
   }
 
-  dismiss() {
+  onDismiss() {
     this.viewCtrl.dismiss();
   }
 
-  applyFilters() {
+  onApplyFilters() {
     const ids = {
       selectedBrandID: this.selectedBrandID,
       selectedModelID: this.selectedModelID,

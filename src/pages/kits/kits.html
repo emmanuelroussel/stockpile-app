@@ -12,7 +12,7 @@
 <ion-content padding>
   <ion-list>
     <ion-list-header>Kits</ion-list-header>
-    <button ion-item *ngFor="let kit of kits" (click)="viewKit(kit)">
+    <button ion-item *ngFor="let kit of kits" (click)="onViewKit(kit)">
       <h2>{{ kit.name }}</h2>
     </button>
 

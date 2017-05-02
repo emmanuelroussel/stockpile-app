@@ -43,20 +43,20 @@ describe('ViewAccount Page', () => {
   it('pushes EditAccountPage on nav onEdit()', () => {
     instance.user = TestData.user;
     spyOn(instance.navCtrl, 'push');
-    instance.editUser();
+    instance.onEditUser();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(EditAccountPage, { user: TestData.user });
   });
 
   it('pushes ChangePasswordPage on nav changePassword()', () => {
     instance.user = TestData.user;
     spyOn(instance.navCtrl, 'push');
-    instance.changePassword();
+    instance.onChangePassword();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(ChangePasswordPage);
   });
 
   it('creates alerts on deleteAccount', () => {
     spyOn(instance.alertCtrl, 'create').and.callThrough();
-    instance.deleteAccount();
+    instance.onDeleteAccount();
     expect(instance.alertCtrl.create).toHaveBeenCalled();
   });
 

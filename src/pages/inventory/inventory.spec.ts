@@ -35,13 +35,13 @@ describe('Inventory Page', () => {
     instance.inventoryData.brands = TestData.brands;
     instance.inventoryData.models = TestData.models;
     instance.inventoryData.categories = TestData.categories;
-    spyOn(instance, 'filterItems');
+    spyOn(instance, 'onFilterItems');
     instance.ionViewWillEnter();
     tick();
     expect(instance.allBrands).toEqual(TestData.brands.results);
     expect(instance.allModels).toEqual(TestData.models.results);
     expect(instance.allCategories).toEqual(TestData.categories.results);
-    expect(instance.filterItems).toHaveBeenCalled();
+    expect(instance.onFilterItems).toHaveBeenCalled();
   }));
 
   it('shows toast if error while getting brands, models, categories or items', fakeAsync(() => {
@@ -87,7 +87,7 @@ describe('Inventory Page', () => {
 
   it('pushes ViewItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
-    instance.viewItem(TestData.item);
+    instance.onViewItem(TestData.item);
     expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewItemPage, { item: TestData.item });
   });
 

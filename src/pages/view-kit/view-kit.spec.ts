@@ -58,7 +58,7 @@ describe('ViewKit Page', () => {
     instance.kit = TestData.kit;
     instance.kitItems = TestData.kitItems;
     spyOn(instance.navCtrl, 'push');
-    instance.editKit();
+    instance.onEditKit();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(EditKitPage, { kit: TestData.kit, kitItems: TestData.kitItems, action: Actions.edit });
   });
 });

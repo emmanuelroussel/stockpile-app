@@ -45,7 +45,7 @@ describe('ViewItem Page', () => {
   it('pushes EditItemPage on nav onEdit()', () => {
     instance.item = TestData.item;
     spyOn(instance.navCtrl, 'push');
-    instance.editItem();
+    instance.onEditItem();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(EditItemPage, { item: TestData.item, action: Actions.edit });
   });
 });

@@ -20,7 +20,7 @@
       <ion-list-header>Items</ion-list-header>
       <ion-item *ngFor="let kitItem of kitItems; let i = index">
         {{ kitItem.brand }} {{ kitItem.model }}
-        <button ion-button clear item-right color="dark" (click)="onRemoveKitItem(i, kitItem)">
+        <button ion-button clear item-right color="dark" (click)="onRemoveFromList(i, kitItem)">
           <ion-icon name="close"></ion-icon>
         </button>
       </ion-item>
@@ -30,7 +30,7 @@
       </ion-item>
 		</ion-list>
 
-    <button ion-button (click)="addItem()" block outline>Add Item to Kit</button>
+    <button ion-button (click)="onAddItem()" block outline>Add Item to Kit</button>
 		<button ion-button (click)="onSave(kitForm)" type="submit" block [disabled]="!kitForm.valid">Save</button>
 	</form>
 </ion-content>

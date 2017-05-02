@@ -110,7 +110,7 @@ export class EditItemPage {
     });
   }
 
-  presentModal(elements, type) {
+  onPresentModal(elements, type) {
     let modal = this.modalCtrl.create(ItemFilterPage, {
       elements: elements,
       type: type

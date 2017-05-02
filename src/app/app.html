@@ -7,15 +7,15 @@
 
   <ion-content>
     <ion-list>
-      <button ion-item (click)="viewInfo()">
+      <button ion-item (click)="onViewInfo()">
         <h2>{{user?.firstName}} {{user?.lastName}}</h2>
         <h3>{{user?.email}}</h3>
         <p>{{organization?.name}}</p>
       </button>
-      <button ion-item (click)="viewKits()">
+      <button ion-item (click)="onViewKits()">
         Kits
       </button>
-      <button ion-item (click)="logout()">
+      <button ion-item (click)="onLogout()">
         Logout
       </button>
     </ion-list>

@@ -142,13 +142,13 @@ describe('EditKit Page', () => {
 
   it('pushes AddKitItemPage on addItem()', () => {
     spyOn(instance.navCtrl, 'push');
-    instance.addItem();
+    instance.onAddItem();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(AddKitItemPage);
   });
 
   it('adds modelID to modelsToDelete onRemoveKitItem()', () => {
     instance.kitItems = TestData.kitItems.results;
-    instance.onRemoveKitItem(0, TestData.kitItem);
+    instance.onRemoveFromList(0, TestData.kitItem);
     expect(instance.modelsToDelete).toEqual([TestData.kitItem.modelID]);
   });
 });

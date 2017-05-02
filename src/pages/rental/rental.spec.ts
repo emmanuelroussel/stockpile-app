@@ -100,7 +100,7 @@ describe('Rental Page', () => {
 
   it('pushes ItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
-    instance.viewItem(TestData.item);
+    instance.onViewItem(TestData.item);
     expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewItemPage, { item: TestData.item });
   });
 

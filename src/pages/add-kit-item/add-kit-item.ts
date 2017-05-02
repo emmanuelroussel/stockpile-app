@@ -52,7 +52,7 @@ export class AddKitItemPage {
     });
   }
 
-  presentModal(elements, type) {
+  onPresentModal(elements, type) {
     let modal = this.modalCtrl.create(ItemFilterPage, { elements, type });
 
     modal.onDidDismiss((element, isNew) => {
