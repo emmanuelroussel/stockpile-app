@@ -44,7 +44,7 @@ describe('EditKit Page', () => {
     instance.action = Actions.add;
     instance.kit = TestData.kit;
     spyOn(instance.inventoryData, 'addKit').and.callThrough();
-    spyOn(instance ,'saveKitItems');
+    spyOn(instance, 'saveKitItems');
     instance.onSave();
     tick();
     expect(instance.inventoryData.addKit).toHaveBeenCalledWith(TestData.kit.name);
@@ -55,7 +55,7 @@ describe('EditKit Page', () => {
     instance.action = Actions.edit;
     instance.kit = TestData.kit;
     spyOn(instance.inventoryData, 'editKit').and.callThrough();
-    spyOn(instance ,'saveKitItems');
+    spyOn(instance, 'saveKitItems');
     instance.onSave();
     tick();
     expect(instance.inventoryData.editKit).toHaveBeenCalledWith(TestData.kit);

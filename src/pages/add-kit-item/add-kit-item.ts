@@ -3,7 +3,7 @@ import { NavController, NavParams, ModalController, Events } from 'ionic-angular
 
 import { InventoryData } from '../../providers/inventory-data';
 
-import { Actions, ItemProperties, Messages } from '../../constants';
+import { ItemProperties } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
 import { Notifications } from '../../providers/notifications';
 
