@@ -4,8 +4,7 @@ import { NavController, NavParams, ModalController, Events } from 'ionic-angular
 import { InventoryData } from '../../providers/inventory-data';
 import { AddKitItemPage } from '../add-kit-item/add-kit-item';
 
-import { Actions, ItemProperties, Messages } from '../../constants';
-import { ItemFilterPage } from '../item-filter/item-filter';
+import { Actions, Messages } from '../../constants';
 import { Notifications } from '../../providers/notifications';
 
 @Component({
@@ -59,9 +58,7 @@ export class EditKitPage {
     }
 
     apiCall.subscribe(
-      kit => {
-        this.saveKitItems(kit, message, event)
-      },
+      kit => this.saveKitItems(kit, message, event),
       err => this.notifications.showToast(err)
     );
   }
