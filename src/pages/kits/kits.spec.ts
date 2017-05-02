@@ -58,7 +58,7 @@ describe('Kits Page', () => {
 
   it('pushes ViewKitPage on nav on viewKit()', () => {
     spyOn(instance.navCtrl, 'push');
-    instance.viewKit(TestData.kit);
+    instance.onViewKit(TestData.kit);
     expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewKitPage, { kit: TestData.kit });
   });
 

@@ -72,7 +72,7 @@ export class StockpileApp {
     });
   }
 
-  viewInfo() {
+  onViewInfo() {
     this.menuCtrl.close();
 
     // Cloning user object to avoid passing by reference
@@ -81,12 +81,12 @@ export class StockpileApp {
     });
   }
 
-  viewKits() {
+  onViewKits() {
     this.menuCtrl.close();
     this.nav.push(KitsPage);
   }
 
-  logout() {
+  onLogout() {
     this.userData.logout();
     this.menuCtrl.close();
     this.nav.setRoot(LoginPage);

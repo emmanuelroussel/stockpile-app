@@ -12,17 +12,17 @@
 <ion-content padding>
   <form #itemForm="ngForm">
 		<ion-list>
-      <ion-item (click)="presentModal(allBrands, itemProperties.brand)">
+      <ion-item (click)="onPresentModal(allBrands, itemProperties.brand)">
         <ion-label floating color="primary">Brand</ion-label>
         <ion-input [ngModel]="selectedBrand" readonly required name="brand" #brand="ngModel"></ion-input>
       </ion-item>
 
-      <ion-item [hidden]="!selectedBrandID" (click)="presentModal(filteredModels, itemProperties.model)">
+      <ion-item [hidden]="!selectedBrandID" (click)="onPresentModal(filteredModels, itemProperties.model)">
         <ion-label floating color="primary">Model</ion-label>
         <ion-input [ngModel]="selectedModel" readonly required name="model" #model="ngModel"></ion-input>
       </ion-item>
 
-      <ion-item (click)="presentModal(allCategories, itemProperties.category)">
+      <ion-item (click)="onPresentModal(allCategories, itemProperties.category)">
         <ion-label floating color="primary">Category</ion-label>
         <ion-input [ngModel]="selectedCategory" readonly required name="category" #category="ngModel"></ion-input>
       </ion-item>

@@ -39,7 +39,7 @@ export class ViewKitPage {
     );
   }
 
-  editKit() {
+  onEditKit() {
     this.navCtrl.push(EditKitPage, {
       kit: this.kit,
       kitItems: this.kitItems,

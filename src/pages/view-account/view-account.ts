@@ -33,13 +33,13 @@ export class ViewAccountPage {
     });
   }
 
-  editUser() {
+  onEditUser() {
     this.navCtrl.push(EditAccountPage, {
       user: Object.assign({}, this.user)
     });
   }
 
-  changePassword() {
+  onChangePassword() {
     this.navCtrl.push(ChangePasswordPage);
   }
 
@@ -47,7 +47,7 @@ export class ViewAccountPage {
    * Prompts user for password to archive their account. This does not delete
    * the account as this is an admin feature.
    */
-  deleteAccount() {
+  onDeleteAccount() {
     let passwordAlert = this.alertCtrl.create({
       title: 'Delete Account',
       message: 'This will delete your account permanently.',

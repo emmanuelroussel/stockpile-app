@@ -38,21 +38,21 @@ describe('InventoryFilter Page', () => {
   });
 
   it('gets navParam selectedBrandID', () => {
-    spyOn(instance, 'filterModels');
+    spyOn(instance, 'onFilterModels');
     instance.navParams.param = TestData.apiItem.brandID;
     instance.ngOnInit();
     expect(instance.selectedBrandID).toEqual(TestData.apiItem.brandID);
   });
 
   it('gets navParam selectedModelID', () => {
-    spyOn(instance, 'filterModels');
+    spyOn(instance, 'onFilterModels');
     instance.navParams.param = TestData.apiItem.modelID;
     instance.ngOnInit();
     expect(instance.selectedModelID).toEqual(TestData.apiItem.modelID);
   });
 
   it('gets navParam selectedCategoryID', () => {
-    spyOn(instance, 'filterModels');
+    spyOn(instance, 'onFilterModels');
     instance.navParams.param = TestData.apiItem.categoryID;
     instance.ngOnInit();
     expect(instance.selectedCategoryID).toEqual(TestData.apiItem.categoryID);
@@ -60,37 +60,37 @@ describe('InventoryFilter Page', () => {
 
   it('calls filterModels if selectedBrandID is not -1', () => {
     instance.navParams.param = TestData.apiItem.brandID;
-    spyOn(instance, 'filterModels');
+    spyOn(instance, 'onFilterModels');
     instance.ngOnInit();
-    expect(instance.filterModels).toHaveBeenCalled();
+    expect(instance.onFilterModels).toHaveBeenCalled();
   });
 
-  it('does not call filterModels if selectedBrandID is -1', () => {
+  it('does not call onFilterModels if selectedBrandID is -1', () => {
     instance.navParams.param = -1;
-    spyOn(instance, 'filterModels');
+    spyOn(instance, 'onFilterModels');
     instance.ngOnInit();
-    expect(instance.filterModels).not.toHaveBeenCalled();
+    expect(instance.onFilterModels).not.toHaveBeenCalled();
   });
 
   it('filters models on filterModels()', () => {
     instance.models = TestData.models.results;
     instance.selectedBrandID = TestData.apiItem.brandID;
-    instance.filterModels();
+    instance.onFilterModels();
     expect(instance.filteredModels).toEqual(TestData.filteredModels);
   });
 
   it('resets filters on resetFilters()', () => {
-    spyOn(instance, 'applyFilters');
-    instance.resetFilters();
+    spyOn(instance, 'onApplyFilters');
+    instance.onResetFilters();
     expect(instance.selectedBrandID).toEqual(-1);
     expect(instance.selectedModelID).toEqual(-1);
     expect(instance.selectedCategoryID).toEqual(-1);
-    expect(instance.applyFilters).toHaveBeenCalled();
+    expect(instance.onApplyFilters).toHaveBeenCalled();
   });
 
   it('dismisses modal on dismiss', () => {
     spyOn(instance.viewCtrl, 'dismiss');
-    instance.dismiss();
+    instance.onDismiss();
     expect(instance.viewCtrl.dismiss).toHaveBeenCalled();
   });
 
@@ -106,7 +106,7 @@ describe('InventoryFilter Page', () => {
     };
 
     spyOn(instance.viewCtrl, 'dismiss');
-    instance.applyFilters();
+    instance.onApplyFilters();
     expect(instance.viewCtrl.dismiss).toHaveBeenCalledWith(ids);
   });
 });

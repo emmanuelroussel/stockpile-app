@@ -109,11 +109,11 @@ export class EditKitPage {
     );
   }
 
-  addItem() {
+  onAddItem() {
     this.navCtrl.push(AddKitItemPage);
   }
 
-  onRemoveKitItem(index, kitItem) {
+  onRemoveFromList(index, kitItem) {
     this.modelsToDelete.push(kitItem.modelID);
     this.kitItems.splice(index, 1);
   }

@@ -33,7 +33,7 @@ export class ViewItemPage {
     });
   }
 
-  editItem() {
+  onEditItem() {
     this.navCtrl.push(EditItemPage, {
       item: this.item,
       action: Actions.edit

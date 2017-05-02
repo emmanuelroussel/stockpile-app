@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-segment [(ngModel)]="segment" (ionChange)="filterItems()">
+  <ion-segment [(ngModel)]="segment" (ionChange)="onFilterItems()">
     <ion-segment-button [value]="-1">
       All
     </ion-segment-button>
@@ -27,7 +27,7 @@
 
   <ion-list *ngIf="items">
     <ion-list-header>Items</ion-list-header>
-    <button ion-item *ngFor="let item of items" (click)="viewItem(item)">
+    <button ion-item *ngFor="let item of items" (click)="onViewItem(item)">
       <h2>{{ item.brand }} {{ item.model }}</h2>
     </button>
 

@@ -66,7 +66,7 @@ export class RentalPage {
     );
   }
 
-  viewItem(item) {
+  onViewItem(item) {
     this.navCtrl.push(ViewItemPage, {
       item: item
     });

@@ -69,7 +69,7 @@ export class KitsPage {
     });
   }
 
-  viewKit(kit) {
+  onViewKit(kit) {
     this.navCtrl.push(ViewKitPage, {
       kit: kit
     });

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button (click)="dismiss()">Cancel</button>
+      <button ion-button (click)="onDismiss()">Cancel</button>
     </ion-buttons>
 
     <ion-title>
@@ -9,7 +9,7 @@
     </ion-title>
 
     <ion-buttons end>
-      <button ion-button (click)="applyFilters()" strong>Done</button>
+      <button ion-button (click)="onApplyFilters()" strong>Done</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -18,7 +18,7 @@
   <ion-list>
     <ion-item>
       <ion-label color="primary">Brand</ion-label>
-      <ion-select [(ngModel)]="selectedBrandID" (ionChange)="filterModels()">
+      <ion-select [(ngModel)]="selectedBrandID" (ionChange)="onFilterModels()">
         <ion-option [value]="-1">All</ion-option>
         <ion-option *ngFor="let brand of brands" [value]="brand.brandID">{{ brand.name }}</ion-option>
       </ion-select>
@@ -42,7 +42,7 @@
   </ion-list>
 
   <ion-list>
-    <button ion-item (click)="resetFilters()" detail-none>
+    <button ion-item (click)="onResetFilters()" detail-none>
       Reset All Filters
     </button>
   </ion-list>

@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title>Item</ion-title>
     <ion-buttons *ngIf="platform.is('ios')" end>
-      <button ion-button clear (click)="editItem()">
+      <button ion-button clear (click)="onEditItem()">
         Edit
       </button>
     </ion-buttons>
@@ -17,6 +17,6 @@
 	</ion-list>
 
   <ion-fab right bottom *ngIf="platform.is('android')">
-    <button ion-fab color="secondary" (click)="editItem()"><ion-icon name="create"></ion-icon></button>
+    <button ion-fab color="secondary" (click)="onEditItem()"><ion-icon name="create"></ion-icon></button>
   </ion-fab>
 </ion-content>
