@@ -31,7 +31,7 @@ export class EditKitPage {
   ngOnInit() {
     this.action = this.navParams.get('action');
 
-    if (this.action === this.actions.edit) {
+    if (this.action === Actions.edit) {
       this.kit = this.navParams.get('kit');
       this.kitItems = this.navParams.get('kitItems');
     }
@@ -47,7 +47,7 @@ export class EditKitPage {
     let message;
     let event;
 
-    if (this.action === this.actions.add) {
+    if (this.action === Actions.add) {
       apiCall = this.inventoryData.addKit(this.kit.name);
       message = Messages.kitAdded;
       event = 'kit:added';
