@@ -88,7 +88,7 @@ export class UserData {
   }
 
   /**
-   * Sets local user from auht token.
+   * Sets local user from auth token.
    */
   setUser() {
     return new Promise((resolve, reject) => {
