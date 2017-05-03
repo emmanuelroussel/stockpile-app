@@ -56,7 +56,7 @@ export class ViewAccountPage {
 
   /**
    * Creates modal to prompt user for password to archive their account. This
-   does not delete the account as this is an admin feature.
+   * does not delete the account as this is an admin feature.
    */
   onDeleteAccount() {
     let passwordAlert = this.alertCtrl.create({
