@@ -34,6 +34,11 @@ export class EditItemPage {
     public events: Events
   ) { }
 
+  /**
+   * Gets action (add or edit), brands, models and categories. If action is
+   * edit, also get the item and sets class variables. If action is add, get the
+   * barcode.
+   */
   ngOnInit() {
     this.action = this.navParams.get('action');
 
@@ -68,6 +73,9 @@ export class EditItemPage {
     );
   }
 
+  /**
+   * Calls api to save or create user depending on the action, then pops nav.
+   */
   onSave() {
     let apiCall;
     let message;
@@ -90,11 +98,18 @@ export class EditItemPage {
     );
   }
 
+  /**
+   * Calls api to delete the user then pops nav.
+   */
   onDelete() {
     this.inventoryData.deleteItem(this.item.barcode).subscribe(
       success => {
         this.notifications.showToast(Messages.itemDeleted);
         this.events.publish('item:deleted', this.item.barcode);
+
+        // This removes the previous page (ViewItemPage in this case) from the
+        // nav. This is so that it won't show when we pop the nav since the item
+        // does not exist anymore.
         const parentIndex = this.navCtrl.indexOf(this.navCtrl.getPrevious());
         this.navCtrl.remove(parentIndex).then(
           () => this.navCtrl.pop()
@@ -104,12 +119,20 @@ export class EditItemPage {
     );
   }
 
+  /**
+   * Sets filteredModels to all models that have the corresponding brandID.
+   */
   filterModels() {
     this.filteredModels = this.allModels.filter((model) => {
       return (model.brandID === this.selectedBrandID);
     });
   }
 
+  /**
+   * Presents the ItemFilterPage as a modal to allow the user to choose a brand,
+   * model or category. When dismissed, creates the brand model or category if
+   * the user chose to create a new one or saves it otherwise.
+   */
   onPresentModal(elements, type) {
     let modal = this.modalCtrl.create(ItemFilterPage, {
       elements: elements,
@@ -129,6 +152,11 @@ export class EditItemPage {
     modal.present();
   }
 
+  /**
+   * Calls the api to create a new brand model or category, pushes it to the
+   * local brands, models or categories calls assignElement() to assign it to
+   * the item.
+   */
   createElement(type, element) {
     switch (type) {
       case this.itemProperties.brand:
@@ -176,6 +204,9 @@ export class EditItemPage {
     }
   }
 
+  /**
+   * Sets the brand, model or category to class variables.
+   */
   assignElement(type, element) {
     switch (type) {
       case this.itemProperties.brand:

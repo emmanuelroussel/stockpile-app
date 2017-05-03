@@ -14,6 +14,8 @@ import { Notifications } from '../providers/notifications';
   templateUrl: './app.html'
 })
 export class StockpileApp {
+  // Need to ViewChild Nav instead of using NavController because this is
+  // highest level component (<ion-nav> in template)
   @ViewChild(Nav) nav: Nav;
   rootPage: any;
   user;
@@ -29,6 +31,10 @@ export class StockpileApp {
     public events: Events
   ) { }
 
+  /**
+   * If user is logged in, get the user's info to set in the side menu. Else
+   * set rootPage to LoginPage. Then initialize the app (hide splash screen).
+   */
   ngOnInit() {
     this.userData.isLoggedIn().then(loggedIn => {
       if (loggedIn) {
@@ -54,6 +60,9 @@ export class StockpileApp {
     });
   }
 
+  /**
+   * Gets info about the user's and organization's info.
+   */
   private getUserInfo() {
     this.userData.getUser().subscribe(
       user => this.user = user,
@@ -65,6 +74,9 @@ export class StockpileApp {
     );
   }
 
+  /**
+   * Sets status bar and hides splash screen.
+   */
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -72,6 +84,9 @@ export class StockpileApp {
     });
   }
 
+  /**
+   * Closes side menu and pushes ViewAccountPage.
+   */
   onViewInfo() {
     this.menuCtrl.close();
 
@@ -81,11 +96,17 @@ export class StockpileApp {
     });
   }
 
+  /**
+   * Closes side menu and pushes KitsPage.
+   */
   onViewKits() {
     this.menuCtrl.close();
     this.nav.push(KitsPage);
   }
 
+  /**
+   * Logs the user out, closes side menu and sets LoginPage as the root.
+   */
   onLogout() {
     this.userData.logout();
     this.menuCtrl.close();

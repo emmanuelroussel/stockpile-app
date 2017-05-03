@@ -20,6 +20,10 @@ export class RentalDetailsPage {
     public notifications: Notifications
   ) { }
 
+  /**
+   * Gets items to rent and sets the rental's start date as today and return
+   * date to tomorrow as default.
+   */
   ngOnInit() {
     this.items = this.navParams.get('items');
 
@@ -30,6 +34,10 @@ export class RentalDetailsPage {
     this.details.endDate = tomorrow.toISOString();
   }
 
+  /**
+   * Rents items by calling the api for each item in the list of items to rent.
+   * Pops the nav back to the root (TabsPage) when done.
+   */
   onRent() {
     // Transform date from ISO 8601 to MySQL date format
     this.details.startDate = new Date(this.details.startDate).toISOString().substring(0, 10);

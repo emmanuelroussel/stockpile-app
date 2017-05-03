@@ -8,6 +8,9 @@ Raven
 export class ErrorReport {
   platform: Platform = new Platform();
 
+  /**
+   * Reports error to Sentry if on mobile.
+   */
   reportError(err: any): void {
     if (this.platform.is('cordova')) {
       Raven.captureException(err.originalError || err);
@@ -15,6 +18,9 @@ export class ErrorReport {
   }
 }
 
+/**
+ * Error handler around Ionic's error handler to report crashes to Sentry.
+ */
 export class RavenErrorHandler extends IonicErrorHandler {
   platform: Platform = new Platform();
   errorReport: ErrorReport = new ErrorReport();

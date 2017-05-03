@@ -19,6 +19,9 @@ export class LoginPage {
     public events: Events
   ) { }
 
+  /**
+   * Calls the api with credentials to login and goes to TabsPage if successful.
+   */
   onLogin() {
     this.userData.login(this.login.email, this.login.password).then(
       (data: any) => {

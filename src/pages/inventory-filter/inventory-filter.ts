@@ -19,6 +19,10 @@ export class InventoryFilterPage {
     public navParams: NavParams
   ) { }
 
+  /**
+   * Gets brands, models and categories as well as the brand, model and category
+   * selected by the user, if any.
+   */
   ngOnInit() {
     this.brands = this.navParams.get('brands');
     this.models = this.navParams.get('models');
@@ -32,12 +36,18 @@ export class InventoryFilterPage {
     }
   }
 
+  /**
+   * Sets filteredModels to all models that have the corresponding brandID.
+   */
   onFilterModels() {
     this.filteredModels = this.models.filter((model) => {
       return (model.brandID === this.selectedBrandID);
     });
   }
 
+  /**
+   * Removes all selected filters.
+   */
   onResetFilters() {
     this.selectedBrandID = -1;
     this.selectedModelID = -1;
@@ -45,10 +55,16 @@ export class InventoryFilterPage {
     this.onApplyFilters();
   }
 
+  /**
+   * Closes the modal without passing anything.
+   */
   onDismiss() {
     this.viewCtrl.dismiss();
   }
 
+  /**
+   * Closes the modal and passes the selected filters.
+   */
   onApplyFilters() {
     const ids = {
       selectedBrandID: this.selectedBrandID,

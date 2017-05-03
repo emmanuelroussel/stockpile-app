@@ -20,10 +20,16 @@ export class EditAccountPage {
     public notifications: Notifications
   ) { }
 
+  /**
+   * Gets the user from the navParams.
+   */
   ngOnInit() {
     this.user = this.navParams.get('user');
   }
 
+  /**
+   * Calls the api to edit the user's info then pops nav.
+   */
   onSave() {
     this.userData.editUser(this.user).subscribe(
       data => {
