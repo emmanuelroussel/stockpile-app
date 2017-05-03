@@ -1,7 +1,7 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
-import { Actions, ItemProperties, Messages } from '../../constants';
+import { ItemProperties } from '../../constants';
 
 import { AddKitItemPage } from './add-kit-item';
 import { ItemFilterPage } from '../item-filter/item-filter';

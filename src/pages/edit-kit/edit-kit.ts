@@ -4,8 +4,7 @@ import { NavController, NavParams, ModalController, Events } from 'ionic-angular
 import { InventoryData } from '../../providers/inventory-data';
 import { AddKitItemPage } from '../add-kit-item/add-kit-item';
 
-import { Actions, ItemProperties, Messages } from '../../constants';
-import { ItemFilterPage } from '../item-filter/item-filter';
+import { Actions, Messages } from '../../constants';
 import { Notifications } from '../../providers/notifications';
 
 @Component({
@@ -32,7 +31,7 @@ export class EditKitPage {
   ngOnInit() {
     this.action = this.navParams.get('action');
 
-    if (this.action === this.actions.edit) {
+    if (this.action === Actions.edit) {
       this.kit = this.navParams.get('kit');
       this.kitItems = this.navParams.get('kitItems');
     }
@@ -48,7 +47,7 @@ export class EditKitPage {
     let message;
     let event;
 
-    if (this.action === this.actions.add) {
+    if (this.action === Actions.add) {
       apiCall = this.inventoryData.addKit(this.kit.name);
       message = Messages.kitAdded;
       event = 'kit:added';
@@ -59,9 +58,7 @@ export class EditKitPage {
     }
 
     apiCall.subscribe(
-      kit => {
-        this.saveKitItems(kit, message, event)
-      },
+      kit => this.saveKitItems(kit, message, event),
       err => this.notifications.showToast(err)
     );
   }

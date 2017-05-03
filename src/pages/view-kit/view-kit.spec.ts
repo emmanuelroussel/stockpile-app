@@ -56,9 +56,9 @@ describe('ViewKit Page', () => {
 
   it('pushes EditKitPage on nav on editKit()', () => {
     instance.kit = TestData.kit;
-    instance.kitItems = TestData.kitItems;
+    instance.kitItems = TestData.kitItems.results;
     spyOn(instance.navCtrl, 'push');
     instance.onEditKit();
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditKitPage, { kit: TestData.kit, kitItems: TestData.kitItems, action: Actions.edit });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditKitPage, { kit: TestData.kit, kitItems: TestData.kitItems.results, action: Actions.edit });
   });
 });

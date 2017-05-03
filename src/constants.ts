@@ -20,10 +20,10 @@ export class Links {
 }
 
 export class Messages {
-  private static itemBaseSingular = 'Item successfully ';
-  private static itemBasePlural = 'Item(s) successfully ';
-  private static kitBaseSingular = 'Kit successfully ';
-  private static itemAlready = 'Item is already ';
+  private static itemBaseSingular = 'Item successfully';
+  private static itemBasePlural = 'Item(s) successfully';
+  private static kitBaseSingular = 'Kit successfully';
+  private static itemAlready = 'Item is already';
   public static itemAdded = `${Messages.itemBaseSingular} added`;
   public static itemEdited = `${Messages.itemBaseSingular} edited`;
   public static itemDeleted = `${Messages.itemBaseSingular} deleted`;

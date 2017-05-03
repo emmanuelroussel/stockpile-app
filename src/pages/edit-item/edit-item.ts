@@ -47,9 +47,10 @@ export class EditItemPage {
       err => this.notifications.showToast(err)
     );
 
-    if (this.action === this.actions.add) {
+
+    if (this.action === Actions.add) {
       this.item.barcode = this.navParams.get('barcode');
-    } else if (this.action === this.actions.edit) {
+    } else if (this.action === Actions.edit) {
       const item = this.navParams.get('item');
 
       this.item.modelID = item.modelID;
@@ -74,10 +75,10 @@ export class EditItemPage {
     let apiCall;
     let message;
 
-    if (this.action === this.actions.add) {
+    if (this.action === Actions.add) {
       apiCall = this.inventoryData.addItem(this.item);
       message = Messages.itemAdded;
-    } else if (this.action === this.actions.edit) {
+    } else if (this.action === Actions.edit) {
       apiCall = this.inventoryData.editItem(this.item, this.item.barcode);
       message = Messages.itemEdited;
     }
@@ -133,7 +134,7 @@ export class EditItemPage {
 
   createElement(type, element) {
     switch (type) {
-      case this.itemProperties.brand:
+      case ItemProperties.brand:
         this.inventoryData.addBrand(element).subscribe(
           (brand: any) => {
             const newBrand = {
@@ -147,7 +148,7 @@ export class EditItemPage {
           err => this.notifications.showToast(err)
         );
         break;
-      case this.itemProperties.model:
+      case ItemProperties.model:
         this.inventoryData.addModel(element, this.selectedBrandID).subscribe(
           (model: any) => {
             const newModel = {
@@ -161,7 +162,7 @@ export class EditItemPage {
           err => this.notifications.showToast(err)
         );
         break;
-      case this.itemProperties.category:
+      case ItemProperties.category:
         this.inventoryData.addCategory(element).subscribe(
           (category: any) => {
             const newCategory = {
@@ -180,17 +181,17 @@ export class EditItemPage {
 
   assignElement(type, element) {
     switch (type) {
-      case this.itemProperties.brand:
+      case ItemProperties.brand:
         this.selectedBrandID = element.brandID;
         this.selectedBrand = element.name;
         this.selectedModel = '';
         this.filterModels();
         break;
-      case this.itemProperties.model:
+      case ItemProperties.model:
         this.item.modelID = element.modelID;
         this.selectedModel = element.name;
         break;
-      case this.itemProperties.category:
+      case ItemProperties.category:
         this.item.categoryID = element.categoryID;
         this.selectedCategory = element.name;
         break;
