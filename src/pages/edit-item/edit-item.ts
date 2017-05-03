@@ -47,7 +47,10 @@ export class EditItemPage {
       err => this.notifications.showToast(err)
     );
 
-    if (this.action === Actions.edit) {
+
+    if (this.action === Actions.add) {
+      this.item.barcode = this.navParams.get('barcode');
+    } else if (this.action === Actions.edit) {
       const item = this.navParams.get('item');
 
       this.item.modelID = item.modelID;
