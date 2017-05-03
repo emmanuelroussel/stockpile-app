@@ -28,6 +28,10 @@ export class RentalPage {
     public alertCtrl: AlertController
   ) { }
 
+  /**
+   * Gets item and action (rent or return). Also listens to events and updates
+   * items in local list if they are modified or deleted.
+   */
   ngOnInit() {
     this.action = this.navParams.get('action');
     const item = this.navParams.get('item');
@@ -49,6 +53,9 @@ export class RentalPage {
     });
   }
 
+  /**
+   * Checks if item can be added to the rental. Shows why if not, adds it if yes.
+   */
   onAdd(barcode: string) {
     this.inventoryData.getItem(barcode).subscribe(
       item => {
@@ -66,18 +73,28 @@ export class RentalPage {
     );
   }
 
+  /**
+   * Pushes ViewItemPage on nav with item to view.
+   */
   onViewItem(item) {
     this.navCtrl.push(ViewItemPage, {
       item: item
     });
   }
 
+  /**
+   * Pushes RentalDetailsPage on nav with items to rent.
+   */
   onContinue() {
     this.navCtrl.push(RentalDetailsPage, {
       items: this.items
     });
   }
 
+  /**
+   * Returns items by calling the api for each item in the list of items to
+   * return. Pops the nav when done.
+   */
   onReturn() {
     let returns = [];
 
@@ -94,6 +111,9 @@ export class RentalPage {
     );
   }
 
+  /**
+   * Starts barcode scanner and calls onAdd() with barcode if it got a barcode.
+   */
   onScanBarcode() {
     this.barcodeScanner.scan().then(
       barcodeData => {
@@ -105,6 +125,10 @@ export class RentalPage {
     );
   }
 
+  /**
+   * Creates alert to let the user type in a barcode. Calls onAdd() with the
+   * result.
+   */
   onTypeBarcode() {
     let alert = this.alertCtrl.create({
       title: 'Type Barcode',
@@ -131,6 +155,9 @@ export class RentalPage {
     alert.present();
   }
 
+  /**
+   * Removes item with the barcode from the list of local items.
+   */
   onRemoveItem(barcode) {
     const index = this.items.findIndex(item => item.barcode === barcode);
 

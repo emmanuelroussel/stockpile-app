@@ -22,13 +22,17 @@ export class HomePage {
     public platform: Platform
   ) { }
 
+  /**
+   * Decide whether the item should be rented or returned based on whether it is
+   * available or not and push RentalPage with the corresponding action.
+   */
   pushPage(barcode: string) {
     this.inventoryData.getItem(barcode).subscribe(
       (item: any) => {
         let action;
 
-        // If item is not available (i.e. rented), return it
-        // Else, if item is available, rent it
+        // 0 = false, item is currently rented
+        // 1 = true, item is available
         if (item.available === 0) {
           action = Actions.return;
         } else {
@@ -44,6 +48,10 @@ export class HomePage {
     );
   }
 
+  /**
+   * Starts barcode scanner and calls pushPage() with the barcode if it got a
+   * barcode.
+   */
   onScanBarcode() {
     this.barcodeScanner.scan().then(
       barcodeData => {
@@ -55,6 +63,10 @@ export class HomePage {
     );
   }
 
+  /**
+   * Creates alert for user to enter a barcode and calls pushPage() with the
+   * barcode when user taps 'Next'.
+   */
   onTypeBarcode() {
     let alert = this.alertCtrl.create({
       title: 'Type Barcode',

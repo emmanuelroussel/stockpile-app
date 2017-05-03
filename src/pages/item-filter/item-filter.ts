@@ -18,12 +18,20 @@ export class ItemFilterPage {
     public alertCtrl: AlertController
   ) { }
 
+  /**
+   * This page is used to let the user choose a brand, model or category.
+   * This methos gets the type and the brands, models or categories.
+   */
   ngOnInit() {
     this.allElements = this.navParams.get('elements');
     this.type = this.navParams.get('type');
     this.filteredElements = this.allElements;
   }
 
+  /**
+   * Gets the brands, models or categories that match the text in the search
+   * field.
+   */
   onGetElements() {
     this.filteredElements = this.allElements;
     this.showNew = false;
@@ -43,10 +51,16 @@ export class ItemFilterPage {
     }
   }
 
+  /**
+   * Closes the modal and passes the info.
+   */
   onDismiss(element?: Object, isNew: boolean = false) {
     this.viewCtrl.dismiss(element, isNew);
   }
 
+  /**
+   * Creates alert to allow user to create a new brand, model or category.
+   */
   onCreate() {
     let alert = this.alertCtrl.create({
       title: `Create new ${this.type.toLowerCase()}`,

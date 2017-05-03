@@ -25,6 +25,9 @@ export class ViewAccountPage {
     public notifications: Notifications
   ) { }
 
+  /**
+   * Gets user info and listens to event to update user if it is modified.
+   */
   ngOnInit() {
     this.user = this.navParams.get('user');
 
@@ -33,19 +36,27 @@ export class ViewAccountPage {
     });
   }
 
+  /**
+   * Pushes EditAccountPage on nav with user info.
+   */
   onEditUser() {
     this.navCtrl.push(EditAccountPage, {
+      // Copies user to pass by value, because modifying the user without
+      // saving would also modify this local copy
       user: Object.assign({}, this.user)
     });
   }
 
+  /**
+   * Pushes ChangePasswordPage on nav.
+   */
   onChangePassword() {
     this.navCtrl.push(ChangePasswordPage);
   }
 
   /**
-   * Prompts user for password to archive their account. This does not delete
-   * the account as this is an admin feature.
+   * Creates modal to prompt user for password to archive their account. This
+   * does not delete the account as this is an admin feature.
    */
   onDeleteAccount() {
     let passwordAlert = this.alertCtrl.create({

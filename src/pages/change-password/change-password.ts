@@ -18,6 +18,10 @@ export class ChangePasswordPage {
     public notifications: Notifications
   ) { }
 
+  /**
+   * Shows message if the two new passwords don't match. If they do, calls the
+   * api to change the password with the new one and pops the nav.
+   */
   onSave() {
     if (this.passwords.newPassword === this.passwords.confirmPassword) {
       this.userData.changePassword(this.passwords.currentPassword, this.passwords.newPassword).subscribe(

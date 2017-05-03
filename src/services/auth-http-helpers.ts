@@ -7,6 +7,9 @@ import 'rxjs/Rx';
 
 let errorReport = new ErrorReport();
 
+/**
+ * Angular2-jwt's config to work with Ionic's Storage.
+ */
 export function getAuthHttp(http, storage) {
   return new AuthHttp(new AuthConfig({
     tokenGetter: (() => storage.get('id_token')),
@@ -19,11 +22,14 @@ export const cloudSettings: CloudSettings = {
   }
 };
 
+/**
+ * Logs error and gets message from api error and throw it.
+ */
 export function handleError(error: Response | any, caught: any) {
   let message: string;
 
-  // Don't report 404s because they are a normal behavior of the api most of the time
-  // ex: user scan item not present in the database
+  // Don't report 404s because they are a normal behavior of the api most of
+  // the time. Ex: user scan item not present in the database
   if (error.status !== 404) {
     errorReport.reportError(error);
   }
@@ -38,6 +44,9 @@ export function handleError(error: Response | any, caught: any) {
   return Observable.throw(message);
 }
 
+/**
+ * Transforms data from the api into json.
+ */
 export function extractData(res: Response) {
   const body = res.json();
   return body || { };

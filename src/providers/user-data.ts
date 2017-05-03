@@ -20,6 +20,9 @@ export class UserData {
     public storage: Storage
   ) { }
 
+  /**
+   * Calls api with credentials to log in and saves auth token.
+   */
   login(email: string, password: string) {
     const credentials = {
       email: email,
@@ -41,18 +44,27 @@ export class UserData {
     });
   }
 
+  /**
+   * Clears all stored user data.
+   */
   logout() {
     this.storage.remove('id_token');
     this.userID = '';
     this.organizationID = '';
   }
 
+  /**
+   * Calls api to edit user.
+   */
   editUser(user) {
     return this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${this.userID}`, user)
     .map(extractData)
     .catch(handleError);
   }
 
+  /**
+   * Calls api with current and new password to change the user's password.
+   */
   changePassword(currentPassword: string, newPassword: string) {
     const passwords = {
       currentPassword,
@@ -64,6 +76,9 @@ export class UserData {
     .catch(handleError);
   }
 
+  /**
+   * Checks whether or not the auth token is expired.
+   */
   isLoggedIn() {
     return new Promise((resolve, reject) => {
       this.storage.get('id_token').then(token => {
@@ -72,6 +87,9 @@ export class UserData {
     });
   }
 
+  /**
+   * Sets local user from auth token.
+   */
   setUser() {
     return new Promise((resolve, reject) => {
       this.storage.get('id_token').then(
@@ -89,14 +107,23 @@ export class UserData {
     });
   }
 
+  /**
+   * Calls api to get user info.
+   */
   getUser() {
     return this.getInfo(Links.user, this.userID);
   }
 
+  /**
+   * Calls api to get organization info.
+   */
   getOrganization() {
     return this.getInfo(Links.organization, this.organizationID);
   }
 
+  /**
+   * Calls api to get info with the specified endpoint and id.
+   */
   private getInfo(endpoint, id) {
     return this.authHttp.get(`${this.apiUrl.getUrl()}${endpoint}/${id}`)
     .map(extractData)

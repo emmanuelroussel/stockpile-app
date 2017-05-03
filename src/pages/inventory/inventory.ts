@@ -23,7 +23,6 @@ export class InventoryPage {
   allCategories;
   selectedCategoryID = -1;
   items;
-  showFilters = false;
   offset;
   loadMoreItems = true;
 
@@ -35,6 +34,13 @@ export class InventoryPage {
     public modalCtrl: ModalController
   ) { }
 
+  /**
+   * Gets brands, models, categories and all items in inventory. Uses
+   * ionViewWillEnter() instead of ngOnInit() because the content of the page
+   * has to be reloaded whenever an item is changed (edited, rented, etc.).
+   * Instead of listening to all of those events, this reloads the page whenever
+   * the user enters it.
+   */
   ionViewWillEnter() {
     this.inventoryData.getBrands().subscribe(
       (brands: any) => this.allBrands = brands.results,
@@ -55,10 +61,9 @@ export class InventoryPage {
     this.onFilterItems();
   }
 
-  toggleFilters() {
-    this.showFilters = !this.showFilters;
-  }
-
+  /**
+   * Apply current filters on items by calling loadItems().
+   */
   onFilterItems() {
     if (Math.sign(this.selectedBrandID) < 0) {
       this.selectedModelID = -1;
@@ -102,12 +107,19 @@ export class InventoryPage {
     });
   }
 
+  /**
+   * Pushes ViewItemPage with the item to view.
+   */
   onViewItem(item) {
     this.navCtrl.push(ViewItemPage, {
       item: item
     });
   }
 
+  /**
+   * Starts barcode scanner and pushes EditItemPage  on navto create the item if
+   * it got a barcode.
+   */
   onAdd() {
     this.barcodeScanner.scan().then(
       barcodeData => {
@@ -122,6 +134,10 @@ export class InventoryPage {
     );
   }
 
+  /**
+   * Creates a modal to allow the user to choose filters. When dismissed, saves
+   * the filters and filters the items.
+   */
   onOpenFilters(event) {
     let modal = this.modalCtrl.create(InventoryFilterPage, {
       brands: this.allBrands,

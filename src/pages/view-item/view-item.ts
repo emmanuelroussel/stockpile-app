@@ -22,6 +22,9 @@ export class ViewItemPage {
     public notifications: Notifications
   ) { }
 
+  /**
+   * Gets item and listens to event to update item if it is modified.
+   */
   ngOnInit() {
     this.item = this.navParams.get('item');
 
@@ -33,6 +36,9 @@ export class ViewItemPage {
     });
   }
 
+  /**
+   * Pushes EditItemPage on nav with item.
+   */
   onEditItem() {
     this.navCtrl.push(EditItemPage, {
       item: this.item,

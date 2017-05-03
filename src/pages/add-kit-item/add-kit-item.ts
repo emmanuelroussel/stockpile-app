@@ -27,6 +27,9 @@ export class AddKitItemPage {
     public events: Events
   ) { }
 
+  /**
+   * Gets brands and models from the api.
+   */
   ngOnInit() {
     this.inventoryData.getBrands().subscribe(
       (brands: any) => this.allBrands = brands.results,
@@ -41,17 +44,29 @@ export class AddKitItemPage {
     );
   }
 
+  /**
+   * Publishes event to tell the AddKitPage that we added a kit item and pops
+   * nav.
+   */
   onAdd() {
     this.events.publish('kit-item:added', this.kitItem);
     this.navCtrl.pop();
   }
 
+  /**
+   * Sets filteredModels to all models that have the corresponding brandID
+   */
   filterModels() {
     this.filteredModels = this.allModels.filter((model) => {
       return (model.brandID === this.kitItem.brandID);
     });
   }
 
+  /**
+   * Presents the ItemFilterPage as a modal to allow the user to choose a brand
+   * or model. When dismissed, creates the brand or model if the user chose to
+   * create a new one or saves it otherwise.
+   */
   onPresentModal(elements, type) {
     let modal = this.modalCtrl.create(ItemFilterPage, { elements, type });
 
@@ -68,6 +83,10 @@ export class AddKitItemPage {
     modal.present();
   }
 
+  /**
+   * Calls the api to create a new brand or model and adds it to the
+   * local list.
+   */
   createElement(type, element) {
     switch (type) {
       case ItemProperties.brand:
@@ -101,6 +120,9 @@ export class AddKitItemPage {
     }
   }
 
+  /**
+   * Sets the brand or model to the kitItem class variable.
+   */
   assignElement(type, element) {
     switch (type) {
       case ItemProperties.brand:

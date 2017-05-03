@@ -23,6 +23,10 @@ export class KitsPage {
     public events: Events
   ) { }
 
+  /**
+   * Gets kits from the api and listens to event to update kits if they are
+   * modified by the user.
+   */
   ngOnInit() {
     this.loadKits();
 
@@ -69,12 +73,18 @@ export class KitsPage {
     });
   }
 
+  /**
+   * Pushes ViewKitPage on nav with the kit to view.
+   */
   onViewKit(kit) {
     this.navCtrl.push(ViewKitPage, {
       kit: kit
     });
   }
 
+  /**
+   * Pushes EditKitPage on nav.
+   */
   onAdd() {
     this.navCtrl.push(EditKitPage, {
       action: Actions.add

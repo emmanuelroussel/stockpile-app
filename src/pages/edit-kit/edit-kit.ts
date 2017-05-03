@@ -28,6 +28,10 @@ export class EditKitPage {
     public events: Events
   ) { }
 
+  /**
+   * Gets the action (add or edit) and if action is edit, also gets the kit and
+   * kitItems. Listens to event if a kit item is added to update the view.
+   */
   ngOnInit() {
     this.action = this.navParams.get('action');
 
@@ -42,6 +46,9 @@ export class EditKitPage {
     });
   }
 
+  /**
+   * Calls api to create kit and calls saveKitItems() to create the kitItems.
+   */
   onSave() {
     let apiCall;
     let message;
@@ -63,6 +70,11 @@ export class EditKitPage {
     );
   }
 
+  /**
+   * Calls api to create kitItem for each modelID in kitItems if action is add.
+   * If action is edit, calls api to create and delete kitItems for each modelID
+   * in modelsToCreate and modelsToDelete. Then pops nav.
+   */
   private saveKitItems(kit, message: string, event: string) {
     let models = [];
 
@@ -92,11 +104,18 @@ export class EditKitPage {
     );
   }
 
+  /**
+   * Calls api to delete the kit then pops nav.
+   */
   onDelete() {
     this.inventoryData.deleteKit(this.kit.kitID).subscribe(
       success => {
         this.notifications.showToast(Messages.kitDeleted);
         this.events.publish('kit:deleted', this.kit);
+
+        // This removes the previous page (ViewKitPage in this case) from the
+        // nav. This is so that it won't show when we pop the nav since the item
+        // does not exist anymore.
         const parentIndex = this.navCtrl.indexOf(this.navCtrl.getPrevious());
         this.navCtrl.remove(parentIndex).then(
           () => this.navCtrl.pop()
@@ -106,10 +125,16 @@ export class EditKitPage {
     );
   }
 
+  /**
+   * Pushes AddKitItemPage on nav to allow user to choose a brand and model.
+   */
   onAddItem() {
     this.navCtrl.push(AddKitItemPage);
   }
 
+  /**
+   * Removes the kitItem from the list and mark it to be deleted.
+   */
   onRemoveFromList(index, kitItem) {
     this.modelsToDelete.push(kitItem.modelID);
     this.kitItems.splice(index, 1);
