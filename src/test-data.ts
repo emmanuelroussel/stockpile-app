@@ -262,6 +262,12 @@ export class TestData {
     organizationID: 4
   };
 
+  public static modifiedKit = {
+    kitID: 1,
+    name: 'Canon T5i',
+    organizationID: 4
+  };
+
   public static updatedKits = {
     results: [
       { kitID: 1, name: 'Canon T7i', organizationID: 4 },

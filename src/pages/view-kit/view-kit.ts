@@ -31,7 +31,8 @@ export class ViewKitPage {
     this.kit = this.navParams.get('kit');
     this.getKitItems();
 
-    this.events.subscribe('kit:edited', () => {
+    this.events.subscribe('kit:edited', kit => {
+      this.kit = kit;
       this.getKitItems();
     });
   }

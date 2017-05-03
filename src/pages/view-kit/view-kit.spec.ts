@@ -34,15 +34,16 @@ describe('ViewKit Page', () => {
     expect(instance.kitItems).toEqual(TestData.kitItems.results);
   }));
 
-  it('gets kitItems when event \'kit:edited\' is published', fakeAsync(() => {
+  it('updates kit name and kitItems when event \'kit:edited\' is published', fakeAsync(() => {
     instance.navParams.param = TestData.kit;
-    instance.inventoryData.kitItems = TestData.kitItems;
     instance.ngOnInit();
     tick();
     instance.kitItems = [];
-    instance.events.publish('kit:edited', TestData.kit);
+    instance.kit = TestData.kit;
+    instance.events.publish('kit:edited', TestData.modifiedKit);
     tick();
     expect(instance.kitItems).toEqual(TestData.kitItems.results);
+    expect(instance.kit).toEqual(TestData.modifiedKit);
   }));
 
   it('shows toast is error in getting kitItems', fakeAsync(() => {
