@@ -84,8 +84,8 @@ export class AddKitItemPage {
   }
 
   /**
-   * Calls the api to create a new brand or model, pushes it to the local
-   * brands or models calls assignElement() to assign it to the kitItem.
+   * Calls the api to create a new brand or model and adds it to the
+   * local list.
    */
   createElement(type, element) {
     switch (type) {

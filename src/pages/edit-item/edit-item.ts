@@ -153,9 +153,8 @@ export class EditItemPage {
   }
 
   /**
-   * Calls the api to create a new brand model or category, pushes it to the
-   * local brands, models or categories calls assignElement() to assign it to
-   * the item.
+   * Calls the api to create a new brand, model or category and adds it to the
+   * local list.
    */
   createElement(type, element) {
     switch (type) {
