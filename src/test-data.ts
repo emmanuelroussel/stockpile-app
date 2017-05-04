@@ -327,4 +327,16 @@ export class TestData {
   public static modelsToDelete = [1, 2, 3, 4];
 
   public static modelsToCreate = [5, 6, 7];
+
+  public static url = 'https://stockpile.adamvig.com/api';
+
+  public static endpoint = '/test';
+
+  public static body = {
+    test: 'test'
+  };
+
+  public static limit = 10;
+
+  public static offset = 10;
 }

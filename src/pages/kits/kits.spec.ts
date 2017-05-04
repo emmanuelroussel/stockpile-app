@@ -27,21 +27,21 @@ describe('Kits Page', () => {
   });
 
   it('gets kits in ngOnInit', fakeAsync(() => {
-    instance.inventoryData.kits = TestData.kits;
+    instance.kitData.kits = TestData.kits;
     instance.ngOnInit();
     tick();
     expect(instance.kits).toEqual(TestData.kits.results);
   }));
 
   it('gets kits on loadKits()', fakeAsync(() => {
-    spyOn(instance.inventoryData, 'getKits').and.callThrough();
+    spyOn(instance.kitData, 'getKits').and.callThrough();
     instance.loadKits();
     tick();
     expect(instance.kits).toEqual(TestData.kits.results);
   }));
 
   it('sets loadMoreItems to false if not kits returned in loadKits()', fakeAsync(() => {
-    instance.inventoryData.kits = { results: [] };
+    instance.kitData.kits = { results: [] };
     instance.loadMoreItems = true;
     instance.loadKits();
     tick();
@@ -50,7 +50,7 @@ describe('Kits Page', () => {
 
   it('shows toast if error on loadKits()', fakeAsync(() => {
     spyOn(instance.notifications, 'showToast');
-    instance.inventoryData.resolve = false;
+    instance.kitData.resolve = false;
     instance.loadKits();
     tick();
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);

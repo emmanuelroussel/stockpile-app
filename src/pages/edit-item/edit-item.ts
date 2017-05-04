@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController, Events } from 'ionic-angular';
 
-import { InventoryData } from '../../providers/inventory-data';
+import { ItemPropertyData } from '../../providers/item-property-data';
+import { ItemData } from '../../providers/item-data';
 
 import { Actions, ItemProperties, Messages } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
@@ -28,7 +29,8 @@ export class EditItemPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public inventoryData: InventoryData,
+    public itemPropertyData: ItemPropertyData,
+    public itemData: ItemData,
     public modalCtrl: ModalController,
     public notifications: Notifications,
     public events: Events
@@ -42,12 +44,12 @@ export class EditItemPage {
   ngOnInit() {
     this.action = this.navParams.get('action');
 
-    this.inventoryData.getBrands().subscribe(
+    this.itemPropertyData.getBrands().subscribe(
       (brands: any) => this.allBrands = brands.results,
       err => this.notifications.showToast(err)
     );
 
-    this.inventoryData.getCategories().subscribe(
+    this.itemPropertyData.getCategories().subscribe(
       (categories: any) => this.allCategories = categories.results,
       err => this.notifications.showToast(err)
     );
@@ -67,7 +69,7 @@ export class EditItemPage {
       this.selectedCategory = item.category;
     }
 
-    this.inventoryData.getModels().subscribe(
+    this.itemPropertyData.getModels().subscribe(
       (models: any) => {
         this.allModels = models.results;
         this.filterModels();
@@ -82,19 +84,22 @@ export class EditItemPage {
   onSave() {
     let apiCall;
     let message;
+    let event;
 
     if (this.action === Actions.add) {
-      apiCall = this.inventoryData.addItem(this.item);
+      apiCall = this.itemData.addItem(this.item);
       message = Messages.itemAdded;
+      event = 'item:added';
     } else if (this.action === Actions.edit) {
-      apiCall = this.inventoryData.editItem(this.item, this.item.barcode);
+      apiCall = this.itemData.editItem(this.item, this.item.barcode);
       message = Messages.itemEdited;
+      event = 'item:edited';
     }
 
     apiCall.subscribe(
       item => {
         this.notifications.showToast(message);
-        this.events.publish('item:edited', item.barcode);
+        this.events.publish(event, item.barcode);
         this.navCtrl.pop();
       },
       err => this.notifications.showToast(err)
@@ -105,7 +110,7 @@ export class EditItemPage {
    * Calls api to delete the user then pops nav.
    */
   onDelete() {
-    this.inventoryData.deleteItem(this.item.barcode).subscribe(
+    this.itemData.deleteItem(this.item.barcode).subscribe(
       success => {
         this.notifications.showToast(Messages.itemDeleted);
         this.events.publish('item:deleted', this.item.barcode);
@@ -162,7 +167,7 @@ export class EditItemPage {
   createElement(type, element) {
     switch (type) {
       case ItemProperties.brand:
-        this.inventoryData.addBrand(element).subscribe(
+        this.itemPropertyData.addBrand(element).subscribe(
           (brand: any) => {
             const newBrand = {
               brandID: brand.id,
@@ -176,7 +181,7 @@ export class EditItemPage {
         );
         break;
       case ItemProperties.model:
-        this.inventoryData.addModel(element, this.selectedBrandID).subscribe(
+        this.itemPropertyData.addModel(element, this.selectedBrandID).subscribe(
           (model: any) => {
             const newModel = {
               modelID: model.id,
@@ -190,7 +195,7 @@ export class EditItemPage {
         );
         break;
       case ItemProperties.category:
-        this.inventoryData.addCategory(element).subscribe(
+        this.itemPropertyData.addCategory(element).subscribe(
           (category: any) => {
             const newCategory = {
               categoryID: category.id,

@@ -38,7 +38,7 @@ describe('Rental Page', () => {
   });
 
   it('updates item when event \'item:edited\' is published', fakeAsync(() => {
-    instance.inventoryData.item = TestData.modifiedItem;
+    instance.itemData.item = TestData.modifiedItem;
     instance.ngOnInit();
     instance.items = TestData.items;
     instance.events.publish('item:edited', TestData.modifiedItem.barcode);
@@ -47,7 +47,7 @@ describe('Rental Page', () => {
   }));
 
   it('shows toast if error while updating item in event.subscribe', fakeAsync(() => {
-    instance.inventoryData.resolve = false;
+    instance.itemData.resolve = false;
     instance.ngOnInit();
     instance.items = TestData.items;
     spyOn(instance.notifications, 'showToast');
@@ -57,14 +57,14 @@ describe('Rental Page', () => {
   }));
 
   it('pushes item onAdd()', fakeAsync(() => {
-    instance.inventoryData.item = TestData.apiItem;
+    instance.itemData.item = TestData.apiItem;
     instance.onAdd(TestData.apiItem.barcode);
     tick();
     expect(instance.items).toEqual([TestData.apiItem]);
   }));
 
   it('shows toast if error onAdd()', fakeAsync(() => {
-    instance.inventoryData.resolve = false;
+    instance.itemData.resolve = false;
     spyOn(instance.notifications, 'showToast');
     instance.onAdd();
     tick();
@@ -72,7 +72,7 @@ describe('Rental Page', () => {
   }));
 
   it('shows toast if item is rented and wants to rent onAdd()', fakeAsync(() => {
-    instance.inventoryData.item = TestData.rentedApiItem;
+    instance.itemData.item = TestData.rentedApiItem;
     instance.action = Actions.rent;
     spyOn(instance.notifications, 'showToast');
     instance.onAdd();
@@ -81,7 +81,7 @@ describe('Rental Page', () => {
   }));
 
   it('shows toast if item is available and wants to return onAdd()', fakeAsync(() => {
-    instance.inventoryData.item = TestData.apiItem;
+    instance.itemData.item = TestData.apiItem;
     instance.action = Actions.return;
     spyOn(instance.notifications, 'showToast');
     instance.onAdd();
@@ -91,7 +91,7 @@ describe('Rental Page', () => {
 
   it('shows toast if item is already added', fakeAsync(() => {
     instance.items = TestData.items;
-    instance.inventoryData.item = TestData.items[0];
+    instance.itemData.item = TestData.items[0];
     spyOn(instance.notifications, 'showToast');
     instance.onAdd();
     tick();
@@ -110,18 +110,18 @@ describe('Rental Page', () => {
     expect(instance.navCtrl.push).toHaveBeenCalled();
   });
 
-  it('calls inventoryData.return for each item', fakeAsync(() => {
+  it('calls itemData.return for each item', fakeAsync(() => {
     instance.items = TestData.items;
-    spyOn(instance.inventoryData, 'return').and.callThrough();
+    spyOn(instance.itemData, 'return').and.callThrough();
     spyOn(instance.notifications, 'showToast');
     instance.onReturn();
     tick();
-    expect(instance.inventoryData.return).toHaveBeenCalledTimes(TestData.items.length);
+    expect(instance.itemData.return).toHaveBeenCalledTimes(TestData.items.length);
     expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemsReturned);
   }));
 
   it('shows toast if error onReturn()', fakeAsync(() => {
-    instance.inventoryData.resolve = false;
+    instance.itemData.resolve = false;
     instance.items = TestData.items;
     spyOn(instance.notifications, 'showToast');
     instance.onReturn();
@@ -129,14 +129,14 @@ describe('Rental Page', () => {
     expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
   }));
 
-  it('calls inventoryData.return() and pops nav onReturn()', fakeAsync(() => {
+  it('calls itemData.return() and pops nav onReturn()', fakeAsync(() => {
     instance.items.push(TestData.item);
     spyOn(instance.navCtrl, 'pop');
-    spyOn(instance.inventoryData, 'return').and.callThrough();
+    spyOn(instance.itemData, 'return').and.callThrough();
     instance.onReturn();
     tick();
     expect(instance.navCtrl.pop).toHaveBeenCalled();
-    expect(instance.inventoryData.return).toHaveBeenCalledWith(TestData.item.barcode);
+    expect(instance.itemData.return).toHaveBeenCalledWith(TestData.item.barcode);
   }));
 
   it('calls barcodeScanner.scan() onScanBarcode()', fakeAsync(() => {

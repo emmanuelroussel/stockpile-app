@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { InventoryData } from '../../providers/inventory-data';
+import { ItemData } from '../../providers/item-data';
 import { Notifications } from '../../providers/notifications';
 import { Messages } from '../../constants';
 
@@ -16,7 +16,7 @@ export class RentalDetailsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public inventoryData: InventoryData,
+    public itemData: ItemData,
     public notifications: Notifications
   ) { }
 
@@ -52,7 +52,7 @@ export class RentalDetailsPage {
         endDate: this.details.endDate
       };
 
-      rentals.push(this.inventoryData.rent(rental).toPromise());
+      rentals.push(this.itemData.rent(rental).toPromise());
     }
 
     Promise.all(rentals).then(

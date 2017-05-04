@@ -30,31 +30,31 @@ describe('RentalDetails Page', () => {
     expect(instance.items).toBeTruthy();
   });
 
-  it('calls inventoryData.rent for each item', fakeAsync(() => {
+  it('calls itemData.rent for each item', fakeAsync(() => {
     instance.details = TestData.details;
     instance.items = TestData.items;
-    spyOn(instance.inventoryData, 'rent').and.callThrough();
+    spyOn(instance.itemData, 'rent').and.callThrough();
     instance.onRent();
     tick();
-    expect(instance.inventoryData.rent).toHaveBeenCalledTimes(TestData.items.length);
+    expect(instance.itemData.rent).toHaveBeenCalledTimes(TestData.items.length);
   }));
 
   it('goes back to the root\'s nav on successful rent()', fakeAsync(() => {
     instance.details = TestData.details;
     instance.items = TestData.items;
     spyOn(instance.navCtrl, 'popToRoot');
-    spyOn(instance.inventoryData, 'rent').and.callThrough();
+    spyOn(instance.itemData, 'rent').and.callThrough();
     spyOn(instance.notifications, 'showToast');
     instance.onRent();
     tick();
-    expect(instance.inventoryData.rent).toHaveBeenCalled();
+    expect(instance.itemData.rent).toHaveBeenCalled();
     expect(instance.navCtrl.popToRoot).toHaveBeenCalled();
     expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemsRented);
   }));
 
   it('shows toast on error onRent()', fakeAsync(() => {
     instance.details = TestData.details;
-    instance.inventoryData.resolve = false;
+    instance.itemData.resolve = false;
     instance.items = TestData.items;
     spyOn(instance.notifications, 'showToast');
     instance.onRent();

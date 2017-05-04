@@ -9,7 +9,7 @@ import { TestData } from './test-data';
 
 export class ApiUrlMock {
   public getUrl(): string {
-    return '';
+    return TestData.url;
   }
 }
 
@@ -204,114 +204,105 @@ export class AlertMock {
   public present(): any {}
 }
 
-export class InventoryDataMock {
+export class ItemDataMock {
   allItems = TestData.items;
   item = TestData.apiItem;
+  resolve: boolean = true;
+
+  public addItem(): any {
+    return returnObservable(this.resolve, this.item);
+  }
+
+  public getItem(): any {
+    return returnObservable(this.resolve, this.item);
+  }
+
+  public editItem(): any {
+    return returnObservable(this.resolve, this.item);
+  }
+
+  public deleteItem(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+
+  public filterItems(): any {
+    return returnObservable(this.resolve, this.allItems);
+  }
+
+  public rent(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+
+  public return(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+}
+
+export class ItemPropertyDataMock {
   brands = TestData.brands;
   brand = TestData.brand;
   models = TestData.models;
   model = TestData.model;
   categories = TestData.categories;
   category = TestData.category;
-  status = TestData.status;
+  resolve: boolean = true;
+
+  public getBrands(): any {
+    return returnObservable(this.resolve, this.brands);
+  }
+
+  public getModels(): any {
+    return returnObservable(this.resolve, this.models);
+  }
+
+  public getCategories(): any {
+    return returnObservable(this.resolve, this.categories);
+  }
+
+  public addBrand(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+
+  public addModel(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+
+  public addCategory(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+}
+
+export class KitDataMock {
   kits = TestData.kits;
   kitItems = TestData.kitItems;
   resolve: boolean = true;
 
-  public addItem(): any {
-    return this.returnValue(this.item);
-  }
-
-  public getAllItems(): any {
-    return this.returnValue(this.allItems);
-  }
-
-  public getItem(): any {
-    return this.returnValue(this.item);
-  }
-
-  public editItem(): any {
-    return this.returnValue(this.item);
-  }
-
-  public deleteItem(): any {
-    return this.returnValue(TestData.response);
-  }
-
-  public filterItems(): any {
-    return this.returnValue(this.allItems);
-  }
-
-  public rent(): any {
-    return this.returnValue(TestData.response);
-  }
-
-  public return(): any {
-    return this.returnValue(TestData.response);
-  }
-
-  public getBrands(): any {
-    return this.returnValue(this.brands);
-  }
-
-  public getModels(): any {
-    return this.returnValue(this.models);
-  }
-
-  public getCategories(): any {
-    return this.returnValue(this.categories);
-  }
-
-  public getStatus(): any {
-    return this.returnValue(this.status);
-  }
-
-  public addBrand(): any {
-    return this.returnValue(TestData.response);
-  }
-
-  public addModel(): any {
-    return this.returnValue(TestData.response);
-  }
-
-  public addCategory(): any {
-    return this.returnValue(TestData.response);
-  }
-
   public getKits() {
-    return this.returnValue(this.kits);
+    return returnObservable(this.resolve, this.kits);
   }
 
   public getKitItems() {
-    return this.returnValue(this.kitItems);
+    return returnObservable(this.resolve, this.kitItems);
   }
 
   public addKitItem() {
-    return this.returnValue(TestData.response);
+    return returnObservable(this.resolve, TestData.response);
   }
 
   public deleteKitItem() {
-    return this.returnValue(TestData.response);
+    return returnObservable(this.resolve, TestData.response);
   }
 
   public addKit() {
-    return this.returnValue(TestData.response);
+    return returnObservable(this.resolve, TestData.response);
   }
 
   public editKit() {
-    return this.returnValue(TestData.response);
+    return returnObservable(this.resolve, TestData.response);
   }
 
   public deleteKit() {
-    return this.returnValue(TestData.response);
-  }
-
-  private returnValue(value?: any): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve(value));
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+    return returnObservable(this.resolve, TestData.response);
   }
 }
 
@@ -326,49 +317,65 @@ export class UserDataMock {
   organization = TestData.organization;
 
   public login(): any {
-    return this.returnPromise();
+    return returnPromise(this.resolve);
   }
 
   public logout(): any { }
 
   public isLoggedIn(): any {
-    return this.returnPromise(this.loggedIn);
+    return returnPromise(this.resolve, this.loggedIn);
   }
 
   public setUser(): any {
-    return this.returnPromise();
+    return returnPromise(this.resolve);
   }
 
   public getUser(): any {
-    return this.returnObservable(this.user);
+    return returnObservable(this.resolve, this.user);
   }
 
   public changePassword(): any {
-    return this.returnObservable(TestData.response);
+    return returnObservable(this.resolve, TestData.response);
   }
 
   public getOrganization(): any {
-    return this.returnObservable(this.organization);
+    return returnObservable(this.resolve, this.organization);
   }
 
-  public editUser() {
-    return this.returnObservable(this.user);
+  public editUser(): any {
+    return returnObservable(this.resolve, this.user);
+  }
+}
+
+export class ApiMock {
+  value = TestData.response;
+
+  public get(): any {
+    return Observable.fromPromise(Promise.resolve(this.value));
   }
 
-  private returnObservable(value?: any): any {
-    if (this.resolve) {
-      return Observable.fromPromise(Promise.resolve(value));
-    } else {
-      return Observable.fromPromise(Promise.reject(TestData.error));
-    }
+  public put(): any {
+    return Observable.fromPromise(Promise.resolve(this.value));
   }
 
-  private returnPromise(value?: any): any {
-    if (this.resolve) {
-      return Promise.resolve(value);
-    } else {
-      return Promise.reject(TestData.error);
-    }
+  public delete(): any {
+    return Observable.fromPromise(Promise.resolve(this.value));
+  }
+}
+
+export function returnObservable(resolve: boolean, value?: any): any {
+  if (resolve) {
+    return Observable.fromPromise(Promise.resolve(value));
+  } else {
+    return Observable.fromPromise(Promise.reject(TestData.error));
+  }
+}
+
+export function returnPromise(resolve: boolean, value?: any): any {
+  if (resolve) {
+    return Promise.resolve(value);
+  } else {
+    return Promise.reject(TestData.error);
   }
 }
 

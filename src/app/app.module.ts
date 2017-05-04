@@ -30,8 +30,11 @@ import { ViewAccountPage } from '../pages/view-account/view-account';
 import { ViewItemPage } from '../pages/view-item/view-item';
 import { ViewKitPage } from '../pages/view-kit/view-kit';
 
+import { Api } from '../providers/api';
 import { ApiUrl } from '../providers/api-url';
-import { InventoryData } from '../providers/inventory-data';
+import { ItemData } from '../providers/item-data';
+import { ItemPropertyData } from '../providers/item-property-data';
+import { KitData } from '../providers/kit-data';
 import { Notifications } from '../providers/notifications';
 import { UserData } from '../providers/user-data';
 
@@ -98,8 +101,11 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
   ],
   providers: [
     { provide: ErrorHandler, useClass: RavenErrorHandler },
+    Api,
     ApiUrl,
-    InventoryData,
+    ItemData,
+    ItemPropertyData,
+    KitData,
     Notifications,
     UserData,
     SplashScreen,

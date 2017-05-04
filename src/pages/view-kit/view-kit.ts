@@ -3,7 +3,7 @@ import { NavController, NavParams, Platform, Events } from 'ionic-angular';
 
 import { Actions } from '../../constants';
 import { EditKitPage } from '../edit-kit/edit-kit';
-import { InventoryData } from '../../providers/inventory-data';
+import { KitData } from '../../providers/kit-data';
 import { Notifications } from '../../providers/notifications';
 
 @Component({
@@ -19,7 +19,7 @@ export class ViewKitPage {
     public navParams: NavParams,
     public platform: Platform,
     public notifications: Notifications,
-    public inventoryData: InventoryData,
+    public kitData: KitData,
     public events: Events
   ) { }
 
@@ -41,7 +41,7 @@ export class ViewKitPage {
    * Calls api to get items in the kit.
    */
   private getKitItems() {
-    this.inventoryData.getKitItems(this.kit.kitID).subscribe(
+    this.kitData.getKitItems(this.kit.kitID).subscribe(
       kitItems => this.kitItems = kitItems.results,
       err => this.notifications.showToast(err)
     );

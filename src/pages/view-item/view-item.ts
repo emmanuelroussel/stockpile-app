@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Platform, Events } from 'ionic-angular';
 
 import { Actions } from '../../constants';
-import { InventoryData } from '../../providers/inventory-data';
+import { ItemData } from '../../providers/item-data';
 import { Notifications } from '../../providers/notifications';
 import { EditItemPage } from '../edit-item/edit-item';
 
@@ -18,7 +18,7 @@ export class ViewItemPage {
     public navParams: NavParams,
     public platform: Platform,
     public events: Events,
-    public inventoryData: InventoryData,
+    public itemData: ItemData,
     public notifications: Notifications
   ) { }
 
@@ -29,7 +29,7 @@ export class ViewItemPage {
     this.item = this.navParams.get('item');
 
     this.events.subscribe('item:edited', barcode => {
-      this.inventoryData.getItem(barcode).subscribe(
+      this.itemData.getItem(barcode).subscribe(
         item => this.item = item,
         err => this.notifications.showToast(err)
       );

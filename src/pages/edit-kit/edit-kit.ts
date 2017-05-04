@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController, Events } from 'ionic-angular';
 
-import { InventoryData } from '../../providers/inventory-data';
+import { KitData } from '../../providers/kit-data';
 import { AddKitItemPage } from '../add-kit-item/add-kit-item';
 
 import { Actions, Messages } from '../../constants';
@@ -22,7 +22,7 @@ export class EditKitPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public inventoryData: InventoryData,
+    public kitData: KitData,
     public notifications: Notifications,
     public modalCtrl: ModalController,
     public events: Events
@@ -55,11 +55,11 @@ export class EditKitPage {
     let event;
 
     if (this.action === Actions.add) {
-      apiCall = this.inventoryData.addKit(this.kit.name);
+      apiCall = this.kitData.addKit(this.kit.name);
       message = Messages.kitAdded;
       event = 'kit:added';
     } else {
-      apiCall = this.inventoryData.editKit(this.kit);
+      apiCall = this.kitData.editKit(this.kit);
       message = Messages.kitEdited;
       event = 'kit:edited';
     }
@@ -82,15 +82,15 @@ export class EditKitPage {
       this.kit.kitID = kit.id;
 
       for (const kitItem of this.kitItems) {
-        models.push(this.inventoryData.addKitItem(this.kit.kitID, kitItem.modelID).toPromise());
+        models.push(this.kitData.addKitItem(this.kit.kitID, kitItem.modelID).toPromise());
       }
     } else {
       for (const modelID of this.modelsToDelete) {
-        models.push(this.inventoryData.deleteKitItem(this.kit.kitID, modelID).toPromise());
+        models.push(this.kitData.deleteKitItem(this.kit.kitID, modelID).toPromise());
       }
 
       for (const modelID of this.modelsToCreate) {
-        models.push(this.inventoryData.addKitItem(this.kit.kitID, modelID).toPromise());
+        models.push(this.kitData.addKitItem(this.kit.kitID, modelID).toPromise());
       }
     }
 
@@ -108,7 +108,7 @@ export class EditKitPage {
    * Calls api to delete the kit then pops nav.
    */
   onDelete() {
-    this.inventoryData.deleteKit(this.kit.kitID).subscribe(
+    this.kitData.deleteKit(this.kit.kitID).subscribe(
       success => {
         this.notifications.showToast(Messages.kitDeleted);
         this.events.publish('kit:deleted', this.kit);

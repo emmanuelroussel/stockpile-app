@@ -33,7 +33,7 @@ describe('ViewItem Page', () => {
 
   it('gets item when event \'item:edited\' is published', fakeAsync(() => {
     instance.navParams.param = TestData.apiItem;
-    instance.inventoryData.item = TestData.apiItem;
+    instance.itemData.item = TestData.apiItem;
     instance.ngOnInit();
     tick();
     instance.item = {};
