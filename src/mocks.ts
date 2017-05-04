@@ -342,7 +342,7 @@ export class UserDataMock {
     return returnObservable(this.resolve, this.organization);
   }
 
-  public editUser() {
+  public editUser(): any {
     return returnObservable(this.resolve, this.user);
   }
 }
