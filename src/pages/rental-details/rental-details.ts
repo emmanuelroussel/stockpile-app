@@ -11,7 +11,7 @@ import { Messages } from '../../constants';
 })
 export class RentalDetailsPage {
   items = [];
-  details: {itemID?: string, startDate?: string, endDate?: string} = {};
+  details: {itemID?: number, startDate?: string, endDate?: string} = {};
 
   constructor(
     public navCtrl: NavController,
