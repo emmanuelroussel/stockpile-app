@@ -372,7 +372,7 @@ export function returnObservable(resolve: boolean, value?: any): any {
 }
 
 export function returnPromise(resolve: boolean, value?: any): any {
-  if (this.resolve) {
+  if (resolve) {
     return Promise.resolve(value);
   } else {
     return Promise.reject(TestData.error);
