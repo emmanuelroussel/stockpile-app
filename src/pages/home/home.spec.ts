@@ -26,7 +26,7 @@ describe('Home Page', () => {
   });
 
   it('pushes rental page on pushPage() with \'Rent\' if item is avaiable', fakeAsync(() => {
-    instance.inventoryData.item = TestData.apiItem;
+    instance.itemData.item = TestData.apiItem;
     spyOn(instance.navCtrl, 'push');
     instance.pushPage(TestData.apiItem.barcode);
     tick();
@@ -34,7 +34,7 @@ describe('Home Page', () => {
   }));
 
   it('pushes rental page on pushPage() with \'Return\' if item is not available', fakeAsync(() => {
-    instance.inventoryData.item = TestData.rentedApiItem;
+    instance.itemData.item = TestData.rentedApiItem;
     spyOn(instance.navCtrl, 'push');
     instance.pushPage(TestData.rentedApiItem.barcode);
     tick();
@@ -42,7 +42,7 @@ describe('Home Page', () => {
   }));
 
   it('shows toast if error in pushPage()', fakeAsync(() => {
-    instance.inventoryData.resolve = false;
+    instance.itemData.resolve = false;
     spyOn(instance.notifications, 'showToast');
     instance.pushPage(TestData.item.barcode);
     tick();

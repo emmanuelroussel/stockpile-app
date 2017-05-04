@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
-import { InventoryData } from '../../providers/inventory-data';
+import { ItemData } from '../../providers/item-data';
+import { ItemPropertyData } from '../../providers/item-property-data';
 import { Notifications } from '../../providers/notifications';
 import { Actions, paginationLimit } from '../../constants';
 import { EditItemPage } from '../edit-item/edit-item';
@@ -28,7 +29,8 @@ export class InventoryPage {
 
   constructor(
     public navCtrl: NavController,
-    public inventoryData: InventoryData,
+    public itemData: ItemData,
+    public itemPropertyData: ItemPropertyData,
     public notifications: Notifications,
     public barcodeScanner: BarcodeScanner,
     public modalCtrl: ModalController
@@ -42,17 +44,17 @@ export class InventoryPage {
    * the user enters it.
    */
   ionViewWillEnter() {
-    this.inventoryData.getBrands().subscribe(
+    this.itemPropertyData.getBrands().subscribe(
       (brands: any) => this.allBrands = brands.results,
       err => this.notifications.showToast(err)
     );
 
-    this.inventoryData.getModels().subscribe(
+    this.itemPropertyData.getModels().subscribe(
       (models: any) => this.allModels = models.results,
       err => this.notifications.showToast(err)
     );
 
-    this.inventoryData.getCategories().subscribe(
+    this.itemPropertyData.getCategories().subscribe(
       (categories: any) => this.allCategories = categories.results,
       err => this.notifications.showToast(err)
     );
@@ -81,7 +83,7 @@ export class InventoryPage {
   */
   loadItems() {
     return new Promise(resolve => {
-      this.inventoryData.filterItems(
+      this.itemData.filterItems(
         this.selectedBrandID,
         this.selectedModelID,
         this.selectedCategoryID,

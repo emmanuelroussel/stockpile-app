@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController, Events } from 'ionic-angular';
 
-import { InventoryData } from '../../providers/inventory-data';
+import { ItemPropertyData } from '../../providers/item-property-data';
 
 import { ItemProperties } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
@@ -21,7 +21,7 @@ export class AddKitItemPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public inventoryData: InventoryData,
+    public itemPropertyData: ItemPropertyData,
     public modalCtrl: ModalController,
     public notifications: Notifications,
     public events: Events
@@ -31,12 +31,12 @@ export class AddKitItemPage {
    * Gets brands and models from the api.
    */
   ngOnInit() {
-    this.inventoryData.getBrands().subscribe(
+    this.itemPropertyData.getBrands().subscribe(
       (brands: any) => this.allBrands = brands.results,
       err => this.notifications.showToast(err)
     );
 
-    this.inventoryData.getModels().subscribe(
+    this.itemPropertyData.getModels().subscribe(
       (models: any) => {
         this.allModels = models.results;
       },
@@ -90,7 +90,7 @@ export class AddKitItemPage {
   createElement(type, element) {
     switch (type) {
       case ItemProperties.brand:
-        this.inventoryData.addBrand(element).subscribe(
+        this.itemPropertyData.addBrand(element).subscribe(
           (brand: any) => {
             const newBrand = {
               brandID: brand.id,
@@ -104,7 +104,7 @@ export class AddKitItemPage {
         );
         break;
       case ItemProperties.model:
-        this.inventoryData.addModel(element, this.kitItem.brandID).subscribe(
+        this.itemPropertyData.addModel(element, this.kitItem.brandID).subscribe(
           (model: any) => {
             const newModel = {
               modelID: model.id,

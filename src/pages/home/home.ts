@@ -5,7 +5,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { RentalPage } from '../rental/rental';
 import { Actions } from '../../constants';
 import { Notifications } from '../../providers/notifications';
-import { InventoryData } from '../../providers/inventory-data';
+import { ItemData } from '../../providers/item-data';
 
 @Component({
   selector: 'page-home',
@@ -17,7 +17,7 @@ export class HomePage {
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     public notifications: Notifications,
-    public inventoryData: InventoryData,
+    public itemData: ItemData,
     public barcodeScanner: BarcodeScanner,
     public platform: Platform
   ) { }
@@ -27,7 +27,7 @@ export class HomePage {
    * available or not and push RentalPage with the corresponding action.
    */
   pushPage(barcode: string) {
-    this.inventoryData.getItem(barcode).subscribe(
+    this.itemData.getItem(barcode).subscribe(
       (item: any) => {
         let action;
 

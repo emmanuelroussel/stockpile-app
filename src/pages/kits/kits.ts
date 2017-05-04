@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 
-import { InventoryData } from '../../providers/inventory-data';
+import { KitData } from '../../providers/kit-data';
 import { Notifications } from '../../providers/notifications';
 import { Actions, paginationLimit } from '../../constants';
 import { EditKitPage } from '../edit-kit/edit-kit';
@@ -18,7 +18,7 @@ export class KitsPage {
 
   constructor(
     public navCtrl: NavController,
-    public inventoryData: InventoryData,
+    public kitData: KitData,
     public notifications: Notifications,
     public events: Events
   ) { }
@@ -51,7 +51,7 @@ export class KitsPage {
   */
   loadKits() {
     return new Promise(resolve => {
-      this.inventoryData.getKits(
+      this.kitData.getKits(
         paginationLimit,
         this.offset
       ).subscribe(

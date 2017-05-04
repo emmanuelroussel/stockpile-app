@@ -13,8 +13,10 @@ import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@ang
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, GestureController, NavParams, ModalController, AlertController, Events } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
-import { ConfigMock, PlatformMock, NavMock, NavParamsMock, InventoryDataMock, UserDataMock, ModalMock, NotificationsMock, AlertMock, BarcodeScannerMock } from './mocks';
-import { InventoryData } from './providers/inventory-data';
+import { ConfigMock, PlatformMock, NavMock, NavParamsMock, ItemDataMock, KitDataMock, ItemPropertyDataMock, UserDataMock, ModalMock, NotificationsMock, AlertMock, BarcodeScannerMock } from './mocks';
+import { ItemData } from './providers/item-data';
+import { KitData } from './providers/kit-data';
+import { ItemPropertyData } from './providers/item-property-data';
 import { UserData } from './providers/user-data';
 import { Notifications } from './providers/notifications';
 
@@ -64,7 +66,9 @@ export class TestUtils {
         { provide: Config, useClass: ConfigMock },
         { provide: NavController, useClass: NavMock },
         { provide: NavParams, useClass: NavParamsMock },
-        { provide: InventoryData, useClass: InventoryDataMock },
+        { provide: ItemData, useClass: ItemDataMock },
+        { provide: KitData, useClass: KitDataMock },
+        { provide: ItemPropertyData, useClass: ItemPropertyDataMock },
         { provide: UserData, useClass: UserDataMock },
         { provide: ModalController, useClass: ModalMock },
         { provide: Notifications, useClass: NotificationsMock },

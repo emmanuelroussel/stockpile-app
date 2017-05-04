@@ -32,9 +32,9 @@ describe('Inventory Page', () => {
   });
 
   it('gets brands, models, categories and items', fakeAsync(() => {
-    instance.inventoryData.brands = TestData.brands;
-    instance.inventoryData.models = TestData.models;
-    instance.inventoryData.categories = TestData.categories;
+    instance.itemPropertyData.brands = TestData.brands;
+    instance.itemPropertyData.models = TestData.models;
+    instance.itemPropertyData.categories = TestData.categories;
     spyOn(instance, 'onFilterItems');
     instance.ionViewWillEnter();
     tick();
@@ -45,30 +45,32 @@ describe('Inventory Page', () => {
   }));
 
   it('shows toast if error while getting brands, models, categories or items', fakeAsync(() => {
-    instance.inventoryData.resolve = false;
+    instance.itemPropertyData.resolve = false;
     spyOn(instance.notifications, 'showToast');
+    spyOn(instance, 'onFilterItems');
     instance.ionViewWillEnter();
     tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledTimes(4);
+    expect(instance.notifications.showToast).toHaveBeenCalledTimes(3);
+    expect(instance.onFilterItems).toHaveBeenCalledWith();
   }));
 
-  it('calls inventoryData.filterItems on loadItems()', fakeAsync(() => {
+  it('calls itemData.filterItems on loadItems()', fakeAsync(() => {
     instance.selectedBrandID = TestData.apiItem.brandID;
     instance.selectedModelID = TestData.apiItem.modelID;
     instance.selectedCategoryID = TestData.apiItem.categoryID;
     instance.segment = 0;
-    instance.inventoryData.allItems = TestData.filteredItems;
+    instance.itemData.allItems = TestData.filteredItems;
     instance.offset = 10;
     instance.items = [];
-    spyOn(instance.inventoryData, 'filterItems').and.callThrough();
+    spyOn(instance.itemData, 'filterItems').and.callThrough();
     instance.loadItems();
     tick();
-    expect(instance.inventoryData.filterItems).toHaveBeenCalledWith(TestData.apiItem.brandID, TestData.apiItem.modelID, TestData.apiItem.categoryID, 0, 10, 10);
+    expect(instance.itemData.filterItems).toHaveBeenCalledWith(TestData.apiItem.brandID, TestData.apiItem.modelID, TestData.apiItem.categoryID, 0, 10, 10);
     expect(instance.items).toEqual(TestData.filteredItems.results);
   }));
 
-  it('sets loadMoreItems to false if inventoryData.filterItems returns nothing', fakeAsync(() => {
-    instance.inventoryData.allItems = { results: [] };
+  it('sets loadMoreItems to false if itemData.filterItems returns nothing', fakeAsync(() => {
+    instance.itemData.allItems = { results: [] };
     instance.items = TestData.filteredItems.results;
     instance.loadMoreItems = true;
     instance.loadItems();
@@ -78,7 +80,7 @@ describe('Inventory Page', () => {
   }));
 
   it('shows toast if error on loadItems()', fakeAsync(() => {
-    instance.inventoryData.resolve = false;
+    instance.itemData.resolve = false;
     spyOn(instance.notifications, 'showToast');
     instance.loadItems();
     tick();

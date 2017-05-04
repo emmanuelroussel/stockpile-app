@@ -27,7 +27,7 @@ describe('ViewKit Page', () => {
 
   it('gets kit and kitItems in ngOnInit', fakeAsync(() => {
     instance.navParams.param = TestData.kit;
-    instance.inventoryData.kitItems = TestData.kitItems;
+    instance.kitData.kitItems = TestData.kitItems;
     instance.ngOnInit();
     tick();
     expect(instance.kit).toEqual(TestData.kit);
@@ -47,7 +47,7 @@ describe('ViewKit Page', () => {
   }));
 
   it('shows toast is error in getting kitItems', fakeAsync(() => {
-    instance.inventoryData.resolve = false;
+    instance.kitData.resolve = false;
     instance.navParams.param = TestData.kit;
     spyOn(instance.notifications, 'showToast');
     instance.ngOnInit();

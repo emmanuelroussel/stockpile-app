@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, Events, Platform, AlertController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
-import { InventoryData } from '../../providers/inventory-data';
+import { ItemData } from '../../providers/item-data';
 import { Notifications } from '../../providers/notifications';
 import { ViewItemPage } from '../view-item/view-item';
 import { RentalDetailsPage } from '../rental-details/rental-details';
@@ -20,7 +20,7 @@ export class RentalPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public inventoryData: InventoryData,
+    public itemData: ItemData,
     public notifications: Notifications,
     public events: Events,
     public barcodeScanner: BarcodeScanner,
@@ -40,7 +40,7 @@ export class RentalPage {
     this.events.subscribe('item:edited', barcode => {
       const index = this.items.findIndex(item => item.barcode === barcode);
 
-      this.inventoryData.getItem(barcode).subscribe(
+      this.itemData.getItem(barcode).subscribe(
         item => this.items.splice(index, 1, item),
         err => this.notifications.showToast(err)
       );
@@ -57,7 +57,7 @@ export class RentalPage {
    * Checks if item can be added to the rental. Shows why if not, adds it if yes.
    */
   onAdd(barcode: string) {
-    this.inventoryData.getItem(barcode).subscribe(
+    this.itemData.getItem(barcode).subscribe(
       item => {
         if (item.available === 0 && this.action === Actions.rent) {
           this.notifications.showToast(Messages.itemAlreadyRented);
@@ -99,7 +99,7 @@ export class RentalPage {
     let returns = [];
 
     for (const item of this.items) {
-      returns.push(this.inventoryData.return(item.barcode).toPromise());
+      returns.push(this.itemData.return(item.barcode).toPromise());
     }
 
     Promise.all(returns).then(
