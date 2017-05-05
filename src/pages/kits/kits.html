@@ -17,7 +17,7 @@
     </button>
 
     <ion-item *ngIf="!kits.length && !loading">
-      No kits found
+      No kits found <button ion-button item-right (click)="onAdd()">Add a kit</button>
     </ion-item>
 
     <ion-spinner *ngIf="loading"></ion-spinner>
