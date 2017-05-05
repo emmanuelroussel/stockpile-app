@@ -20,7 +20,7 @@
       No kits found <button ion-button item-right (click)="onAdd()">Add a kit</button>
     </ion-item>
 
-    <ion-spinner *ngIf="loading"></ion-spinner>
+    <ion-spinner class="center-spinner" *ngIf="loading"></ion-spinner>
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="$event.waitFor(loadKits())" [enabled]="loadMoreItems">
