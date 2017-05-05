@@ -17,6 +17,7 @@ export class Links {
   public static organization = '/organization';
   public static password = '/password';
   public static kit = '/kit';
+  public static active = '/active';
 }
 
 export class Messages {
