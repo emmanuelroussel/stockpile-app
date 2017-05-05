@@ -103,14 +103,29 @@ export class RentalPage {
 
     loading.present();
 
+    // Set return date to today in MySQL date format
+    const returnDate = new Date().toISOString().substring(0, 10);
     let returns = [];
 
+    // Get the rentalID of each item and then return it with today's date
     for (const item of this.items) {
-      returns.push(this.itemData.return(item.barcode).toPromise());
+      returns.push(
+        new Promise((resolve, reject) => {
+          this.itemData.getActiveRental(item.barcode).subscribe(
+            rental => {
+              this.itemData.return(rental.rentalID, returnDate).subscribe(
+                res => resolve(),
+                err => reject(err)
+              );
+            },
+            err => reject(err)
+          );
+        })
+      );
     }
 
     Promise.all(returns).then(
-      success => {
+      () => {
         this.notifications.showToast(Messages.itemsReturned);
         loading.dismiss();
         this.navCtrl.pop();

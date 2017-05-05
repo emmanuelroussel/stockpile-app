@@ -136,7 +136,7 @@ describe('Rental Page', () => {
     instance.onReturn();
     tick();
     expect(instance.navCtrl.pop).toHaveBeenCalled();
-    expect(instance.itemData.return).toHaveBeenCalledWith(TestData.item.barcode);
+    expect(instance.itemData.return).toHaveBeenCalled();
   }));
 
   it('calls barcodeScanner.scan() onScanBarcode()', fakeAsync(() => {

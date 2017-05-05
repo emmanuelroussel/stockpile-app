@@ -246,6 +246,10 @@ export class ItemDataMock {
   public return(): any {
     return returnObservable(this.resolve, TestData.response);
   }
+
+  public getActiveRental(): any {
+    return returnObservable(this.resolve, TestData.item);
+  }
 }
 
 export class ItemPropertyDataMock {

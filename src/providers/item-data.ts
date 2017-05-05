@@ -60,7 +60,15 @@ export class ItemData {
     return this.api.put(Links.rental, rental);
   }
 
-  return(barcode: string) {
-      return this.api.delete(`${Links.rental}/${barcode}`);
+  return(rentalID: number, returnDate: string) {
+    const body = {
+      returnDate
+    };
+
+    return this.api.put(`${Links.rental}/${rentalID}`, body);
+  }
+
+  getActiveRental(barcode: string) {
+    return this.api.get(`${Links.item}/${barcode}${Links.rental}${Links.active}`);
   }
 }
