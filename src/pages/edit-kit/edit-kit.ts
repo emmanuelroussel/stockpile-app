@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, Events } from 'ionic-angular';
+import { NavController, NavParams, ModalController, Events, LoadingController } from 'ionic-angular';
 
 import { KitData } from '../../providers/kit-data';
 import { AddKitItemPage } from '../add-kit-item/add-kit-item';
@@ -25,7 +25,8 @@ export class EditKitPage {
     public kitData: KitData,
     public notifications: Notifications,
     public modalCtrl: ModalController,
-    public events: Events
+    public events: Events,
+    public loadingCtrl: LoadingController
   ) { }
 
   /**
@@ -64,9 +65,16 @@ export class EditKitPage {
       event = 'kit:edited';
     }
 
+    let loading = this.loadingCtrl.create({
+      content: 'Saving changes, please wait...'
+    });
+
+    loading.present();
+
     apiCall.subscribe(
       kit => this.saveKitItems(kit, message, event),
-      err => this.notifications.showToast(err)
+      err => this.notifications.showToast(err),
+      () => loading.dismiss()
     );
   }
 

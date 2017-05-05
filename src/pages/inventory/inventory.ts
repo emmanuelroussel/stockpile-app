@@ -26,6 +26,7 @@ export class InventoryPage {
   items;
   offset;
   loadMoreItems = true;
+  loading = false;
 
   constructor(
     public navCtrl: NavController,
@@ -67,6 +68,7 @@ export class InventoryPage {
    * Apply current filters on items by calling loadItems().
    */
   onFilterItems() {
+    this.loading = true;
     if (Math.sign(this.selectedBrandID) < 0) {
       this.selectedModelID = -1;
     }
@@ -74,7 +76,9 @@ export class InventoryPage {
     this.items = [];
     this.offset = 0;
     this.loadMoreItems = true;
-    this.loadItems();
+    this.loadItems().then(
+      () => this.loading = false
+    );
   }
 
  /**

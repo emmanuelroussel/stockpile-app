@@ -31,9 +31,11 @@
       <h2>{{ item.brand }} {{ item.model }}</h2>
     </button>
 
-    <ion-item *ngIf="!items">
+    <ion-item *ngIf="!items.length && !loading">
       No items found
     </ion-item>
+
+    <ion-spinner *ngIf="loading"></ion-spinner>
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="$event.waitFor(loadItems())" [enabled]="loadMoreItems">

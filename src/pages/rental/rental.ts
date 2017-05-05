@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events, Platform, AlertController } from 'ionic-angular';
+import { NavController, NavParams, Events, Platform, AlertController, LoadingController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { ItemData } from '../../providers/item-data';
@@ -25,7 +25,8 @@ export class RentalPage {
     public events: Events,
     public barcodeScanner: BarcodeScanner,
     public platform: Platform,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController
   ) { }
 
   /**
@@ -96,6 +97,12 @@ export class RentalPage {
    * return. Pops the nav when done.
    */
   onReturn() {
+    let loading = this.loadingCtrl.create({
+      content: 'Returning your item(s), please wait...'
+    });
+
+    loading.present();
+
     let returns = [];
 
     for (const item of this.items) {
@@ -105,9 +112,13 @@ export class RentalPage {
     Promise.all(returns).then(
       success => {
         this.notifications.showToast(Messages.itemsReturned);
+        loading.dismiss();
         this.navCtrl.pop();
       },
-      err => this.notifications.showToast(err)
+      err => {
+        loading.dismiss();
+        this.notifications.showToast(err);
+      }
     );
   }
 
