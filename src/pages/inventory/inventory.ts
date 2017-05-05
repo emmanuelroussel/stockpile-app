@@ -27,6 +27,7 @@ export class InventoryPage {
   offset;
   loadMoreItems = true;
   loading = false;
+  showAdd = true;
 
   constructor(
     public navCtrl: NavController,
@@ -104,6 +105,7 @@ export class InventoryPage {
             this.loadMoreItems = false;
           } else {
             this.offset += paginationLimit;
+            this.showAdd = false;
           }
 
           resolve();
