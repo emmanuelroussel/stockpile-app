@@ -15,6 +15,7 @@ export class KitsPage {
   kits = [];
   loadMoreItems = true;
   offset;
+  loading = false;
 
   constructor(
     public navCtrl: NavController,
@@ -28,7 +29,10 @@ export class KitsPage {
    * modified by the user.
    */
   ngOnInit() {
-    this.loadKits();
+    this.loading = true;
+    this.loadKits().then(
+      () => this.loading = false
+    );
 
     this.events.subscribe('kit:edited', kit => {
       const index = this.kits.findIndex(element => element.kitID === kit.kitID);
