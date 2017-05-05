@@ -32,7 +32,7 @@
     </button>
 
     <ion-item *ngIf="!items">
-      No items found
+      No items found <button ion-button item-right *ngIf="!items" (click)="onAdd()">Add an item</button>
     </ion-item>
   </ion-list>
 

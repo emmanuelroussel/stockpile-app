@@ -17,7 +17,7 @@
     </button>
 
     <ion-item *ngIf="!kits.length">
-      No kits found
+      No kits found <button ion-button item-right (click)="onAdd()">Add a kit</button>
     </ion-item>
   </ion-list>
 
