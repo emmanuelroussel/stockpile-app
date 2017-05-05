@@ -11,9 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, GestureController, NavParams, ModalController, AlertController, Events } from 'ionic-angular';
+import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, GestureController, NavParams, ModalController, AlertController, Events, LoadingController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
-import { ConfigMock, PlatformMock, NavMock, NavParamsMock, ItemDataMock, KitDataMock, ItemPropertyDataMock, UserDataMock, ModalMock, NotificationsMock, AlertMock, BarcodeScannerMock } from './mocks';
+import { ConfigMock, PlatformMock, NavMock, NavParamsMock, ItemDataMock, KitDataMock, ItemPropertyDataMock, UserDataMock, ModalMock, NotificationsMock, AlertMock, BarcodeScannerMock, LoadingMock } from './mocks';
 import { ItemData } from './providers/item-data';
 import { KitData } from './providers/kit-data';
 import { ItemPropertyData } from './providers/item-property-data';
@@ -73,7 +73,8 @@ export class TestUtils {
         { provide: ModalController, useClass: ModalMock },
         { provide: Notifications, useClass: NotificationsMock },
         { provide: AlertController, useClass: AlertMock },
-        { provide: BarcodeScanner, useClass: BarcodeScannerMock }
+        { provide: BarcodeScanner, useClass: BarcodeScannerMock },
+        { provide: LoadingController, useClass: LoadingMock }
       ],
       imports: [
         FormsModule,

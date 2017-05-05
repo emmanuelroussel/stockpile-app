@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events, LoadingController } from 'ionic-angular';
 
 import { UserData } from '../../providers/user-data';
 import { Notifications } from '../../providers/notifications';
@@ -17,7 +17,8 @@ export class EditAccountPage {
     public navParams: NavParams,
     public events: Events,
     public userData: UserData,
-    public notifications: Notifications
+    public notifications: Notifications,
+    public loadingCtrl: LoadingController
   ) { }
 
   /**
@@ -31,13 +32,20 @@ export class EditAccountPage {
    * Calls the api to edit the user's info then pops nav.
    */
   onSave() {
+    let loading = this.loadingCtrl.create({
+      content: 'Saving changes, please wait...'
+    });
+
+    loading.present();
+
     this.userData.editUser(this.user).subscribe(
       data => {
         this.notifications.showToast(Messages.userEdited);
         this.events.publish('user:edited', data);
         this.navCtrl.pop();
       },
-      err => this.notifications.showToast(err)
+      err => this.notifications.showToast(err),
+      () => loading.dismiss()
     );
   }
 }

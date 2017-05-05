@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, Events } from 'ionic-angular';
+import { NavController, NavParams, ModalController, Events, LoadingController } from 'ionic-angular';
 
 import { ItemPropertyData } from '../../providers/item-property-data';
 import { ItemData } from '../../providers/item-data';
@@ -33,7 +33,8 @@ export class EditItemPage {
     public itemData: ItemData,
     public modalCtrl: ModalController,
     public notifications: Notifications,
-    public events: Events
+    public events: Events,
+    public loadingCtrl: LoadingController
   ) { }
 
   /**
@@ -96,13 +97,20 @@ export class EditItemPage {
       event = 'item:edited';
     }
 
+    let loading = this.loadingCtrl.create({
+      content: 'Saving changes, please wait...'
+    });
+
+    loading.present();
+
     apiCall.subscribe(
       item => {
         this.notifications.showToast(message);
         this.events.publish(event, item.barcode);
         this.navCtrl.pop();
       },
-      err => this.notifications.showToast(err)
+      err => this.notifications.showToast(err),
+      () => loading.dismiss()
     );
   }
 

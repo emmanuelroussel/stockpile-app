@@ -192,6 +192,16 @@ export class ModalMock {
   public present(): any {}
 }
 
+export class LoadingMock {
+  public create(): any {
+    return new LoadingMock;
+  }
+
+  public dismiss(): any {}
+
+  public present(): any {}
+}
+
 export class ViewMock {
   public dismiss(): any {}
 }

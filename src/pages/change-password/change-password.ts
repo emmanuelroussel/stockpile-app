@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 
 import { UserData } from '../../providers/user-data';
 import { Notifications } from '../../providers/notifications';
@@ -15,7 +15,8 @@ export class ChangePasswordPage {
   constructor(
     public navCtrl: NavController,
     public userData: UserData,
-    public notifications: Notifications
+    public notifications: Notifications,
+    public loadingCtrl: LoadingController
   ) { }
 
   /**
@@ -24,12 +25,19 @@ export class ChangePasswordPage {
    */
   onSave() {
     if (this.passwords.newPassword === this.passwords.confirmPassword) {
+      let loading = this.loadingCtrl.create({
+        content: 'Changing your password, please wait...'
+      });
+
+      loading.present();
+
       this.userData.changePassword(this.passwords.currentPassword, this.passwords.newPassword).subscribe(
         data => {
           this.notifications.showToast(data.message);
           this.navCtrl.pop();
         },
-        err => this.notifications.showToast(err)
+        err => this.notifications.showToast(err),
+        () => loading.dismiss()
       );
     } else {
       this.notifications.showToast(Messages.passwordsDontMatch);
