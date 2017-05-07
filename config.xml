@@ -2,7 +2,7 @@
 <widget id="co.stockpileapp.stockpile" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Stockpile</name>
   <description>An app that manages stuff for organizations</description>
-  <author email="emman.roussel@gmail.com" href="">Stockpile Team</author>
+  <author email="info@stockpileapp.co" href="https://stockpileapp.co">Stockpile Team</author>
   <content src="index.html"/>
   <access origin="*"/>
   <allow-navigation href="http://ionic.local/*"/>
