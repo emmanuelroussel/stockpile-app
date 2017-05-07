@@ -12,7 +12,7 @@ export class ApiUrl {
    */
   getUrl() {
     if (this.platform.is('cordova')) {
-      return 'https://stockpile.adamvig.com/api';
+      return 'https://stockpileapp.co/api';
     } else {
       return '/api';
     }
