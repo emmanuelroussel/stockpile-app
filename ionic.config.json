@@ -6,7 +6,7 @@
   "proxies": [
     {
       "path": "/",
-      "proxyUrl": "https://stockpile.adamvig.com"
+      "proxyUrl": "https://stockpileapp.co"
     }
   ]
 }
