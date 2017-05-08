@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/stockpile-co/app.svg?branch=master)](https://travis-ci.org/stockpile-co/app)
-[![Coverage Status](https://coveralls.io/repos/github/emroussel/stockpile-app/badge.svg?branch=master)](https://coveralls.io/github/emroussel/stockpile-app?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/stockpile-co/app/badge.svg?branch=master)](https://coveralls.io/github/stockpile-co/app?branch=master)
 [![codebeat badge](https://codebeat.co/badges/d0387971-f205-4146-8946-b8a8a8d1d2e2)](https://codebeat.co/projects/github-com-emmanuelroussel-stockpile-app)
 
 # Stockpile App
