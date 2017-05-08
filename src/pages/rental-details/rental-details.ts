@@ -54,7 +54,7 @@ export class RentalDetailsPage {
 
     for (const item of this.items) {
       const rental = {
-        itemID: item.itemID,
+        barcode: item.barcode,
         startDate: this.details.startDate,
         endDate: this.details.endDate
       };
