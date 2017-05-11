@@ -135,8 +135,10 @@ export class TestData {
   };
 
   public static details = {
+    itemID: 1,
     startDate: '01/01/2017',
-    endDate: '01/02/2017'
+    endDate: '01/02/2017',
+    notes: 'This is a note'
   };
 
   public static brands = {
