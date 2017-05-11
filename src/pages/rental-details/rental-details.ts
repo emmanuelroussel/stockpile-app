@@ -11,7 +11,7 @@ import { Messages } from '../../constants';
 })
 export class RentalDetailsPage {
   items = [];
-  details: {itemID?: number, startDate?: string, endDate?: string} = {};
+  details: {itemID?: number, startDate?: string, endDate?: string, notes?: string} = {};
 
   constructor(
     public navCtrl: NavController,
@@ -56,7 +56,8 @@ export class RentalDetailsPage {
       const rental = {
         barcode: item.barcode,
         startDate: this.details.startDate,
-        endDate: this.details.endDate
+        endDate: this.details.endDate,
+        notes: this.details.notes
       };
 
       rentals.push(this.itemData.rent(rental).toPromise());

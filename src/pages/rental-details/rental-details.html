@@ -15,9 +15,11 @@
         <ion-datetime displayFormat="DDD D MMM, YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="details.endDate"  name="endDate" #date="ngModel" required>
         </ion-datetime>
 			</ion-item>
-    </ion-list>
+      <ion-item>
+        <ion-label floating color="primary">Notes</ion-label>
+        <ion-textarea [(ngModel)]="details.notes" name="notes" #notes="ngModel"></ion-textarea>
+      </ion-item>
 
-    <ion-list>
       <ion-list-header>Scanned Items</ion-list-header>
 
       <ion-item *ngFor="let item of items">
