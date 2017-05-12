@@ -22,6 +22,14 @@ describe('KitData Provider', () => {
     );
   });
 
+  it('calls api to get kit', () => {
+    instance.api.value = TestData.kit;
+    instance.getKits(TestData.kit.kitID).subscribe(
+      res => expect(res).toEqual(TestData.kit),
+      err => fail(err)
+    );
+  });
+
   it('calls api to get kit item', () => {
     instance.api.value = TestData.kitItems;
     instance.getKitItems().subscribe(

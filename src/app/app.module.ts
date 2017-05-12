@@ -21,6 +21,7 @@ import { HomePage } from '../pages/home/home';
 import { InventoryFilterPage } from '../pages/inventory-filter/inventory-filter';
 import { InventoryPage } from '../pages/inventory/inventory';
 import { ItemFilterPage } from '../pages/item-filter/item-filter';
+import { KitRentalPage } from '../pages/kit-rental/kit-rental';
 import { KitsPage } from '../pages/kits/kits';
 import { LoginPage } from '../pages/login/login';
 import { RentalPage } from '../pages/rental/rental';
@@ -53,6 +54,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     InventoryFilterPage,
     InventoryPage,
     ItemFilterPage,
+    KitRentalPage,
     KitsPage,
     LoginPage,
     RentalPage,
@@ -90,6 +92,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     InventoryFilterPage,
     InventoryPage,
     ItemFilterPage,
+    KitRentalPage,
     KitsPage,
     LoginPage,
     RentalPage,

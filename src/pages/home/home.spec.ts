@@ -25,6 +25,20 @@ describe('Home Page', () => {
     expect(fixture).toBeTruthy();
   });
 
+  it('gets kits', fakeAsync(() => {
+    instance.ngOnInit();
+    tick();
+    expect(instance.kits).toEqual(TestData.kits.results);
+  }));
+
+  it('shows toast if error while getting kits', fakeAsync(() => {
+    instance.kitData.resolve = false;
+    spyOn(instance.notifications, 'showToast');
+    instance.ngOnInit();
+    tick();
+    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
+  }));
+
   it('pushes rental page on pushPage() with \'Rent\' if item is avaiable', fakeAsync(() => {
     instance.itemData.item = TestData.apiItem;
     spyOn(instance.navCtrl, 'push');
@@ -79,6 +93,20 @@ describe('Home Page', () => {
   it('creates an alert onTypeBarcode()', () => {
     spyOn(instance.alertCtrl, 'create').and.callThrough();
     instance.onTypeBarcode();
+    expect(instance.alertCtrl.create).toHaveBeenCalled();
+  });
+
+  it('creates an alert onRentKit()', () => {
+    instance.kits = TestData.kits.results;
+    spyOn(instance.alertCtrl, 'create').and.callThrough();
+    instance.onRentKit();
+    expect(instance.alertCtrl.create).toHaveBeenCalled();
+  });
+
+  it('creates an alert onRentKit() if there are no kits', () => {
+    instance.kits = [];
+    spyOn(instance.alertCtrl, 'create').and.callThrough();
+    instance.onRentKit();
     expect(instance.alertCtrl.create).toHaveBeenCalled();
   });
 });

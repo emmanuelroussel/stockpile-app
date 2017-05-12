@@ -288,11 +288,16 @@ export class ItemPropertyDataMock {
 
 export class KitDataMock {
   kits = TestData.kits;
+  kit = TestData.kit;
   kitItems = TestData.kitItems;
   resolve: boolean = true;
 
   public getKits() {
     return returnObservable(this.resolve, this.kits);
+  }
+
+  public getKit() {
+    return returnObservable(this.resolve, this.kit);
   }
 
   public getKitItems() {

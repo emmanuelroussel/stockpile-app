@@ -24,6 +24,10 @@ export class KitData {
     });
   }
 
+  getKit(kitID: number) {
+    return this.api.get(`${Links.kit}/${kitID}`);
+  }
+
   getKitItems(kitID: number) {
     return this.api.get(`${Links.kit}/${kitID}${Links.model}`);
   }

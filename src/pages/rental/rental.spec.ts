@@ -173,7 +173,7 @@ describe('Rental Page', () => {
   });
 
   it('removes item from the list onRemoveItem()', () => {
-    instance.items = TestData.items;
+    instance.items = JSON.parse(JSON.stringify(TestData.items));
     instance.onRemoveItem(TestData.barcode);
     expect(instance.items).toEqual(TestData.itemsMinusOne);
   });
