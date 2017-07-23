@@ -108,7 +108,7 @@ export class InventoryPage {
           });
         }
       },
-      err => this.notifications.showToast(err)
+      err => this.notifications.showMessage(err)
     );
   }
 

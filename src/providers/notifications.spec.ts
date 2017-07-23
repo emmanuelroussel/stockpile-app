@@ -18,14 +18,14 @@ describe('IonicPlugins Provider', () => {
   it('shows toast if cordova is available', () => {
     instance = new Notifications((<any> new PlatformMockIsCordova), (<any> new ToastMock));
     spyOn(instance.toast, 'showWithOptions').and.callThrough();
-    instance.showToast(TestData.response.message);
+    instance.showMessage(TestData.response.message);
     expect(instance.toast.showWithOptions).toHaveBeenCalled();
   });
 
   it('logs message to the console if cordova is not available', () => {
     instance = new Notifications((<any> new PlatformMockIsCore), (<any> new ToastMock));
     spyOn(console, 'log');
-    instance.showToast(TestData.response.message);
+    instance.showMessage(TestData.response.message);
     expect(console.log).toHaveBeenCalledWith(TestData.response.message);
   });
 });

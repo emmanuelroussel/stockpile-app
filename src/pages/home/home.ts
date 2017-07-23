@@ -60,7 +60,7 @@ export class HomePage {
           this.pushPage(barcodeData.text);
         }
       },
-      err => this.notifications.showToast(err)
+      err => this.notifications.showMessage(err)
     );
   }
 

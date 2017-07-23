@@ -49,7 +49,7 @@ export class RentalPage {
     this.items.take(1).subscribe(i => items = i.rentals);
 
     if (items[barcode]) {
-      this.notifications.showToast(Messages.itemAlreadyAdded);
+      this.notifications.showMessage(Messages.itemAlreadyAdded);
     } else {
       this.itemsActions.addToRentals(barcode, this.action);
     }
@@ -82,7 +82,7 @@ export class RentalPage {
           this.onAdd(barcodeData.text);
         }
       },
-      err => this.notifications.showToast(err)
+      err => this.notifications.showMessage(err)
     );
   }
 

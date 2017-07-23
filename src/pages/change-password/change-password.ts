@@ -26,7 +26,7 @@ export class ChangePasswordPage {
         newPassword: form.value.newPassword
       });
     } else {
-      this.notifications.showToast(Messages.passwordsDontMatch);
+      this.notifications.showMessage(Messages.passwordsDontMatch);
       form.setValue({
         currentPassword: form.value.currentPassword,
         newPassword: '',
