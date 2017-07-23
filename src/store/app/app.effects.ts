@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { App, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppActions } from './app.actions.ts';
+import { Notifications } from '../../providers/notifications';
 
 @Injectable()
 export class AppEffects {
@@ -12,6 +13,7 @@ export class AppEffects {
     public app: App,
     public platform: Platform,
     public splashScreen: SplashScreen,
+    public notifications: Notifications
   ) {}
 
   /**
@@ -75,5 +77,14 @@ export class AppEffects {
       .map(() => {
         this.splashScreen.hide();
       }))
+    .ignoreElements();
+
+  /**
+   * Shows a message.
+   */
+  @Effect()
+  showMessage$ = this.actions$
+    .ofType(AppActions.SHOW_MESSAGE)
+    .do(action => this.notifications.showMessage(action.payload))
     .ignoreElements();
 }

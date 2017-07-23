@@ -46,4 +46,16 @@ export class BrandsEffects {
     .ofType(BrandsActions.CREATE_BRAND_SUCCESS)
     .mergeMap(action => Observable.of(AppActions.POP_NAV))
     .delay(1);
+
+  /**
+   * On unsuccessful operations, show message.
+   */
+  @Effect()
+  errors$ = this.actions$
+    .ofType(
+      BrandsActions.FETCH_BRANDS_ERROR,
+      BrandsActions.CREATE_BRAND_ERROR,
+    )
+    .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
+    .delay(1);
 }

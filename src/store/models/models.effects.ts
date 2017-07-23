@@ -46,4 +46,16 @@ export class ModelsEffects {
     .ofType(ModelsActions.CREATE_MODEL_SUCCESS)
     .mergeMap(action => Observable.of(AppActions.POP_NAV))
     .delay(1);
+
+  /**
+   * On unsuccessful operations, show message.
+   */
+  @Effect()
+  errors$ = this.actions$
+    .ofType(
+      ModelsActions.FETCH_MODELS_ERROR,
+      ModelsActions.CREATE_MODEL_ERROR,
+    )
+    .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
+    .delay(1);
 }

@@ -31,7 +31,10 @@ export class KitModelsEffects {
   @Effect()
   createSuccess$ = this.actions$
     .ofType(KitModelsActions.UPDATE_KIT_MODELS_SUCCESS)
-    .mergeMap(() => Observable.of(createAction(AppActions.POP_NAV)))
+    .mergeMap(action => Observable.of(
+      createAction(AppActions.SHOW_MESSAGE, action.payload.message),
+      createAction(AppActions.POP_NAV)
+    ))
     .delay(1);
 
   /**
@@ -52,7 +55,19 @@ export class KitModelsEffects {
       }
 
       return Observable.of(Promise.all(models))
-        .map(res => createAction(KitModelsActions.UPDATE_KIT_MODELS_SUCCESS, action.payload))
+        .map(res => createAction(KitModelsActions.UPDATE_KIT_MODELS_SUCCESS, { message: action.payload.message, results: res }))
         .catch(err => Observable.of(createAction(KitModelsActions.UPDATE_KIT_MODELS_ERROR, err)));
     });
+
+  /**
+   * On unsuccessful operations, show message.
+   */
+  @Effect()
+  errors$ = this.actions$
+    .ofType(
+      KitModelsActions.FETCH_KIT_MODELS_ERROR,
+      KitModelsActions.UPDATE_KIT_MODELS_ERROR,
+    )
+    .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
+    .delay(1);
 }

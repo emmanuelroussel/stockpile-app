@@ -43,11 +43,7 @@ export class UserActions {
   ) {}
 
   loginUser(credentials: any) {
-    this.userData.login(credentials)
-      .subscribe(
-        res => this.store.dispatch(createAction(UserActions.SAVE_TOKEN, res)),
-        err => this.store.dispatch(createAction(UserActions.LOGIN_USER_ERROR, err))
-      );
+    this.store.dispatch(createAction(UserActions.LOGIN_USER, credentials));
   }
 
   logoutUser() {

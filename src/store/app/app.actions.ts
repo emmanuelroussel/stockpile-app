@@ -11,5 +11,7 @@ export class AppActions {
 
   static INITIALIZE_APP = 'INITIALIZE_APP';
 
+  static SHOW_MESSAGE = 'SHOW_MESSAGE';
+
   constructor() {}
 }

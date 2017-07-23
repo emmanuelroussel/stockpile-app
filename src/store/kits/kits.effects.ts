@@ -8,6 +8,7 @@ import { KitsActions } from './kits.actions';
 import { AppActions } from '../app/app.actions.ts';
 import { KitData } from '../../providers/kit-data';
 import { KitModelsActions } from '../kit-models/kit-models.actions';
+import { Messages } from '../../constants';
 
 @Injectable()
 export class KitsEffects {
@@ -46,7 +47,10 @@ export class KitsEffects {
   @Effect()
   deleteSuccess$ = this.actions$
     .ofType(KitsActions.DELETE_KIT_SUCCESS)
-    .mergeMap(() => Observable.of(createAction(AppActions.POP_NAV_TWICE)))
+    .mergeMap(() => Observable.of(
+      createAction(AppActions.SHOW_MESSAGE, Messages.kitDeleted),
+      createAction(AppActions.POP_NAV_TWICE)
+    ))
     .delay(1);
 
   /**
@@ -59,7 +63,8 @@ export class KitsEffects {
       .map(res => createAction(KitsActions.CREATE_KIT_SUCCESS, {
         kit: res,
         kitModelsToCreate: action.payload.kitModels,
-        kitModelsToDelete: []
+        kitModelsToDelete: [],
+        message: Messages.kitAdded
       }))
       .catch(err => Observable.of(createAction(KitsActions.CREATE_KIT_ERROR, err)))
     );
@@ -69,7 +74,7 @@ export class KitsEffects {
    */
   @Effect()
   createSuccess$ = this.actions$
-    .ofType(KitsActions.CREATE_KIT_SUCCESS, KitsActions.UPDATE_KIT_SUCCESS)
+    .ofType(KitsActions.UPDATE_KIT_SUCCESS, KitsActions.CREATE_KIT_SUCCESS)
     .mergeMap(action => Observable.of(
       createAction(KitModelsActions.UPDATE_KIT_MODELS, action.payload)
     ))
@@ -85,8 +90,23 @@ export class KitsEffects {
       .map(res => createAction(KitsActions.UPDATE_KIT_SUCCESS, {
         kit: res,
         kitModelsToCreate: action.payload.kitModelsToCreate,
-        kitModelsToDelete: action.payload.kitModelsToDelete
+        kitModelsToDelete: action.payload.kitModelsToDelete,
+        message: Messages.kitEdited
       }))
       .catch(err => Observable.of(createAction(KitsActions.UPDATE_KIT_ERROR, err)))
     );
+
+  /**
+   * On unsuccessful operations, show message.
+   */
+  @Effect()
+  errors$ = this.actions$
+    .ofType(
+      KitsActions.FETCH_KITS_ERROR,
+      KitsActions.DELETE_KIT_ERROR,
+      KitsActions.CREATE_KIT_ERROR,
+      KitsActions.UPDATE_KIT_ERROR
+    )
+    .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
+    .delay(1);
 }

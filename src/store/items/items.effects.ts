@@ -11,7 +11,7 @@ import { createAction } from '../create-action';
 import { ItemsActions } from './items.actions.ts';
 import { AppActions } from '../app/app.actions.ts';
 import { ItemData } from '../../providers/item-data';
-import { paginationLimit } from '../../constants';
+import { paginationLimit, Messages } from '../../constants';
 
 @Injectable()
 export class ItemsEffects {
@@ -28,13 +28,13 @@ export class ItemsEffects {
   fetch$ = this.actions$
     .ofType(ItemsActions.FETCH_ITEMS)
     .withLatestFrom(this.store$)
-    .mergeMap(([action, storeState]) => this.itemData.filterItems(
+    .mergeMap(([action, store]) => this.itemData.filterItems(
         action.payload.brandID,
         action.payload.modelID,
         action.payload.categoryID,
         action.payload.available,
         paginationLimit,
-        storeState.items.offset
+        store.items.offset
       )
       .map(res => createAction(ItemsActions.FETCH_ITEMS_SUCCESS, res))
       .catch(err => Observable.of(createAction(ItemsActions.FETCH_ITEMS_ERROR, err)))
@@ -107,9 +107,9 @@ export class ItemsEffects {
     .mergeMap(action => this.itemData.getItem(action.payload.barcode)
       .map(res => {
         if (!res.available && action.payload.action === constants.Actions.rent) {
-          return createAction(ItemsActions.ADD_TO_RENTALS_ERROR, constants.Messages.itemAlreadyRented);
+          return createAction(ItemsActions.ADD_TO_RENTALS_ERROR, { message: Messages.itemAlreadyRented });
         } else if (res.available && action.payload.action === constants.Actions.return) {
-          return createAction(ItemsActions.ADD_TO_RENTALS_ERROR, constants.Messages.itemNotRented);
+          return createAction(ItemsActions.ADD_TO_RENTALS_ERROR, { message: Messages.itemNotRented });
         } else {
           return createAction(ItemsActions.ADD_TO_RENTALS_SUCCESS, res);
         }
@@ -123,7 +123,10 @@ export class ItemsEffects {
   @Effect()
   createSuccess$ = this.actions$
     .ofType(ItemsActions.CREATE_ITEM_SUCCESS)
-    .mergeMap(action => Observable.of(createAction(AppActions.POP_NAV)))
+    .mergeMap(action => Observable.of(
+      createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded),
+      createAction(AppActions.POP_NAV)
+    ))
     .delay(1);
 
   /**
@@ -132,7 +135,10 @@ export class ItemsEffects {
   @Effect()
   updateSuccess$ = this.actions$
     .ofType(ItemsActions.UPDATE_ITEM_SUCCESS)
-    .mergeMap(action => Observable.of(createAction(AppActions.POP_NAV)))
+    .mergeMap(action => Observable.of(
+      createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited),
+      createAction(AppActions.POP_NAV)
+    ))
     .delay(1);
 
   /**
@@ -141,7 +147,10 @@ export class ItemsEffects {
   @Effect()
   deleteSuccess$ = this.actions$
     .ofType(ItemsActions.DELETE_ITEM_SUCCESS)
-    .mergeMap(action => Observable.of(createAction(AppActions.POP_NAV_TWICE)))
+    .mergeMap(action => Observable.of(
+      createAction(AppActions.SHOW_MESSAGE, Messages.itemDeleted),
+      createAction(AppActions.POP_NAV_TWICE)
+    ))
     .delay(1);
 
   /**
@@ -183,7 +192,10 @@ export class ItemsEffects {
     @Effect()
     returnSuccess$ = this.actions$
       .ofType(ItemsActions.RETURN_ITEMS_SUCCESS)
-      .mergeMap(action => Observable.of(createAction(AppActions.POP_NAV)))
+      .mergeMap(action => Observable.of(
+        createAction(AppActions.SHOW_MESSAGE, Messages.itemsReturned),
+        createAction(AppActions.POP_NAV)
+      ))
       .delay(1);
 
     /**
@@ -213,6 +225,27 @@ export class ItemsEffects {
       @Effect()
       rentSuccess$ = this.actions$
         .ofType(ItemsActions.RENT_ITEMS_SUCCESS)
-        .mergeMap(action => Observable.of(createAction(AppActions.POP_NAV_TO_ROOT)))
+        .mergeMap(action => Observable.of(
+          createAction(AppActions.SHOW_MESSAGE, Messages.itemsRented),
+          createAction(AppActions.POP_NAV_TO_ROOT)
+        ))
+        .delay(1);
+
+      /**
+       * On unsuccessful operations, show message.
+       */
+      @Effect()
+      errors$ = this.actions$
+        .ofType(
+          ItemsActions.FETCH_ITEMS_ERROR,
+          ItemsActions.CREATE_ITEM_ERROR,
+          ItemsActions.UPDATE_ITEM_ERROR,
+          ItemsActions.DELETE_ITEM_ERROR,
+          ItemsActions.START_RENTAL_ERROR,
+          ItemsActions.ADD_TO_RENTALS_ERROR,
+          ItemsActions.RETURN_ITEMS_ERROR,
+          ItemsActions.RENT_ITEMS_ERROR
+        )
+        .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
         .delay(1);
 }
