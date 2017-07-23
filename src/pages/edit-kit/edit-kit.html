@@ -25,9 +25,9 @@
         </button>
       </ion-item>
 
-      <!--<ion-item *ngIf="!kitModels.length">
-        No items found
-      </ion-item>-->
+      <ion-item *ngIf="!kitModels.length">
+        No items in this kit
+      </ion-item>
 		</ion-list>
 
     <button ion-button (click)="onAddItem()" block outline>Add Item to Kit</button>

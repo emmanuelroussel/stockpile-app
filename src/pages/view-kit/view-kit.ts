@@ -18,6 +18,7 @@ import { Observable } from 'rxjs/Observable';
 export class ViewKitPage {
   kit: Observable<Kit>;
   kitModels: Observable<Array<KitModel>>;
+  loading: Observable<boolean>;
 
   constructor(
     public navCtrl: NavController,
@@ -36,6 +37,7 @@ export class ViewKitPage {
 
     this.kit = this.kitsService.getKit(kitID);
     this.kitModels = this.kitModelsService.getKitModels(kitID);
+    this.loading = this.kitModelsService.getLoading(kitID);
 
     this.kitModelsActions.fetchKitModels(kitID);
   }

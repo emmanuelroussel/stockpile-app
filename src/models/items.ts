@@ -19,4 +19,5 @@ export interface Items {
   readonly tempItem: any;
   readonly rentals: { [barcode: string]: Item };
   readonly display: Array<Item>;
+  readonly loading: boolean;
 }

@@ -30,7 +30,6 @@ export class InventoryPage {
   selectedCategoryID = -1;
   items: Observable<Items>;
   loadMoreItems: Observable<boolean>;
-  loading = false;
   showAddNew: Observable<boolean>;
 
   constructor(

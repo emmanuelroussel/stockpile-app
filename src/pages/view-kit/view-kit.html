@@ -20,9 +20,11 @@
       <h2>{{ kitModel.brand }} {{ kitModel.model }}</h2>
     </ion-item>
 
-    <!--<ion-item *ngIf="!kitItems.length">
+    <ion-spinner class="center-spinner" *ngIf="loading | async"></ion-spinner>
+
+    <ion-item *ngIf="!(kitModels | async) && !(loading | async)">
       No items found
-    </ion-item>-->
+    </ion-item>
   </ion-list>
 
   <ion-fab right bottom *ngIf="platform.is('android')">

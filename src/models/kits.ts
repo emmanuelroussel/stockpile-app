@@ -6,4 +6,5 @@ export interface Kit {
 
 export interface Kits {
   readonly results: { [kitID: number]: Kit };
+  readonly loading: boolean;
 }

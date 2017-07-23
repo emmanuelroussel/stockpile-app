@@ -11,11 +11,15 @@ const initialState = {
   showAddNew: false,
   tempItem: {},
   rentals: {},
-  display: []
+  display: [],
+  loading: false
 };
 
 export function itemsReducer(items: Items = initialState, action: Action): Items {
   switch (action.type) {
+    case ItemsActions.FETCH_ITEMS:
+      // Show loading only if there are no items, else it is the infinite scroll
+      return { ...items, loading: items.display.length ? false : true };
     case ItemsActions.FETCH_ITEMS_SUCCESS:
       return {
         ...items,
@@ -29,7 +33,8 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
         showAddNew: (items.offset === 0 && action.payload.results.length === 0),
         offset: items.offset + paginationLimit,
         loadMoreItems: !(action.payload.results.length < paginationLimit),
-        display: [...items.display, ...action.payload.results]
+        display: [...items.display, ...action.payload.results],
+        loading: false
       };
     case ItemsActions.CREATE_ITEM_SUCCESS:
       return {
@@ -64,7 +69,7 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
     case ItemsActions.UPDATE_TEMP_ITEM:
       return {
         ...items,
-        tempItem: Object.assign({}, items.tempItem, action.payload)
+        tempItem: Object.assign({}, items.tempItem, action.payload),
       };
     case ItemsActions.START_RENTAL_SUCCESS:
       return {

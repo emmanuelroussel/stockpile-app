@@ -13,4 +13,8 @@ export class KitModelsService {
   getKitModels(kitID: number): Observable<Array<KitModel>> {
     return this.store.select(appState => appState.kitModels.results[kitID]);
   }
+
+  getLoading(kitID: number): Observable<boolean> {
+    return this.store.select(appState => appState.kitModels.loading);
+  }
 }

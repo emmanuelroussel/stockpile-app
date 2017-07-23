@@ -8,4 +8,5 @@ export interface KitModel {
 
 export interface KitModels {
   readonly results: { [kitID: number]: Array<KitModel> };
+  readonly loading: boolean;
 }

@@ -16,11 +16,11 @@
       <h2>{{ kit.name }}</h2>
     </button>
 
-    <!--<ion-item *ngIf="!(kits | async).length && !loading">
+    <ion-item *ngIf="!((kits | async).results | mapToIterable).length && !(kits | async).loading">
       No kits found <button ion-button item-right (click)="onAdd()">Add a kit</button>
-    </ion-item>-->
+    </ion-item>
 
-    <ion-spinner class="center-spinner" *ngIf="loading"></ion-spinner>
+    <ion-spinner class="center-spinner" *ngIf="(kits | async).loading"></ion-spinner>
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="$event.waitFor(loadKits())" [enabled]="loadMoreItems">
