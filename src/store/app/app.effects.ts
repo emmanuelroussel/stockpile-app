@@ -5,6 +5,7 @@ import { App, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppActions } from './app.actions.ts';
 import { Notifications } from '../../providers/notifications';
+import { createAction } from '../create-action';
 
 @Injectable()
 export class AppEffects {
@@ -22,7 +23,16 @@ export class AppEffects {
   @Effect()
   popNav$ = this.actions$
     .ofType(AppActions.POP_NAV)
-    .do(() => this.app.getActiveNav().pop())
+    .do(() => {
+      // We need to check if there is a previous page in the active nav because
+      // we have to use the root nav instead when the page is accessed through
+      // the side menu
+      if (this.app.getActiveNav().getPrevious()) {
+        this.app.getActiveNav().pop();
+      } else {
+        this.app.getRootNav().pop();
+      }
+    })
     .ignoreElements();
 
   /**
@@ -43,9 +53,19 @@ export class AppEffects {
  popNavTwice$ = this.actions$
    .ofType(AppActions.POP_NAV_TWICE)
    .mergeMap(() => {
-     const parentIndex = this.app.getActiveNav().indexOf(this.app.getActiveNav().getPrevious());
-     return Observable.of(this.app.getActiveNav().remove(parentIndex))
-     .map(() => this.app.getActiveNav().pop());
+     let nav;
+
+     // We need to check if there is a previous page in the active nav because
+     // we have to use the root nav instead when the page is accessed through
+     // the side menu
+     if (this.app.getActiveNav().getPrevious()) {
+       nav = this.app.getActiveNav();
+     } else {
+       nav = this.app.getRootNav();
+     }
+     const parentIndex = nav.indexOf(nav.getPrevious());
+     return Observable.of(nav.remove(parentIndex))
+       .map(() => nav.pop());
    })
    .ignoreElements();
 
