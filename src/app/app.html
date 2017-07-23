@@ -8,9 +8,9 @@
   <ion-content>
     <ion-list>
       <button ion-item (click)="onViewInfo()">
-        <h2>{{user?.firstName}} {{user?.lastName}}</h2>
-        <h3>{{user?.email}}</h3>
-        <p>{{organization?.name}}</p>
+        <h2>{{(user | async)?.firstName}} {{(user | async)?.lastName}}</h2>
+        <h3>{{(user | async)?.email}}</h3>
+        <p>{{(organization | async)?.name}}</p>
       </button>
       <button ion-item (click)="onViewKits()">
         Kits

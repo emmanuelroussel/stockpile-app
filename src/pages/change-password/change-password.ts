@@ -1,48 +1,37 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NgForm } from '@angular/forms';
 
-import { UserData } from '../../providers/user-data';
 import { Notifications } from '../../providers/notifications';
 import { Messages } from '../../constants';
+import { UserActions } from '../../store/user/user.actions';
 
 @Component({
   selector: 'page-change-password',
   templateUrl: 'change-password.html'
 })
 export class ChangePasswordPage {
-  passwords: { currentPassword?: string, newPassword?: string, confirmPassword?: string } = {};
 
   constructor(
-    public navCtrl: NavController,
-    public userData: UserData,
     public notifications: Notifications,
-    public loadingCtrl: LoadingController
-  ) { }
+    public userActions: UserActions
+  ) {}
 
   /**
-   * Shows message if the two new passwords don't match. If they do, calls the
-   * api to change the password with the new one and pops the nav.
+   * Checks if the two new passwords match. If they do, change the password.
    */
-  onSave() {
-    if (this.passwords.newPassword === this.passwords.confirmPassword) {
-      let loading = this.loadingCtrl.create({
-        content: 'Changing your password, please wait...'
+  onSave(form: NgForm) {
+    if (form.value.newPassword === form.value.confirmPassword) {
+      this.userActions.changeUserPassword({
+        currentPassword: form.value.currentPassword,
+        newPassword: form.value.newPassword
       });
-
-      loading.present();
-
-      this.userData.changePassword(this.passwords.currentPassword, this.passwords.newPassword).subscribe(
-        data => {
-          this.notifications.showToast(data.message);
-          this.navCtrl.pop();
-        },
-        err => this.notifications.showToast(err),
-        () => loading.dismiss()
-      );
     } else {
       this.notifications.showToast(Messages.passwordsDontMatch);
-      this.passwords.newPassword = '';
-      this.passwords.confirmPassword = '';
+      form.setValue({
+        currentPassword: form.value.currentPassword,
+        newPassword: '',
+        confirmPassword: ''
+      });
     }
   }
 }

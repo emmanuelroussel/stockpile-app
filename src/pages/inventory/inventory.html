@@ -25,20 +25,20 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-list *ngIf="items">
+  <ion-list>
     <ion-list-header>Items</ion-list-header>
-    <button ion-item *ngFor="let item of items" (click)="onViewItem(item)">
+    <button ion-item *ngFor="let item of (items | async).display | mapToIterable" (click)="onViewItem(item.barcode)">
       <h2>{{ item.brand }} {{ item.model }}</h2>
     </button>
 
-    <ion-item *ngIf="!items.length && !loading">
-      No items found <button ion-button item-right *ngIf="showAdd" (click)="onAdd()">Add an item</button>
+    <ion-item *ngIf="!((items | async).results | mapToIterable).length && !loading">
+      No items found <button ion-button item-right *ngIf="showAddNew | async" (click)="onAdd()">Add an item</button>
     </ion-item>
 
     <ion-spinner class="center-spinner" *ngIf="loading"></ion-spinner>
   </ion-list>
 
-  <ion-infinite-scroll (ionInfinite)="$event.waitFor(loadItems())" [enabled]="loadMoreItems">
+  <ion-infinite-scroll (ionInfinite)="loadItems($event)" [enabled]="loadMoreItems | async">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 

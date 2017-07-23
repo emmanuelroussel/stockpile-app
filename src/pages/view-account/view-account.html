@@ -11,9 +11,9 @@
 
 <ion-content padding>
 	<ion-list>
-    <ion-item>{{user?.firstName}}</ion-item>
-    <ion-item>{{user?.lastName}}</ion-item>
-    <ion-item>{{user?.email}}</ion-item>
+    <ion-item>{{(user | async)?.firstName}}</ion-item>
+    <ion-item>{{(user | async)?.lastName}}</ion-item>
+    <ion-item>{{(user | async)?.email}}</ion-item>
 	</ion-list>
 
   <button ion-button (click)="onDeleteAccount()" block outline>Delete Account</button>

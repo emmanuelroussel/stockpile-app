@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, Events } from 'ionic-angular';
+import { NavController, ModalController, Events } from 'ionic-angular';
 
-import { ItemPropertyData } from '../../providers/item-property-data';
+import { BrandsActions } from '../../store/brands/brands.actions';
+import { ModelsActions } from '../../store/models/models.actions';
 
 import { ItemProperties } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
-import { Notifications } from '../../providers/notifications';
 
 @Component({
   selector: 'page-add-kit-item',
@@ -13,35 +13,22 @@ import { Notifications } from '../../providers/notifications';
 })
 export class AddKitItemPage {
   itemProperties = ItemProperties;
-  kitItem: {brandID?: number, brand?: string, modelID?: number, model?: string} = {};
-  allBrands;
-  allModels;
-  filteredModels;
+  kitItem: { brandID?: number, brand?: string, modelID?: number, model?: string } = {};
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
-    public itemPropertyData: ItemPropertyData,
     public modalCtrl: ModalController,
-    public notifications: Notifications,
-    public events: Events
-  ) { }
+    public events: Events,
+    public brandsActions: BrandsActions,
+    public modelsActions: ModelsActions,
+  ) {}
 
   /**
-   * Gets brands and models from the api.
+   * Fetches brands and models.
    */
   ngOnInit() {
-    this.itemPropertyData.getBrands().subscribe(
-      (brands: any) => this.allBrands = brands.results,
-      err => this.notifications.showToast(err)
-    );
-
-    this.itemPropertyData.getModels().subscribe(
-      (models: any) => {
-        this.allModels = models.results;
-      },
-      err => this.notifications.showToast(err)
-    );
+    this.brandsActions.fetchBrands();
+    this.modelsActions.fetchModels();
   }
 
   /**
@@ -54,86 +41,31 @@ export class AddKitItemPage {
   }
 
   /**
-   * Sets filteredModels to all models that have the corresponding brandID
+   * Presents a modal to allow the user to choose a brand, model or category.
+   * When dismissed, updates the kit item with the new data.
    */
-  filterModels() {
-    this.filteredModels = this.allModels.filter((model) => {
-      return (model.brandID === this.kitItem.brandID);
-    });
-  }
+  onPresentModal(type) {
+    let modal = this.modalCtrl.create(ItemFilterPage, { type, brandID: this.kitItem.brandID });
 
-  /**
-   * Presents the ItemFilterPage as a modal to allow the user to choose a brand
-   * or model. When dismissed, creates the brand or model if the user chose to
-   * create a new one or saves it otherwise.
-   */
-  onPresentModal(elements, type) {
-    let modal = this.modalCtrl.create(ItemFilterPage, { elements, type });
-
-    modal.onDidDismiss((element, isNew) => {
+    modal.onDidDismiss((element) => {
+      // If user has chosen an element (did not cancel)
       if (element) {
-        if (isNew) {
-          this.createElement(type, element);
-        } else {
-          this.assignElement(type, element);
+        switch (type) {
+          // Since models are linked to a brand, also reset model when brand changes.
+          case ItemProperties.brand:
+            this.kitItem.brand = element.name;
+            this.kitItem.brandID = element.brandID;
+            this.kitItem.model = '';
+            this.kitItem.modelID = null;
+            break;
+          case ItemProperties.model:
+            this.kitItem.model = element.name;
+            this.kitItem.modelID = element.modelID;
+            break;
         }
       }
    });
 
     modal.present();
-  }
-
-  /**
-   * Calls the api to create a new brand or model and adds it to the
-   * local list.
-   */
-  createElement(type, element) {
-    switch (type) {
-      case ItemProperties.brand:
-        this.itemPropertyData.addBrand(element).subscribe(
-          (brand: any) => {
-            const newBrand = {
-              brandID: brand.id,
-              name: element
-            };
-
-            this.allBrands.push(newBrand);
-            this.assignElement(type, newBrand);
-          },
-          err => this.notifications.showToast(err)
-        );
-        break;
-      case ItemProperties.model:
-        this.itemPropertyData.addModel(element, this.kitItem.brandID).subscribe(
-          (model: any) => {
-            const newModel = {
-              modelID: model.id,
-              name: element
-            };
-
-            this.allModels.push(newModel);
-            this.assignElement(type, newModel);
-          },
-          err => this.notifications.showToast(err)
-        );
-        break;
-    }
-  }
-
-  /**
-   * Sets the brand or model to the kitItem class variable.
-   */
-  assignElement(type, element) {
-    switch (type) {
-      case ItemProperties.brand:
-        this.kitItem.brand = element.name;
-        this.kitItem.brandID = element.brandID;
-        this.filterModels();
-        break;
-      case ItemProperties.model:
-        this.kitItem.model = element.name;
-        this.kitItem.modelID = element.modelID;
-        break;
-    }
   }
 }

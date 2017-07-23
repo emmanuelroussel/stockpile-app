@@ -1,10 +1,9 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { TestUtils } from '../../test';
-import { Actions, Messages } from '../../constants';
+import { Messages } from '../../constants';
 import { TestData } from '../../test-data';
 
 import { KitRentalPage } from './kit-rental';
-import { ViewItemPage } from '../view-item/view-item';
 
 let fixture: ComponentFixture<KitRentalPage> = null;
 let instance: any = null;

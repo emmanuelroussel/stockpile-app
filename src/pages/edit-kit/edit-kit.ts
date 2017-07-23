@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { NavController, NavParams, ModalController, Events, LoadingController } from 'ionic-angular';
 
-import { KitData } from '../../providers/kit-data';
 import { AddKitItemPage } from '../add-kit-item/add-kit-item';
+import { Kit } from '../../models/kits';
+import { KitsService } from '../../services/kits.service';
+import { KitsActions } from '../../store/kits/kits.actions';
+import { KitModelsService } from '../../services/kit-models.service';
+import { KitModelsActions } from '../../store/kit-models/kit-models.actions';
 
-import { Actions, Messages } from '../../constants';
-import { Notifications } from '../../providers/notifications';
+import { Actions } from '../../constants';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'page-edit-kit',
@@ -14,127 +19,76 @@ import { Notifications } from '../../providers/notifications';
 export class EditKitPage {
   actions = Actions;
   action: Actions = '';
-  kit: { kitID?: number, name?: string } = {};
-  kitItems = [];
+  kit: Observable<Kit>;
+  kitModels = [];
   modelsToDelete = [];
   modelsToCreate = [];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public kitData: KitData,
-    public notifications: Notifications,
     public modalCtrl: ModalController,
     public events: Events,
-    public loadingCtrl: LoadingController
-  ) { }
+    public loadingCtrl: LoadingController,
+    public kitsService: KitsService,
+    public kitModelsService: KitModelsService,
+    public kitModelsActions: KitModelsActions,
+    public kitsActions: KitsActions
+  ) {}
 
   /**
    * Gets the action (add or edit) and if action is edit, also gets the kit and
-   * kitItems. Listens to event if a kit item is added to update the view.
+   * kitModels.
    */
   ngOnInit() {
     this.action = this.navParams.get('action');
 
     if (this.action === Actions.edit) {
-      this.kit = this.navParams.get('kit');
-      this.kitItems = this.navParams.get('kitItems');
+      const kitID = this.navParams.get('kitID');
+      this.kit = this.kitsService.getKit(kitID);
+
+      // Creating a local copy instead of using observables because of the
+      // complexity of managing kit models before the user saves the kit.
+      let kitModels;
+      this.kitModelsService.getKitModels(kitID).take(1).subscribe(k => kitModels = (k || []).slice());
+
+      this.kitModels = kitModels;
     }
 
-    this.events.subscribe('kit-item:added', kitItem => {
-      this.kitItems.push(kitItem);
-      this.modelsToCreate.push(kitItem.modelID);
+    // Listens to the event published when user adds a kit model and add it to
+    // local array of kit models.
+    this.events.subscribe('kit-item:added', kitModel => {
+      this.kitModels.push(kitModel);
+      this.modelsToCreate.push(kitModel.modelID);
     });
   }
 
   /**
-   * Calls api to create kit and calls saveKitItems() to create the kitItems.
+   * Creates or updates the kit, and creates and deletes kit models.
    */
-  onSave() {
-    let apiCall;
-    let message;
-    let event;
-
+  onSave(form: NgForm) {
     if (this.action === Actions.add) {
-      apiCall = this.kitData.addKit(this.kit.name);
-      message = Messages.kitAdded;
-      event = 'kit:added';
+      this.kitsActions.createKit(form.value, this.modelsToCreate);
     } else {
-      apiCall = this.kitData.editKit(this.kit);
-      message = Messages.kitEdited;
-      event = 'kit:edited';
+      let kitID;
+      this.kit.take(1).subscribe(kit => kitID = kit.kitID);
+
+      this.kitsActions.updateKit({ name: form.value.name, kitID: kitID }, this.modelsToCreate, this.modelsToDelete);
     }
-
-    let loading = this.loadingCtrl.create({
-      content: 'Saving changes, please wait...'
-    });
-
-    loading.present();
-
-    apiCall.subscribe(
-      kit => this.saveKitItems(kit, message, event),
-      err => this.notifications.showToast(err),
-      () => loading.dismiss()
-    );
   }
 
   /**
-   * Calls api to create kitItem for each modelID in kitItems if action is add.
-   * If action is edit, calls api to create and delete kitItems for each modelID
-   * in modelsToCreate and modelsToDelete. Then pops nav.
-   */
-  private saveKitItems(kit, message: string, event: string) {
-    let models = [];
-
-    if (this.action === Actions.add) {
-      this.kit.kitID = kit.id;
-
-      for (const kitItem of this.kitItems) {
-        models.push(this.kitData.addKitItem(this.kit.kitID, kitItem.modelID).toPromise());
-      }
-    } else {
-      for (const modelID of this.modelsToDelete) {
-        models.push(this.kitData.deleteKitItem(this.kit.kitID, modelID).toPromise());
-      }
-
-      for (const modelID of this.modelsToCreate) {
-        models.push(this.kitData.addKitItem(this.kit.kitID, modelID).toPromise());
-      }
-    }
-
-    Promise.all(models).then(
-      success => {
-        this.notifications.showToast(message);
-        this.events.publish(event, this.kit);
-        this.navCtrl.pop();
-      },
-      err => this.notifications.showToast(err)
-    );
-  }
-
-  /**
-   * Calls api to delete the kit then pops nav.
+   * Deletes kit.
    */
   onDelete() {
-    this.kitData.deleteKit(this.kit.kitID).subscribe(
-      success => {
-        this.notifications.showToast(Messages.kitDeleted);
-        this.events.publish('kit:deleted', this.kit);
+    let kitID;
+    this.kit.take(1).subscribe(kit => kitID = kit.kitID);
 
-        // This removes the previous page (ViewKitPage in this case) from the
-        // nav. This is so that it won't show when we pop the nav since the item
-        // does not exist anymore.
-        const parentIndex = this.navCtrl.indexOf(this.navCtrl.getPrevious());
-        this.navCtrl.remove(parentIndex).then(
-          () => this.navCtrl.pop()
-        );
-      },
-      err => this.notifications.showToast(err)
-    );
+    this.kitsActions.deleteKit(kitID);
   }
 
   /**
-   * Pushes AddKitItemPage on nav to allow user to choose a brand and model.
+   * Pushes page on nav to allow user to choose a brand and model.
    */
   onAddItem() {
     this.navCtrl.push(AddKitItemPage);
@@ -143,8 +97,8 @@ export class EditKitPage {
   /**
    * Removes the kitItem from the list and mark it to be deleted.
    */
-  onRemoveFromList(index, kitItem) {
-    this.modelsToDelete.push(kitItem.modelID);
-    this.kitItems.splice(index, 1);
+  onRemoveFromList(index, kitModel) {
+    this.modelsToDelete.push(kitModel.modelID);
+    this.kitModels.splice(index, 1);
   }
 }

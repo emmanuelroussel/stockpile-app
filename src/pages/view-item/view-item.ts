@@ -1,47 +1,45 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, Events } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 
 import { Actions } from '../../constants';
-import { ItemData } from '../../providers/item-data';
-import { Notifications } from '../../providers/notifications';
 import { EditItemPage } from '../edit-item/edit-item';
+import { ItemsService } from '../../services/items.service';
+import { Item } from '../../models/items';
+import { Observable } from 'rxjs/Observable';
+
+import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
 
 @Component({
   selector: 'page-view-item',
   templateUrl: 'view-item.html'
 })
 export class ViewItemPage {
-  item;
+  item: Observable<Item>;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
-    public events: Events,
-    public itemData: ItemData,
-    public notifications: Notifications
-  ) { }
+    public itemsService: ItemsService
+  ) {}
 
   /**
-   * Gets item and listens to event to update item if it is modified.
+   * Gets item.
    */
   ngOnInit() {
-    this.item = this.navParams.get('item');
-
-    this.events.subscribe('item:edited', barcode => {
-      this.itemData.getItem(barcode).subscribe(
-        item => this.item = item,
-        err => this.notifications.showToast(err)
-      );
-    });
+    const barcode = this.navParams.get('barcode');
+    this.item = this.itemsService.getItem(barcode);
   }
 
   /**
-   * Pushes EditItemPage on nav with item.
+   * Pushes page on nav with item to allow user to edit the item.
    */
   onEditItem() {
+    let barcode;
+    this.item.take(1).subscribe(item => barcode = item.barcode);
+
     this.navCtrl.push(EditItemPage, {
-      item: this.item,
+      barcode: barcode,
       action: Actions.edit
     });
   }

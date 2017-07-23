@@ -12,11 +12,11 @@ export class ItemData {
     return this.api.get(`${Links.item}/${barcode}`);
   }
 
-  addItem(item: Object) {
+  addItem(item: any) {
     return this.api.put(Links.item, item);
   }
 
-  editItem(item: Object, barcode: string) {
+  editItem(item: any, barcode: string) {
     return this.api.put(`${Links.item}/${barcode}`, item);
   }
 
@@ -56,7 +56,7 @@ export class ItemData {
     });
   }
 
-  rent(rental: Object) {
+  rent(rental: any) {
     return this.api.put(Links.rental, rental);
   }
 

@@ -11,11 +11,7 @@ export class ItemPropertyData {
     return this.api.get(Links.brand);
   }
 
-  addBrand(brand: string) {
-    const body = {
-      name: brand
-    };
-
+  addBrand(body: Object) {
     return this.api.put(Links.brand, body);
   }
 
@@ -23,12 +19,7 @@ export class ItemPropertyData {
     return this.api.get(Links.model);
   }
 
-  addModel(model: string, brandID: number) {
-    const body = {
-      name: model,
-      brandID: brandID
-    };
-
+  addModel(body: Object) {
     return this.api.put(Links.model, body);
   }
 
@@ -36,11 +27,7 @@ export class ItemPropertyData {
     return this.api.get(Links.category);
   }
 
-  addCategory(category: string) {
-    const body = {
-      name: category
-    };
-
+  addCategory(body: Object) {
     return this.api.put(Links.category, body);
   }
 }

@@ -1,61 +1,54 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, Events } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 
 import { Actions } from '../../constants';
 import { EditKitPage } from '../edit-kit/edit-kit';
-import { KitData } from '../../providers/kit-data';
-import { Notifications } from '../../providers/notifications';
+import { Kit } from '../../models/kits';
+import { KitModel } from '../../models/kit-models';
+import { KitsService } from '../../services/kits.service';
+import { KitModelsService } from '../../services/kit-models.service';
+import { KitModelsActions } from '../../store/kit-models/kit-models.actions';
+
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'page-view-kit',
   templateUrl: 'view-kit.html'
 })
 export class ViewKitPage {
-  kit;
-  kitItems = [];
+  kit: Observable<Kit>;
+  kitModels: Observable<Array<KitModel>>;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public platform: Platform,
-    public notifications: Notifications,
-    public kitData: KitData,
-    public events: Events
-  ) { }
+    public kitsService: KitsService,
+    public kitModelsService: KitModelsService,
+    public kitModelsActions: KitModelsActions
+  ) {}
 
   /**
-   * Gets kit and kit items and listens to event to update kit if it is
-   * modified.
+   * Gets kit items.
    */
   ngOnInit() {
-    this.kit = this.navParams.get('kit');
-    this.getKitItems();
+    const kitID = this.navParams.get('kitID');
 
-    this.events.subscribe('kit:edited', kit => {
-      this.kit = kit;
-      this.getKitItems();
-    });
+    this.kit = this.kitsService.getKit(kitID);
+    this.kitModels = this.kitModelsService.getKitModels(kitID);
+
+    this.kitModelsActions.fetchKitModels(kitID);
   }
 
   /**
-   * Calls api to get items in the kit.
-   */
-  private getKitItems() {
-    this.kitData.getKitItems(this.kit.kitID).subscribe(
-      kitItems => this.kitItems = kitItems.results,
-      err => this.notifications.showToast(err)
-    );
-  }
-
-  /**
-   * Pushes EditKitPage on nav with the kit and items.
+   * Pushes page on nav to allows users to edit the kit.
    */
   onEditKit() {
+    let kitID;
+    this.kit.take(1).subscribe(kit => kitID = kit.kitID);
+
     this.navCtrl.push(EditKitPage, {
-      // Copies kit and kitItems to pass by value, because modifying the kit or
-      // the items in it without saving would also modify this local copy
-      kit: Object.assign({}, this.kit),
-      kitItems: this.kitItems.slice(),
+      kitID: kitID,
       action: Actions.edit
     });
   }

@@ -5,6 +5,7 @@ import * as Raven from 'raven-js';
 import { AuthHttp, tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { Links } from '../constants';
 import { ApiUrl } from './api-url';
+import { Api } from './api';
 import { extractData, handleError } from '../services/auth-http-helpers';
 
 @Injectable()
@@ -15,33 +16,19 @@ export class UserData {
 
   constructor(
     public apiUrl: ApiUrl,
+    public api: Api,
     public authHttp: AuthHttp,
     public http: Http,
     public storage: Storage
-  ) { }
+  ) {}
 
   /**
    * Calls api with credentials to log in and saves auth token.
    */
-  login(email: string, password: string) {
-    const credentials = {
-      email: email,
-      password: password
-    };
-
-    return new Promise((resolve, reject) => {
-        this.http.post(`${this.apiUrl.getUrl()}${Links.authenticate}`, credentials)
-        .map(extractData)
-        .catch(handleError)
-        .subscribe(
-          data => {
-            this.storage.set('id_token', data.token).then(
-              data => resolve(data)
-            );
-          },
-          err => reject(err)
-        );
-    });
+  login(credentials: any) {
+    return this.http.post(`${this.apiUrl.getUrl()}${Links.authenticate}`, credentials)
+    .map(extractData)
+    .catch(handleError);
   }
 
   /**
@@ -56,8 +43,8 @@ export class UserData {
   /**
    * Calls api to edit user.
    */
-  editUser(user) {
-    return this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${this.userID}`, user)
+  updateUser(userID, user?) {
+    return this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${userID}`, user)
     .map(extractData)
     .catch(handleError);
   }
@@ -65,13 +52,8 @@ export class UserData {
   /**
    * Calls api with current and new password to change the user's password.
    */
-  changePassword(currentPassword: string, newPassword: string) {
-    const passwords = {
-      currentPassword,
-      newPassword
-    };
-
-    return this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${this.userID}${Links.password}`, passwords)
+  changePassword(userID: number, passwords: any) {
+    return this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${userID}${Links.password}`, passwords)
     .map(extractData)
     .catch(handleError);
   }
@@ -110,15 +92,15 @@ export class UserData {
   /**
    * Calls api to get user info.
    */
-  getUser() {
-    return this.getInfo(Links.user, this.userID);
+  getUser(userID: number) {
+    return this.getInfo(Links.user, userID);
   }
 
   /**
    * Calls api to get organization info.
    */
-  getOrganization() {
-    return this.getInfo(Links.organization, this.organizationID);
+  getOrganization(organizationID: number) {
+    return this.getInfo(Links.organization, organizationID);
   }
 
   /**

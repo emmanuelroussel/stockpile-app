@@ -1,51 +1,34 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events, LoadingController } from 'ionic-angular';
+import { NgForm } from '@angular/forms';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
+import { UserActions } from '../../store/user/user.actions';
 
-import { UserData } from '../../providers/user-data';
-import { Notifications } from '../../providers/notifications';
-import { Messages } from '../../constants';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'page-edit-account',
   templateUrl: 'edit-account.html'
 })
 export class EditAccountPage {
-  user;
+  user: Observable<User>;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public events: Events,
-    public userData: UserData,
-    public notifications: Notifications,
-    public loadingCtrl: LoadingController
-  ) { }
+    public userService: UserService,
+    public userActions: UserActions
+  ) {}
 
   /**
-   * Gets the user from the navParams.
+   * Gets the user.
    */
   ngOnInit() {
-    this.user = this.navParams.get('user');
+    this.user = this.userService.getUser();
   }
 
   /**
-   * Calls the api to edit the user's info then pops nav.
+   * Updates the user's info.
    */
-  onSave() {
-    let loading = this.loadingCtrl.create({
-      content: 'Saving changes, please wait...'
-    });
-
-    loading.present();
-
-    this.userData.editUser(this.user).subscribe(
-      data => {
-        this.notifications.showToast(Messages.userEdited);
-        this.events.publish('user:edited', data);
-        this.navCtrl.pop();
-      },
-      err => this.notifications.showToast(err),
-      () => loading.dismiss()
-    );
+  onSave(form: NgForm) {
+    this.userActions.updateUser(form.value);
   }
 }

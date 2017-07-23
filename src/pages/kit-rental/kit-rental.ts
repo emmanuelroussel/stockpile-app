@@ -1,95 +1,75 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, Platform, NavParams, Events } from 'ionic-angular';
+import { NavController, AlertController, Platform, NavParams } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { RentalDetailsPage } from '../rental-details/rental-details';
-import { Messages } from '../../constants';
+import { Actions, Messages } from '../../constants';
 import { Notifications } from '../../providers/notifications';
-import { ItemData } from '../../providers/item-data';
-import { KitData } from '../../providers/kit-data';
+
+import { Kit } from '../../models/kits';
+import { KitModel } from '../../models/kit-models';
+import { KitsService } from '../../services/kits.service';
+import { KitModelsService } from '../../services/kit-models.service';
+import { KitModelsActions } from '../../store/kit-models/kit-models.actions';
+import { ItemsActions } from '../../store/items/items.actions';
+import { ItemsService } from '../../services/items.service';
+import { Items } from '../../models/items';
+import { Observable } from 'rxjs/Observable';
+
+import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
 
 @Component({
   selector: 'page-kit-rental',
   templateUrl: 'kit-rental.html'
 })
 export class KitRentalPage {
-  kit;
-  kitItems = [];
-  items = [];
-  otherItems = [];
+  kit: Observable<Kit>;
+  kitModels: Observable<Array<KitModel>>;
+  items: Observable<Items>;
 
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public notifications: Notifications,
-    public itemData: ItemData,
     public barcodeScanner: BarcodeScanner,
+    public notifications: Notifications,
     public platform: Platform,
-    public kitData: KitData,
     public navParams: NavParams,
-    public events: Events
-  ) { }
+    public kitsService: KitsService,
+    public kitModelsService: KitModelsService,
+    public kitModelsActions: KitModelsActions,
+    public itemsService: ItemsService,
+    public itemsActions: ItemsActions
+  ) {}
 
   /**
-   * Gets kit and kit items from api.
+   * Gets kit, kit models and items.
    */
   ngOnInit() {
     const kitID = this.navParams.get('kitID');
 
-    this.kitData.getKit(kitID).subscribe(
-      kit => this.kit = kit,
-      err => this.notifications.showToast(err)
-    );
+    this.kit = this.kitsService.getKit(kitID);
+    this.kitModels = this.kitModelsService.getKitModels(kitID);
+    this.items = this.itemsService.getItems();
 
-    this.kitData.getKitItems(kitID).subscribe(
-      kitItems => this.kitItems = kitItems.results,
-      err => this.notifications.showToast(err)
-    );
+    this.kitModelsActions.fetchKitModels(kitID);
   }
 
   /**
-   * Checks if item can be added to the rental. Shows why if not, adds it if yes.
+   * Tries to add item to rentals.
    */
   onAdd(barcode: string) {
-    this.itemData.getItem(barcode).subscribe(
-      item => {
-        if (item.available === 0) {
-          this.notifications.showToast(Messages.itemAlreadyRented);
-        } else if (this.items.some(listItem => listItem.barcode === item.barcode)) {
-          this.notifications.showToast(Messages.itemAlreadyAdded);
-        } else if (!this.kitItems.some(kitItem => kitItem.brandID === item.brandID && kitItem.modelID === item.modelID)) {
-          let alert = this.alertCtrl.create({
-            title: 'Item not in kit',
-            message: 'Are you sure you want to rent it with this kit?',
-            buttons: [
-              {
-                text: 'Cancel',
-                role: 'cancel'
-              },
-              {
-                text: 'Yes',
-                handler: () => {
-                  this.items.push(item);
-                  this.otherItems.push(item);
-                }
-              }
-            ]
-          });
+    let items;
+    this.items.take(1).subscribe(i => items = i.rentals);
 
-          alert.present();
-        } else {
-          this.items.push(item);
-          const index = this.kitItems.findIndex(kitItem => kitItem.brandID === item.brandID && kitItem.modelID === item.modelID);
-          this.kitItems[index].barcode = item.barcode;
-        }
-      },
-      err => this.notifications.showToast(err)
-    );
+    if (items[barcode]) {
+      this.notifications.showToast(Messages.itemAlreadyAdded);
+    } else {
+      this.itemsActions.addToRentals(barcode, Actions.rent);
+    }
   }
 
   /**
-   * Creates alert to let the user type in a barcode. Calls onAdd() with the
-   * result.
+   * Creates alert to let the user type in a barcode and adds the result.
    */
   onTypeBarcode() {
     let alert = this.alertCtrl.create({
@@ -118,7 +98,7 @@ export class KitRentalPage {
   }
 
   /**
-   * Starts barcode scanner and calls onAdd() with barcode if it got a barcode.
+   * Starts barcode scanner and process barcode if it is present (i.e. user didn't cancel)
    */
   onScanBarcode() {
     this.barcodeScanner.scan().then(
@@ -132,15 +112,18 @@ export class KitRentalPage {
   }
 
   /**
-   * Pushes RentalDetailsPage on nav with items to rent.
+   * Pushes RentalDetailsPage on nav and warns user if all kit models haven't
+   * been scanned.
    */
   onContinue() {
-    const remaining = this.kitItems.some(kitItem => !kitItem.barcode);
+    let kitModels;
+    this.kitModels.take(1).subscribe(k => kitModels = k);
+
+    // See if user scanned all items in kit
+    const remaining = kitModels.find(kitModel => !this.isKitModelAdded(kitModel));
 
     if (!remaining) {
-      this.navCtrl.push(RentalDetailsPage, {
-        items: this.items
-      });
+      this.navCtrl.push(RentalDetailsPage);
     } else {
       let alert = this.alertCtrl.create({
         title: 'You haven\'t scanned all the items in the kit',
@@ -153,9 +136,7 @@ export class KitRentalPage {
           {
             text: 'Continue',
             handler: () => {
-              this.navCtrl.push(RentalDetailsPage, {
-                items: this.items
-              });
+              this.navCtrl.push(RentalDetailsPage);
             }
           }
         ]
@@ -166,30 +147,43 @@ export class KitRentalPage {
   }
 
   /**
-   * Removes kit item and item from the list of local items.
+   * Returns whether there is an item corresponding to the kit model that has
+   * been added to the rentals or not.
    */
-  onRemoveKitItem(barcode: string) {
-    this.removeItem(barcode);
-
-    const kitItemindex = this.kitItems.findIndex(kitItem => kitItem.barcode === barcode);
-    this.kitItems[kitItemindex].barcode = '';
+  isKitModelAdded(kitModel: KitModel) {
+    let items;
+    this.items.take(1).subscribe(i => items = Object.keys(i.rentals).map((key) => i.rentals[key]));
+    return items.find(item => kitModel.brandID === item.brandID && kitModel.modelID === item.modelID);
   }
 
   /**
-   * Removes item with the barcode from the list of local items.
+   * Returns items added to rentals, but not in the kit that is being rented.
    */
-  onRemoveOtherItem(barcode: string) {
-    this.removeItem(barcode);
-
-    const otherItemIndex = this.otherItems.findIndex(item => item.barcode === barcode);
-    this.otherItems.splice(otherItemIndex, 1);
+  getItemsNotInKit() {
+    let kitModels;
+    let items;
+    this.kitModels.take(1).subscribe(k => kitModels = k);
+    this.items.take(1).subscribe(i => items = Object.keys(i.rentals).map((key) => i.rentals[key]));
+    return items.filter(item => !kitModels.find(kitModel => {
+      return kitModel.brandID === item.brandID && kitModel.modelID === item.modelID;
+    }));
   }
 
   /**
-   * Removes item with the barcode from the list of local items.
+   * Finds the item corresponding to the kit model and removes it from rentals.
    */
-  private removeItem(barcode: string) {
-    const itemIndex = this.items.findIndex(item => item.barcode === barcode);
-    this.items.splice(itemIndex, 1);
+  onRemoveKitModel(kitModel: KitModel) {
+    let items;
+    this.items.take(1).subscribe(i => items = Object.keys(i.rentals).map((key) => i.rentals[key]));
+    let item = items.find(item => kitModel.brandID === item.brandID && kitModel.modelID === item.modelID);
+
+    this.itemsActions.removeFromRentals(item.barcode);
+  }
+
+  /**
+   * Removes item from rentals.
+   */
+  onRemoveItem(barcode: string) {
+    this.itemsActions.removeFromRentals(barcode);
   }
 }

@@ -20,7 +20,7 @@
       <ion-label color="primary">Brand</ion-label>
       <ion-select [(ngModel)]="selectedBrandID" (ionChange)="onFilterModels()">
         <ion-option [value]="-1">All</ion-option>
-        <ion-option *ngFor="let brand of brands" [value]="brand.brandID">{{ brand.name }}</ion-option>
+        <ion-option *ngFor="let brand of (brands | async).results | mapToIterable" [value]="brand.brandID">{{ brand.name }}</ion-option>
       </ion-select>
     </ion-item>
 
@@ -28,7 +28,7 @@
       <ion-label color="primary">Model</ion-label>
       <ion-select [(ngModel)]="selectedModelID">
         <ion-option [value]="-1">All</ion-option>
-        <ion-option *ngFor="let model of filteredModels" [value]="model.modelID">{{ model.name }}</ion-option>
+        <ion-option *ngFor="let model of (models | async).filtered" [value]="model.modelID">{{ model.name }}</ion-option>
       </ion-select>
     </ion-item>
 
@@ -36,7 +36,7 @@
       <ion-label color="primary">Category</ion-label>
       <ion-select [(ngModel)]="selectedCategoryID">
         <ion-option [value]="-1">All</ion-option>
-        <ion-option *ngFor="let category of categories" [value]="category.categoryID">{{ category.name }}</ion-option>
+        <ion-option *ngFor="let category of (categories | async).results | mapToIterable" [value]="category.categoryID">{{ category.name }}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
