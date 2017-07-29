@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/stockpile-co/app.svg?branch=master)](https://travis-ci.org/stockpile-co/app)
 [![Coverage Status](https://coveralls.io/repos/github/stockpile-co/app/badge.svg?branch=master)](https://coveralls.io/github/stockpile-co/app?branch=master)
 [![codebeat badge](https://codebeat.co/badges/d0387971-f205-4146-8946-b8a8a8d1d2e2)](https://codebeat.co/projects/github-com-emmanuelroussel-stockpile-app)
+[![NSP Status](https://nodesecurity.io/orgs/stockpile-co/projects/970ba70d-9243-4294-95a2-cccbe8550dc6/badge)](https://nodesecurity.io/orgs/stockpile-co/projects/970ba70d-9243-4294-95a2-cccbe8550dc6)
 
 # Stockpile App
 Front end for Stockpile, an app that manages stuff for organizations.
