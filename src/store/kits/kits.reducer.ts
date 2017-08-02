@@ -5,15 +5,16 @@ import { Kits } from '../../models/kits';
 
 const initialState = {
   results: {},
-  loading: false
+  showLoadingSpinner: false,
 };
 
 export function kitsReducer(kits: Kits = initialState, action: Action): Kits {
   switch (action.type) {
     case KitsActions.FETCH_KITS:
-     return { ...kits, loading: true };
+     return { ...kits, showLoadingSpinner: true };
     case KitsActions.FETCH_KITS_SUCCESS:
       return {
+        ...kits,
         results: Object.assign({},
           kits.results,
           action.payload.results.reduce((obj, kit) => {
@@ -21,7 +22,7 @@ export function kitsReducer(kits: Kits = initialState, action: Action): Kits {
             return obj;
           }, {})
         ),
-        loading: false
+        showLoadingSpinner: false
       };
     case KitsActions.FETCH_KITS_ERROR:
       return { ...kits, loading: false };

@@ -4,6 +4,8 @@ import { Store } from '@ngrx/store';
 import { createAction } from '../create-action';
 import { AppState } from '../../models/app-state';
 import { UserData } from '../../providers/user-data';
+import { LayoutActions } from '../layout/layout.actions';
+import { LoadingMessages } from '../../constants';
 
 @Injectable()
 export class UserActions {
@@ -43,6 +45,7 @@ export class UserActions {
   ) {}
 
   loginUser(credentials: any) {
+    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.loggingInUser));
     this.store.dispatch(createAction(UserActions.LOGIN_USER, credentials));
   }
 
@@ -55,6 +58,7 @@ export class UserActions {
   }
 
   updateUser(user: any) {
+    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.updatingUser));
     this.store.dispatch(createAction(UserActions.UPDATE_USER, user));
   }
 
@@ -63,10 +67,12 @@ export class UserActions {
   }
 
   archiveUser(password: string) {
+    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.archivingUser));
     this.store.dispatch(createAction(UserActions.ARCHIVE_USER, password));
   }
 
   changeUserPassword(passwords: any) {
+    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.savingPassword));
     this.store.dispatch(createAction(UserActions.CHANGE_USER_PASSWORD, passwords));
   }
 }

@@ -42,6 +42,26 @@ export class Messages {
   public static userDeleted = 'Account succesfully deleted';
 }
 
+export class LoadingMessages {
+  public static creatingBrand = 'Creating brand...';
+  public static creatingCategory = 'Creating category...';
+  public static creatingKit = 'Creating kit...';
+  public static updatingKit = 'Updating kit...';
+  public static deletingKit = 'Deleting kit...';
+  public static creatingItem = 'Creating item...';
+  public static updatingItem = 'Updating item...';
+  public static deletingItem = 'Deleting item...';
+  public static rentingItems = 'Renting items...';
+  public static returningItems = 'Returning items...';
+  public static addingToRentals = 'Verifying item status...';
+  public static startingRental = 'Verifying item status...';
+  public static creatingModel = 'Creating model...';
+  public static savingPassword = 'Saving password...';
+  public static updatingUser = 'Updating account info...';
+  public static loggingInUser = 'Logging in...';
+  public static archivingUser = 'Archiving account...';
+}
+
 export class ItemProperties {
   public static brand = 'Brand';
   public static model = 'Model';

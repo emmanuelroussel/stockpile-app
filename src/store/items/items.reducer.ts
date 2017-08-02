@@ -12,14 +12,14 @@ const initialState = {
   tempItem: {},
   rentals: {},
   display: [],
-  loading: false
+  showLoadingSpinner: false
 };
 
 export function itemsReducer(items: Items = initialState, action: Action): Items {
   switch (action.type) {
     case ItemsActions.FETCH_ITEMS:
       // Show loading only if there are no items, else it is the infinite scroll
-      return { ...items, loading: items.display.length ? false : true };
+      return { ...items, showLoadingSpinner: items.display.length ? false : true };
     case ItemsActions.FETCH_ITEMS_SUCCESS:
       return {
         ...items,
@@ -34,7 +34,7 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
         offset: items.offset + paginationLimit,
         loadMoreItems: !(action.payload.results.length < paginationLimit),
         display: [...items.display, ...action.payload.results],
-        loading: false
+        showLoadingSpinner: false
       };
     case ItemsActions.CREATE_ITEM_SUCCESS:
       return {

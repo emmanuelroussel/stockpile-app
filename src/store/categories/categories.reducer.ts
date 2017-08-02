@@ -13,6 +13,7 @@ export function categoriesReducer(categories: Categories = initialState, action:
   switch (action.type) {
     case CategoriesActions.FETCH_CATEGORIES_SUCCESS:
       return {
+        ...categories,
         results: Object.assign({},
           categories.results,
           action.payload.results.reduce((obj, category) => {

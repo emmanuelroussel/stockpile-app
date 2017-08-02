@@ -11,7 +11,7 @@ export class LoginPage {
   login: {email?: string, password?: string} = {};
 
   constructor(
-    public userActions: UserActions
+    public userActions: UserActions,
   ) {}
 
   /**

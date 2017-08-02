@@ -9,6 +9,7 @@ import { AppActions } from '../app/app.actions.ts';
 import { KitData } from '../../providers/kit-data';
 import { KitModelsActions } from '../kit-models/kit-models.actions';
 import { Messages } from '../../constants';
+import { LayoutActions } from '../layout/layout.actions';
 
 @Injectable()
 export class KitsEffects {
@@ -36,8 +37,14 @@ export class KitsEffects {
   delete$ = this.actions$
     .ofType(KitsActions.DELETE_KIT)
     .mergeMap(action => this.kitData.deleteKit(action.payload)
-      .map(res => createAction(KitsActions.DELETE_KIT_SUCCESS, res))
-      .catch(err => Observable.of(createAction(KitsActions.DELETE_KIT_ERROR, err)))
+      .concatMap(res => [
+        createAction(KitsActions.DELETE_KIT_SUCCESS, res),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ])
+      .catch(err => Observable.of(
+        createAction(KitsActions.DELETE_KIT_ERROR, err),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**

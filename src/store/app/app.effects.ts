@@ -5,7 +5,6 @@ import { App, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AppActions } from './app.actions.ts';
 import { Notifications } from '../../providers/notifications';
-import { createAction } from '../create-action';
 
 @Injectable()
 export class AppEffects {

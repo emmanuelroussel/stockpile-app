@@ -19,6 +19,7 @@ import { UserService } from '../../services/user.service';
 import { OrganizationActions } from '../organization/organization.actions';
 import { LoginPage } from '../../pages/login/login';
 import { Messages } from '../../constants';
+import { LayoutActions } from '../layout/layout.actions';
 
 @Injectable()
 export class UserEffects {
@@ -44,7 +45,10 @@ export class UserEffects {
     .ofType(UserActions.LOGIN_USER)
     .mergeMap(action => this.userData.login(action.payload)
       .map(res => createAction(UserActions.SAVE_TOKEN, res))
-      .catch(err => Observable.of(createAction(UserActions.LOGIN_USER_ERROR, err)))
+      .catch(err => Observable.of(
+        createAction(UserActions.LOGIN_USER_ERROR, err),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**
@@ -54,8 +58,14 @@ export class UserEffects {
   saveToken$ = this.actions$
     .ofType(UserActions.SAVE_TOKEN)
     .mergeMap(action => Observable.of(this.storage.set('id_token', action.payload.token))
-      .map(res => createAction(UserActions.LOGIN_USER_SUCCESS, this.getIDsFromToken(action.payload.token)))
-      .catch(err => Observable.of(createAction(UserActions.LOGIN_USER_ERROR, err)))
+      .concatMap(res => [
+        createAction(UserActions.LOGIN_USER_SUCCESS, this.getIDsFromToken(action.payload.token)),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ])
+      .catch(err => Observable.of(
+        createAction(UserActions.LOGIN_USER_ERROR, err),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**
@@ -173,8 +183,14 @@ export class UserEffects {
     .ofType(UserActions.UPDATE_USER)
     .withLatestFrom(this.store$)
     .mergeMap(([action, store]) => this.userData.updateUser(store.user.userID, action.payload)
-      .map(res => createAction(UserActions.UPDATE_USER_SUCCESS, res))
-      .catch(err => Observable.of(createAction(UserActions.UPDATE_USER_ERROR, err)))
+      .concatMap(res => [
+        createAction(UserActions.UPDATE_USER_SUCCESS, res),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ])
+      .catch(err => Observable.of(
+        createAction(UserActions.UPDATE_USER_ERROR, err),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**
@@ -203,12 +219,20 @@ export class UserEffects {
           archived: new Date().toISOString().substring(0, 10)
         };
 
-        this.userData.updateUser(store.user.userID, user).subscribe(
-          res => createAction(UserActions.ARCHIVE_USER_SUCCESS, user),
-          err => createAction(UserActions.ARCHIVE_USER_ERROR, err)
-        );
+        this.userData.updateUser(store.user.userID, user)
+          .concatMap(res => [
+            createAction(UserActions.ARCHIVE_USER_SUCCESS, user),
+            createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+          ])
+          .catch(err => Observable.of(
+            createAction(UserActions.ARCHIVE_USER_ERROR, err),
+            createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+          ));
       })
-      .catch(err => Observable.of(createAction(UserActions.ARCHIVE_USER_ERROR, Messages.wrongPassword)))
+      .catch(err => Observable.of(
+        createAction(UserActions.ARCHIVE_USER_ERROR, Messages.wrongPassword),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**
@@ -242,8 +266,14 @@ export class UserEffects {
     .ofType(UserActions.CHANGE_USER_PASSWORD)
     .withLatestFrom(this.store$)
     .mergeMap(([action, store]) => this.userData.changePassword(store.user.userID, action.payload)
-      .map(res => createAction(UserActions.CHANGE_USER_PASSWORD_SUCCESS, res))
-      .catch(err => Observable.of(createAction(UserActions.CHANGE_USER_PASSWORD_ERROR, err)))
+      .concatMap(res => [
+        createAction(UserActions.CHANGE_USER_PASSWORD_SUCCESS, res),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ])
+      .catch(err => Observable.of(
+        createAction(UserActions.CHANGE_USER_PASSWORD_ERROR, err),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**

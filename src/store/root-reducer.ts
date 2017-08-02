@@ -6,6 +6,7 @@ import { kitModelsReducer } from './kit-models/kit-models.reducer';
 import { brandsReducer } from './brands/brands.reducer';
 import { modelsReducer } from './models/models.reducer';
 import { categoriesReducer } from './categories/categories.reducer';
+import { layoutReducer } from './layout/layout.reducer';
 
 export const rootReducer = {
   user: userReducer,
@@ -15,5 +16,6 @@ export const rootReducer = {
   kitModels: kitModelsReducer,
   brands: brandsReducer,
   models: modelsReducer,
-  categories: categoriesReducer
+  categories: categoriesReducer,
+  layout: layoutReducer
 };

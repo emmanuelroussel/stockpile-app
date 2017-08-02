@@ -6,6 +6,7 @@ import { createAction } from '../create-action';
 import { KitModelsActions } from './kit-models.actions';
 import { KitData } from '../../providers/kit-data';
 import { AppActions } from '../app/app.actions.ts';
+import { LayoutActions } from '../layout/layout.actions';
 
 @Injectable()
 export class KitModelsEffects {
@@ -55,8 +56,14 @@ export class KitModelsEffects {
       }
 
       return Observable.of(Promise.all(models))
-        .map(res => createAction(KitModelsActions.UPDATE_KIT_MODELS_SUCCESS, { message: action.payload.message, results: res }))
-        .catch(err => Observable.of(createAction(KitModelsActions.UPDATE_KIT_MODELS_ERROR, err)));
+        .concatMap(res => [
+          createAction(KitModelsActions.UPDATE_KIT_MODELS_SUCCESS, { message: action.payload.message, results: res }),
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        ])
+        .catch(err => Observable.of(
+          createAction(KitModelsActions.UPDATE_KIT_MODELS_ERROR, err),
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        ));
     });
 
   /**

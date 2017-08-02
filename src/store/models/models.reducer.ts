@@ -13,6 +13,7 @@ export function modelsReducer(models: Models = initialState, action: Action): Mo
   switch (action.type) {
     case ModelsActions.FETCH_MODELS_SUCCESS:
       return {
+        ...models,
         results: Object.assign({},
           action.payload.results.reduce((obj, model) => {
             obj[model.modelID] = model;

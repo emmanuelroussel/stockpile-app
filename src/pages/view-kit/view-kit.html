@@ -20,9 +20,9 @@
       <h2>{{ kitModel.brand }} {{ kitModel.model }}</h2>
     </ion-item>
 
-    <ion-spinner class="center-spinner" *ngIf="loading | async"></ion-spinner>
+    <ion-spinner class="center-spinner" *ngIf="showLoadingSpinner | async"></ion-spinner>
 
-    <ion-item *ngIf="!(kitModels | async) && !(loading | async)">
+    <ion-item *ngIf="!(kitModels | async) && !(showLoadingSpinner | async)">
       No items found
     </ion-item>
   </ion-list>

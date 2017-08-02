@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 
 import { ItemsActions } from '../../store/items/items.actions';
@@ -19,7 +19,6 @@ export class RentalDetailsPage {
 
   constructor(
     public navCtrl: NavController,
-    public loadingCtrl: LoadingController,
     public itemsService: ItemsService,
     public itemsActions: ItemsActions
   ) {}

@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 
 import { createAction } from '../create-action';
 import { AppState } from '../../models/app-state';
+import { LayoutActions } from '../layout/layout.actions';
+import { LoadingMessages } from '../../constants';
 
 @Injectable()
 export class BrandsActions {
@@ -26,6 +28,7 @@ export class BrandsActions {
   }
 
   createBrand(name: string) {
+    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.creatingBrand));
     this.store.dispatch(createAction(BrandsActions.CREATE_BRAND, { name }));
   }
 

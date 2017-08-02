@@ -7,6 +7,7 @@ import { createAction } from '../create-action';
 import { BrandsActions } from './brands.actions';
 import { AppActions } from '../app/app.actions.ts';
 import { ItemPropertyData } from '../../providers/item-property-data';
+import { LayoutActions } from '../layout/layout.actions';
 
 @Injectable()
 export class BrandsEffects {
@@ -34,8 +35,14 @@ export class BrandsEffects {
   create$ = this.actions$
     .ofType(BrandsActions.CREATE_BRAND)
     .mergeMap(action => this.itemPropertyData.addBrand(action.payload)
-      .map(res => createAction(BrandsActions.CREATE_BRAND_SUCCESS, res))
-      .catch(err => Observable.of(createAction(BrandsActions.CREATE_BRAND_ERROR, err)))
+      .concatMap(res => [
+        createAction(BrandsActions.CREATE_BRAND_SUCCESS, res),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ])
+      .catch(err => Observable.of(
+        createAction(BrandsActions.CREATE_BRAND_ERROR, err),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**

@@ -13,7 +13,7 @@ export class ChangePasswordPage {
 
   constructor(
     public notifications: Notifications,
-    public userActions: UserActions
+    public userActions: UserActions,
   ) {}
 
   /**

@@ -13,6 +13,7 @@ export function brandsReducer(brands: Brands = initialState, action: Action): Br
   switch (action.type) {
     case BrandsActions.FETCH_BRANDS_SUCCESS:
       return {
+        ...brands,
         results: Object.assign({},
           brands.results,
           action.payload.results.reduce((obj, brand) => {

@@ -41,6 +41,8 @@ import { CategoriesService } from '../services/categories.service';
 import { ItemsActions } from '../store/items/items.actions';
 import { ItemsEffects } from '../store/items/items.effects';
 import { ItemsService } from '../services/items.service';
+import { LayoutActions } from '../store/layout/layout.actions';
+import { LayoutService } from '../services/layout.service';
 
 import { AddKitItemPage } from '../pages/add-kit-item/add-kit-item';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
@@ -169,6 +171,8 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     KitModelsActions,
     KitModelsEffects,
     KitModelsService,
+    LayoutActions,
+    LayoutService,
     MapToIterablePipe,
     ModelsActions,
     ModelsEffects,

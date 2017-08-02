@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NavController, NavParams, ModalController, Events, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, Events } from 'ionic-angular';
 
 import { AddKitItemPage } from '../add-kit-item/add-kit-item';
 import { Kit } from '../../models/kits';
@@ -29,7 +29,6 @@ export class EditKitPage {
     public navParams: NavParams,
     public modalCtrl: ModalController,
     public events: Events,
-    public loadingCtrl: LoadingController,
     public kitsService: KitsService,
     public kitModelsService: KitModelsService,
     public kitModelsActions: KitModelsActions,

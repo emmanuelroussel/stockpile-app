@@ -15,7 +15,7 @@ export class EditAccountPage {
 
   constructor(
     public userService: UserService,
-    public userActions: UserActions
+    public userActions: UserActions,
   ) {}
 
   /**

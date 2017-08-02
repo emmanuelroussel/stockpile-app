@@ -12,6 +12,7 @@ import { ItemsActions } from './items.actions.ts';
 import { AppActions } from '../app/app.actions.ts';
 import { ItemData } from '../../providers/item-data';
 import { paginationLimit, Messages } from '../../constants';
+import { LayoutActions } from '../layout/layout.actions';
 
 @Injectable()
 export class ItemsEffects {
@@ -47,8 +48,14 @@ export class ItemsEffects {
   create$ = this.actions$
     .ofType(ItemsActions.CREATE_ITEM)
     .mergeMap(action => this.itemData.addItem(action.payload)
-      .map(res => createAction(ItemsActions.CREATE_ITEM_SUCCESS, res))
-      .catch(err => Observable.of(createAction(ItemsActions.CREATE_ITEM_ERROR, err)))
+      .concatMap(res => [
+        createAction(ItemsActions.CREATE_ITEM_SUCCESS, res),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ])
+      .catch(err => Observable.of(
+        createAction(ItemsActions.CREATE_ITEM_ERROR, err),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**
@@ -58,8 +65,14 @@ export class ItemsEffects {
   update$ = this.actions$
     .ofType(ItemsActions.UPDATE_ITEM)
     .mergeMap(action => this.itemData.editItem(action.payload, action.payload.barcode)
-      .map(res => createAction(ItemsActions.UPDATE_ITEM_SUCCESS, res))
-      .catch(err => Observable.of(createAction(ItemsActions.UPDATE_ITEM_ERROR, err)))
+      .concatMap(res => [
+        createAction(ItemsActions.UPDATE_ITEM_SUCCESS, res),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ])
+      .catch(err => Observable.of(
+        createAction(ItemsActions.UPDATE_ITEM_ERROR, err),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**
@@ -69,8 +82,14 @@ export class ItemsEffects {
   delete$ = this.actions$
     .ofType(ItemsActions.DELETE_ITEM)
     .mergeMap(action => this.itemData.deleteItem(action.payload)
-      .map(res => createAction(ItemsActions.DELETE_ITEM_SUCCESS, res))
-      .catch(err => Observable.of(createAction(ItemsActions.DELETE_ITEM_ERROR, err)))
+      .concatMap(res => [
+        createAction(ItemsActions.DELETE_ITEM_SUCCESS, res),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ])
+      .catch(err => Observable.of(
+        createAction(ItemsActions.DELETE_ITEM_ERROR, err),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**
@@ -80,8 +99,14 @@ export class ItemsEffects {
   startRental$ = this.actions$
     .ofType(ItemsActions.START_RENTAL)
     .mergeMap(action => this.itemData.getItem(action.payload)
-      .map(res => createAction(ItemsActions.START_RENTAL_SUCCESS, res))
-      .catch(err => Observable.of(createAction(ItemsActions.START_RENTAL_ERROR, err)))
+      .concatMap(res => [
+        createAction(ItemsActions.START_RENTAL_SUCCESS, res),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ])
+      .catch(err => Observable.of(
+        createAction(ItemsActions.START_RENTAL_ERROR, err),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**
@@ -105,16 +130,28 @@ export class ItemsEffects {
   addToRentals$ = this.actions$
     .ofType(ItemsActions.ADD_TO_RENTALS)
     .mergeMap(action => this.itemData.getItem(action.payload.barcode)
-      .map(res => {
+      .concatMap(res => {
         if (!res.available && action.payload.action === constants.Actions.rent) {
-          return createAction(ItemsActions.ADD_TO_RENTALS_ERROR, { message: Messages.itemAlreadyRented });
+          return [
+            createAction(ItemsActions.ADD_TO_RENTALS_ERROR, { message: Messages.itemAlreadyRented }),
+            createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+          ];
         } else if (res.available && action.payload.action === constants.Actions.return) {
-          return createAction(ItemsActions.ADD_TO_RENTALS_ERROR, { message: Messages.itemNotRented });
+          return [
+            createAction(ItemsActions.ADD_TO_RENTALS_ERROR, { message: Messages.itemNotRented }),
+            createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+          ];
         } else {
-          return createAction(ItemsActions.ADD_TO_RENTALS_SUCCESS, res);
+          return [
+            createAction(ItemsActions.ADD_TO_RENTALS_SUCCESS, res),
+            createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+          ];
         }
       })
-      .catch(err => Observable.of(createAction(ItemsActions.ADD_TO_RENTALS_ERROR, err)))
+      .catch(err => Observable.of(
+        createAction(ItemsActions.ADD_TO_RENTALS_ERROR, err),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**
@@ -182,8 +219,14 @@ export class ItemsEffects {
       }
 
       return Observable.of(Promise.all(returns))
-        .map(() => createAction(ItemsActions.RETURN_ITEMS_SUCCESS))
-        .catch(err => Observable.of(createAction(ItemsActions.RETURN_ITEMS_ERROR, err)));
+        .concatMap(() => [
+          createAction(ItemsActions.RETURN_ITEMS_SUCCESS),
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        ])
+        .catch(err => Observable.of(
+          createAction(ItemsActions.RETURN_ITEMS_ERROR, err),
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        ));
     });
 
     /**
@@ -215,8 +258,14 @@ export class ItemsEffects {
         }
 
         return Observable.of(Promise.all(rentals))
-          .map(() => createAction(ItemsActions.RENT_ITEMS_SUCCESS))
-          .catch(err => Observable.of(createAction(ItemsActions.RENT_ITEMS_ERROR, err)));
+          .concatMap(() => [
+            createAction(ItemsActions.RENT_ITEMS_SUCCESS),
+            createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+          ])
+          .catch(err => Observable.of(
+            createAction(ItemsActions.RENT_ITEMS_ERROR, err),
+            createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+          ));
       });
 
       /**

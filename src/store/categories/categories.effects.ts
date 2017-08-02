@@ -7,6 +7,7 @@ import { createAction } from '../create-action';
 import { CategoriesActions } from './categories.actions';
 import { AppActions } from '../app/app.actions.ts';
 import { ItemPropertyData } from '../../providers/item-property-data';
+import { LayoutActions } from '../layout/layout.actions';
 
 @Injectable()
 export class CategoriesEffects {
@@ -34,8 +35,14 @@ export class CategoriesEffects {
   create$ = this.actions$
     .ofType(CategoriesActions.CREATE_CATEGORY)
     .mergeMap(action => this.itemPropertyData.addCategory(action.payload)
-      .map(res => createAction(CategoriesActions.CREATE_CATEGORY_SUCCESS, res))
-      .catch(err => Observable.of(createAction(CategoriesActions.CREATE_CATEGORY_ERROR, err)))
+      .concatMap(res => [
+        createAction(CategoriesActions.CREATE_CATEGORY_SUCCESS, res),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ])
+      .catch(err => Observable.of(
+        createAction(CategoriesActions.CREATE_CATEGORY_ERROR, err),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      ))
     );
 
   /**

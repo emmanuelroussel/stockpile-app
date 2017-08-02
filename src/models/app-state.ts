@@ -6,6 +6,7 @@ import { Brands } from './brands';
 import { Models } from './models';
 import { Categories } from './categories';
 import { Items } from './items';
+import { Layout } from './layout';
 
 export interface AppState {
   readonly user: User;
@@ -16,4 +17,5 @@ export interface AppState {
   readonly models: Models;
   readonly categories: Categories;
   readonly items: Items;
+  readonly layout: Layout;
 }
