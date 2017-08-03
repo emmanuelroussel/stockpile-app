@@ -11,7 +11,7 @@ const initialState = {
 
 export function modelsReducer(models: Models = initialState, action: Action): Models {
   switch (action.type) {
-    case ModelsActions.FETCH_MODELS_SUCCESS:
+    case ModelsActions.FETCH_SUCCESS:
       return {
         ...models,
         results: Object.assign({},
@@ -23,7 +23,7 @@ export function modelsReducer(models: Models = initialState, action: Action): Mo
         filtered: action.payload.results,
         showAddNew: false
       };
-    case ModelsActions.CREATE_MODEL_SUCCESS:
+    case ModelsActions.CREATE_SUCCESS:
       return {
         ...models,
         results: {
@@ -31,7 +31,7 @@ export function modelsReducer(models: Models = initialState, action: Action): Mo
           [action.payload.modelID]: action.payload
         }
       };
-    case ModelsActions.FILTER_MODELS:
+    case ModelsActions.FILTER:
       return Object.assign({}, models, {
         filtered: Object.keys(models.results)
           .map((key) => models.results[key])

@@ -20,10 +20,10 @@ export class KitModelsEffects {
    */
   @Effect()
   fetch$ = this.actions$
-    .ofType(KitModelsActions.FETCH_KIT_MODELS)
+    .ofType(KitModelsActions.FETCH)
     .mergeMap(action => this.kitData.getKitModels(action.payload)
-      .map(res => createAction(KitModelsActions.FETCH_KIT_MODELS_SUCCESS, res))
-      .catch(err => Observable.of(createAction(KitModelsActions.FETCH_KIT_MODELS_ERROR, err)))
+      .map(res => createAction(KitModelsActions.FETCH_SUCCESS, res))
+      .catch(err => Observable.of(createAction(KitModelsActions.FETCH_FAIL, err)))
     );
 
   /**
@@ -31,7 +31,7 @@ export class KitModelsEffects {
    */
   @Effect()
   createSuccess$ = this.actions$
-    .ofType(KitModelsActions.UPDATE_KIT_MODELS_SUCCESS)
+    .ofType(KitModelsActions.UPDATE_SUCCESS)
     .mergeMap(action => Observable.of(
       createAction(AppActions.SHOW_MESSAGE, action.payload.message),
       createAction(AppActions.POP_NAV)
@@ -43,7 +43,7 @@ export class KitModelsEffects {
    */
   @Effect()
   update$ = this.actions$
-    .ofType(KitModelsActions.UPDATE_KIT_MODELS)
+    .ofType(KitModelsActions.UPDATE)
     .mergeMap(action => {
       let models = [];
 
@@ -57,11 +57,11 @@ export class KitModelsEffects {
 
       return Observable.of(Promise.all(models))
         .concatMap(res => [
-          createAction(KitModelsActions.UPDATE_KIT_MODELS_SUCCESS, { message: action.payload.message, results: res }),
+          createAction(KitModelsActions.UPDATE_SUCCESS, { message: action.payload.message, results: res }),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE)
         ])
         .catch(err => Observable.of(
-          createAction(KitModelsActions.UPDATE_KIT_MODELS_ERROR, err),
+          createAction(KitModelsActions.UPDATE_FAIL, err),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE)
         ));
     });
@@ -72,8 +72,8 @@ export class KitModelsEffects {
   @Effect()
   errors$ = this.actions$
     .ofType(
-      KitModelsActions.FETCH_KIT_MODELS_ERROR,
-      KitModelsActions.UPDATE_KIT_MODELS_ERROR,
+      KitModelsActions.FETCH_FAIL,
+      KitModelsActions.UPDATE_FAIL,
     )
     .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
     .delay(1);

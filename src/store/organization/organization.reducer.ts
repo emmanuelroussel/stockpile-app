@@ -11,9 +11,9 @@ const initialState = {
 
 export function organizationReducer(organization: Organization = initialState, action: Action): Organization {
   switch (action.type) {
-    case OrganizationActions.FETCH_ORGANIZATION_SUCCESS:
+    case OrganizationActions.FETCH_SUCCESS:
       return action.payload;
-    case UserActions.LOGOUT_USER_SUCCESS:
+    case UserActions.LOGOUT_SUCCESS:
       return initialState;
     default:
       return organization;

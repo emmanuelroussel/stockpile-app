@@ -22,10 +22,10 @@ export class CategoriesEffects {
    */
   @Effect()
   fetch$ = this.actions$
-    .ofType(CategoriesActions.FETCH_CATEGORIES)
+    .ofType(CategoriesActions.FETCH)
     .mergeMap(action => this.itemPropertyData.getCategories()
-      .map(res => createAction(CategoriesActions.FETCH_CATEGORIES_SUCCESS, res))
-      .catch(err => Observable.of(createAction(CategoriesActions.FETCH_CATEGORIES_ERROR, err)))
+      .map(res => createAction(CategoriesActions.FETCH_SUCCESS, res))
+      .catch(err => Observable.of(createAction(CategoriesActions.FETCH_FAIL, err)))
     );
 
   /**
@@ -33,14 +33,14 @@ export class CategoriesEffects {
    */
   @Effect()
   create$ = this.actions$
-    .ofType(CategoriesActions.CREATE_CATEGORY)
+    .ofType(CategoriesActions.CREATE)
     .mergeMap(action => this.itemPropertyData.addCategory(action.payload)
       .concatMap(res => [
-        createAction(CategoriesActions.CREATE_CATEGORY_SUCCESS, res),
+        createAction(CategoriesActions.CREATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ])
       .catch(err => Observable.of(
-        createAction(CategoriesActions.CREATE_CATEGORY_ERROR, err),
+        createAction(CategoriesActions.CREATE_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -50,7 +50,7 @@ export class CategoriesEffects {
    */
   @Effect()
   createSuccess$ = this.actions$
-    .ofType(CategoriesActions.CREATE_CATEGORY_SUCCESS)
+    .ofType(CategoriesActions.CREATE_SUCCESS)
     .mergeMap(action => Observable.of(AppActions.POP_NAV))
     .delay(1);
 
@@ -60,8 +60,8 @@ export class CategoriesEffects {
   @Effect()
   errors$ = this.actions$
     .ofType(
-      CategoriesActions.FETCH_CATEGORIES_ERROR,
-      CategoriesActions.CREATE_CATEGORY_ERROR,
+      CategoriesActions.FETCH_FAIL,
+      CategoriesActions.CREATE_FAIL,
     )
     .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
     .delay(1);

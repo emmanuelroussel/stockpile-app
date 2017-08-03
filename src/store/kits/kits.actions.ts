@@ -9,42 +9,42 @@ import { LoadingMessages } from '../../constants';
 @Injectable()
 export class KitsActions {
 
-  static FETCH_KITS = 'FETCH_KITS';
-  static FETCH_KITS_SUCCESS = 'FETCH_KITS_SUCCESS';
-  static FETCH_KITS_ERROR = 'FETCH_KITS_ERROR';
+  static FETCH = '[Kits] Fetch';
+  static FETCH_SUCCESS = '[Kits] Fetch Success';
+  static FETCH_FAIL = '[Kits] Fetch Fail';
 
-  static DELETE_KIT = 'DELETE_KIT';
-  static DELETE_KIT_SUCCESS = 'DELETE_KIT_SUCCESS';
-  static DELETE_KIT_ERROR = 'DELETE_KIT_ERROR';
+  static DELETE = '[Kits] Delete';
+  static DELETE_SUCCESS = '[Kits] Delete Success';
+  static DELETE_FAIL = '[Kits] Delete Fail';
 
-  static CREATE_KIT = 'CREATE_KIT';
-  static CREATE_KIT_SUCCESS = 'CREATE_KIT_SUCCESS';
-  static CREATE_KIT_ERROR = 'CREATE_KIT_ERROR';
+  static CREATE = '[Kits] Create';
+  static CREATE_SUCCESS = '[Kits] Create Success';
+  static CREATE_FAIL = '[Kits] Create Fail';
 
-  static UPDATE_KIT = 'UPDATE_KIT';
-  static UPDATE_KIT_SUCCESS = 'UPDATE_KIT_SUCCESS';
-  static UPDATE_KIT_ERROR = 'UPDATE_KIT_ERROR';
+  static UPDATE = '[Kits] Update';
+  static UPDATE_SUCCESS = '[Kits] Update Success';
+  static UPDATE_FAIL = '[Kits] Update Fail';
 
   constructor(
     private store: Store<AppState>
   ) {}
 
   fetchKits() {
-    this.store.dispatch(createAction(KitsActions.FETCH_KITS));
+    this.store.dispatch(createAction(KitsActions.FETCH));
   }
 
   deleteKit(kitID: number) {
     this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.deletingKit));
-    this.store.dispatch(createAction(KitsActions.DELETE_KIT, kitID));
+    this.store.dispatch(createAction(KitsActions.DELETE, kitID));
   }
 
   createKit(kit: any, kitModels: any) {
     this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.creatingKit));
-    this.store.dispatch(createAction(KitsActions.CREATE_KIT, { kit, kitModels }));
+    this.store.dispatch(createAction(KitsActions.CREATE, { kit, kitModels }));
   }
 
   updateKit(kit: any, kitModelsToCreate: any, kitModelsToDelete: any) {
     this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.updatingKit));
-    this.store.dispatch(createAction(KitsActions.UPDATE_KIT, { kit, kitModelsToCreate, kitModelsToDelete }));
+    this.store.dispatch(createAction(KitsActions.UPDATE, { kit, kitModelsToCreate, kitModelsToDelete }));
   }
 }

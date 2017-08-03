@@ -24,10 +24,10 @@ export class KitsEffects {
    */
   @Effect()
   fetch$ = this.actions$
-    .ofType(KitsActions.FETCH_KITS)
+    .ofType(KitsActions.FETCH)
     .mergeMap(action => this.kitData.getKits()
-      .map(res => createAction(KitsActions.FETCH_KITS_SUCCESS, res))
-      .catch(err => Observable.of(createAction(KitsActions.FETCH_KITS_ERROR, err)))
+      .map(res => createAction(KitsActions.FETCH_SUCCESS, res))
+      .catch(err => Observable.of(createAction(KitsActions.FETCH_FAIL, err)))
     );
 
   /**
@@ -35,14 +35,14 @@ export class KitsEffects {
    */
   @Effect()
   delete$ = this.actions$
-    .ofType(KitsActions.DELETE_KIT)
+    .ofType(KitsActions.DELETE)
     .mergeMap(action => this.kitData.deleteKit(action.payload)
       .concatMap(res => [
-        createAction(KitsActions.DELETE_KIT_SUCCESS, res),
+        createAction(KitsActions.DELETE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ])
       .catch(err => Observable.of(
-        createAction(KitsActions.DELETE_KIT_ERROR, err),
+        createAction(KitsActions.DELETE_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -53,7 +53,7 @@ export class KitsEffects {
    */
   @Effect()
   deleteSuccess$ = this.actions$
-    .ofType(KitsActions.DELETE_KIT_SUCCESS)
+    .ofType(KitsActions.DELETE_SUCCESS)
     .mergeMap(() => Observable.of(
       createAction(AppActions.SHOW_MESSAGE, Messages.kitDeleted),
       createAction(AppActions.POP_NAV_TWICE)
@@ -65,15 +65,15 @@ export class KitsEffects {
    */
   @Effect()
   create$ = this.actions$
-    .ofType(KitsActions.CREATE_KIT)
+    .ofType(KitsActions.CREATE)
     .mergeMap(action => this.kitData.addKit(action.payload.kit)
-      .map(res => createAction(KitsActions.CREATE_KIT_SUCCESS, {
+      .map(res => createAction(KitsActions.CREATE_SUCCESS, {
         kit: res,
         kitModelsToCreate: action.payload.kitModels,
         kitModelsToDelete: [],
         message: Messages.kitAdded
       }))
-      .catch(err => Observable.of(createAction(KitsActions.CREATE_KIT_ERROR, err)))
+      .catch(err => Observable.of(createAction(KitsActions.CREATE_FAIL, err)))
     );
 
   /**
@@ -81,9 +81,9 @@ export class KitsEffects {
    */
   @Effect()
   createSuccess$ = this.actions$
-    .ofType(KitsActions.UPDATE_KIT_SUCCESS, KitsActions.CREATE_KIT_SUCCESS)
+    .ofType(KitsActions.UPDATE_SUCCESS, KitsActions.CREATE_SUCCESS)
     .mergeMap(action => Observable.of(
-      createAction(KitModelsActions.UPDATE_KIT_MODELS, action.payload)
+      createAction(KitModelsActions.UPDATE, action.payload)
     ))
     .delay(1);
 
@@ -92,15 +92,15 @@ export class KitsEffects {
    */
   @Effect()
   update$ = this.actions$
-    .ofType(KitsActions.UPDATE_KIT)
+    .ofType(KitsActions.UPDATE)
     .mergeMap(action => this.kitData.updateKit(action.payload.kit)
-      .map(res => createAction(KitsActions.UPDATE_KIT_SUCCESS, {
+      .map(res => createAction(KitsActions.UPDATE_SUCCESS, {
         kit: res,
         kitModelsToCreate: action.payload.kitModelsToCreate,
         kitModelsToDelete: action.payload.kitModelsToDelete,
         message: Messages.kitEdited
       }))
-      .catch(err => Observable.of(createAction(KitsActions.UPDATE_KIT_ERROR, err)))
+      .catch(err => Observable.of(createAction(KitsActions.UPDATE_FAIL, err)))
     );
 
   /**
@@ -109,10 +109,10 @@ export class KitsEffects {
   @Effect()
   errors$ = this.actions$
     .ofType(
-      KitsActions.FETCH_KITS_ERROR,
-      KitsActions.DELETE_KIT_ERROR,
-      KitsActions.CREATE_KIT_ERROR,
-      KitsActions.UPDATE_KIT_ERROR
+      KitsActions.FETCH_FAIL,
+      KitsActions.DELETE_FAIL,
+      KitsActions.CREATE_FAIL,
+      KitsActions.UPDATE_FAIL
     )
     .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
     .delay(1);

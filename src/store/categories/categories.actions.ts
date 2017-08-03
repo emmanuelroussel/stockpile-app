@@ -9,30 +9,30 @@ import { LoadingMessages } from '../../constants';
 @Injectable()
 export class CategoriesActions {
 
-  static FETCH_CATEGORIES = 'FETCH_CATEGORIES';
-  static FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
-  static FETCH_CATEGORIES_ERROR = 'FETCH_CATEGORIES_ERROR';
+  static FETCH = '[Categories] Fetch';
+  static FETCH_SUCCESS = '[Categories] Fetch Success';
+  static FETCH_FAIL = '[Categories] Fetch Fail';
 
-  static CREATE_CATEGORY = 'CREATE_CATEGORY';
-  static CREATE_CATEGORY_SUCCESS = 'CREATE_CATEGORY_SUCCESS';
-  static CREATE_CATEGORY_ERROR = 'CREATE_CATEGORY_ERROR';
+  static CREATE = '[Categories] Create';
+  static CREATE_SUCCESS = '[Categories] Create Success';
+  static CREATE_FAIL = '[Categories] Create Fail';
 
-  static FILTER_CATEGORIES = 'FILTER_CATEGORIES';
+  static FILTER = '[Categories] Filter';
 
   constructor(
     private store: Store<AppState>
   ) {}
 
   fetchCategories() {
-    this.store.dispatch(createAction(CategoriesActions.FETCH_CATEGORIES));
+    this.store.dispatch(createAction(CategoriesActions.FETCH));
   }
 
   createCategory(name: string) {
     this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.creatingCategory));
-    this.store.dispatch(createAction(CategoriesActions.CREATE_CATEGORY, { name }));
+    this.store.dispatch(createAction(CategoriesActions.CREATE, { name }));
   }
 
   filterCategories(text: string) {
-    this.store.dispatch(createAction(CategoriesActions.FILTER_CATEGORIES, text));
+    this.store.dispatch(createAction(CategoriesActions.FILTER, text));
   }
 }

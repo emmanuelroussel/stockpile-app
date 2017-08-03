@@ -10,9 +10,9 @@ const initialState = {
 
 export function kitsReducer(kits: Kits = initialState, action: Action): Kits {
   switch (action.type) {
-    case KitsActions.FETCH_KITS:
+    case KitsActions.FETCH:
      return { ...kits, showLoadingSpinner: true };
-    case KitsActions.FETCH_KITS_SUCCESS:
+    case KitsActions.FETCH_SUCCESS:
       return {
         ...kits,
         results: Object.assign({},
@@ -24,14 +24,14 @@ export function kitsReducer(kits: Kits = initialState, action: Action): Kits {
         ),
         showLoadingSpinner: false
       };
-    case KitsActions.FETCH_KITS_ERROR:
+    case KitsActions.FETCH_FAIL:
       return { ...kits, loading: false };
-    case KitsActions.DELETE_KIT_SUCCESS:
+    case KitsActions.DELETE_SUCCESS:
       const results = Object.assign({}, kits.results);
       delete results[action.payload.id];
       return { ...kits, results };
-    case KitsActions.CREATE_KIT_SUCCESS:
-    case KitsActions.UPDATE_KIT_SUCCESS:
+    case KitsActions.CREATE_SUCCESS:
+    case KitsActions.UPDATE_SUCCESS:
       return {
         ...kits,
         results: {

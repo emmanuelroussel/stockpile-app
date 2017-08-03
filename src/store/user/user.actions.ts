@@ -10,34 +10,34 @@ import { LoadingMessages } from '../../constants';
 @Injectable()
 export class UserActions {
 
-  static LOGIN_USER = 'LOGIN_USER';
-  static LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
-  static LOGIN_USER_ERROR = 'LOGIN_USER_ERROR';
-  static SAVE_TOKEN = 'SAVE_TOKEN';
+  static LOGIN = '[User] Login';
+  static LOGIN_SUCCESS = '[User] Login Success';
+  static LOGIN_FAIL = '[User] Login Fail';
+  static SAVE_TOKEN = '[User] Save Token';
 
-  static LOGOUT_USER = 'LOGOUT_USER';
-  static LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
-  static LOGOUT_USER_ERROR = 'LOGOUT_USER_ERROR';
+  static LOGOUT = '[User] Logout';
+  static LOGOUT_SUCCESS = '[User] Logout Success';
+  static LOGOUT_FAIL = '[User] Logout Fail';
 
-  static FETCH_USER = 'FETCH_USER';
-  static FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
-  static FETCH_USER_ERROR = 'FETCH_USER_ERROR';
+  static FETCH = '[User] Fetch';
+  static FETCH_SUCCESS = '[User] Fetch Success';
+  static FETCH_FAIL = '[User] Fetch Fail';
 
-  static UPDATE_USER = 'UPDATE_USER';
-  static UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
-  static UPDATE_USER_ERROR = 'UPDATE_USER_ERROR';
+  static UPDATE = '[User] Update';
+  static UPDATE_SUCCESS = '[User] Update Success';
+  static UPDATE_FAIL = '[User] Update Fail';
 
-  static CHECK_USER_LOGGED_IN = 'CHECK_USER_LOGGED_IN';
-  static CHECK_USER_LOGGED_IN_SUCCESS = 'CHECK_USER_LOGGED_IN_SUCCESS';
-  static CHECK_USER_LOGGED_IN_ERROR = 'CHECK_USER_LOGGED_IN_ERROR';
+  static CHECK_LOGGED_IN = '[User] Check Logged In';
+  static CHECK_LOGGED_IN_SUCCESS = '[User] Check Logged In Success';
+  static CHECK_LOGGED_IN_FAIL = '[User] Check Logged In Fail';
 
-  static ARCHIVE_USER = 'ARCHIVE_USER';
-  static ARCHIVE_USER_SUCCESS = 'ARCHIVE_USER_SUCCESS';
-  static ARCHIVE_USER_ERROR = 'ARCHIVE_USER_ERROR';
+  static ARCHIVE = '[User] Archive';
+  static ARCHIVE_SUCCESS = '[User] Archive Success';
+  static ARCHIVE_FAIL = '[User] Archive Fail';
 
-  static CHANGE_USER_PASSWORD = 'CHANGE_USER_PASSWORD';
-  static CHANGE_USER_PASSWORD_SUCCESS = 'CHANGE_USER_PASSWORD_SUCCESS';
-  static CHANGE_USER_PASSWORD_ERROR = 'CHANGE_USER_PASSWORD_ERROR';
+  static CHANGE_PASSWORD = '[User] Change Password';
+  static CHANGE_PASSWORD_SUCCESS = '[User] Change Password Success';
+  static CHANGE_PASSWORD_FAIL = '[User] Change Password Fail';
 
   constructor(
     private store: Store<AppState>,
@@ -46,33 +46,33 @@ export class UserActions {
 
   loginUser(credentials: any) {
     this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.loggingInUser));
-    this.store.dispatch(createAction(UserActions.LOGIN_USER, credentials));
+    this.store.dispatch(createAction(UserActions.LOGIN, credentials));
   }
 
   logoutUser() {
-    this.store.dispatch(createAction(UserActions.LOGOUT_USER));
+    this.store.dispatch(createAction(UserActions.LOGOUT));
   }
 
   fetchUser() {
-    this.store.dispatch(createAction(UserActions.FETCH_USER));
+    this.store.dispatch(createAction(UserActions.FETCH));
   }
 
   updateUser(user: any) {
     this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.updatingUser));
-    this.store.dispatch(createAction(UserActions.UPDATE_USER, user));
+    this.store.dispatch(createAction(UserActions.UPDATE, user));
   }
 
   checkUserLoggedIn() {
-    this.store.dispatch(createAction(UserActions.CHECK_USER_LOGGED_IN));
+    this.store.dispatch(createAction(UserActions.CHECK_LOGGED_IN));
   }
 
   archiveUser(password: string) {
     this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.archivingUser));
-    this.store.dispatch(createAction(UserActions.ARCHIVE_USER, password));
+    this.store.dispatch(createAction(UserActions.ARCHIVE, password));
   }
 
   changeUserPassword(passwords: any) {
     this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.savingPassword));
-    this.store.dispatch(createAction(UserActions.CHANGE_USER_PASSWORD, passwords));
+    this.store.dispatch(createAction(UserActions.CHANGE_PASSWORD, passwords));
   }
 }

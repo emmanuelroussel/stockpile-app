@@ -15,10 +15,10 @@ const initialState = {
 
 export function userReducer(user: User = initialState, action: Action): User {
   switch (action.type) {
-    case UserActions.LOGOUT_USER:
+    case UserActions.LOGOUT:
       return initialState;
-    case UserActions.FETCH_USER_SUCCESS:
-    case UserActions.UPDATE_USER_SUCCESS:
+    case UserActions.FETCH_SUCCESS:
+    case UserActions.UPDATE_SUCCESS:
       return action.payload;
     default:
       return user;

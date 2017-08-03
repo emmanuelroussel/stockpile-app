@@ -22,10 +22,10 @@ export class BrandsEffects {
    */
   @Effect()
   fetch$ = this.actions$
-    .ofType(BrandsActions.FETCH_BRANDS)
+    .ofType(BrandsActions.FETCH)
     .mergeMap(action => this.itemPropertyData.getBrands()
-      .map(res => createAction(BrandsActions.FETCH_BRANDS_SUCCESS, res))
-      .catch(err => Observable.of(createAction(BrandsActions.FETCH_BRANDS_ERROR, err)))
+      .map(res => createAction(BrandsActions.FETCH_SUCCESS, res))
+      .catch(err => Observable.of(createAction(BrandsActions.FETCH_FAIL, err)))
     );
 
   /**
@@ -33,14 +33,14 @@ export class BrandsEffects {
    */
   @Effect()
   create$ = this.actions$
-    .ofType(BrandsActions.CREATE_BRAND)
+    .ofType(BrandsActions.CREATE)
     .mergeMap(action => this.itemPropertyData.addBrand(action.payload)
       .concatMap(res => [
-        createAction(BrandsActions.CREATE_BRAND_SUCCESS, res),
+        createAction(BrandsActions.CREATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ])
       .catch(err => Observable.of(
-        createAction(BrandsActions.CREATE_BRAND_ERROR, err),
+        createAction(BrandsActions.CREATE_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -50,7 +50,7 @@ export class BrandsEffects {
    */
   @Effect()
   createSuccess$ = this.actions$
-    .ofType(BrandsActions.CREATE_BRAND_SUCCESS)
+    .ofType(BrandsActions.CREATE_SUCCESS)
     .mergeMap(action => Observable.of(AppActions.POP_NAV))
     .delay(1);
 
@@ -60,8 +60,8 @@ export class BrandsEffects {
   @Effect()
   errors$ = this.actions$
     .ofType(
-      BrandsActions.FETCH_BRANDS_ERROR,
-      BrandsActions.CREATE_BRAND_ERROR,
+      BrandsActions.FETCH_FAIL,
+      BrandsActions.CREATE_FAIL,
     )
     .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
     .delay(1);

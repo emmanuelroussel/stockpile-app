@@ -17,10 +17,10 @@ const initialState = {
 
 export function itemsReducer(items: Items = initialState, action: Action): Items {
   switch (action.type) {
-    case ItemsActions.FETCH_ITEMS:
+    case ItemsActions.FETCH:
       // Show loading only if there are no items, else it is the infinite scroll
       return { ...items, showLoadingSpinner: items.display.length ? false : true };
-    case ItemsActions.FETCH_ITEMS_SUCCESS:
+    case ItemsActions.FETCH_SUCCESS:
       return {
         ...items,
         results: Object.assign({},
@@ -36,7 +36,7 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
         display: [...items.display, ...action.payload.results],
         showLoadingSpinner: false
       };
-    case ItemsActions.CREATE_ITEM_SUCCESS:
+    case ItemsActions.CREATE_SUCCESS:
       return {
         ...items,
         results: {
@@ -45,7 +45,7 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
         },
         display: [...items.display, action.payload]
       };
-    case ItemsActions.UPDATE_ITEM_SUCCESS:
+    case ItemsActions.UPDATE_SUCCESS:
       return {
         ...items,
         results: {
@@ -60,13 +60,13 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
           }
         })
       };
-    case ItemsActions.DELETE_ITEM_SUCCESS:
+    case ItemsActions.DELETE_SUCCESS:
       const results = Object.assign({}, items.results);
       delete results[action.payload.id];
       return { ...items, results };
-    case ItemsActions.RESET_ITEMS:
+    case ItemsActions.RESET:
       return initialState;
-    case ItemsActions.UPDATE_TEMP_ITEM:
+    case ItemsActions.UPDATE_TEMP:
       return {
         ...items,
         tempItem: Object.assign({}, items.tempItem, action.payload),
@@ -79,8 +79,8 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
         }
       };
     case ItemsActions.RESET_RENTALS:
-    case ItemsActions.RETURN_ITEMS_SUCCESS:
-    case ItemsActions.RENT_ITEMS_SUCCESS:
+    case ItemsActions.RETURN_SUCCESS:
+    case ItemsActions.RENT_SUCCESS:
       return { ...items, rentals: {} };
     case ItemsActions.ADD_TO_RENTALS_SUCCESS:
       return {

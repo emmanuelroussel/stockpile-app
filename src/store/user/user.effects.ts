@@ -42,11 +42,11 @@ export class UserEffects {
    */
   @Effect()
   login$ = this.actions$
-    .ofType(UserActions.LOGIN_USER)
+    .ofType(UserActions.LOGIN)
     .mergeMap(action => this.userData.login(action.payload)
       .map(res => createAction(UserActions.SAVE_TOKEN, res))
       .catch(err => Observable.of(
-        createAction(UserActions.LOGIN_USER_ERROR, err),
+        createAction(UserActions.LOGIN_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -59,11 +59,11 @@ export class UserEffects {
     .ofType(UserActions.SAVE_TOKEN)
     .mergeMap(action => Observable.of(this.storage.set('id_token', action.payload.token))
       .concatMap(res => [
-        createAction(UserActions.LOGIN_USER_SUCCESS, this.getIDsFromToken(action.payload.token)),
+        createAction(UserActions.LOGIN_SUCCESS, this.getIDsFromToken(action.payload.token)),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ])
       .catch(err => Observable.of(
-        createAction(UserActions.LOGIN_USER_ERROR, err),
+        createAction(UserActions.LOGIN_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -73,7 +73,7 @@ export class UserEffects {
    */
   @Effect()
   loginError$ = this.actions$
-    .ofType(UserActions.LOGIN_USER_ERROR)
+    .ofType(UserActions.LOGIN_FAIL)
     .do(action => Observable.of(
       createAction(AppActions.SHOW_MESSAGE, action.payload.message),
       createAction(AppActions.SET_ROOT_TO, LoginPage)
@@ -86,10 +86,10 @@ export class UserEffects {
    */
   @Effect()
   loginSuccess$ = this.actions$
-    .ofType(UserActions.LOGIN_USER_SUCCESS)
+    .ofType(UserActions.LOGIN_SUCCESS)
     .mergeMap(action => Observable.of(
-      createAction(UserActions.FETCH_USER, action.payload.userID),
-      createAction(OrganizationActions.FETCH_ORGANIZATION, action.payload.organizationID),
+      createAction(UserActions.FETCH, action.payload.userID),
+      createAction(OrganizationActions.FETCH, action.payload.organizationID),
       createAction(AppActions.SET_ROOT_TO, TabsPage)
     ))
     .delay(1);
@@ -99,13 +99,13 @@ export class UserEffects {
    */
   @Effect()
   checkUserLoggedIn$ = this.actions$
-    .ofType(UserActions.CHECK_USER_LOGGED_IN)
+    .ofType(UserActions.CHECK_LOGGED_IN)
     .mergeMap(() => Observable.fromPromise(this.storage.get('id_token'))
       .map(token => {
         if (tokenNotExpired(null, token)) {
-          return createAction(UserActions.CHECK_USER_LOGGED_IN_SUCCESS, this.getIDsFromToken(token));
+          return createAction(UserActions.CHECK_LOGGED_IN_SUCCESS, this.getIDsFromToken(token));
         } else {
-          return createAction(UserActions.CHECK_USER_LOGGED_IN_ERROR);
+          return createAction(UserActions.CHECK_LOGGED_IN_FAIL);
         }
       })
     );
@@ -115,10 +115,10 @@ export class UserEffects {
    */
   @Effect()
   checkUserLoggedInSuccess$ = this.actions$
-    .ofType(UserActions.CHECK_USER_LOGGED_IN_SUCCESS)
+    .ofType(UserActions.CHECK_LOGGED_IN_SUCCESS)
     .mergeMap(action => Observable.of(
-      createAction(AppActions.INITIALIZE_APP),
-      createAction(UserActions.LOGIN_USER_SUCCESS, action.payload)
+      createAction(AppActions.INITIALIZE),
+      createAction(UserActions.LOGIN_SUCCESS, action.payload)
     ))
     .delay(1);
 
@@ -127,9 +127,9 @@ export class UserEffects {
    */
   @Effect()
   checkUserLoggedInError$ = this.actions$
-    .ofType(UserActions.CHECK_USER_LOGGED_IN_ERROR)
+    .ofType(UserActions.CHECK_LOGGED_IN_FAIL)
     .mergeMap(() => Observable.of(
-      createAction(AppActions.INITIALIZE_APP),
+      createAction(AppActions.INITIALIZE),
       createAction(AppActions.SET_ROOT_TO, LoginPage)
     ))
     .delay(1);
@@ -139,10 +139,10 @@ export class UserEffects {
    */
   @Effect()
   logout$ = this.actions$
-    .ofType(UserActions.LOGOUT_USER)
+    .ofType(UserActions.LOGOUT)
     .mergeMap(action => Observable.of(this.storage.remove('id_token'))
-      .map(res => createAction(UserActions.LOGOUT_USER_SUCCESS))
-      .catch(err => Observable.of(createAction(UserActions.LOGOUT_USER_ERROR, err)))
+      .map(res => createAction(UserActions.LOGOUT_SUCCESS))
+      .catch(err => Observable.of(createAction(UserActions.LOGOUT_FAIL, err)))
     );
 
   /**
@@ -150,7 +150,7 @@ export class UserEffects {
    */
   @Effect()
   logoutSuccess$ = this.actions$
-    .ofType(UserActions.LOGOUT_USER_SUCCESS)
+    .ofType(UserActions.LOGOUT_SUCCESS)
     .mergeMap(action => Observable.of(createAction(AppActions.SET_ROOT_TO, LoginPage)))
     .delay(1);
 
@@ -159,7 +159,7 @@ export class UserEffects {
    */
   @Effect()
   logoutError$ = this.actions$
-    .ofType(UserActions.LOGOUT_USER_ERROR)
+    .ofType(UserActions.LOGOUT_FAIL)
     .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
     .delay(1);
 
@@ -168,11 +168,11 @@ export class UserEffects {
    */
   @Effect()
   fetch$ = this.actions$
-    .ofType(UserActions.FETCH_USER)
+    .ofType(UserActions.FETCH)
     .withLatestFrom(this.store$)
     .mergeMap(([action, store]) => this.userData.getUser(store.user.userID || action.payload)
-      .map(res => createAction(UserActions.FETCH_USER_SUCCESS, res))
-      .catch(err => Observable.of(createAction(UserActions.FETCH_USER_ERROR, err)))
+      .map(res => createAction(UserActions.FETCH_SUCCESS, res))
+      .catch(err => Observable.of(createAction(UserActions.FETCH_FAIL, err)))
     );
 
   /**
@@ -180,15 +180,15 @@ export class UserEffects {
    */
   @Effect()
   update$ = this.actions$
-    .ofType(UserActions.UPDATE_USER)
+    .ofType(UserActions.UPDATE)
     .withLatestFrom(this.store$)
     .mergeMap(([action, store]) => this.userData.updateUser(store.user.userID, action.payload)
       .concatMap(res => [
-        createAction(UserActions.UPDATE_USER_SUCCESS, res),
+        createAction(UserActions.UPDATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ])
       .catch(err => Observable.of(
-        createAction(UserActions.UPDATE_USER_ERROR, err),
+        createAction(UserActions.UPDATE_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -198,7 +198,7 @@ export class UserEffects {
    */
   @Effect()
   updateSuccess$ = this.actions$
-    .ofType(UserActions.UPDATE_USER_SUCCESS)
+    .ofType(UserActions.UPDATE_SUCCESS)
     .mergeMap(action => Observable.of(
       createAction(AppActions.SHOW_MESSAGE, Messages.userEdited),
       createAction(AppActions.POP_NAV)
@@ -211,7 +211,7 @@ export class UserEffects {
    */
   @Effect()
   archive$ = this.actions$
-    .ofType(UserActions.ARCHIVE_USER)
+    .ofType(UserActions.ARCHIVE)
     .withLatestFrom(this.store$)
     .mergeMap(([action, store]) => this.userData.login({ email: store.user.email, password: action.payload })
       .map(res => {
@@ -221,16 +221,16 @@ export class UserEffects {
 
         this.userData.updateUser(store.user.userID, user)
           .concatMap(res => [
-            createAction(UserActions.ARCHIVE_USER_SUCCESS, user),
+            createAction(UserActions.ARCHIVE_SUCCESS, user),
             createAction(LayoutActions.HIDE_LOADING_MESSAGE)
           ])
           .catch(err => Observable.of(
-            createAction(UserActions.ARCHIVE_USER_ERROR, err),
+            createAction(UserActions.ARCHIVE_FAIL, err),
             createAction(LayoutActions.HIDE_LOADING_MESSAGE)
           ));
       })
       .catch(err => Observable.of(
-        createAction(UserActions.ARCHIVE_USER_ERROR, Messages.wrongPassword),
+        createAction(UserActions.ARCHIVE_FAIL, Messages.wrongPassword),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -240,10 +240,10 @@ export class UserEffects {
    */
   @Effect()
   archiveSuccess$ = this.actions$
-    .ofType(UserActions.ARCHIVE_USER_SUCCESS)
+    .ofType(UserActions.ARCHIVE_SUCCESS)
     .mergeMap(action => Observable.of(
       createAction(AppActions.SHOW_MESSAGE, Messages.userDeleted),
-      createAction(UserActions.LOGOUT_USER)
+      createAction(UserActions.LOGOUT)
     ))
     .delay(1);
 
@@ -252,7 +252,7 @@ export class UserEffects {
    */
   @Effect()
   archiveError$ = this.actions$
-    .ofType(UserActions.ARCHIVE_USER_ERROR, UserActions.CHANGE_USER_PASSWORD_ERROR)
+    .ofType(UserActions.ARCHIVE_FAIL, UserActions.CHANGE_PASSWORD_FAIL)
     .mergeMap(action => Observable.of(
       createAction(AppActions.SHOW_MESSAGE, action.payload.message)
     ))
@@ -263,15 +263,15 @@ export class UserEffects {
    */
   @Effect()
   changePassword$ = this.actions$
-    .ofType(UserActions.CHANGE_USER_PASSWORD)
+    .ofType(UserActions.CHANGE_PASSWORD)
     .withLatestFrom(this.store$)
     .mergeMap(([action, store]) => this.userData.changePassword(store.user.userID, action.payload)
       .concatMap(res => [
-        createAction(UserActions.CHANGE_USER_PASSWORD_SUCCESS, res),
+        createAction(UserActions.CHANGE_PASSWORD_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ])
       .catch(err => Observable.of(
-        createAction(UserActions.CHANGE_USER_PASSWORD_ERROR, err),
+        createAction(UserActions.CHANGE_PASSWORD_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -281,7 +281,7 @@ export class UserEffects {
    */
   @Effect()
   changePasswordSuccess$ = this.actions$
-    .ofType(UserActions.CHANGE_USER_PASSWORD_SUCCESS)
+    .ofType(UserActions.CHANGE_PASSWORD_SUCCESS)
     .mergeMap(action => Observable.of(
       createAction(AppActions.SHOW_MESSAGE, action.payload.message),
       createAction(AppActions.POP_NAV)

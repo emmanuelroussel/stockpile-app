@@ -11,7 +11,7 @@ const initialState = {
 
 export function brandsReducer(brands: Brands = initialState, action: Action): Brands {
   switch (action.type) {
-    case BrandsActions.FETCH_BRANDS_SUCCESS:
+    case BrandsActions.FETCH_SUCCESS:
       return {
         ...brands,
         results: Object.assign({},
@@ -24,7 +24,7 @@ export function brandsReducer(brands: Brands = initialState, action: Action): Br
         filtered: action.payload.results,
         showAddNew: false
       };
-    case BrandsActions.CREATE_BRAND_SUCCESS:
+    case BrandsActions.CREATE_SUCCESS:
       return {
         ...brands,
         results: {
@@ -32,7 +32,7 @@ export function brandsReducer(brands: Brands = initialState, action: Action): Br
           [action.payload.brandID]: action.payload
         }
       };
-    case BrandsActions.FILTER_BRANDS:
+    case BrandsActions.FILTER:
       const filtered = Object.keys(brands.results)
         .map((key) => brands.results[key])
         .filter(brand => brand.name.toLowerCase().indexOf(action.payload.toLowerCase()) > -1);

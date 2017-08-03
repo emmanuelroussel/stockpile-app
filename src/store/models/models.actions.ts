@@ -9,30 +9,30 @@ import { LoadingMessages } from '../../constants';
 @Injectable()
 export class ModelsActions {
 
-  static FETCH_MODELS = 'FETCH_MODELS';
-  static FETCH_MODELS_SUCCESS = 'FETCH_MODELS_SUCCESS';
-  static FETCH_MODELS_ERROR = 'FETCH_MODELS_ERROR';
+  static FETCH = '[Models] Fetch';
+  static FETCH_SUCCESS = '[Models] Fetch Success';
+  static FETCH_FAIL = '[Models] Fetch Fail';
 
-  static CREATE_MODEL = 'CREATE_MODEL';
-  static CREATE_MODEL_SUCCESS = 'CREATE_MODEL_SUCCESS';
-  static CREATE_MODEL_ERROR = 'CREATE_MODEL_ERROR';
+  static CREATE = '[Models] Create';
+  static CREATE_SUCCESS = '[Models] Create Success';
+  static CREATE_FAIL = '[Models] Create Fail';
 
-  static FILTER_MODELS = 'FILTER_MODELS';
+  static FILTER = '[Models] Filter';
 
   constructor(
     private store: Store<AppState>
   ) {}
 
   fetchModels() {
-    this.store.dispatch(createAction(ModelsActions.FETCH_MODELS));
+    this.store.dispatch(createAction(ModelsActions.FETCH));
   }
 
   createModel(name: string, brandID: number) {
     this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.creatingModel));
-    this.store.dispatch(createAction(ModelsActions.CREATE_MODEL, { name, brandID }));
+    this.store.dispatch(createAction(ModelsActions.CREATE, { name, brandID }));
   }
 
   filterModels(brandID: number, text: string = '') {
-    this.store.dispatch(createAction(ModelsActions.FILTER_MODELS, { brandID, text }));
+    this.store.dispatch(createAction(ModelsActions.FILTER, { brandID, text }));
   }
 }

@@ -7,16 +7,16 @@ import { AppState } from '../../models/app-state';
 @Injectable()
 export class OrganizationActions {
 
-  static FETCH_ORGANIZATION = 'FETCH_ORGANIZATION';
-  static FETCH_ORGANIZATION_SUCCESS = 'FETCH_ORGANIZATION_SUCCESS';
-  static FETCH_ORGANIZATION_ERROR = 'FETCH_ORGANIZATION_ERROR';
+  static FETCH = '[Organization] Fetch';
+  static FETCH_SUCCESS = '[Organization] Fetch Success';
+  static FETCH_FAIL = '[Organization] Fetch Fail';
 
   constructor(
     private store: Store<AppState>
   ) {}
 
   fetchOrganization() {
-    this.store.dispatch(createAction(OrganizationActions.FETCH_ORGANIZATION));
+    this.store.dispatch(createAction(OrganizationActions.FETCH));
   }
 
 }

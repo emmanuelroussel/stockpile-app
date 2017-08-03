@@ -7,8 +7,8 @@ import { AppState } from '../../models/app-state';
 @Injectable()
 export class LayoutActions {
 
-  static SHOW_LOADING_MESSAGE = 'SHOW_LOADING_MESSAGE';
-  static HIDE_LOADING_MESSAGE = 'HIDE_LOADING_MESSAGE';
+  static SHOW_LOADING_MESSAGE = '[Layout] Show Loading Message';
+  static HIDE_LOADING_MESSAGE = '[Layout] Hide Loading Message';
 
   constructor(
     private store: Store<AppState>

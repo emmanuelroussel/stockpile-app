@@ -7,20 +7,20 @@ import { AppState } from '../../models/app-state';
 @Injectable()
 export class KitModelsActions {
 
-  static FETCH_KIT_MODELS = 'FETCH_KIT_MODELS';
-  static FETCH_KIT_MODELS_SUCCESS = 'FETCH_KIT_MODELS_SUCCESS';
-  static FETCH_KIT_MODELS_ERROR = 'FETCH_KIT_MODELS_ERROR';
+  static FETCH = '[Kit Models] Fetch';
+  static FETCH_SUCCESS = '[Kit Models] Fetch Success';
+  static FETCH_FAIL = '[Kit Models] Fetch Fail';
 
-  static UPDATE_KIT_MODELS = 'UPDATE_KIT_MODELS';
-  static UPDATE_KIT_MODELS_SUCCESS = 'UPDATE_KIT_MODELS_SUCCESS';
-  static UPDATE_KIT_MODELS_ERROR = 'UPDATE_KIT_MODELS_ERROR';
+  static UPDATE = '[Kit Models] Update';
+  static UPDATE_SUCCESS = '[Kit Models] Update Success';
+  static UPDATE_FAIL = '[Kit Models] Update Fail';
 
   constructor(
     private store: Store<AppState>
   ) {}
 
   fetchKitModels(kitID: number) {
-    this.store.dispatch(createAction(KitModelsActions.FETCH_KIT_MODELS, kitID));
+    this.store.dispatch(createAction(KitModelsActions.FETCH, kitID));
   }
 
 }

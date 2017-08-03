@@ -9,30 +9,30 @@ import { LoadingMessages } from '../../constants';
 @Injectable()
 export class BrandsActions {
 
-  static FETCH_BRANDS = 'FETCH_BRANDS';
-  static FETCH_BRANDS_SUCCESS = 'FETCH_BRANDS_SUCCESS';
-  static FETCH_BRANDS_ERROR = 'FETCH_BRANDS_ERROR';
+  static FETCH = '[Brands] Fetch';
+  static FETCH_SUCCESS = '[Brands] Fetch Success';
+  static FETCH_FAIL = '[Brands] Fetch Fail';
 
-  static CREATE_BRAND = 'CREATE_BRAND';
-  static CREATE_BRAND_SUCCESS = 'CREATE_BRAND_SUCCESS';
-  static CREATE_BRAND_ERROR = 'CREATE_BRAND_ERROR';
+  static CREATE = '[Brands] Create';
+  static CREATE_SUCCESS = '[Brands] Create Success';
+  static CREATE_FAIL = '[Brands] Create Fail';
 
-  static FILTER_BRANDS = 'FILTER_BRANDS';
+  static FILTER = '[Brands] Filter';
 
   constructor(
     private store: Store<AppState>
   ) {}
 
   fetchBrands() {
-    this.store.dispatch(createAction(BrandsActions.FETCH_BRANDS));
+    this.store.dispatch(createAction(BrandsActions.FETCH));
   }
 
   createBrand(name: string) {
     this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.creatingBrand));
-    this.store.dispatch(createAction(BrandsActions.CREATE_BRAND, { name }));
+    this.store.dispatch(createAction(BrandsActions.CREATE, { name }));
   }
 
   filterBrands(text: string) {
-    this.store.dispatch(createAction(BrandsActions.FILTER_BRANDS, text));
+    this.store.dispatch(createAction(BrandsActions.FILTER, text));
   }
 }

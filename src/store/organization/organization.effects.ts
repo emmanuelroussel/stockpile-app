@@ -19,10 +19,10 @@ export class OrganizationEffects {
    */
   @Effect()
   fetch$ = this.actions$
-    .ofType(OrganizationActions.FETCH_ORGANIZATION)
+    .ofType(OrganizationActions.FETCH)
     .mergeMap(action => this.userData.getOrganization(action.payload.organizationID)
-      .map(res => createAction(OrganizationActions.FETCH_ORGANIZATION_SUCCESS, res))
-      .catch(err => Observable.of(createAction(OrganizationActions.FETCH_ORGANIZATION_ERROR, err)))
+      .map(res => createAction(OrganizationActions.FETCH_SUCCESS, res))
+      .catch(err => Observable.of(createAction(OrganizationActions.FETCH_FAIL, err)))
     );
 
   /**
@@ -30,7 +30,7 @@ export class OrganizationEffects {
    */
   @Effect()
   errors$ = this.actions$
-    .ofType(OrganizationActions.FETCH_ORGANIZATION_ERROR)
+    .ofType(OrganizationActions.FETCH_FAIL)
     .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
     .delay(1);
 }

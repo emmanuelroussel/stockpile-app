@@ -27,7 +27,7 @@ export class ItemsEffects {
    */
   @Effect()
   fetch$ = this.actions$
-    .ofType(ItemsActions.FETCH_ITEMS)
+    .ofType(ItemsActions.FETCH)
     .withLatestFrom(this.store$)
     .mergeMap(([action, store]) => this.itemData.filterItems(
         action.payload.brandID,
@@ -37,8 +37,8 @@ export class ItemsEffects {
         paginationLimit,
         store.items.offset
       )
-      .map(res => createAction(ItemsActions.FETCH_ITEMS_SUCCESS, res))
-      .catch(err => Observable.of(createAction(ItemsActions.FETCH_ITEMS_ERROR, err)))
+      .map(res => createAction(ItemsActions.FETCH_SUCCESS, res))
+      .catch(err => Observable.of(createAction(ItemsActions.FETCH_FAIL, err)))
     );
 
   /**
@@ -46,14 +46,14 @@ export class ItemsEffects {
    */
   @Effect()
   create$ = this.actions$
-    .ofType(ItemsActions.CREATE_ITEM)
+    .ofType(ItemsActions.CREATE)
     .mergeMap(action => this.itemData.addItem(action.payload)
       .concatMap(res => [
-        createAction(ItemsActions.CREATE_ITEM_SUCCESS, res),
+        createAction(ItemsActions.CREATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ])
       .catch(err => Observable.of(
-        createAction(ItemsActions.CREATE_ITEM_ERROR, err),
+        createAction(ItemsActions.CREATE_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -63,14 +63,14 @@ export class ItemsEffects {
    */
   @Effect()
   update$ = this.actions$
-    .ofType(ItemsActions.UPDATE_ITEM)
+    .ofType(ItemsActions.UPDATE)
     .mergeMap(action => this.itemData.editItem(action.payload, action.payload.barcode)
       .concatMap(res => [
-        createAction(ItemsActions.UPDATE_ITEM_SUCCESS, res),
+        createAction(ItemsActions.UPDATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ])
       .catch(err => Observable.of(
-        createAction(ItemsActions.UPDATE_ITEM_ERROR, err),
+        createAction(ItemsActions.UPDATE_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -80,14 +80,14 @@ export class ItemsEffects {
    */
   @Effect()
   delete$ = this.actions$
-    .ofType(ItemsActions.DELETE_ITEM)
+    .ofType(ItemsActions.DELETE)
     .mergeMap(action => this.itemData.deleteItem(action.payload)
       .concatMap(res => [
-        createAction(ItemsActions.DELETE_ITEM_SUCCESS, res),
+        createAction(ItemsActions.DELETE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ])
       .catch(err => Observable.of(
-        createAction(ItemsActions.DELETE_ITEM_ERROR, err),
+        createAction(ItemsActions.DELETE_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -104,7 +104,7 @@ export class ItemsEffects {
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ])
       .catch(err => Observable.of(
-        createAction(ItemsActions.START_RENTAL_ERROR, err),
+        createAction(ItemsActions.START_RENTAL_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -133,12 +133,12 @@ export class ItemsEffects {
       .concatMap(res => {
         if (!res.available && action.payload.action === constants.Actions.rent) {
           return [
-            createAction(ItemsActions.ADD_TO_RENTALS_ERROR, { message: Messages.itemAlreadyRented }),
+            createAction(ItemsActions.ADD_TO_RENTALS_FAIL, { message: Messages.itemAlreadyRented }),
             createAction(LayoutActions.HIDE_LOADING_MESSAGE)
           ];
         } else if (res.available && action.payload.action === constants.Actions.return) {
           return [
-            createAction(ItemsActions.ADD_TO_RENTALS_ERROR, { message: Messages.itemNotRented }),
+            createAction(ItemsActions.ADD_TO_RENTALS_FAIL, { message: Messages.itemNotRented }),
             createAction(LayoutActions.HIDE_LOADING_MESSAGE)
           ];
         } else {
@@ -149,7 +149,7 @@ export class ItemsEffects {
         }
       })
       .catch(err => Observable.of(
-        createAction(ItemsActions.ADD_TO_RENTALS_ERROR, err),
+        createAction(ItemsActions.ADD_TO_RENTALS_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
@@ -159,7 +159,7 @@ export class ItemsEffects {
    */
   @Effect()
   createSuccess$ = this.actions$
-    .ofType(ItemsActions.CREATE_ITEM_SUCCESS)
+    .ofType(ItemsActions.CREATE_SUCCESS)
     .mergeMap(action => Observable.of(
       createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded),
       createAction(AppActions.POP_NAV)
@@ -171,7 +171,7 @@ export class ItemsEffects {
    */
   @Effect()
   updateSuccess$ = this.actions$
-    .ofType(ItemsActions.UPDATE_ITEM_SUCCESS)
+    .ofType(ItemsActions.UPDATE_SUCCESS)
     .mergeMap(action => Observable.of(
       createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited),
       createAction(AppActions.POP_NAV)
@@ -183,7 +183,7 @@ export class ItemsEffects {
    */
   @Effect()
   deleteSuccess$ = this.actions$
-    .ofType(ItemsActions.DELETE_ITEM_SUCCESS)
+    .ofType(ItemsActions.DELETE_SUCCESS)
     .mergeMap(action => Observable.of(
       createAction(AppActions.SHOW_MESSAGE, Messages.itemDeleted),
       createAction(AppActions.POP_NAV_TWICE)
@@ -195,7 +195,7 @@ export class ItemsEffects {
    */
   @Effect()
   return$ = this.actions$
-    .ofType(ItemsActions.RETURN_ITEMS)
+    .ofType(ItemsActions.RETURN)
     .withLatestFrom(this.store$)
     .mergeMap(([action, store]) => {
       let returns = [];
@@ -220,11 +220,11 @@ export class ItemsEffects {
 
       return Observable.of(Promise.all(returns))
         .concatMap(() => [
-          createAction(ItemsActions.RETURN_ITEMS_SUCCESS),
+          createAction(ItemsActions.RETURN_SUCCESS),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE)
         ])
         .catch(err => Observable.of(
-          createAction(ItemsActions.RETURN_ITEMS_ERROR, err),
+          createAction(ItemsActions.RETURN_FAIL, err),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE)
         ));
     });
@@ -234,7 +234,7 @@ export class ItemsEffects {
      */
     @Effect()
     returnSuccess$ = this.actions$
-      .ofType(ItemsActions.RETURN_ITEMS_SUCCESS)
+      .ofType(ItemsActions.RETURN_SUCCESS)
       .mergeMap(action => Observable.of(
         createAction(AppActions.SHOW_MESSAGE, Messages.itemsReturned),
         createAction(AppActions.POP_NAV)
@@ -246,7 +246,7 @@ export class ItemsEffects {
      */
     @Effect()
     rent$ = this.actions$
-      .ofType(ItemsActions.RENT_ITEMS)
+      .ofType(ItemsActions.RENT)
       .withLatestFrom(this.store$)
       .mergeMap(([action, store]) => {
         let rentals = [];
@@ -259,11 +259,11 @@ export class ItemsEffects {
 
         return Observable.of(Promise.all(rentals))
           .concatMap(() => [
-            createAction(ItemsActions.RENT_ITEMS_SUCCESS),
+            createAction(ItemsActions.RENT_SUCCESS),
             createAction(LayoutActions.HIDE_LOADING_MESSAGE)
           ])
           .catch(err => Observable.of(
-            createAction(ItemsActions.RENT_ITEMS_ERROR, err),
+            createAction(ItemsActions.RENT_FAIL, err),
             createAction(LayoutActions.HIDE_LOADING_MESSAGE)
           ));
       });
@@ -273,7 +273,7 @@ export class ItemsEffects {
        */
       @Effect()
       rentSuccess$ = this.actions$
-        .ofType(ItemsActions.RENT_ITEMS_SUCCESS)
+        .ofType(ItemsActions.RENT_SUCCESS)
         .mergeMap(action => Observable.of(
           createAction(AppActions.SHOW_MESSAGE, Messages.itemsRented),
           createAction(AppActions.POP_NAV_TO_ROOT)
@@ -286,14 +286,14 @@ export class ItemsEffects {
       @Effect()
       errors$ = this.actions$
         .ofType(
-          ItemsActions.FETCH_ITEMS_ERROR,
-          ItemsActions.CREATE_ITEM_ERROR,
-          ItemsActions.UPDATE_ITEM_ERROR,
-          ItemsActions.DELETE_ITEM_ERROR,
-          ItemsActions.START_RENTAL_ERROR,
-          ItemsActions.ADD_TO_RENTALS_ERROR,
-          ItemsActions.RETURN_ITEMS_ERROR,
-          ItemsActions.RENT_ITEMS_ERROR
+          ItemsActions.FETCH_FAIL,
+          ItemsActions.CREATE_FAIL,
+          ItemsActions.UPDATE_FAIL,
+          ItemsActions.DELETE_FAIL,
+          ItemsActions.START_RENTAL_FAIL,
+          ItemsActions.ADD_TO_RENTALS_FAIL,
+          ItemsActions.RETURN_FAIL,
+          ItemsActions.RENT_FAIL
         )
         .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
         .delay(1);

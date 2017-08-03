@@ -11,7 +11,7 @@ const initialState = {
 
 export function categoriesReducer(categories: Categories = initialState, action: Action): Categories {
   switch (action.type) {
-    case CategoriesActions.FETCH_CATEGORIES_SUCCESS:
+    case CategoriesActions.FETCH_SUCCESS:
       return {
         ...categories,
         results: Object.assign({},
@@ -24,7 +24,7 @@ export function categoriesReducer(categories: Categories = initialState, action:
         filtered: action.payload.results,
         showAddNew: false
       };
-    case CategoriesActions.CREATE_CATEGORY_SUCCESS:
+    case CategoriesActions.CREATE_SUCCESS:
       return {
         ...categories,
         results: {
@@ -32,7 +32,7 @@ export function categoriesReducer(categories: Categories = initialState, action:
           [action.payload.categoryID]: action.payload
         }
       };
-    case CategoriesActions.FILTER_CATEGORIES:
+    case CategoriesActions.FILTER:
       return Object.assign({}, categories, {
         filtered: Object.keys(categories.results)
           .map((key) => categories.results[key])
