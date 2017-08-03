@@ -25,7 +25,10 @@ export class ModelsEffects {
     .ofType(ModelsActions.FETCH)
     .mergeMap(action => this.itemPropertyData.getModels()
       .map(res => createAction(ModelsActions.FETCH_SUCCESS, res))
-      .catch(err => Observable.of(createAction(ModelsActions.FETCH_FAIL, err)))
+      .catch(err => Observable.of(
+        createAction(ModelsActions.FETCH_FAIL, err),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
+      ))
     );
 
   /**
@@ -37,32 +40,13 @@ export class ModelsEffects {
     .mergeMap(action => this.itemPropertyData.addModel(action.payload)
       .concatMap(res => [
         createAction(ModelsActions.CREATE_SUCCESS, res),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.POP_NAV)
       ])
       .catch(err => Observable.of(
         createAction(ModelsActions.CREATE_FAIL, err),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
       ))
     );
-
-  /**
-   * On successful model creation, pop nav.
-   */
-  @Effect()
-  createSuccess$ = this.actions$
-    .ofType(ModelsActions.CREATE_SUCCESS)
-    .mergeMap(action => Observable.of(AppActions.POP_NAV))
-    .delay(1);
-
-  /**
-   * On unsuccessful operations, show message.
-   */
-  @Effect()
-  errors$ = this.actions$
-    .ofType(
-      ModelsActions.FETCH_FAIL,
-      ModelsActions.CREATE_FAIL,
-    )
-    .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
-    .delay(1);
 }

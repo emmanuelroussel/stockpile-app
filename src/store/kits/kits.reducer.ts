@@ -36,7 +36,7 @@ export function kitsReducer(kits: Kits = initialState, action: Action): Kits {
         ...kits,
         results: {
           ...kits.results,
-          [action.payload.kit.kitID]: action.payload.kit
+          [action.payload.kitID]: action.payload
         }
       };
     default:

@@ -23,20 +23,11 @@ export class KitModelsEffects {
     .ofType(KitModelsActions.FETCH)
     .mergeMap(action => this.kitData.getKitModels(action.payload)
       .map(res => createAction(KitModelsActions.FETCH_SUCCESS, res))
-      .catch(err => Observable.of(createAction(KitModelsActions.FETCH_FAIL, err)))
+      .catch(err => Observable.of(
+        createAction(KitModelsActions.FETCH_FAIL, err),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
+      ))
     );
-
-  /**
-   * On successful kit models creation, pop nav.
-   */
-  @Effect()
-  createSuccess$ = this.actions$
-    .ofType(KitModelsActions.UPDATE_SUCCESS)
-    .mergeMap(action => Observable.of(
-      createAction(AppActions.SHOW_MESSAGE, action.payload.message),
-      createAction(AppActions.POP_NAV)
-    ))
-    .delay(1);
 
   /**
    * Creates and deletes kit models belonging to a specific kit.
@@ -58,23 +49,14 @@ export class KitModelsEffects {
       return Observable.of(Promise.all(models))
         .concatMap(res => [
           createAction(KitModelsActions.UPDATE_SUCCESS, { message: action.payload.message, results: res }),
-          createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+          createAction(AppActions.SHOW_MESSAGE, action.payload.message),
+          createAction(AppActions.POP_NAV)
         ])
         .catch(err => Observable.of(
           createAction(KitModelsActions.UPDATE_FAIL, err),
-          createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+          createAction(AppActions.SHOW_MESSAGE, err.message)
         ));
     });
-
-  /**
-   * On unsuccessful operations, show message.
-   */
-  @Effect()
-  errors$ = this.actions$
-    .ofType(
-      KitModelsActions.FETCH_FAIL,
-      KitModelsActions.UPDATE_FAIL,
-    )
-    .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
-    .delay(1);
 }

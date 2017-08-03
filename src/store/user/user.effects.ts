@@ -47,7 +47,8 @@ export class UserEffects {
       .map(res => createAction(UserActions.SAVE_TOKEN, res))
       .catch(err => Observable.of(
         createAction(UserActions.LOGIN_FAIL, err),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
       ))
     );
 
@@ -58,7 +59,7 @@ export class UserEffects {
   saveToken$ = this.actions$
     .ofType(UserActions.SAVE_TOKEN)
     .mergeMap(action => Observable.of(this.storage.set('id_token', action.payload.token))
-      .concatMap(res => [
+      .concatMap(() => [
         createAction(UserActions.LOGIN_SUCCESS, this.getIDsFromToken(action.payload.token)),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ])
@@ -67,18 +68,6 @@ export class UserEffects {
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
-
-  /**
-   * Goes back to login page if error while logging user in.
-   */
-  @Effect()
-  loginError$ = this.actions$
-    .ofType(UserActions.LOGIN_FAIL)
-    .do(action => Observable.of(
-      createAction(AppActions.SHOW_MESSAGE, action.payload.message),
-      createAction(AppActions.SET_ROOT_TO, LoginPage)
-    ))
-    .delay(1);
 
   /**
    * Publishes event to fetch user and organization and navigate home on
@@ -101,38 +90,22 @@ export class UserEffects {
   checkUserLoggedIn$ = this.actions$
     .ofType(UserActions.CHECK_LOGGED_IN)
     .mergeMap(() => Observable.fromPromise(this.storage.get('id_token'))
-      .map(token => {
+      .concatMap(token => {
         if (tokenNotExpired(null, token)) {
-          return createAction(UserActions.CHECK_LOGGED_IN_SUCCESS, this.getIDsFromToken(token));
+          return [
+            createAction(UserActions.CHECK_LOGGED_IN_SUCCESS),
+            createAction(AppActions.INITIALIZE),
+            createAction(UserActions.LOGIN_SUCCESS, this.getIDsFromToken(token))
+          ];
         } else {
-          return createAction(UserActions.CHECK_LOGGED_IN_FAIL);
+          return [
+            createAction(UserActions.CHECK_LOGGED_IN_FAIL),
+            createAction(AppActions.INITIALIZE),
+            createAction(AppActions.SET_ROOT_TO, LoginPage)
+          ];
         }
       })
     );
-
-  /**
-   * If user is already logged in, initialize app and get info.
-   */
-  @Effect()
-  checkUserLoggedInSuccess$ = this.actions$
-    .ofType(UserActions.CHECK_LOGGED_IN_SUCCESS)
-    .mergeMap(action => Observable.of(
-      createAction(AppActions.INITIALIZE),
-      createAction(UserActions.LOGIN_SUCCESS, action.payload)
-    ))
-    .delay(1);
-
-  /**
-   * If user is not already logged in, initialize app and set nav root.
-   */
-  @Effect()
-  checkUserLoggedInError$ = this.actions$
-    .ofType(UserActions.CHECK_LOGGED_IN_FAIL)
-    .mergeMap(() => Observable.of(
-      createAction(AppActions.INITIALIZE),
-      createAction(AppActions.SET_ROOT_TO, LoginPage)
-    ))
-    .delay(1);
 
   /**
    * Removes auth token from storage.
@@ -141,27 +114,15 @@ export class UserEffects {
   logout$ = this.actions$
     .ofType(UserActions.LOGOUT)
     .mergeMap(action => Observable.of(this.storage.remove('id_token'))
-      .map(res => createAction(UserActions.LOGOUT_SUCCESS))
-      .catch(err => Observable.of(createAction(UserActions.LOGOUT_FAIL, err)))
+      .concatMap(res => [
+        createAction(UserActions.LOGOUT_SUCCESS),
+        createAction(AppActions.SET_ROOT_TO, LoginPage)
+      ])
+      .catch(err => Observable.of(
+        createAction(UserActions.LOGOUT_FAIL, err),
+        createAction(AppActions.SET_ROOT_TO, LoginPage)
+      ))
     );
-
-  /**
-   * Navigates home on sucessful logout.
-   */
-  @Effect()
-  logoutSuccess$ = this.actions$
-    .ofType(UserActions.LOGOUT_SUCCESS)
-    .mergeMap(action => Observable.of(createAction(AppActions.SET_ROOT_TO, LoginPage)))
-    .delay(1);
-
-  /**
-   * Shows message on unsuccessful logout.
-   */
-  @Effect()
-  logoutError$ = this.actions$
-    .ofType(UserActions.LOGOUT_FAIL)
-    .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
-    .delay(1);
 
   /**
    * Fetches user.
@@ -185,25 +146,15 @@ export class UserEffects {
     .mergeMap(([action, store]) => this.userData.updateUser(store.user.userID, action.payload)
       .concatMap(res => [
         createAction(UserActions.UPDATE_SUCCESS, res),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, Messages.userEdited),
+        createAction(AppActions.POP_NAV)
       ])
       .catch(err => Observable.of(
         createAction(UserActions.UPDATE_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
-
-  /**
-   * On successful user update, pop nav.
-   */
-  @Effect()
-  updateSuccess$ = this.actions$
-    .ofType(UserActions.UPDATE_SUCCESS)
-    .mergeMap(action => Observable.of(
-      createAction(AppActions.SHOW_MESSAGE, Messages.userEdited),
-      createAction(AppActions.POP_NAV)
-    ))
-    .delay(1);
 
   /**
    * Checks password and archives user if valid by setting archived to today's
@@ -222,41 +173,22 @@ export class UserEffects {
         this.userData.updateUser(store.user.userID, user)
           .concatMap(res => [
             createAction(UserActions.ARCHIVE_SUCCESS, user),
-            createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+            createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+              createAction(AppActions.SHOW_MESSAGE, Messages.userDeleted),
+              createAction(UserActions.LOGOUT)
           ])
           .catch(err => Observable.of(
             createAction(UserActions.ARCHIVE_FAIL, err),
-            createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+            createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+            createAction(AppActions.SHOW_MESSAGE, err.message)
           ));
       })
       .catch(err => Observable.of(
-        createAction(UserActions.ARCHIVE_FAIL, Messages.wrongPassword),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(UserActions.ARCHIVE_FAIL),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, Messages.wrongPassword)
       ))
     );
-
-  /**
-   * On successful user archival, logout user.
-   */
-  @Effect()
-  archiveSuccess$ = this.actions$
-    .ofType(UserActions.ARCHIVE_SUCCESS)
-    .mergeMap(action => Observable.of(
-      createAction(AppActions.SHOW_MESSAGE, Messages.userDeleted),
-      createAction(UserActions.LOGOUT)
-    ))
-    .delay(1);
-
-  /**
-   * On unsuccessful user archival, show error message.
-   */
-  @Effect()
-  archiveError$ = this.actions$
-    .ofType(UserActions.ARCHIVE_FAIL, UserActions.CHANGE_PASSWORD_FAIL)
-    .mergeMap(action => Observable.of(
-      createAction(AppActions.SHOW_MESSAGE, action.payload.message)
-    ))
-    .delay(1);
 
   /**
    * Changes the user's password.
@@ -268,25 +200,16 @@ export class UserEffects {
     .mergeMap(([action, store]) => this.userData.changePassword(store.user.userID, action.payload)
       .concatMap(res => [
         createAction(UserActions.CHANGE_PASSWORD_SUCCESS, res),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, res.message),
+        createAction(AppActions.POP_NAV)
       ])
       .catch(err => Observable.of(
         createAction(UserActions.CHANGE_PASSWORD_FAIL, err),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
       ))
     );
-
-  /**
-   * On successful password change, pop nav.
-   */
-  @Effect()
-  changePasswordSuccess$ = this.actions$
-    .ofType(UserActions.CHANGE_PASSWORD_SUCCESS)
-    .mergeMap(action => Observable.of(
-      createAction(AppActions.SHOW_MESSAGE, action.payload.message),
-      createAction(AppActions.POP_NAV)
-    ))
-    .delay(1);
 
   private getIDsFromToken(token: string) {
     const decodedToken = this.jwtHelper.decodeToken(token);

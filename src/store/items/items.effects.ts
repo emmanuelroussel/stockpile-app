@@ -38,7 +38,10 @@ export class ItemsEffects {
         store.items.offset
       )
       .map(res => createAction(ItemsActions.FETCH_SUCCESS, res))
-      .catch(err => Observable.of(createAction(ItemsActions.FETCH_FAIL, err)))
+      .catch(err => Observable.of(
+        createAction(ItemsActions.FETCH_FAIL, err),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
+      ))
     );
 
   /**
@@ -50,11 +53,14 @@ export class ItemsEffects {
     .mergeMap(action => this.itemData.addItem(action.payload)
       .concatMap(res => [
         createAction(ItemsActions.CREATE_SUCCESS, res),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded),
+        createAction(AppActions.POP_NAV)
       ])
       .catch(err => Observable.of(
         createAction(ItemsActions.CREATE_FAIL, err),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
       ))
     );
 
@@ -67,11 +73,14 @@ export class ItemsEffects {
     .mergeMap(action => this.itemData.editItem(action.payload, action.payload.barcode)
       .concatMap(res => [
         createAction(ItemsActions.UPDATE_SUCCESS, res),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited),
+        createAction(AppActions.POP_NAV)
       ])
       .catch(err => Observable.of(
         createAction(ItemsActions.UPDATE_FAIL, err),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
       ))
     );
 
@@ -84,11 +93,14 @@ export class ItemsEffects {
     .mergeMap(action => this.itemData.deleteItem(action.payload)
       .concatMap(res => [
         createAction(ItemsActions.DELETE_SUCCESS, res),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, Messages.itemDeleted),
+        createAction(AppActions.POP_NAV_TWICE)
       ])
       .catch(err => Observable.of(
         createAction(ItemsActions.DELETE_FAIL, err),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
       ))
     );
 
@@ -101,27 +113,20 @@ export class ItemsEffects {
     .mergeMap(action => this.itemData.getItem(action.payload)
       .concatMap(res => [
         createAction(ItemsActions.START_RENTAL_SUCCESS, res),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.PUSH_PAGE, {
+          page: RentalPage,
+          navParams: {
+            action: action.payload.available ? constants.Actions.rent : constants.Actions.return
+          }
+        })
       ])
       .catch(err => Observable.of(
         createAction(ItemsActions.START_RENTAL_FAIL, err),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
       ))
     );
-
-  /**
-   * On successful rental start, push Rental page with the right action.
-   */
-  @Effect()
-  startRentalSuccess$ = this.actions$
-    .ofType(ItemsActions.START_RENTAL_SUCCESS)
-    .mergeMap(action => Observable.of(createAction(AppActions.PUSH_PAGE, {
-      page: RentalPage,
-      navParams: {
-        action: action.payload.available ? constants.Actions.rent : constants.Actions.return
-      }
-    })))
-    .delay(1);
 
   /**
    * Adds an item to the rentals if valid.
@@ -150,45 +155,10 @@ export class ItemsEffects {
       })
       .catch(err => Observable.of(
         createAction(ItemsActions.ADD_TO_RENTALS_FAIL, err),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
       ))
     );
-
-  /**
-   * On successful item creation, pop nav.
-   */
-  @Effect()
-  createSuccess$ = this.actions$
-    .ofType(ItemsActions.CREATE_SUCCESS)
-    .mergeMap(action => Observable.of(
-      createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded),
-      createAction(AppActions.POP_NAV)
-    ))
-    .delay(1);
-
-  /**
-   * On successful item update, pop nav.
-   */
-  @Effect()
-  updateSuccess$ = this.actions$
-    .ofType(ItemsActions.UPDATE_SUCCESS)
-    .mergeMap(action => Observable.of(
-      createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited),
-      createAction(AppActions.POP_NAV)
-    ))
-    .delay(1);
-
-  /**
-   * On successful item deletion, pop nav twice.
-   */
-  @Effect()
-  deleteSuccess$ = this.actions$
-    .ofType(ItemsActions.DELETE_SUCCESS)
-    .mergeMap(action => Observable.of(
-      createAction(AppActions.SHOW_MESSAGE, Messages.itemDeleted),
-      createAction(AppActions.POP_NAV_TWICE)
-    ))
-    .delay(1);
 
   /**
    * Returns items.
@@ -221,80 +191,44 @@ export class ItemsEffects {
       return Observable.of(Promise.all(returns))
         .concatMap(() => [
           createAction(ItemsActions.RETURN_SUCCESS),
-          createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+          createAction(AppActions.SHOW_MESSAGE, Messages.itemsReturned),
+          createAction(AppActions.POP_NAV)
         ])
         .catch(err => Observable.of(
           createAction(ItemsActions.RETURN_FAIL, err),
-          createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+          createAction(AppActions.SHOW_MESSAGE, err.message)
         ));
     });
 
-    /**
-     * On successful return, pop nav.
-     */
-    @Effect()
-    returnSuccess$ = this.actions$
-      .ofType(ItemsActions.RETURN_SUCCESS)
-      .mergeMap(action => Observable.of(
-        createAction(AppActions.SHOW_MESSAGE, Messages.itemsReturned),
-        createAction(AppActions.POP_NAV)
-      ))
-      .delay(1);
+  /**
+   * Rents items.
+   */
+  @Effect()
+  rent$ = this.actions$
+    .ofType(ItemsActions.RENT)
+    .withLatestFrom(this.store$)
+    .mergeMap(([action, store]) => {
+      let rentals = [];
+      const items = Object.keys(store.items.rentals).map((key) => store.items.rentals[key]);
 
-    /**
-     * Rents items.
-     */
-    @Effect()
-    rent$ = this.actions$
-      .ofType(ItemsActions.RENT)
-      .withLatestFrom(this.store$)
-      .mergeMap(([action, store]) => {
-        let rentals = [];
-        const items = Object.keys(store.items.rentals).map((key) => store.items.rentals[key]);
+      for (const item of items) {
+        const rental = { ...action.payload, barcode: item.barcode };
+        rentals.push(this.itemData.rent(rental).toPromise());
+      }
 
-        for (const item of items) {
-          const rental = { ...action.payload, barcode: item.barcode };
-          rentals.push(this.itemData.rent(rental).toPromise());
-        }
-
-        return Observable.of(Promise.all(rentals))
-          .concatMap(() => [
-            createAction(ItemsActions.RENT_SUCCESS),
-            createAction(LayoutActions.HIDE_LOADING_MESSAGE)
-          ])
-          .catch(err => Observable.of(
-            createAction(ItemsActions.RENT_FAIL, err),
-            createAction(LayoutActions.HIDE_LOADING_MESSAGE)
-          ));
-      });
-
-      /**
-       * On successful rent, pop nav to root.
-       */
-      @Effect()
-      rentSuccess$ = this.actions$
-        .ofType(ItemsActions.RENT_SUCCESS)
-        .mergeMap(action => Observable.of(
+      return Observable.of(Promise.all(rentals))
+        .concatMap(() => [
+          createAction(ItemsActions.RENT_SUCCESS),
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, Messages.itemsRented),
           createAction(AppActions.POP_NAV_TO_ROOT)
-        ))
-        .delay(1);
-
-      /**
-       * On unsuccessful operations, show message.
-       */
-      @Effect()
-      errors$ = this.actions$
-        .ofType(
-          ItemsActions.FETCH_FAIL,
-          ItemsActions.CREATE_FAIL,
-          ItemsActions.UPDATE_FAIL,
-          ItemsActions.DELETE_FAIL,
-          ItemsActions.START_RENTAL_FAIL,
-          ItemsActions.ADD_TO_RENTALS_FAIL,
-          ItemsActions.RETURN_FAIL,
-          ItemsActions.RENT_FAIL
-        )
-        .mergeMap(action => Observable.of(createAction(AppActions.SHOW_MESSAGE, action.payload.message)))
-        .delay(1);
+        ])
+        .catch(err => Observable.of(
+          createAction(ItemsActions.RENT_FAIL, err),
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+          createAction(AppActions.SHOW_MESSAGE, err.message)
+        ));
+    });
 }

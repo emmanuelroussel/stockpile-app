@@ -6,7 +6,7 @@ import { AuthHttp, tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { Links } from '../constants';
 import { ApiUrl } from './api-url';
 import { Api } from './api';
-import { handleError } from '../services/auth-http-helpers';
+import { extractData, handleError } from '../services/auth-http-helpers';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
