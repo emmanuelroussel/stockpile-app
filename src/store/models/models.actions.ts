@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { type } from '../../utils';
 
 import { createAction } from '../create-action';
 import { AppState } from '../../models/app-state';
@@ -9,15 +10,15 @@ import { LoadingMessages } from '../../constants';
 @Injectable()
 export class ModelsActions {
 
-  static FETCH = '[Models] Fetch';
-  static FETCH_SUCCESS = '[Models] Fetch Success';
-  static FETCH_FAIL = '[Models] Fetch Fail';
+  static FETCH = type('[Models] Fetch');
+  static FETCH_SUCCESS = type('[Models] Fetch Success');
+  static FETCH_FAIL = type('[Models] Fetch Fail');
 
-  static CREATE = '[Models] Create';
-  static CREATE_SUCCESS = '[Models] Create Success';
-  static CREATE_FAIL = '[Models] Create Fail';
+  static CREATE = type('[Models] Create');
+  static CREATE_SUCCESS = type('[Models] Create Success');
+  static CREATE_FAIL = type('[Models] Create Fail');
 
-  static FILTER = '[Models] Filter';
+  static FILTER = type('[Models] Filter');
 
   constructor(
     private store: Store<AppState>

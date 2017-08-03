@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { type } from '../../utils';
 
 import { createAction } from '../create-action';
 import { AppState } from '../../models/app-state';
@@ -9,44 +10,44 @@ import { LoadingMessages } from '../../constants';
 @Injectable()
 export class ItemsActions {
 
-  static FETCH = '[Items] Fetch';
-  static FETCH_SUCCESS = '[Items] Fetch Success';
-  static FETCH_FAIL = '[Items] Fetch Fail';
+  static FETCH = type('[Items] Fetch');
+  static FETCH_SUCCESS = type('[Items] Fetch Success');
+  static FETCH_FAIL = type('[Items] Fetch Fail');
 
-  static CREATE = '[Items] Create';
-  static CREATE_SUCCESS = '[Items] Create Success';
-  static CREATE_FAIL = '[Items] Create Fail';
+  static CREATE = type('[Items] Create');
+  static CREATE_SUCCESS = type('[Items] Create Success');
+  static CREATE_FAIL = type('[Items] Create Fail');
 
-  static UPDATE = '[Items] Update';
-  static UPDATE_SUCCESS = '[Items] Update Success';
-  static UPDATE_FAIL = '[Items] Update Fail';
+  static UPDATE = type('[Items] Update');
+  static UPDATE_SUCCESS = type('[Items] Update Success');
+  static UPDATE_FAIL = type('[Items] Update Fail');
 
-  static DELETE = '[Items] Delete';
-  static DELETE_SUCCESS = '[Items] Delete Success';
-  static DELETE_FAIL = '[Items] Delete Fail';
+  static DELETE = type('[Items] Delete');
+  static DELETE_SUCCESS = type('[Items] Delete Success');
+  static DELETE_FAIL = type('[Items] Delete Fail');
 
-  static RESET = '[Items] Reset';
+  static RESET = type('[Items] Reset');
 
-  static UPDATE_TEMP = '[Items] Update Temp';
+  static UPDATE_TEMP = type('[Items] Update Temp');
 
-  static RESET_RENTALS = '[Items] Reset Rentals';
-  static REMOVE_FROM_RENTALS = '[Items] Remove From Rentals';
+  static RESET_RENTALS = type('[Items] Reset Rentals');
+  static REMOVE_FROM_RENTALS = type('[Items] Remove From Rentals');
 
-  static ADD_TO_RENTALS = '[Items] Add To Rentals';
-  static ADD_TO_RENTALS_SUCCESS = '[Items] Add to Rentals Success';
-  static ADD_TO_RENTALS_FAIL = '[Items] Add to Rentals Fail';
+  static ADD_TO_RENTALS = type('[Items] Add To Rentals');
+  static ADD_TO_RENTALS_SUCCESS = type('[Items] Add to Rentals Success');
+  static ADD_TO_RENTALS_FAIL = type('[Items] Add to Rentals Fail');
 
-  static START_RENTAL = '[Items] Start Rental';
-  static START_RENTAL_SUCCESS = '[Items] Start Rental Success';
-  static START_RENTAL_FAIL = '[Items] Start Rental Fail';
+  static START_RENTAL = type('[Items] Start Rental');
+  static START_RENTAL_SUCCESS = type('[Items] Start Rental Success');
+  static START_RENTAL_FAIL = type('[Items] Start Rental Fail');
 
-  static RETURN = '[Items] Return';
-  static RETURN_SUCCESS = '[Items] Return Success';
-  static RETURN_FAIL = '[Items] Return Fail';
+  static RETURN = type('[Items] Return');
+  static RETURN_SUCCESS = type('[Items] Return Success');
+  static RETURN_FAIL = type('[Items] Return Fail');
 
-  static RENT = '[Items] Rent';
-  static RENT_SUCCESS = '[Items] Rent Success';
-  static RENT_FAIL = '[Items] Rent Fail';
+  static RENT = type('[Items] Rent');
+  static RENT_SUCCESS = type('[Items] Rent Success');
+  static RENT_FAIL = type('[Items] Rent Fail');
 
   constructor(
     private store: Store<AppState>

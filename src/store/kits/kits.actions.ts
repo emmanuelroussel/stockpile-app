@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { type } from '../../utils';
 
 import { createAction } from '../create-action';
 import { AppState } from '../../models/app-state';
@@ -9,21 +10,21 @@ import { LoadingMessages } from '../../constants';
 @Injectable()
 export class KitsActions {
 
-  static FETCH = '[Kits] Fetch';
-  static FETCH_SUCCESS = '[Kits] Fetch Success';
-  static FETCH_FAIL = '[Kits] Fetch Fail';
+  static FETCH = type('[Kits] Fetch');
+  static FETCH_SUCCESS = type('[Kits] Fetch Success');
+  static FETCH_FAIL = type('[Kits] Fetch Fail');
 
-  static DELETE = '[Kits] Delete';
-  static DELETE_SUCCESS = '[Kits] Delete Success';
-  static DELETE_FAIL = '[Kits] Delete Fail';
+  static DELETE = type('[Kits] Delete');
+  static DELETE_SUCCESS = type('[Kits] Delete Success');
+  static DELETE_FAIL = type('[Kits] Delete Fail');
 
-  static CREATE = '[Kits] Create';
-  static CREATE_SUCCESS = '[Kits] Create Success';
-  static CREATE_FAIL = '[Kits] Create Fail';
+  static CREATE = type('[Kits] Create');
+  static CREATE_SUCCESS = type('[Kits] Create Success');
+  static CREATE_FAIL = type('[Kits] Create Fail');
 
-  static UPDATE = '[Kits] Update';
-  static UPDATE_SUCCESS = '[Kits] Update Success';
-  static UPDATE_FAIL = '[Kits] Update Fail';
+  static UPDATE = type('[Kits] Update');
+  static UPDATE_SUCCESS = type('[Kits] Update Success');
+  static UPDATE_FAIL = type('[Kits] Update Fail');
 
   constructor(
     private store: Store<AppState>

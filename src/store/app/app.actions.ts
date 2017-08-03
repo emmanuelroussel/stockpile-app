@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
+import { type } from '../../utils';
 
 @Injectable()
 export class AppActions {
 
-  static POP_NAV = '[App] Pop Nav';
-  static POP_NAV_TWICE = '[App] Pop Nav Twice';
-  static SET_ROOT_TO = '[App] Set Root To';
-  static PUSH_PAGE = '[App] Push Page';
-  static POP_NAV_TO_ROOT = '[App] Pop Nav To Root';
+  static POP_NAV = type('[App] Pop Nav');
+  static POP_NAV_TWICE = type('[App] Pop Nav Twice');
+  static SET_ROOT_TO = type('[App] Set Root To');
+  static PUSH_PAGE = type('[App] Push Page');
+  static POP_NAV_TO_ROOT = type('[App] Pop Nav To Root');
 
-  static INITIALIZE = '[App] Initialize';
+  static INITIALIZE = type('[App] Initialize');
 
-  static SHOW_MESSAGE = '[App] Show Message';
+  static SHOW_MESSAGE = type('[App] Show Message');
 
   constructor() {}
 }
