@@ -6,7 +6,8 @@ import { AuthHttp, tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { Links } from '../constants';
 import { ApiUrl } from './api-url';
 import { Api } from './api';
-import { extractData, handleError } from '../services/auth-http-helpers';
+import { handleError } from '../services/auth-http-helpers';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserData {
@@ -26,9 +27,10 @@ export class UserData {
    * Calls api with credentials to log in and saves auth token.
    */
   login(credentials: any) {
+    // Using Http instead of Api because this request does not have authentication
     return this.http.post(`${this.apiUrl.getUrl()}${Links.authenticate}`, credentials)
-    .map(extractData)
-    .catch(handleError);
+      .map(extractData)
+      .catch(handleError);
   }
 
   /**
@@ -44,18 +46,14 @@ export class UserData {
    * Calls api to edit user.
    */
   updateUser(userID, user?) {
-    return this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${userID}`, user)
-    .map(extractData)
-    .catch(handleError);
+    return this.api.put(`${Links.user}/${userID}`, user);
   }
 
   /**
    * Calls api with current and new password to change the user's password.
    */
   changePassword(userID: number, passwords: any) {
-    return this.authHttp.put(`${this.apiUrl.getUrl()}${Links.user}/${userID}${Links.password}`, passwords)
-    .map(extractData)
-    .catch(handleError);
+    return this.api.put(`${Links.user}/${userID}${Links.password}`, passwords);
   }
 
   /**
@@ -107,8 +105,6 @@ export class UserData {
    * Calls api to get info with the specified endpoint and id.
    */
   private getInfo(endpoint, id) {
-    return this.authHttp.get(`${this.apiUrl.getUrl()}${endpoint}/${id}`)
-    .map(extractData)
-    .catch(handleError);
+    return this.api.get(`${endpoint}/${id}`);
   }
 }

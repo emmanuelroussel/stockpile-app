@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
 import { ApiUrl } from './api-url';
-
-import { Observable } from 'rxjs/Observable';
+import { extractData, handleError } from '../services/auth-http-helpers';
 
 @Injectable()
 export class Api {
@@ -17,8 +16,8 @@ export class Api {
    */
   get(endpoint: string, params?: Object) {
     return this.authHttp.get(`${this.apiUrl.getUrl()}${endpoint}`, params)
-      .map(res => res.json())
-      .catch(err => Observable.throw(err.json()));
+      .map(extractData)
+      .catch(handleError);
   }
 
   /**
@@ -26,8 +25,8 @@ export class Api {
    */
   put(endpoint: string, body: Object) {
     return this.authHttp.put(`${this.apiUrl.getUrl()}${endpoint}`, body)
-      .map(res => res.json())
-      .catch(err => Observable.throw(err.json()));
+      .map(extractData)
+      .catch(handleError);
   }
 
   /**
@@ -35,7 +34,7 @@ export class Api {
    */
   delete(endpoint: string) {
     return this.authHttp.delete(`${this.apiUrl.getUrl()}${endpoint}`)
-      .map(res => res.json())
-      .catch(err => Observable.throw(err.json()));
+      .map(extractData)
+      .catch(handleError);
   }
 }
