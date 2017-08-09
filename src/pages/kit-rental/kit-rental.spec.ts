@@ -1,9 +1,10 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { TestUtils } from '../../test';
-import { Messages } from '../../constants';
+import { Messages, Actions } from '../../constants';
 import { TestData } from '../../test-data';
 
 import { KitRentalPage } from './kit-rental';
+import { Observable } from 'rxjs/Observable';
 
 let fixture: ComponentFixture<KitRentalPage> = null;
 let instance: any = null;
@@ -24,61 +25,30 @@ describe('KitRental Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('gets kit and kitItems', fakeAsync(() => {
+  it('fetches kitItems', () => {
     instance.navParams.param = TestData.kit.kitID;
-    instance.kitData.kitItems = TestData.kitItems;
-    spyOn(instance.kitData, 'getKit').and.callThrough();
-    spyOn(instance.kitData, 'getKitItems').and.callThrough();
+    spyOn(instance.kitModelsActions, 'fetchKitModels');
     instance.ngOnInit();
-    tick();
-    expect(instance.kitData.getKit).toHaveBeenCalledWith(TestData.kit.kitID);
-    expect(instance.kitData.getKitItems).toHaveBeenCalledWith(TestData.kit.kitID);
-    expect(instance.kit).toEqual(TestData.kit);
-    expect(instance.kitItems).toEqual(TestData.kitItems.results);
-  }));
+    expect(instance.kitModelsActions.fetchKitModels).toHaveBeenCalledWith(TestData.kit.kitID);
+  });
 
-  it('shows toast if error while getting kit and kitItems', fakeAsync(() => {
-    instance.kitData.resolve = false;
-    instance.navParams.param = TestData.kit.kitID;
-    spyOn(instance.notifications, 'showToast');
-    instance.ngOnInit();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledTimes(2);
-  }));
+  it('shows message if item is already added', () => {
+    instance.items = Observable.of({
+      rentals: {
+        [TestData.items[0].barcode]: TestData.items[0]
+      }
+    });
+    spyOn(instance.notifications, 'showMessage');
+    instance.onAdd(TestData.items[0].barcode);
+    expect(instance.notifications.showMessage).toHaveBeenCalledWith(Messages.itemAlreadyAdded);
+  });
 
-  it('shows toast if error onAdd()', fakeAsync(() => {
-    instance.itemData.resolve = false;
-    spyOn(instance.notifications, 'showToast');
-    instance.onAdd();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
-
-  it('shows toast if item is rented', fakeAsync(() => {
-    instance.itemData.item = TestData.rentedApiItem;
-    spyOn(instance.notifications, 'showToast');
-    instance.onAdd();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemAlreadyRented);
-  }));
-
-  it('shows toast if item is already added', fakeAsync(() => {
-    instance.items = TestData.items;
-    instance.itemData.item = TestData.items[0];
-    spyOn(instance.notifications, 'showToast');
-    instance.onAdd();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemAlreadyAdded);
-  }));
-
-  it('creates alert if item is not in kitItems', fakeAsync(() => {
-    instance.kitItems = JSON.parse(JSON.stringify(TestData.kitItems.results));
-    instance.itemData.item = TestData.apiItem;
-    spyOn(instance.alertCtrl, 'create').and.callThrough();
-    instance.onAdd();
-    tick();
-    expect(instance.alertCtrl.create).toHaveBeenCalled();
-  }));
+  it('adds item to rentals if not already added', () => {
+    instance.items = Observable.of({ rentals: [] });
+    spyOn(instance.itemsActions, 'addToRentals');
+    instance.onAdd(TestData.item.barcode);
+    expect(instance.itemsActions.addToRentals).toHaveBeenCalledWith(TestData.item.barcode, Actions.rent);
+  });
 
   it('creates an alert onTypeBarcode()', () => {
     spyOn(instance.alertCtrl, 'create').and.callThrough();
@@ -95,50 +65,69 @@ describe('KitRental Page', () => {
     expect(instance.onAdd).toHaveBeenCalledWith(TestData.barcodeData.text);
   }));
 
-  it('shows toast if error in onScanBarcode()', fakeAsync(() => {
+  it('shows message if error in onScanBarcode()', fakeAsync(() => {
     instance.barcodeScanner.resolve = false;
-    spyOn(instance.notifications, 'showToast');
+    spyOn(instance.notifications, 'showMessage');
     instance.onScanBarcode();
     tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showMessage).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('it does nothing if scan is cancelled', fakeAsync(() => {
     instance.barcodeScanner.cancel = true;
-    spyOn(instance.notifications, 'showToast');
+    spyOn(instance.notifications, 'showMessage');
     spyOn(instance, 'onAdd');
     instance.onScanBarcode();
     tick();
     expect(instance.onAdd).not.toHaveBeenCalled();
-    expect(instance.notifications.showToast).not.toHaveBeenCalled();
+    expect(instance.notifications.showMessage).not.toHaveBeenCalled();
   }));
 
   it('pushes RentalDetailsPage on nav onContinue()', () => {
+    instance.kitModels = Observable.of(TestData.kitItems.results);
+    instance.items = Observable.of({ rentals: TestData.kitItems.results });
     spyOn(instance.navCtrl, 'push');
     instance.onContinue();
     expect(instance.navCtrl.push).toHaveBeenCalled();
   });
 
   it('shows alert if not all kitItems are scanned onContinue()', () => {
-    instance.kitItems = TestData.kitItemsWithBarcode.results;
+    instance.kitModels = Observable.of(TestData.kitItems.results);
+    instance.items = Observable.of({ rentals: TestData.deletedKitItems.results });
     spyOn(instance.alertCtrl, 'create').and.callThrough();
     instance.onContinue();
     expect(instance.alertCtrl.create).toHaveBeenCalled();
   });
 
-  it('removes kit item from the list onRemoveKitItem()', () => {
-    instance.items = JSON.parse(JSON.stringify(TestData.items));
-    instance.kitItems = TestData.kitItemsWithBarcode.results;
-    instance.onRemoveKitItem(TestData.barcode);
-    expect(instance.items).toEqual(TestData.itemsMinusOne);
-    expect(instance.kitItems).toEqual(TestData.kitItemsWithEmptyBarcode.results);
+  it('returns true if kit model is added on isKitModelAdded()', () => {
+    instance.items = Observable.of({ rentals: TestData.kitItems.results });
+    const remaining = instance.isKitModelAdded(TestData.kitItems.results[0]);
+    expect(remaining).toBeTruthy();
   });
 
-  it('removes item from the list onRemoveOtherItem()', () => {
-    instance.items = JSON.parse(JSON.stringify(TestData.items));
-    instance.otherItems = JSON.parse(JSON.stringify(TestData.items));
-    instance.onRemoveOtherItem(TestData.barcode);
-    expect(instance.items).toEqual(TestData.itemsMinusOne);
-    expect(instance.otherItems).toEqual(TestData.itemsMinusOne);
+  /*it('returns false if kit model is not added on isKitModelAdded()', () => {
+    instance.items = Observable.of({ rentals: TestData.kitItems.results });
+    const remaining = instance.isKitModelAdded(TestData.kitItem);
+    expect(remaining).not.toBeTruthy();
+  });
+
+  it('returns items not in kit on getItemsNotInKit', () => {
+    instance.items = Observable.of({ rentals: TestData.itemsMap });
+    instance.kitModels = Observable.of(TestData.kitItems.results);
+    const item = instance.getItemsNotInKit();
+    expect(item).toEqual(TestData.items[3]);
+  });*/
+
+  it('removes item from rentals on onRemoveKitModel()', () => {
+    instance.items = Observable.of({ rentals: TestData.itemsMap });
+    spyOn(instance.itemsActions, 'removeFromRentals');
+    instance.onRemoveKitModel(TestData.kitItem);
+    expect(instance.itemsActions.removeFromRentals).toHaveBeenCalledWith(TestData.items[3].barcode);
+  });
+
+  it('removes item from rentals on onRemoveItem()', () => {
+    spyOn(instance.itemsActions, 'removeFromRentals');
+    instance.onRemoveItem(TestData.barcode);
+    expect(instance.itemsActions.removeFromRentals).toHaveBeenCalledWith(TestData.barcode);
   });
 });

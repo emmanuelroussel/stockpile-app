@@ -11,8 +11,7 @@ export class UserService {
   constructor(private store: Store<AppState>) {}
 
   getUser(): Observable<User> {
-    return this.store.select(appState => appState.user)
-      .filter(Boolean);
+    return this.store.select(appState => appState.user);
   }
 
   getLoading(): Observable<boolean> {

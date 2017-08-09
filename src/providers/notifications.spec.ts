@@ -5,7 +5,7 @@ import { TestData } from '../test-data';
 
 let instance: Notifications = null;
 
-describe('IonicPlugins Provider', () => {
+describe('Notifications Provider', () => {
 
   beforeEach(() => {
     instance = new Notifications((<any> new PlatformMock), (<any> new ToastMock));

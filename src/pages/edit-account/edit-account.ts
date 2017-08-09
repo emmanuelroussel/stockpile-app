@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { UserActions } from '../../store/user/user.actions';
+import { LayoutActions } from '../../store/layout/layout.actions';
+import { LoadingMessages } from '../../constants';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -16,6 +18,7 @@ export class EditAccountPage {
   constructor(
     public userService: UserService,
     public userActions: UserActions,
+    public layoutActions: LayoutActions
   ) {}
 
   /**
@@ -29,6 +32,7 @@ export class EditAccountPage {
    * Updates the user's info.
    */
   onSave(form: NgForm) {
+    this.layoutActions.showLoadingMessage(LoadingMessages.updatingUser);
     this.userActions.updateUser(form.value);
   }
 }

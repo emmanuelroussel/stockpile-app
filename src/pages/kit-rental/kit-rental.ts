@@ -87,9 +87,7 @@ export class KitRentalPage {
         },
         {
           text: 'Next',
-          handler: form => {
-            this.onAdd(form.barcode);
-          }
+          handler: form => this.onAdd(form.barcode)
         }
       ]
     });
@@ -112,7 +110,7 @@ export class KitRentalPage {
   }
 
   /**
-   * Pushes RentalDetailsPage on nav and warns user if all kit models haven't
+   * Pushes RentalDetailsPage on nav and warns user if some kit models haven't
    * been scanned.
    */
   onContinue() {
@@ -135,9 +133,7 @@ export class KitRentalPage {
           },
           {
             text: 'Continue',
-            handler: () => {
-              this.navCtrl.push(RentalDetailsPage);
-            }
+            handler: () => this.navCtrl.push(RentalDetailsPage)
           }
         ]
       });

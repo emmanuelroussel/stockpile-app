@@ -6,6 +6,8 @@ import { ItemsActions } from '../../store/items/items.actions';
 import { ItemsService } from '../../services/items.service';
 import { Items } from '../../models/items';
 import { Observable } from 'rxjs/Observable';
+import { LoadingMessages } from '../../constants';
+import { LayoutActions } from '../../store/layout/layout.actions';
 
 import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
 
@@ -20,7 +22,8 @@ export class RentalDetailsPage {
   constructor(
     public navCtrl: NavController,
     public itemsService: ItemsService,
-    public itemsActions: ItemsActions
+    public itemsActions: ItemsActions,
+    public layoutActions: LayoutActions
   ) {}
 
   /**
@@ -46,6 +49,7 @@ export class RentalDetailsPage {
       endDate: form.value.endDate.substring(0, 10)
     };
 
+    this.layoutActions.showLoadingMessage(LoadingMessages.rentingItems);
     this.itemsActions.rentItems(details);
   }
 }

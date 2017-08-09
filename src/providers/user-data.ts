@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import * as Raven from 'raven-js';
-import { AuthHttp, tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { Links } from '../constants';
 import { ApiUrl } from './api-url';
 import { Api } from './api';
 import { extractData, handleError } from '../services/auth-http-helpers';
-import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserData {
@@ -18,7 +17,6 @@ export class UserData {
   constructor(
     public apiUrl: ApiUrl,
     public api: Api,
-    public authHttp: AuthHttp,
     public http: Http,
     public storage: Storage
   ) {}

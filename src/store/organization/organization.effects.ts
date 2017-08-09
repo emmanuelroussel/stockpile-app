@@ -20,7 +20,7 @@ export class OrganizationEffects {
   @Effect()
   fetch$ = this.actions$
     .ofType(OrganizationActions.FETCH)
-    .mergeMap(action => this.userData.getOrganization(action.payload.organizationID)
+    .mergeMap(action => this.userData.getOrganization(action.payload)
       .map(res => createAction(OrganizationActions.FETCH_SUCCESS, res))
       .catch(err => Observable.of(
         createAction(OrganizationActions.FETCH_FAIL, err),

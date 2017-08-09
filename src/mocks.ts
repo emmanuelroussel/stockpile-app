@@ -13,6 +13,16 @@ export class ApiUrlMock {
   }
 }
 
+export class AppMock {
+  public getActiveNav() {
+    return new NavMock();
+  }
+
+  public getRootNav() {
+    return new NavMock();
+  }
+}
+
 export class ConfigMock {
 
   public get(): any {
@@ -137,17 +147,18 @@ export class NavParamsMock {
 
 export class StorageMock {
   stored = TestData.token;
+  resolve: boolean = true;
 
   public get(): any {
-    return Promise.resolve(this.stored);
+    return returnPromise(this.resolve, this.stored);
   }
 
   public set(): any {
-    return Promise.resolve();
+    return returnPromise(this.resolve);
   }
 
   public remove(): any {
-    return Promise.resolve();
+    return returnPromise(this.resolve);
   }
 }
 
@@ -300,7 +311,7 @@ export class KitDataMock {
     return returnObservable(this.resolve, this.kit);
   }
 
-  public getKitItems() {
+  public getKitModels() {
     return returnObservable(this.resolve, this.kitItems);
   }
 
@@ -316,7 +327,7 @@ export class KitDataMock {
     return returnObservable(this.resolve, TestData.response);
   }
 
-  public editKit() {
+  public updateKit() {
     return returnObservable(this.resolve, TestData.response);
   }
 
@@ -326,7 +337,7 @@ export class KitDataMock {
 }
 
 export class NotificationsMock {
-  public showToast(): any { }
+  public showMessage(): any { }
 }
 
 export class UserDataMock {
@@ -336,17 +347,17 @@ export class UserDataMock {
   organization = TestData.organization;
 
   public login(): any {
-    return returnPromise(this.resolve);
+    return returnObservable(this.resolve, TestData.loginResponse);
   }
 
   public logout(): any { }
 
   public isLoggedIn(): any {
-    return returnPromise(this.resolve, this.loggedIn);
+    return returnObservable(this.resolve, this.loggedIn);
   }
 
   public setUser(): any {
-    return returnPromise(this.resolve);
+    return returnObservable(this.resolve);
   }
 
   public getUser(): any {
@@ -379,6 +390,175 @@ export class ApiMock {
 
   public delete(): any {
     return Observable.fromPromise(Promise.resolve(this.value));
+  }
+}
+
+export class BrandsActionsMock {
+  public fetchBrands() {}
+  public createBrand() {}
+  public filterBrands() {}
+}
+
+export class CategoriesActionsMock {
+  public fetchCategories() {}
+  public createCategory() {}
+  public filterCategories() {}
+}
+
+export class ItemsActionsMock {
+  public fetchItems() {}
+  public createItem() {}
+  public updateItem() {}
+  public deleteItem() {}
+  public resetItems() {}
+  public updateTempItem() {}
+  public addToRentals() {}
+  public resetRentals() {}
+  public startRental() {}
+  public removeFromRentals() {}
+  public returnItems() {}
+  public rentItems() {}
+}
+
+export class KitModelsActionsMock {
+  public fetchKitModels() {}
+}
+
+export class KitsActionsMock {
+  public fetchKits() {}
+  public deleteKit() {}
+  public createKit() {}
+  public updateKit() {}
+}
+
+export class LayoutActionsMock {
+  public showLoadingMessage() {}
+  public hideLoadingMessage() {}
+}
+
+export class ModelsActionsMock {
+  public fetchModels() {}
+  public createModel() {}
+  public filterModels() {}
+}
+
+export class OrganizationActionsMock {
+  public fetchOrganization() {}
+}
+
+export class UserActionsMock {
+  public loginUser() {}
+  public logoutUser() {}
+  public fetchUser() {}
+  public updateUser() {}
+  public checkUserLoggedIn() {}
+  public archiveUser() {}
+  public changeUserPassword() {}
+}
+
+export class BrandsServiceMock {
+  public getBrands() {
+    return Observable.of(TestData.brands);
+  }
+
+  public getShouldShowAddNew() {
+    return Observable.of(TestData.showAddNew);
+  }
+}
+
+export class CategoriesServiceMock {
+  public getCategories() {
+    return Observable.of(TestData.categories);
+  }
+
+  public getShouldShowAddNew() {
+    return Observable.of(TestData.showAddNew);
+  }
+}
+
+export class ItemsServiceMock {
+  public getItems() {
+    return Observable.of(TestData.items);
+  }
+
+  public getShouldLoadMoreItems() {
+    return Observable.of(TestData.loadMoreItems);
+  }
+
+  public getShouldShowAddNew() {
+    return Observable.of(TestData.showAddNew);
+  }
+
+  public getItem() {
+    return Observable.of(TestData.apiItem);
+  }
+
+  public getTempItem() {
+    return Observable.of(TestData.apiItem);
+  }
+}
+
+export class KitModelsServiceMock {
+  public getKitModels() {
+    return Observable.of(TestData.kitItems.results);
+  }
+
+  public getShouldShowLoadingSpinner() {
+    return Observable.of(TestData.showLoadingSpinner);
+  }
+}
+
+export class KitsServiceMock {
+  public getKits() {
+    return Observable.of(TestData.kits);
+  }
+
+  public getKit() {
+    return Observable.of(TestData.kit);
+  }
+}
+
+export class LayoutServiceMock {
+  loadingMessage: Observable<string> = Observable.of('');
+
+  public getLoadingMessage() {
+    return Observable.of(this.loadingMessage);
+  }
+}
+
+export class ModelsServiceMock {
+  public getModels() {
+    return Observable.of(TestData.models);
+  }
+
+  public getShouldShowAddNew() {
+    return Observable.of(TestData.showAddNew);
+  }
+}
+
+export class OrganizationServiceMock {
+  public getOrganization() {
+    return Observable.of(TestData.organization);
+  }
+}
+
+export class UserServiceMock {
+  public getUser() {
+    return Observable.of(TestData.user);
+  }
+}
+
+export class StoreMock {
+  state = TestData.state;
+
+  public select(select) {
+    return Observable.of(select(this.state));
+  }
+
+  public dispatch() {}
+
+  get fakeData() {
+    return this.state;
   }
 }
 

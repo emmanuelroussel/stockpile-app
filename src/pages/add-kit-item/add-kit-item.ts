@@ -50,22 +50,32 @@ export class AddKitItemPage {
     modal.onDidDismiss((element) => {
       // If user has chosen an element (did not cancel)
       if (element) {
-        switch (type) {
-          // Since models are linked to a brand, also reset model when brand changes.
-          case ItemProperties.brand:
-            this.kitItem.brand = element.name;
-            this.kitItem.brandID = element.brandID;
-            this.kitItem.model = '';
-            this.kitItem.modelID = null;
-            break;
-          case ItemProperties.model:
-            this.kitItem.model = element.name;
-            this.kitItem.modelID = element.modelID;
-            break;
-        }
+        const modifiedKitItem = this.getNewKitModelProperties(type, element);
+        this.kitItem = { ...this.kitItem, ...modifiedKitItem };
       }
    });
 
     modal.present();
+  }
+
+  /**
+   * Returns the brand or model of the kitModel depending on the type.
+   */
+  getNewKitModelProperties(type, element) {
+    switch (type) {
+      // Since models are linked to a brand, also reset model when brand changes.
+      case ItemProperties.brand:
+        return {
+          brand: element.name,
+          brandID: element.brandID,
+          model: '',
+          modelID: null
+        };
+      case ItemProperties.model:
+        return {
+          model: element.name,
+          modelID: element.modelID
+        };
+    }
   }
 }

@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { Notifications } from '../../providers/notifications';
-import { Messages } from '../../constants';
+import { Messages, LoadingMessages } from '../../constants';
 import { UserActions } from '../../store/user/user.actions';
+import { LayoutActions } from '../../store/layout/layout.actions';
 
 @Component({
   selector: 'page-change-password',
@@ -14,6 +15,7 @@ export class ChangePasswordPage {
   constructor(
     public notifications: Notifications,
     public userActions: UserActions,
+    public layoutActions: LayoutActions
   ) {}
 
   /**
@@ -21,6 +23,7 @@ export class ChangePasswordPage {
    */
   onSave(form: NgForm) {
     if (form.value.newPassword === form.value.confirmPassword) {
+      this.layoutActions.showLoadingMessage(LoadingMessages.savingPassword);
       this.userActions.changeUserPassword({
         currentPassword: form.value.currentPassword,
         newPassword: form.value.newPassword

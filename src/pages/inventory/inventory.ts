@@ -89,7 +89,7 @@ export class InventoryPage {
   /**
    * Pushes page with the item to view.
    */
-  onViewItem(barcode) {
+  onViewItem(barcode: string) {
     this.navCtrl.push(ViewItemPage, { barcode });
   }
 

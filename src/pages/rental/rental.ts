@@ -3,13 +3,14 @@ import { NavController, NavParams, Platform, AlertController } from 'ionic-angul
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { RentalDetailsPage } from '../rental-details/rental-details';
-import { Actions, Messages } from '../../constants';
+import { Actions, Messages, LoadingMessages } from '../../constants';
 import { Notifications } from '../../providers/notifications';
 
 import { ItemsActions } from '../../store/items/items.actions';
 import { ItemsService } from '../../services/items.service';
 import { Items } from '../../models/items';
 import { Observable } from 'rxjs/Observable';
+import { LayoutActions } from '../../store/layout/layout.actions';
 
 import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
 
@@ -30,7 +31,8 @@ export class RentalPage {
     public notifications: Notifications,
     public alertCtrl: AlertController,
     public itemsService: ItemsService,
-    public itemsActions: ItemsActions
+    public itemsActions: ItemsActions,
+    public layoutActions: LayoutActions
   ) {}
 
   /**
@@ -51,6 +53,7 @@ export class RentalPage {
     if (items[barcode]) {
       this.notifications.showMessage(Messages.itemAlreadyAdded);
     } else {
+      this.layoutActions.showLoadingMessage(LoadingMessages.addingToRentals);
       this.itemsActions.addToRentals(barcode, this.action);
     }
   }
@@ -69,6 +72,7 @@ export class RentalPage {
   onReturn() {
     // Set return date to today in MySQL date format
     const returnDate = new Date().toISOString().substring(0, 10);
+    this.layoutActions.showLoadingMessage(LoadingMessages.returningItems);
     this.itemsActions.returnItems(returnDate);
   }
 
@@ -118,7 +122,7 @@ export class RentalPage {
   /**
    * Removes item from rentals.
    */
-  onRemoveItem(barcode) {
+  onRemoveItem(barcode: string) {
     this.itemsActions.removeFromRentals(barcode);
   }
 }

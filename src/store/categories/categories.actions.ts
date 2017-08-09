@@ -4,8 +4,6 @@ import { type } from '../../utils';
 
 import { createAction } from '../create-action';
 import { AppState } from '../../models/app-state';
-import { LayoutActions } from '../layout/layout.actions';
-import { LoadingMessages } from '../../constants';
 
 @Injectable()
 export class CategoriesActions {
@@ -29,7 +27,6 @@ export class CategoriesActions {
   }
 
   createCategory(name: string) {
-    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.creatingCategory));
     this.store.dispatch(createAction(CategoriesActions.CREATE, { name }));
   }
 

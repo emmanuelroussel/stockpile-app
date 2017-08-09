@@ -11,14 +11,81 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { App, Config, Form, IonicModule, Keyboard, DomController, MenuController, NavController, Platform, GestureController, NavParams, ModalController, AlertController, Events, LoadingController } from 'ionic-angular';
+import {
+  App,
+  Config,
+  Form,
+  IonicModule,
+  Keyboard,
+  DomController,
+  MenuController,
+  NavController,
+  Platform,
+  GestureController,
+  NavParams,
+  ModalController,
+  AlertController,
+  Events,
+  LoadingController
+} from 'ionic-angular';
 import { NgForm } from '@angular/forms';
-import { ConfigMock, PlatformMock, NavMock, NavParamsMock, ItemDataMock, KitDataMock, ItemPropertyDataMock, UserDataMock, ModalMock, NotificationsMock, AlertMock, BarcodeScannerMock, LoadingMock } from './mocks';
+import {
+  ConfigMock,
+  PlatformMock,
+  NavMock,
+  NavParamsMock,
+  ItemDataMock,
+  KitDataMock,
+  ItemPropertyDataMock,
+  UserDataMock,
+  ModalMock,
+  NotificationsMock,
+  AlertMock,
+  BarcodeScannerMock,
+  LoadingMock,
+  BrandsActionsMock,
+  CategoriesActionsMock,
+  ItemsActionsMock,
+  KitModelsActionsMock,
+  KitsActionsMock,
+  LayoutActionsMock,
+  ModelsActionsMock,
+  OrganizationActionsMock,
+  UserActionsMock,
+  BrandsServiceMock,
+  CategoriesServiceMock,
+  ItemsServiceMock,
+  KitModelsServiceMock,
+  KitsServiceMock,
+  LayoutServiceMock,
+  ModelsServiceMock,
+  OrganizationServiceMock,
+  UserServiceMock
+} from './mocks';
+import { BrandsActions } from './store/brands/brands.actions';
+import { CategoriesActions } from './store/categories/categories.actions';
+import { ItemsActions } from './store/items/items.actions';
+import { KitModelsActions } from './store/kit-models/kit-models.actions';
+import { KitsActions } from './store/kits/kits.actions';
+import { LayoutActions } from './store/layout/layout.actions';
+import { ModelsActions } from './store/models/models.actions';
+import { OrganizationActions } from './store/organization/organization.actions';
+import { UserActions } from './store/user/user.actions';
+import { BrandsService } from './services/brands.service';
+import { CategoriesService } from './services/categories.service';
+import { ItemsService } from './services/items.service';
+import { KitModelsService } from './services/kit-models.service';
+import { KitsService } from './services/kits.service';
+import { LayoutService } from './services/layout.service';
+import { ModelsService } from './services/models.service';
+import { OrganizationService } from './services/organization.service';
+import { UserService } from './services/user.service';
 import { ItemData } from './providers/item-data';
 import { KitData } from './providers/kit-data';
 import { ItemPropertyData } from './providers/item-property-data';
 import { UserData } from './providers/user-data';
 import { Notifications } from './providers/notifications';
+import { MapToIterablePipe } from './pipes/map-to-iterable.pipe';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare var __karma__: any;
@@ -58,6 +125,7 @@ export class TestUtils {
     return TestBed.configureTestingModule({
       declarations: [
         ...components,
+        MapToIterablePipe
       ],
       providers: [
         App, Form, Keyboard, DomController, MenuController, GestureController,
@@ -74,7 +142,25 @@ export class TestUtils {
         { provide: Notifications, useClass: NotificationsMock },
         { provide: AlertController, useClass: AlertMock },
         { provide: BarcodeScanner, useClass: BarcodeScannerMock },
-        { provide: LoadingController, useClass: LoadingMock }
+        { provide: LoadingController, useClass: LoadingMock },
+        { provide: BrandsActions, useClass: BrandsActionsMock },
+        { provide: CategoriesActions, useClass: CategoriesActionsMock },
+        { provide: ItemsActions, useClass: ItemsActionsMock },
+        { provide: KitModelsActions, useClass: KitModelsActionsMock },
+        { provide: KitsActions, useClass: KitsActionsMock },
+        { provide: LayoutActions, useClass: LayoutActionsMock },
+        { provide: ModelsActions, useClass: ModelsActionsMock },
+        { provide: OrganizationActions, useClass: OrganizationActionsMock },
+        { provide: UserActions, useClass: UserActionsMock },
+        { provide: BrandsService, useClass: BrandsServiceMock },
+        { provide: CategoriesService, useClass: CategoriesServiceMock },
+        { provide: ItemsService, useClass: ItemsServiceMock },
+        { provide: KitModelsService, useClass: KitModelsServiceMock },
+        { provide: KitsService, useClass: KitsServiceMock },
+        { provide: LayoutService, useClass: LayoutServiceMock },
+        { provide: ModelsService, useClass: ModelsServiceMock },
+        { provide: OrganizationService, useClass: OrganizationServiceMock },
+        { provide: UserService, useClass: UserServiceMock },
       ],
       imports: [
         FormsModule,

@@ -4,8 +4,6 @@ import { type } from '../../utils';
 
 import { createAction } from '../create-action';
 import { AppState } from '../../models/app-state';
-import { LayoutActions } from '../layout/layout.actions';
-import { LoadingMessages } from '../../constants';
 
 @Injectable()
 export class ItemsActions {
@@ -58,17 +56,14 @@ export class ItemsActions {
   }
 
   createItem(item: any) {
-    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.creatingItem));
     this.store.dispatch(createAction(ItemsActions.CREATE, item));
   }
 
   updateItem(item: any) {
-    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.updatingItem));
     this.store.dispatch(createAction(ItemsActions.UPDATE, item));
   }
 
   deleteItem(barcode: string) {
-    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.deletingItem));
     this.store.dispatch(createAction(ItemsActions.DELETE, barcode));
   }
 
@@ -81,7 +76,6 @@ export class ItemsActions {
   }
 
   addToRentals(barcode: string, action: string) {
-    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.addingToRentals));
     this.store.dispatch(createAction(ItemsActions.ADD_TO_RENTALS, { barcode, action }));
   }
 
@@ -90,7 +84,6 @@ export class ItemsActions {
   }
 
   startRental(barcode: string) {
-    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.startingRental));
     this.store.dispatch(createAction(ItemsActions.START_RENTAL, barcode));
   }
 
@@ -99,12 +92,10 @@ export class ItemsActions {
   }
 
   returnItems(returnDate: string) {
-    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.returningItems));
     this.store.dispatch(createAction(ItemsActions.RETURN, returnDate));
   }
 
   rentItems(details: any) {
-    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.rentingItems));
     this.store.dispatch(createAction(ItemsActions.RENT, details));
   }
 }

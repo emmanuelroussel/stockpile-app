@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { NavController, AlertController, Platform } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
-import { Actions } from '../../constants';
+import { Actions, LoadingMessages } from '../../constants';
 import { Notifications } from '../../providers/notifications';
 import { ItemData } from '../../providers/item-data';
 import { ItemsActions } from '../../store/items/items.actions';
 import { ItemsService } from '../../services/items.service';
 import { KitsService } from '../../services/kits.service';
 import { KitsActions } from '../../store/kits/kits.actions';
+import { LayoutActions } from '../../store/layout/layout.actions';
 import { Kits } from '../../models/kits';
 import { EditKitPage } from '../edit-kit/edit-kit';
 import { KitRentalPage } from '../kit-rental/kit-rental';
@@ -31,7 +32,8 @@ export class HomePage {
     public kitsService: KitsService,
     public kitsActions: KitsActions,
     public itemsService: ItemsService,
-    public itemsActions: ItemsActions
+    public itemsActions: ItemsActions,
+    public layoutActions: LayoutActions
   ) {}
 
   /**
@@ -47,6 +49,7 @@ export class HomePage {
    * available or not and pushes RentalPage with the corresponding action.
    */
   pushPage(barcode: string) {
+    this.layoutActions.showLoadingMessage(LoadingMessages.startingRental);
     this.itemsActions.startRental(barcode);
   }
 

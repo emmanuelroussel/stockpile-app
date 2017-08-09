@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
-import { App } from 'ionic-angular';
 
 import { createAction } from '../create-action';
 import { BrandsActions } from './brands.actions';
@@ -13,8 +12,7 @@ import { LayoutActions } from '../layout/layout.actions';
 export class BrandsEffects {
   constructor(
     public actions$: Actions,
-    public itemPropertyData: ItemPropertyData,
-    public app: App
+    public itemPropertyData: ItemPropertyData
   ) {}
 
   /**

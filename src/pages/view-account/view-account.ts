@@ -6,6 +6,8 @@ import { ChangePasswordPage } from '../change-password/change-password';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { UserActions } from '../../store/user/user.actions';
+import { LayoutActions } from '../../store/layout/layout.actions';
+import { LoadingMessages } from '../../constants';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -21,7 +23,8 @@ export class ViewAccountPage {
     public platform: Platform,
     public alertCtrl: AlertController,
     public userService: UserService,
-    public userActions: UserActions
+    public userActions: UserActions,
+    public layoutActions: LayoutActions
   ) {}
 
   /**
@@ -69,6 +72,7 @@ export class ViewAccountPage {
         {
           text: 'Delete',
           handler: data => {
+            this.layoutActions.showLoadingMessage(LoadingMessages.archivingUser);
             this.userActions.archiveUser(data.password);
           }
         }

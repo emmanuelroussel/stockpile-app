@@ -8,8 +8,9 @@ import { KitsService } from '../../services/kits.service';
 import { KitsActions } from '../../store/kits/kits.actions';
 import { KitModelsService } from '../../services/kit-models.service';
 import { KitModelsActions } from '../../store/kit-models/kit-models.actions';
+import { LayoutActions } from '../../store/layout/layout.actions';
 
-import { Actions } from '../../constants';
+import { Actions, LoadingMessages } from '../../constants';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -32,7 +33,8 @@ export class EditKitPage {
     public kitsService: KitsService,
     public kitModelsService: KitModelsService,
     public kitModelsActions: KitModelsActions,
-    public kitsActions: KitsActions
+    public kitsActions: KitsActions,
+    public layoutActions: LayoutActions
   ) {}
 
   /**
@@ -67,11 +69,13 @@ export class EditKitPage {
    */
   onSave(form: NgForm) {
     if (this.action === Actions.add) {
+      this.layoutActions.showLoadingMessage(LoadingMessages.creatingKit);
       this.kitsActions.createKit(form.value, this.modelsToCreate);
     } else {
       let kitID;
       this.kit.take(1).subscribe(kit => kitID = kit.kitID);
 
+      this.layoutActions.showLoadingMessage(LoadingMessages.updatingKit);
       this.kitsActions.updateKit({ name: form.value.name, kitID: kitID }, this.modelsToCreate, this.modelsToDelete);
     }
   }
@@ -83,6 +87,7 @@ export class EditKitPage {
     let kitID;
     this.kit.take(1).subscribe(kit => kitID = kit.kitID);
 
+    this.layoutActions.showLoadingMessage(LoadingMessages.deletingKit);
     this.kitsActions.deleteKit(kitID);
   }
 

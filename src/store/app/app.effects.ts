@@ -93,9 +93,7 @@ export class AppEffects {
   initializeApp$ = this.actions$
     .ofType(AppActions.INITIALIZE)
     .mergeMap(() => Observable.of(this.platform.ready())
-      .map(() => {
-        this.splashScreen.hide();
-      }))
+      .map(() => this.splashScreen.hide()))
     .ignoreElements();
 
   /**

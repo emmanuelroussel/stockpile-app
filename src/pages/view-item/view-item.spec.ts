@@ -1,10 +1,11 @@
-import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { Actions } from '../../constants';
 
 import { ViewItemPage } from './view-item';
 import { EditItemPage } from '../edit-item/edit-item';
+import { Observable } from 'rxjs/Observable';
 
 let fixture: ComponentFixture<ViewItemPage> = null;
 let instance: any = null;
@@ -25,27 +26,20 @@ describe('ViewItem Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('gets item in ngOnInit', () => {
-    instance.navParams.param = TestData.apiItem;
+  it('gets item', () => {
+    instance.navParams.param = TestData.barcode;
+    spyOn(instance.itemsService, 'getItem');
     instance.ngOnInit();
-    expect(instance.item).toEqual(TestData.apiItem);
+    expect(instance.itemsService.getItem).toHaveBeenCalledWith(TestData.barcode);
   });
 
-  it('gets item when event \'item:edited\' is published', fakeAsync(() => {
-    instance.navParams.param = TestData.apiItem;
-    instance.itemData.item = TestData.apiItem;
-    instance.ngOnInit();
-    tick();
-    instance.item = {};
-    instance.events.publish('item:edited', TestData.apiItem.barcode);
-    tick();
-    expect(instance.item).toEqual(TestData.apiItem);
-  }));
-
   it('pushes EditItemPage on nav onEdit()', () => {
-    instance.item = TestData.item;
+    instance.item = Observable.of(TestData.apiItem);
     spyOn(instance.navCtrl, 'push');
     instance.onEditItem();
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditItemPage, { item: TestData.item, action: Actions.edit });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditItemPage, {
+      barcode: TestData.apiItem.barcode,
+      action: Actions.edit
+    });
   });
 });

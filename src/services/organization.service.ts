@@ -11,8 +11,7 @@ export class OrganizationService {
   constructor(private store: Store<AppState>) {}
 
   getOrganization(): Observable<Organization> {
-    return this.store.select(appState => appState.organization)
-      .filter(Boolean);
+    return this.store.select(appState => appState.organization);
   }
 
 }

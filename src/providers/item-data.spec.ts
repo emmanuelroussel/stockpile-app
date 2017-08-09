@@ -79,7 +79,7 @@ describe('ItemData Provider', () => {
 
   it('calls api to get active rental of item', () => {
     instance.api.value = TestData.response;
-    instance.return(TestData.barcode).subscribe(
+    instance.getActiveRental(TestData.barcode).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
     );

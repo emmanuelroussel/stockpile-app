@@ -3,11 +3,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
-import { Platform } from 'ionic-angular';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
-import { App } from 'ionic-angular';
 import { AppState } from '../../models/app-state';
 
 import { createAction } from '../create-action';
@@ -15,7 +11,6 @@ import { UserActions } from './user.actions';
 import { AppActions } from '../app/app.actions.ts';
 import { UserData } from '../../providers/user-data';
 import { TabsPage } from '../../pages/tabs/tabs';
-import { UserService } from '../../services/user.service';
 import { OrganizationActions } from '../organization/organization.actions';
 import { LoginPage } from '../../pages/login/login';
 import { Messages } from '../../constants';
@@ -29,11 +24,6 @@ export class UserEffects {
     public actions$: Actions,
     public storage: Storage,
     public userData: UserData,
-    public app: App,
-    public userService: UserService,
-    public platform: Platform,
-    public splashScreen: SplashScreen,
-    public statusBar: StatusBar,
     public store$: Store<AppState>
   ) {}
 
@@ -119,8 +109,7 @@ export class UserEffects {
         createAction(AppActions.SET_ROOT_TO, LoginPage)
       ])
       .catch(err => Observable.of(
-        createAction(UserActions.LOGOUT_FAIL, err),
-        createAction(AppActions.SET_ROOT_TO, LoginPage)
+        createAction(UserActions.LOGOUT_FAIL, err)
       ))
     );
 

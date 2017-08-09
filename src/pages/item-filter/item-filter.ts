@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController, AlertController } from 'ionic-angular';
-import { ItemProperties } from '../../constants';
+import { ItemProperties, LoadingMessages } from '../../constants';
 import { BrandsService } from '../../services/brands.service';
 import { ModelsService } from '../../services/models.service';
 import { CategoriesService } from '../../services/categories.service';
 import { BrandsActions } from '../../store/brands/brands.actions';
 import { ModelsActions } from '../../store/models/models.actions';
 import { CategoriesActions } from '../../store/categories/categories.actions';
+import { LayoutActions } from '../../store/layout/layout.actions';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -30,6 +31,7 @@ export class ItemFilterPage {
     public modelsService: ModelsService,
     public categoriesActions: CategoriesActions,
     public categoriesService: CategoriesService,
+    public layoutActions: LayoutActions
   ) {}
 
   /**
@@ -111,40 +113,48 @@ export class ItemFilterPage {
         },
         {
           text: 'Create',
-          handler: form => {
-            switch (this.type) {
-              case ItemProperties.brand:
-                this.brandsActions.createBrand(form.name);
-                break;
-              case ItemProperties.model:
-                this.modelsActions.createModel(form.name, this.brandID);
-                break;
-              case ItemProperties.category:
-                this.categoriesActions.createCategory(form.name);
-                break;
-            }
-
-            // Workaround to detect when the brand, model or category has been
-            // created and added to the store. Dismisses the modal and passes
-            // the newly created field. This allows to handle field creation in
-            // this modal instead of in the component that creates it and
-            // allows for much cleaner components.
-            // It works because this modal will be destroyed when dismiss is
-            // called, so the subscribe could not be called again when the
-            // elements change.
-            this.elements.subscribe(elements => {
-              const newElement = Object.keys(elements.results).map((key) => elements.results[key])
-                .find(element => element.name === form.name);
-
-              if (newElement) {
-                this.onDismiss(newElement);
-              }
-            });
-          }
+          handler: form => this.createNewElement(form.name)
         }
       ]
     });
 
     alert.present();
+  }
+
+  /**
+   * Creates new brand, model or category and dismisses modal when done.
+   */
+  createNewElement(name: string) {
+    switch (this.type) {
+      case ItemProperties.brand:
+        this.layoutActions.showLoadingMessage(LoadingMessages.creatingBrand);
+        this.brandsActions.createBrand(name);
+        break;
+      case ItemProperties.model:
+        this.layoutActions.showLoadingMessage(LoadingMessages.creatingModel);
+        this.modelsActions.createModel(name, this.brandID);
+        break;
+      case ItemProperties.category:
+        this.layoutActions.showLoadingMessage(LoadingMessages.creatingCategory);
+        this.categoriesActions.createCategory(name);
+        break;
+    }
+
+    // Workaround to detect when the brand, model or category has been
+    // created and added to the store. Dismisses the modal and passes
+    // the newly created field. This allows to handle field creation in
+    // this modal instead of in the component that creates it and
+    // allows for much cleaner components.
+    // It works because this modal will be destroyed when dismiss is
+    // called, so the subscribe could not be called again when the
+    // elements change.
+    this.elements.subscribe(elements => {
+      const newElement = Object.keys(elements.results).map((key) => elements.results[key])
+        .find(element => element.name === name);
+
+      if (newElement) {
+        this.onDismiss(newElement);
+      }
+    });
   }
 }

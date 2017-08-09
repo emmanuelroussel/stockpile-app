@@ -1,10 +1,11 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { TestUtils } from '../../test';
-import { Actions, Messages } from '../../constants';
+import { Actions, Messages, LoadingMessages } from '../../constants';
 import { TestData } from '../../test-data';
 
 import { RentalPage } from './rental';
-import { ViewItemPage } from '../view-item/view-item';
+import { RentalDetailsPage } from '../rental-details/rental-details';
+import { Observable } from 'rxjs/Observable';
 
 let fixture: ComponentFixture<RentalPage> = null;
 let instance: any = null;
@@ -31,113 +32,37 @@ describe('Rental Page', () => {
     expect(instance.action).toEqual(Actions.rent);
   });
 
-  it('gets initial item info', () => {
-    instance.navParams.param = TestData.item;
-    instance.ngOnInit();
-    expect(instance.items[0]).toEqual(TestData.item);
+  it('adds item to rentals onAdd()', () => {
+    instance.items = Observable.of({ rentals: TestData.itemsMap });
+    instance.action = Actions.rent;
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.itemsActions, 'addToRentals');
+    instance.onAdd('');
+    expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.addingToRentals);
+    expect(instance.itemsActions.addToRentals).toHaveBeenCalledWith('', Actions.rent);
   });
 
-  it('updates item when event \'item:edited\' is published', fakeAsync(() => {
-    instance.itemData.item = TestData.modifiedItem;
-    instance.ngOnInit();
-    instance.items = TestData.items;
-    instance.events.publish('item:edited', TestData.modifiedItem.barcode);
-    tick();
-    expect(instance.items).toEqual(TestData.modifiedItems);
-  }));
-
-  it('shows toast if error while updating item in event.subscribe', fakeAsync(() => {
-    instance.itemData.resolve = false;
-    instance.ngOnInit();
-    instance.items = TestData.items;
-    spyOn(instance.notifications, 'showToast');
-    instance.events.publish('item:edited', TestData.modifiedItem.barcode);
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
-
-  it('pushes item onAdd()', fakeAsync(() => {
-    instance.itemData.item = TestData.apiItem;
-    instance.onAdd(TestData.apiItem.barcode);
-    tick();
-    expect(instance.items).toEqual([TestData.apiItem]);
-  }));
-
-  it('shows toast if error onAdd()', fakeAsync(() => {
-    instance.itemData.resolve = false;
-    spyOn(instance.notifications, 'showToast');
-    instance.onAdd();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
-
-  it('shows toast if item is rented and wants to rent onAdd()', fakeAsync(() => {
-    instance.itemData.item = TestData.rentedApiItem;
-    instance.action = Actions.rent;
-    spyOn(instance.notifications, 'showToast');
-    instance.onAdd();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemAlreadyRented);
-  }));
-
-  it('shows toast if item is available and wants to return onAdd()', fakeAsync(() => {
-    instance.itemData.item = TestData.apiItem;
-    instance.action = Actions.return;
-    spyOn(instance.notifications, 'showToast');
-    instance.onAdd();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemNotRented);
-  }));
-
-  it('shows toast if item is already added', fakeAsync(() => {
-    instance.items = TestData.items;
-    instance.itemData.item = TestData.items[0];
-    spyOn(instance.notifications, 'showToast');
-    instance.onAdd();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemAlreadyAdded);
-  }));
-
-  it('pushes ItemPage on nav on viewItem()', () => {
-    spyOn(instance.navCtrl, 'push');
-    instance.onViewItem(TestData.item);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewItemPage, { item: TestData.item });
+  it('shows message if item is already added', () => {
+    instance.items = Observable.of({ rentals: TestData.itemsMap });
+    spyOn(instance.notifications, 'showMessage');
+    instance.onAdd(TestData.barcode);
+    expect(instance.notifications.showMessage).toHaveBeenCalledWith(Messages.itemAlreadyAdded);
   });
 
   it('pushes RentalDetailsPage on nav onContinue()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.onContinue();
-    expect(instance.navCtrl.push).toHaveBeenCalled();
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalDetailsPage);
   });
 
-  it('calls itemData.return for each item', fakeAsync(() => {
-    instance.items = TestData.items;
-    spyOn(instance.itemData, 'return').and.callThrough();
-    spyOn(instance.notifications, 'showToast');
+  it('returns item with today\'s date onReturn', () => {
+    const today = new Date().toISOString().substring(0, 10);
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.itemsActions, 'returnItems');
     instance.onReturn();
-    tick();
-    expect(instance.itemData.return).toHaveBeenCalledTimes(TestData.items.length);
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemsReturned);
-  }));
-
-  it('shows toast if error onReturn()', fakeAsync(() => {
-    instance.itemData.resolve = false;
-    instance.items = TestData.items;
-    spyOn(instance.notifications, 'showToast');
-    instance.onReturn();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
-
-  it('calls itemData.return() and pops nav onReturn()', fakeAsync(() => {
-    instance.items.push(TestData.item);
-    spyOn(instance.navCtrl, 'pop');
-    spyOn(instance.itemData, 'return').and.callThrough();
-    instance.onReturn();
-    tick();
-    expect(instance.navCtrl.pop).toHaveBeenCalled();
-    expect(instance.itemData.return).toHaveBeenCalled();
-  }));
+    expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.returningItems);
+    expect(instance.itemsActions.returnItems).toHaveBeenCalledWith(today);
+  });
 
   it('calls barcodeScanner.scan() onScanBarcode()', fakeAsync(() => {
     spyOn(instance.barcodeScanner, 'scan').and.callThrough();
@@ -150,20 +75,20 @@ describe('Rental Page', () => {
 
   it('shows toast if error in onScanBarcode()', fakeAsync(() => {
     instance.barcodeScanner.resolve = false;
-    spyOn(instance.notifications, 'showToast');
+    spyOn(instance.notifications, 'showMessage');
     instance.onScanBarcode();
     tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showMessage).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('it does nothing if scan is cancelled', fakeAsync(() => {
     instance.barcodeScanner.cancel = true;
-    spyOn(instance.notifications, 'showToast');
+    spyOn(instance.notifications, 'showMessage');
     spyOn(instance, 'onAdd');
     instance.onScanBarcode();
     tick();
     expect(instance.onAdd).not.toHaveBeenCalled();
-    expect(instance.notifications.showToast).not.toHaveBeenCalled();
+    expect(instance.notifications.showMessage).not.toHaveBeenCalled();
   }));
 
   it('creates an alert onTypeBarcode()', () => {
@@ -173,8 +98,8 @@ describe('Rental Page', () => {
   });
 
   it('removes item from the list onRemoveItem()', () => {
-    instance.items = JSON.parse(JSON.stringify(TestData.items));
+    spyOn(instance.itemsActions, 'removeFromRentals');
     instance.onRemoveItem(TestData.barcode);
-    expect(instance.items).toEqual(TestData.itemsMinusOne);
+    expect(instance.itemsActions.removeFromRentals).toHaveBeenCalledWith(TestData.barcode);
   });
 });

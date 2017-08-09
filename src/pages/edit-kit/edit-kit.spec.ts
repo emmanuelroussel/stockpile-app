@@ -1,10 +1,11 @@
-import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
-import { Actions, Messages } from '../../constants';
+import { Actions, LoadingMessages } from '../../constants';
 
 import { EditKitPage } from './edit-kit';
 import { AddKitItemPage } from '../add-kit-item/add-kit-item';
+import { Observable } from 'rxjs/Observable';
 
 let fixture: ComponentFixture<EditKitPage> = null;
 let instance: any = null;
@@ -32,123 +33,74 @@ describe('EditKit Page', () => {
   });
 
   it('adds a kitItem if event \'kit-item:added\' is published', () => {
-    instance.navParams.param = Actions.edit;
     instance.ngOnInit();
-    instance.kitItems = TestData.kitItems.results;
+    instance.kitModels = TestData.kitItems.results.slice();
     instance.events.publish('kit-item:added', TestData.kitItem);
-    expect(instance.kitItems).toEqual(TestData.addedKitItems.results);
+    expect(instance.kitModels).toEqual(TestData.addedKitItems.results);
     expect(instance.modelsToCreate).toEqual([TestData.kitItem.modelID]);
   });
 
-  it('adds kit onSave() if action is add', fakeAsync(() => {
-    instance.action = Actions.add;
-    instance.kit = TestData.kit;
-    spyOn(instance.kitData, 'addKit').and.callThrough();
-    spyOn(instance, 'saveKitItems');
-    instance.onSave();
-    tick();
-    expect(instance.kitData.addKit).toHaveBeenCalledWith(TestData.kit.name);
-    expect(instance.saveKitItems).toHaveBeenCalledWith(TestData.response, Messages.kitAdded, 'kit:added');
-  }));
+  it('gets kit models if action is edit', () => {
+    instance.navParams.param = Actions.edit;
+    instance.ngOnInit();
+    expect(instance.kitModels).toEqual(TestData.kitItems.results);
+  });
 
-  it('edits kit onSave() if action is edit', fakeAsync(() => {
+  it('creates kit onSave() if action is add', () => {
+    const form = {
+      value: {
+        name: TestData.kit.name
+      }
+    };
+    instance.action = Actions.add;
+    instance.modelsToCreate = [TestData.kitItem.modelID];
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.kitsActions, 'createKit');
+    instance.onSave(form);
+    expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.creatingKit);
+    expect(instance.kitsActions.createKit).toHaveBeenCalledWith(form.value, [TestData.kitItem.modelID]);
+  });
+
+  it('updates kit onSave() if action is edit', () => {
+    const form = {
+      value: {
+        name: TestData.kit.name
+      }
+    };
     instance.action = Actions.edit;
-    instance.kit = TestData.kit;
-    spyOn(instance.kitData, 'editKit').and.callThrough();
-    spyOn(instance, 'saveKitItems');
-    instance.onSave();
-    tick();
-    expect(instance.kitData.editKit).toHaveBeenCalledWith(TestData.kit);
-    expect(instance.saveKitItems).toHaveBeenCalledWith(TestData.response, Messages.kitEdited, 'kit:edited');
-  }));
+    instance.kit = Observable.of(TestData.kit);
+    instance.modelsToCreate = [TestData.kitItem.modelID];
+    instance.modelsToDelete = [TestData.kitItems.results[0]];
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.kitsActions, 'updateKit');
+    instance.onSave(form);
+    expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.updatingKit);
+    expect(instance.kitsActions.updateKit).toHaveBeenCalledWith(
+      { name: TestData.kit.name, kitID: TestData.kit.kitID },
+      [TestData.kitItem.modelID],
+      [TestData.kitItems.results[0]]
+    );
+  });
 
-  it('shows toast if error onSave()', fakeAsync(() => {
-    instance.action = Actions.add;
-    instance.kit = TestData.kit;
-    instance.kitData.resolve = false;
-    spyOn(instance.notifications, 'showToast');
-    instance.onSave();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
-
-  it('adds kitItems on saveKitItems() if action is add', fakeAsync(() => {
-    spyOn(instance.kitData, 'addKitItem').and.callThrough();
-    spyOn(instance.events, 'publish');
-    spyOn(instance.navCtrl, 'pop');
-    spyOn(instance.notifications, 'showToast');
-    instance.kit = TestData.kit;
-    instance.action = Actions.add;
-    instance.kitItems = TestData.kitItems.results;
-    instance.saveKitItems(TestData.kit, Messages.kitAdded, 'kit:added');
-    tick();
-    expect(instance.kitData.addKitItem).toHaveBeenCalledTimes(TestData.kitItems.results.length);
-    expect(instance.events.publish).toHaveBeenCalledWith('kit:added', TestData.kit);
-    expect(instance.navCtrl.pop).toHaveBeenCalled();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.kitAdded);
-  }));
-
-  it('edits kitItems on saveKitItems() if action is edit', fakeAsync(() => {
-    spyOn(instance.kitData, 'addKitItem').and.callThrough();
-    spyOn(instance.kitData, 'deleteKitItem').and.callThrough();
-    spyOn(instance.events, 'publish');
-    spyOn(instance.navCtrl, 'pop');
-    spyOn(instance.notifications, 'showToast');
-    instance.kit = TestData.kit;
-    instance.action = Actions.edit;
-    instance.modelsToCreate = TestData.modelsToCreate;
-    instance.modelsToDelete = TestData.modelsToDelete;
-    instance.saveKitItems(TestData.kit, Messages.kitEdited, 'kit:edited');
-    tick();
-    expect(instance.kitData.addKitItem).toHaveBeenCalledTimes(TestData.modelsToCreate.length);
-    expect(instance.kitData.deleteKitItem).toHaveBeenCalledTimes(TestData.modelsToDelete.length);
-    expect(instance.events.publish).toHaveBeenCalledWith('kit:edited', TestData.kit);
-    expect(instance.navCtrl.pop).toHaveBeenCalled();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.kitEdited);
-  }));
-
-  it('shows toast if error on saveKitItems()', fakeAsync(() => {
-    spyOn(instance.notifications, 'showToast');
-    instance.kit = TestData.kit;
-    instance.action = Actions.add;
-    instance.kitItems = TestData.kitItems.results;
-    instance.kitData.resolve = false;
-    instance.saveKitItems(TestData.kit, Messages.kitAdded, 'kit:added');
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
-
-  it('deletes kit onDelete()', fakeAsync(() => {
-    spyOn(instance.kitData, 'deleteKit').and.callThrough();
-    spyOn(instance.notifications, 'showToast');
-    spyOn(instance.events, 'publish');
-    spyOn(instance.navCtrl, 'pop');
-    instance.kit = TestData.kit;
+  it('deletes item onDelete()', () => {
+    instance.kit = Observable.of(TestData.kit);
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.kitsActions, 'deleteKit');
     instance.onDelete();
-    tick();
-    expect(instance.kitData.deleteKit).toHaveBeenCalledWith(TestData.kit.kitID);
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.kitDeleted);
-    expect(instance.events.publish).toHaveBeenCalledWith('kit:deleted', TestData.kit);
-    expect(instance.navCtrl.pop).toHaveBeenCalled();
-  }));
+    expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.deletingKit);
+    expect(instance.kitsActions.deleteKit).toHaveBeenCalledWith(TestData.kit.kitID);
+  });
 
-  it('shows toast if error onDelete()', fakeAsync(() => {
-    instance.kitData.resolve = false;
-    spyOn(instance.notifications, 'showToast');
-    instance.onDelete();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
-
-  it('pushes AddKitItemPage on addItem()', () => {
+  it('pushes AddKitItemPage onAddItem()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.onAddItem();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(AddKitItemPage);
   });
 
-  it('adds modelID to modelsToDelete onRemoveKitItem()', () => {
-    instance.kitItems = TestData.kitItems.results;
+  it('removes kit models onRemoveFromList()', () => {
+    instance.kitModels = TestData.kitItems.results.slice();
     instance.onRemoveFromList(0, TestData.kitItem);
+    expect(instance.kitModels).toEqual(TestData.deletedKitItems.results);
     expect(instance.modelsToDelete).toEqual([TestData.kitItem.modelID]);
   });
 });

@@ -39,16 +39,16 @@ export class KitModelsEffects {
       let models = [];
 
       for (const modelID of action.payload.kitModelsToCreate) {
-        models.push(this.kitData.addKitItem(action.payload.kit.kitID, modelID).toPromise());
+        models.push(this.kitData.addKitItem(action.payload.kitID, modelID).toPromise());
       }
 
       for (const modelID of action.payload.kitModelsToDelete) {
-        models.push(this.kitData.deleteKitItem(action.payload.kit.kitID, modelID).toPromise());
+        models.push(this.kitData.deleteKitItem(action.payload.kitID, modelID).toPromise());
       }
 
       return Observable.of(Promise.all(models))
         .concatMap(res => [
-          createAction(KitModelsActions.UPDATE_SUCCESS, { message: action.payload.message, results: res }),
+          createAction(KitModelsActions.UPDATE_SUCCESS, res),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, action.payload.message),
           createAction(AppActions.POP_NAV)

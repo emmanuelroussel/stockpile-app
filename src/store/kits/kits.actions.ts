@@ -4,8 +4,6 @@ import { type } from '../../utils';
 
 import { createAction } from '../create-action';
 import { AppState } from '../../models/app-state';
-import { LayoutActions } from '../layout/layout.actions';
-import { LoadingMessages } from '../../constants';
 
 @Injectable()
 export class KitsActions {
@@ -35,17 +33,14 @@ export class KitsActions {
   }
 
   deleteKit(kitID: number) {
-    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.deletingKit));
     this.store.dispatch(createAction(KitsActions.DELETE, kitID));
   }
 
   createKit(kit: any, kitModels: any) {
-    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.creatingKit));
     this.store.dispatch(createAction(KitsActions.CREATE, { kit, kitModels }));
   }
 
   updateKit(kit: any, kitModelsToCreate: any, kitModelsToDelete: any) {
-    this.store.dispatch(createAction(LayoutActions.SHOW_LOADING_MESSAGE, LoadingMessages.updatingKit));
     this.store.dispatch(createAction(KitsActions.UPDATE, { kit, kitModelsToCreate, kitModelsToDelete }));
   }
 }

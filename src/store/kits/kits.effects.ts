@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
-import { App } from 'ionic-angular';
 
 import { createAction } from '../create-action';
 import { KitsActions } from './kits.actions';
@@ -15,8 +14,7 @@ import { LayoutActions } from '../layout/layout.actions';
 export class KitsEffects {
   constructor(
     public actions$: Actions,
-    public kitData: KitData,
-    public app: App
+    public kitData: KitData
   ) {}
 
   /**
@@ -63,6 +61,7 @@ export class KitsEffects {
       .concatMap(res => [
         createAction(KitsActions.CREATE_SUCCESS, res),
         createAction(KitModelsActions.UPDATE, {
+          kitID: action.payload.kit.kitID,
           kitModelsToCreate: action.payload.kitModels,
           kitModelsToDelete: [],
           message: Messages.kitAdded
@@ -84,6 +83,7 @@ export class KitsEffects {
       .concatMap(res => [
         createAction(KitsActions.UPDATE_SUCCESS, res),
         createAction(KitModelsActions.UPDATE, {
+          kitID: action.payload.kit.kitID,
           kitModelsToCreate: action.payload.kitModelsToCreate,
           kitModelsToDelete: action.payload.kitModelsToDelete,
           message: Messages.kitEdited

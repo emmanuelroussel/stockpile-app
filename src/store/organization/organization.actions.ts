@@ -16,8 +16,8 @@ export class OrganizationActions {
     private store: Store<AppState>
   ) {}
 
-  fetchOrganization() {
-    this.store.dispatch(createAction(OrganizationActions.FETCH));
+  fetchOrganization(organizationID: number) {
+    this.store.dispatch(createAction(OrganizationActions.FETCH, organizationID));
   }
 
 }

@@ -45,8 +45,10 @@
         "src/constants.ts",
         "src/mocks.ts",
         "src/test-data.ts",
-        "src/services/*",
-        "**/test.ts"
+        "src/services/auth-http-helpers.ts",
+        "src/services/raven-error-handler.ts",
+        "**/test.ts",
+        "src/utils/*"
       ]
     },
     "karma": {

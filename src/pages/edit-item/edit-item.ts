@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { NavParams, ModalController } from 'ionic-angular';
 
-import { Actions, ItemProperties } from '../../constants';
+import { Actions, ItemProperties, LoadingMessages } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
 import { ItemsActions } from '../../store/items/items.actions';
 import { ItemsService } from '../../services/items.service';
 import { BrandsActions } from '../../store/brands/brands.actions';
 import { ModelsActions } from '../../store/models/models.actions';
 import { CategoriesActions } from '../../store/categories/categories.actions';
+import { LayoutActions } from '../../store/layout/layout.actions';
 import { Observable } from 'rxjs/Observable';
 
 import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
@@ -30,6 +31,7 @@ export class EditItemPage {
     public brandsActions: BrandsActions,
     public modelsActions: ModelsActions,
     public categoriesActions: CategoriesActions,
+    public layoutActions: LayoutActions
   ) {}
 
   /**
@@ -76,8 +78,10 @@ export class EditItemPage {
     });
 
     if (this.action === Actions.add) {
+      this.layoutActions.showLoadingMessage(LoadingMessages.creatingItem);
       this.itemsActions.createItem(item);
     } else if (this.action === Actions.edit) {
+      this.layoutActions.showLoadingMessage(LoadingMessages.updatingItem);
       this.itemsActions.updateItem(item);
     }
   }
@@ -88,6 +92,7 @@ export class EditItemPage {
   onDelete() {
     let barcode;
     this.tempItem.take(1).subscribe(i => barcode = i.barcode);
+    this.layoutActions.showLoadingMessage(LoadingMessages.deletingItem);
     this.itemsActions.deleteItem(barcode);
   }
 
@@ -104,33 +109,39 @@ export class EditItemPage {
     modal.onDidDismiss(element => {
       // If user cancelled, element will be undefined
       if (element) {
-        // Update the item with the new brand, model or category
-        switch (type) {
-          case ItemProperties.brand:
-            // Since models are linked to a brand, also reset model when brand changes.
-            this.itemsActions.updateTempItem({
-              brandID: element.brandID,
-              brand: element.name,
-              modelID: null,
-              model: ''
-            });
-            break;
-          case ItemProperties.model:
-            this.itemsActions.updateTempItem({
-              modelID: element.modelID,
-              model: element.name
-            });
-            break;
-          case ItemProperties.category:
-            this.itemsActions.updateTempItem({
-              categoryID: element.categoryID,
-              category: element.name
-            });
-            break;
-        }
+        this.updateTempItem(type, element);
       }
    });
 
     modal.present();
+  }
+
+  /**
+   * Updates the item with the new brand, model or category.
+   */
+  updateTempItem(type, element) {
+    switch (type) {
+      case ItemProperties.brand:
+        // Since models are linked to a brand, also reset model when brand changes.
+        this.itemsActions.updateTempItem({
+          brandID: element.brandID,
+          brand: element.name,
+          modelID: null,
+          model: ''
+        });
+        break;
+      case ItemProperties.model:
+        this.itemsActions.updateTempItem({
+          modelID: element.modelID,
+          model: element.name
+        });
+        break;
+      case ItemProperties.category:
+        this.itemsActions.updateTempItem({
+          categoryID: element.categoryID,
+          category: element.name
+        });
+        break;
+    }
   }
 }

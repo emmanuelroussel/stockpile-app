@@ -1,4 +1,4 @@
-import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { Actions } from '../../constants';
@@ -6,6 +6,7 @@ import { Actions } from '../../constants';
 import { KitsPage } from './kits';
 import { ViewKitPage } from '../view-kit/view-kit';
 import { EditKitPage } from '../edit-kit/edit-kit';
+import { Observable } from 'rxjs/Observable';
 
 let fixture: ComponentFixture<KitsPage> = null;
 let instance: any = null;
@@ -26,40 +27,15 @@ describe('Kits Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('gets kits in ngOnInit', fakeAsync(() => {
-    instance.kitData.kits = TestData.kits;
+  it('gets kits', () => {
     instance.ngOnInit();
-    tick();
-    expect(instance.kits).toEqual(TestData.kits.results);
-  }));
-
-  it('gets kits on loadKits()', fakeAsync(() => {
-    spyOn(instance.kitData, 'getKits').and.callThrough();
-    instance.loadKits();
-    tick();
-    expect(instance.kits).toEqual(TestData.kits.results);
-  }));
-
-  it('sets loadMoreItems to false if not kits returned in loadKits()', fakeAsync(() => {
-    instance.kitData.kits = { results: [] };
-    instance.loadMoreItems = true;
-    instance.loadKits();
-    tick();
-    expect(instance.loadMoreItems).toEqual(false);
-  }));
-
-  it('shows toast if error on loadKits()', fakeAsync(() => {
-    spyOn(instance.notifications, 'showToast');
-    instance.kitData.resolve = false;
-    instance.loadKits();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
+    expect(instance.kits).toEqual(Observable.of(TestData.kits));
+  });
 
   it('pushes ViewKitPage on nav on viewKit()', () => {
     spyOn(instance.navCtrl, 'push');
-    instance.onViewKit(TestData.kit);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewKitPage, { kit: TestData.kit });
+    instance.onViewKit(TestData.kit.kitID);
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewKitPage, { kitID: TestData.kit.kitID });
   });
 
   it('pushes EditKitPage on nav on onAdd()', () => {
