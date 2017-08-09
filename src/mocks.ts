@@ -230,7 +230,7 @@ export class ItemDataMock {
   item = TestData.apiItem;
   resolve: boolean = true;
 
-  public addItem(): any {
+  public createItem(): any {
     return returnObservable(this.resolve, this.item);
   }
 
@@ -238,7 +238,7 @@ export class ItemDataMock {
     return returnObservable(this.resolve, this.item);
   }
 
-  public editItem(): any {
+  public updateItem(): any {
     return returnObservable(this.resolve, this.item);
   }
 
@@ -284,15 +284,15 @@ export class ItemPropertyDataMock {
     return returnObservable(this.resolve, this.categories);
   }
 
-  public addBrand(): any {
+  public createBrand(): any {
     return returnObservable(this.resolve, TestData.response);
   }
 
-  public addModel(): any {
+  public createModel(): any {
     return returnObservable(this.resolve, TestData.response);
   }
 
-  public addCategory(): any {
+  public createCategory(): any {
     return returnObservable(this.resolve, TestData.response);
   }
 }
@@ -300,7 +300,7 @@ export class ItemPropertyDataMock {
 export class KitDataMock {
   kits = TestData.kits;
   kit = TestData.kit;
-  kitItems = TestData.kitItems;
+  kitModels = TestData.kitModels;
   resolve: boolean = true;
 
   public getKits() {
@@ -312,18 +312,18 @@ export class KitDataMock {
   }
 
   public getKitModels() {
-    return returnObservable(this.resolve, this.kitItems);
+    return returnObservable(this.resolve, this.kitModels);
   }
 
-  public addKitItem() {
+  public addkitModel() {
     return returnObservable(this.resolve, TestData.response);
   }
 
-  public deleteKitItem() {
+  public deletekitModel() {
     return returnObservable(this.resolve, TestData.response);
   }
 
-  public addKit() {
+  public createKit() {
     return returnObservable(this.resolve, TestData.response);
   }
 
@@ -500,7 +500,7 @@ export class ItemsServiceMock {
 
 export class KitModelsServiceMock {
   public getKitModels() {
-    return Observable.of(TestData.kitItems.results);
+    return Observable.of(TestData.kitModels.results);
   }
 
   public getShouldShowLoadingSpinner() {

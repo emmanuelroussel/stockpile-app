@@ -97,14 +97,14 @@ describe('Kits Effects', () => {
   });
 
   it('creates a kit', () => {
-    runner.queue(createAction(KitsActions.CREATE, { kit: TestData.kit, kitModels: TestData.kitItems.results }));
+    runner.queue(createAction(KitsActions.CREATE, { kit: TestData.kit, kitModels: TestData.kitModels.results }));
 
     let performedActions = [];
     const expectedResult = [
       createAction(KitsActions.CREATE_SUCCESS, TestData.response),
       createAction(KitModelsActions.UPDATE, {
         kitID: TestData.kit.kitID,
-        kitModelsToCreate: TestData.kitItems.results,
+        kitModelsToCreate: TestData.kitModels.results,
         kitModelsToDelete: [],
         message: Messages.kitAdded
       })
@@ -120,7 +120,7 @@ describe('Kits Effects', () => {
   it('returns error if create fails', () => {
     instance.kitData.resolve = false;
 
-    runner.queue(createAction(KitsActions.CREATE, { kit: TestData.kit, kitModels: TestData.kitItems.results }));
+    runner.queue(createAction(KitsActions.CREATE, { kit: TestData.kit, kitModels: TestData.kitModels.results }));
 
     instance.create$.subscribe(
       res => expect(res).toEqual(Observable.of(
@@ -133,8 +133,8 @@ describe('Kits Effects', () => {
   it('updates a kit', () => {
     runner.queue(createAction(KitsActions.UPDATE, {
       kit: TestData.kit,
-      kitModelsToCreate: TestData.kitItems.results,
-      kitModelsToDelete: TestData.deletedKitItems.results
+      kitModelsToCreate: TestData.kitModels.results,
+      kitModelsToDelete: TestData.deletedKitModels.results
     }));
 
     let performedActions = [];
@@ -142,8 +142,8 @@ describe('Kits Effects', () => {
       createAction(KitsActions.UPDATE_SUCCESS, TestData.response),
       createAction(KitModelsActions.UPDATE, {
         kitID: TestData.kit.kitID,
-        kitModelsToCreate: TestData.kitItems.results,
-        kitModelsToDelete: TestData.deletedKitItems.results,
+        kitModelsToCreate: TestData.kitModels.results,
+        kitModelsToDelete: TestData.deletedKitModels.results,
         message: Messages.kitEdited
       })
     ];
@@ -160,8 +160,8 @@ describe('Kits Effects', () => {
 
     runner.queue(createAction(KitsActions.UPDATE, {
       kit: TestData.kit,
-      kitModelsToCreate: TestData.kitItems.results,
-      kitModelsToDelete: TestData.deletedKitItems.results
+      kitModelsToCreate: TestData.kitModels.results,
+      kitModelsToDelete: TestData.deletedKitModels.results
     }));
 
     instance.update$.subscribe(

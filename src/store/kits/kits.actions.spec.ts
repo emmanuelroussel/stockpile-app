@@ -24,20 +24,20 @@ describe('Kits Actions', () => {
 
   it('dispatches action CREATE', () => {
     spyOn(instance.store, 'dispatch');
-    instance.createKit(TestData.kit, TestData.kitItems.results);
+    instance.createKit(TestData.kit, TestData.kitModels.results);
     expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(KitsActions.CREATE, {
       kit: TestData.kit,
-      kitModels: TestData.kitItems.results
+      kitModels: TestData.kitModels.results
     }));
   });
 
   it('dispatches action UPDATE', () => {
     spyOn(instance.store, 'dispatch');
-    instance.updateKit(TestData.kit, TestData.kitItems.results, TestData.deletedKitItems.results);
+    instance.updateKit(TestData.kit, TestData.kitModels.results, TestData.deletedKitModels.results);
     expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(KitsActions.UPDATE, {
       kit: TestData.kit,
-      kitModelsToCreate: TestData.kitItems.results,
-      kitModelsToDelete: TestData.deletedKitItems.results
+      kitModelsToCreate: TestData.kitModels.results,
+      kitModelsToDelete: TestData.deletedKitModels.results
     }));
   });
 

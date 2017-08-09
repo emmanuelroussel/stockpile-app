@@ -57,7 +57,7 @@ export class KitsEffects {
   @Effect()
   create$ = this.actions$
     .ofType(KitsActions.CREATE)
-    .mergeMap(action => this.kitData.addKit(action.payload.kit)
+    .mergeMap(action => this.kitData.createKit(action.payload.kit)
       .concatMap(res => [
         createAction(KitsActions.CREATE_SUCCESS, res),
         createAction(KitModelsActions.UPDATE, {

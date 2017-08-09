@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NavController, NavParams, ModalController, Events } from 'ionic-angular';
 
-import { AddKitItemPage } from '../add-kit-item/add-kit-item';
+import { AddKitModelPage } from '../add-kit-model/add-kit-model';
 import { Kit } from '../../models/kits';
 import { KitsService } from '../../services/kits.service';
 import { KitsActions } from '../../store/kits/kits.actions';
@@ -95,11 +95,11 @@ export class EditKitPage {
    * Pushes page on nav to allow user to choose a brand and model.
    */
   onAddItem() {
-    this.navCtrl.push(AddKitItemPage);
+    this.navCtrl.push(AddKitModelPage);
   }
 
   /**
-   * Removes the kitItem from the list and mark it to be deleted.
+   * Removes the kitModel from the list and mark it to be deleted.
    */
   onRemoveFromList(index, kitModel) {
     this.modelsToDelete.push(kitModel.modelID);

@@ -39,38 +39,38 @@ describe('KitData Provider', () => {
   });
 
   it('calls api to get kit item', () => {
-    instance.api.value = TestData.kitItems;
+    instance.api.value = TestData.kitModels;
     instance.getKitModels().subscribe(
-      res => expect(res).toEqual(TestData.kitItems),
+      res => expect(res).toEqual(TestData.kitModels),
       err => fail(err)
     );
   });
 
   it('calls api to add kit item', () => {
-    instance.api.value = TestData.kitItem;
-    instance.addKitItem(TestData.kit.kitID, TestData.kitItem.modelID).subscribe(
-      res => expect(res).toEqual(TestData.kitItem),
+    instance.api.value = TestData.kitModel;
+    instance.addKitModel(TestData.kit.kitID, TestData.kitModel.modelID).subscribe(
+      res => expect(res).toEqual(TestData.kitModel),
       err => fail(err)
     );
   });
 
   it('calls api to delete kit item', () => {
     instance.api.value = TestData.response;
-    instance.deleteKitItem(TestData.kit.kitID, TestData.kitItem.modelID).subscribe(
+    instance.deleteKitModel(TestData.kit.kitID, TestData.kitModel.modelID).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
     );
   });
 
-  it('calls api to add kit', () => {
+  it('calls api to create kit', () => {
     instance.api.value = TestData.response;
-    instance.addKit(TestData.kit.name).subscribe(
+    instance.createKit(TestData.kit.name).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
     );
   });
 
-  it('calls api to edit kit', () => {
+  it('calls api to update kit', () => {
     instance.api.value = TestData.response;
     instance.updateKit(TestData.kit).subscribe(
       res => expect(res).toEqual(TestData.response),

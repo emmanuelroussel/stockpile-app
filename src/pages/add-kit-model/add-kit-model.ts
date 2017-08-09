@@ -8,12 +8,12 @@ import { ItemProperties } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
 
 @Component({
-  selector: 'page-add-kit-item',
-  templateUrl: 'add-kit-item.html'
+  selector: 'page-add-kit-model',
+  templateUrl: 'add-kit-model.html'
 })
-export class AddKitItemPage {
+export class AddKitModelPage {
   itemProperties = ItemProperties;
-  kitItem: { brandID?: number, brand?: string, modelID?: number, model?: string } = {};
+  kitModel: { brandID?: number, brand?: string, modelID?: number, model?: string } = {};
 
   constructor(
     public navCtrl: NavController,
@@ -36,7 +36,7 @@ export class AddKitItemPage {
    * nav.
    */
   onAdd() {
-    this.events.publish('kit-item:added', this.kitItem);
+    this.events.publish('kit-item:added', this.kitModel);
     this.navCtrl.pop();
   }
 
@@ -45,13 +45,13 @@ export class AddKitItemPage {
    * When dismissed, updates the kit item with the new data.
    */
   onPresentModal(type) {
-    let modal = this.modalCtrl.create(ItemFilterPage, { type, brandID: this.kitItem.brandID });
+    let modal = this.modalCtrl.create(ItemFilterPage, { type, brandID: this.kitModel.brandID });
 
     modal.onDidDismiss((element) => {
       // If user has chosen an element (did not cancel)
       if (element) {
-        const modifiedKitItem = this.getNewKitModelProperties(type, element);
-        this.kitItem = { ...this.kitItem, ...modifiedKitItem };
+        const modifiedkitModel = this.getNewKitModelProperties(type, element);
+        this.kitModel = { ...this.kitModel, ...modifiedkitModel };
       }
    });
 

@@ -35,7 +35,7 @@ export class CategoriesEffects {
   @Effect()
   create$ = this.actions$
     .ofType(CategoriesActions.CREATE)
-    .mergeMap(action => this.itemPropertyData.addCategory(action.payload)
+    .mergeMap(action => this.itemPropertyData.createCategory(action.payload)
       .concatMap(res => [
         createAction(CategoriesActions.CREATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)

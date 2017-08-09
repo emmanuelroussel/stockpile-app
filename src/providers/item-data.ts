@@ -12,11 +12,11 @@ export class ItemData {
     return this.api.get(`${Links.item}/${barcode}`);
   }
 
-  addItem(item: any) {
+  createItem(item: any) {
     return this.api.put(Links.item, item);
   }
 
-  editItem(item: any, barcode: string) {
+  updateItem(item: any, barcode: string) {
     return this.api.put(`${Links.item}/${barcode}`, item);
   }
 

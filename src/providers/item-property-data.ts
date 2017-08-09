@@ -11,7 +11,7 @@ export class ItemPropertyData {
     return this.api.get(Links.brand);
   }
 
-  addBrand(body: Object) {
+  createBrand(body: Object) {
     return this.api.put(Links.brand, body);
   }
 
@@ -19,7 +19,7 @@ export class ItemPropertyData {
     return this.api.get(Links.model);
   }
 
-  addModel(body: Object) {
+  createModel(body: Object) {
     return this.api.put(Links.model, body);
   }
 
@@ -27,7 +27,7 @@ export class ItemPropertyData {
     return this.api.get(Links.category);
   }
 
-  addCategory(body: Object) {
+  createCategory(body: Object) {
     return this.api.put(Links.category, body);
   }
 }

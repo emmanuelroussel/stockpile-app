@@ -3,15 +3,15 @@ import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { ItemProperties } from '../../constants';
 
-import { AddKitItemPage } from './add-kit-item';
+import { AddKitModelPage } from './add-kit-model';
 import { ItemFilterPage } from '../item-filter/item-filter';
 
-let fixture: ComponentFixture<AddKitItemPage> = null;
+let fixture: ComponentFixture<AddKitModelPage> = null;
 let instance: any = null;
 
-describe('AddKitItem Page', () => {
+describe('AddKitModel Page', () => {
 
-  beforeEach(async(() => TestUtils.beforeEachCompiler([AddKitItemPage]).then(compiled => {
+  beforeEach(async(() => TestUtils.beforeEachCompiler([AddKitModelPage]).then(compiled => {
     fixture = compiled.fixture;
     instance = compiled.instance;
   })));
@@ -36,32 +36,32 @@ describe('AddKitItem Page', () => {
   it('pops nav onAdd()', () => {
     spyOn(instance.events, 'publish');
     spyOn(instance.navCtrl, 'pop');
-    instance.kitItem = TestData.kitItem;
+    instance.kitModel = TestData.kitModel;
     instance.onAdd();
-    expect(instance.events.publish).toHaveBeenCalledWith('kit-item:added', TestData.kitItem);
+    expect(instance.events.publish).toHaveBeenCalledWith('kit-item:added', TestData.kitModel);
     expect(instance.navCtrl.pop).toHaveBeenCalled();
   });
 
   it('creates a modal on presentModal()', () => {
-    instance.kitItem = TestData.kitItem;
+    instance.kitModel = TestData.kitModel;
     spyOn(instance.modalCtrl, 'create').and.callThrough();
     instance.onPresentModal(ItemProperties.brand);
-    expect(instance.modalCtrl.create).toHaveBeenCalledWith(ItemFilterPage, { type: ItemProperties.brand, brandID: TestData.kitItem.brandID });
+    expect(instance.modalCtrl.create).toHaveBeenCalledWith(ItemFilterPage, { type: ItemProperties.brand, brandID: TestData.kitModel.brandID });
   });
 
   it('returns brand on getNewKitModelProperties', () => {
-    const kitItemNewBrand = instance.getNewKitModelProperties(ItemProperties.brand, {
-      name: TestData.kitItem.brand,
-      brandID: TestData.kitItem.brandID
+    const kitModelNewBrand = instance.getNewKitModelProperties(ItemProperties.brand, {
+      name: TestData.kitModel.brand,
+      brandID: TestData.kitModel.brandID
     });
-    expect(kitItemNewBrand).toEqual(TestData.kitItemNewBrand);
+    expect(kitModelNewBrand).toEqual(TestData.kitModelNewBrand);
   });
 
   it('returns model on getNewKitModelProperties', () => {
-    const kitItemNewModel = instance.getNewKitModelProperties(ItemProperties.model, {
-      name: TestData.kitItem.model,
-      modelID: TestData.kitItem.modelID
+    const kitModelNewModel = instance.getNewKitModelProperties(ItemProperties.model, {
+      name: TestData.kitModel.model,
+      modelID: TestData.kitModel.modelID
     });
-    expect(kitItemNewModel).toEqual(TestData.kitItemNewModel);
+    expect(kitModelNewModel).toEqual(TestData.kitModelNewModel);
   });
 });

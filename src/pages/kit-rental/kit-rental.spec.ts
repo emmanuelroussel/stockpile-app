@@ -25,7 +25,7 @@ describe('KitRental Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('fetches kitItems', () => {
+  it('fetches kitModels', () => {
     instance.navParams.param = TestData.kit.kitID;
     spyOn(instance.kitModelsActions, 'fetchKitModels');
     instance.ngOnInit();
@@ -84,44 +84,31 @@ describe('KitRental Page', () => {
   }));
 
   it('pushes RentalDetailsPage on nav onContinue()', () => {
-    instance.kitModels = Observable.of(TestData.kitItems.results);
-    instance.items = Observable.of({ rentals: TestData.kitItems.results });
+    instance.kitModels = Observable.of(TestData.kitModels.results);
+    instance.items = Observable.of({ rentals: TestData.kitModels.results });
     spyOn(instance.navCtrl, 'push');
     instance.onContinue();
     expect(instance.navCtrl.push).toHaveBeenCalled();
   });
 
-  it('shows alert if not all kitItems are scanned onContinue()', () => {
-    instance.kitModels = Observable.of(TestData.kitItems.results);
-    instance.items = Observable.of({ rentals: TestData.deletedKitItems.results });
+  it('shows alert if not all kitModels are scanned onContinue()', () => {
+    instance.kitModels = Observable.of(TestData.kitModels.results);
+    instance.items = Observable.of({ rentals: TestData.deletedKitModels.results });
     spyOn(instance.alertCtrl, 'create').and.callThrough();
     instance.onContinue();
     expect(instance.alertCtrl.create).toHaveBeenCalled();
   });
 
   it('returns true if kit model is added on isKitModelAdded()', () => {
-    instance.items = Observable.of({ rentals: TestData.kitItems.results });
-    const remaining = instance.isKitModelAdded(TestData.kitItems.results[0]);
+    instance.items = Observable.of({ rentals: TestData.kitModels.results });
+    const remaining = instance.isKitModelAdded(TestData.kitModels.results[0]);
     expect(remaining).toBeTruthy();
   });
-
-  /*it('returns false if kit model is not added on isKitModelAdded()', () => {
-    instance.items = Observable.of({ rentals: TestData.kitItems.results });
-    const remaining = instance.isKitModelAdded(TestData.kitItem);
-    expect(remaining).not.toBeTruthy();
-  });
-
-  it('returns items not in kit on getItemsNotInKit', () => {
-    instance.items = Observable.of({ rentals: TestData.itemsMap });
-    instance.kitModels = Observable.of(TestData.kitItems.results);
-    const item = instance.getItemsNotInKit();
-    expect(item).toEqual(TestData.items[3]);
-  });*/
 
   it('removes item from rentals on onRemoveKitModel()', () => {
     instance.items = Observable.of({ rentals: TestData.itemsMap });
     spyOn(instance.itemsActions, 'removeFromRentals');
-    instance.onRemoveKitModel(TestData.kitItem);
+    instance.onRemoveKitModel(TestData.kitModel);
     expect(instance.itemsActions.removeFromRentals).toHaveBeenCalledWith(TestData.items[3].barcode);
   });
 

@@ -22,17 +22,17 @@ describe('ItemData Provider', () => {
     );
   });
 
-  it('calls api to add item', () => {
+  it('calls api to create item', () => {
     instance.api.value = TestData.response;
-    instance.addItem(TestData.item).subscribe(
+    instance.createItem(TestData.item).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
     );
   });
 
-  it('calls api to edit item', () => {
+  it('calls api to update item', () => {
     instance.api.value = TestData.response;
-    instance.editItem(TestData.item, TestData.item.barcode).subscribe(
+    instance.updateItem(TestData.item, TestData.item.barcode).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
     );

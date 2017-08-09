@@ -35,7 +35,7 @@ export class BrandsEffects {
   @Effect()
   create$ = this.actions$
     .ofType(BrandsActions.CREATE)
-    .mergeMap(action => this.itemPropertyData.addBrand(action.payload)
+    .mergeMap(action => this.itemPropertyData.createBrand(action.payload)
       .concatMap(res => [
         createAction(BrandsActions.CREATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)

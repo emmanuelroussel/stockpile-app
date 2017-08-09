@@ -35,7 +35,7 @@ export class ModelsEffects {
   @Effect()
   create$ = this.actions$
     .ofType(ModelsActions.CREATE)
-    .mergeMap(action => this.itemPropertyData.addModel(action.payload)
+    .mergeMap(action => this.itemPropertyData.createModel(action.payload)
       .concatMap(res => [
         createAction(ModelsActions.CREATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),

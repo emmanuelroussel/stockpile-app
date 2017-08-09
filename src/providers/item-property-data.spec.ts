@@ -22,9 +22,9 @@ describe('KitData Provider', () => {
     );
   });
 
-  it('calls api to add brand', () => {
+  it('calls api to create brand', () => {
     instance.api.value = TestData.response;
-    instance.addBrand(TestData.brand.name).subscribe(
+    instance.createBrand(TestData.brand.name).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
     );
@@ -38,9 +38,9 @@ describe('KitData Provider', () => {
     );
   });
 
-  it('calls api to add model', () => {
+  it('calls api to create model', () => {
     instance.api.value = TestData.response;
-    instance.addModel(TestData.model.name).subscribe(
+    instance.createModel(TestData.model.name).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
     );
@@ -54,9 +54,9 @@ describe('KitData Provider', () => {
     );
   });
 
-  it('calls api to add category', () => {
+  it('calls api to create category', () => {
     instance.api.value = TestData.response;
-    instance.addCategory(TestData.category.name).subscribe(
+    instance.createCategory(TestData.category.name).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
     );

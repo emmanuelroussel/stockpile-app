@@ -39,11 +39,11 @@ export class KitModelsEffects {
       let models = [];
 
       for (const modelID of action.payload.kitModelsToCreate) {
-        models.push(this.kitData.addKitItem(action.payload.kitID, modelID).toPromise());
+        models.push(this.kitData.addKitModel(action.payload.kitID, modelID).toPromise());
       }
 
       for (const modelID of action.payload.kitModelsToDelete) {
-        models.push(this.kitData.deleteKitItem(action.payload.kitID, modelID).toPromise());
+        models.push(this.kitData.deleteKitModel(action.payload.kitID, modelID).toPromise());
       }
 
       return Observable.of(Promise.all(models))

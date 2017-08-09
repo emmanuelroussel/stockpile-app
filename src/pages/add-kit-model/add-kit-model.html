@@ -9,12 +9,12 @@
 		<ion-list>
       <ion-item (click)="onPresentModal(itemProperties.brand)">
         <ion-label floating color="primary">Brand</ion-label>
-        <ion-input [ngModel]="kitItem.brand" readonly required name="brand" #brand="ngModel"></ion-input>
+        <ion-input [ngModel]="kitModel.brand" readonly required name="brand" #brand="ngModel"></ion-input>
       </ion-item>
 
-      <ion-item [hidden]="!kitItem.brandID" (click)="onPresentModal(itemProperties.model)">
+      <ion-item [hidden]="!kitModel.brandID" (click)="onPresentModal(itemProperties.model)">
         <ion-label floating color="primary">Model</ion-label>
-        <ion-input [ngModel]="kitItem.model" readonly required name="model" #model="ngModel"></ion-input>
+        <ion-input [ngModel]="kitModel.model" readonly required name="model" #model="ngModel"></ion-input>
       </ion-item>
 		</ion-list>
 

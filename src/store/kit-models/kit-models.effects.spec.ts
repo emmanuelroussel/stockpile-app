@@ -38,12 +38,12 @@ describe('KitModels Effects', () => {
   });
 
   it('fetches kit models', () => {
-    instance.kitData.kitItems = TestData.kitItems.results;
+    instance.kitData.kitModels = TestData.kitModels.results;
 
     runner.queue(createAction(KitModelsActions.FETCH));
 
     instance.fetch$.subscribe(
-      res => expect(res).toEqual(createAction(KitModelsActions.FETCH_SUCCESS, TestData.kitItems.results))
+      res => expect(res).toEqual(createAction(KitModelsActions.FETCH_SUCCESS, TestData.kitModels.results))
       err => fail(err)
     );
   });

@@ -50,7 +50,7 @@ export class ItemsEffects {
   @Effect()
   create$ = this.actions$
     .ofType(ItemsActions.CREATE)
-    .mergeMap(action => this.itemData.addItem(action.payload)
+    .mergeMap(action => this.itemData.createItem(action.payload)
       .concatMap(res => [
         createAction(ItemsActions.CREATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
@@ -70,7 +70,7 @@ export class ItemsEffects {
   @Effect()
   update$ = this.actions$
     .ofType(ItemsActions.UPDATE)
-    .mergeMap(action => this.itemData.editItem(action.payload, action.payload.barcode)
+    .mergeMap(action => this.itemData.updateItem(action.payload, action.payload.barcode)
       .concatMap(res => [
         createAction(ItemsActions.UPDATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),

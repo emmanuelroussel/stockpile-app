@@ -44,7 +44,7 @@ import { ItemsService } from '../services/items.service';
 import { LayoutActions } from '../store/layout/layout.actions';
 import { LayoutService } from '../services/layout.service';
 
-import { AddKitItemPage } from '../pages/add-kit-item/add-kit-item';
+import { AddKitModelPage } from '../pages/add-kit-model/add-kit-model';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { EditAccountPage } from '../pages/edit-account/edit-account';
 import { EditItemPage } from '../pages/edit-item/edit-item';
@@ -79,7 +79,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
 @NgModule({
   declarations: [
     StockpileApp,
-    AddKitItemPage,
+    AddKitModelPage,
     ChangePasswordPage,
     EditAccountPage,
     EditItemPage,
@@ -128,7 +128,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
   bootstrap: [IonicApp],
   entryComponents: [
     StockpileApp,
-    AddKitItemPage,
+    AddKitModelPage,
     ChangePasswordPage,
     EditAccountPage,
     EditItemPage,
