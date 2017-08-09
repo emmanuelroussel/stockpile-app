@@ -4,6 +4,7 @@ import { createAction } from '../create-action';
 import { TestData } from '../../test-data';
 import { UserData } from '../../providers/user-data';
 import { UserDataMock } from '../../mocks';
+import { Observable } from 'rxjs/Observable';
 
 import { OrganizationEffects } from './organization.effects';
 import { OrganizationActions } from './organization.actions';
@@ -53,11 +54,15 @@ describe('Organization Effects', () => {
 
     runner.queue(createAction(OrganizationActions.FETCH));
 
-    instance.fetch$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(OrganizationActions.FETCH_FAIL, TestData.error),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(OrganizationActions.FETCH_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.fetch$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 });

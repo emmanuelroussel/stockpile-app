@@ -7,10 +7,12 @@ import { UserDataMock StorageMock, StoreMock } from '../../mocks';
 import { Storage } from '@ionic/storage';
 import { Store } from '@ngrx/store';
 import { LoginPage } from '../../pages/login/login';
+import { Observable } from 'rxjs/Observable';
 
 import { UserEffects } from './user.effects';
 import { UserActions } from './user.actions';
 import { AppActions } from '../app/app.actions';
+import { LayoutActions } from '../layout/layout.actions';
 
 let instance: OrganizationEffects = null;
 let runner: EffectsRunner = null;
@@ -56,12 +58,16 @@ describe('User Effects', () => {
 
     runner.queue(createAction(UserActions.LOGIN));
 
-    instance.login$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(UserActions.LOGIN_FAIL, TestData.error),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(UserActions.LOGIN_FAIL, TestData.error),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.login$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 

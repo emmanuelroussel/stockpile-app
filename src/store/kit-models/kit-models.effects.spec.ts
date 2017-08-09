@@ -4,6 +4,7 @@ import { TestData } from '../../test-data';
 import { createAction } from '../create-action';
 import { KitData } from '../../providers/kit-data';
 import { KitDataMock } from '../../mocks';
+import { Observable } from 'rxjs/Observable';
 
 import { KitModelsEffects } from './kit-models.effects';
 import { KitModelsActions } from './kit-models.actions';
@@ -53,11 +54,15 @@ describe('KitModels Effects', () => {
 
     runner.queue(createAction(KitModelsActions.FETCH));
 
-    instance.fetch$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(KitModelsActions.FETCH_FAIL, TestData.error),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(KitModelsActions.FETCH_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.fetch$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 });

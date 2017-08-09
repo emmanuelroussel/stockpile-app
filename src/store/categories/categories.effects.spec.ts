@@ -4,6 +4,7 @@ import { TestData } from '../../test-data';
 import { createAction } from '../create-action';
 import { ItemPropertyData } from '../../providers/item-property-data';
 import { ItemPropertyDataMock } from '../../mocks';
+import { Observable } from 'rxjs/Observable';
 
 import { CategoriesEffects } from './categories.effects';
 import { CategoriesActions } from './categories.actions';
@@ -54,11 +55,15 @@ describe('Categories Effects', () => {
 
     runner.queue(createAction(CategoriesActions.FETCH));
 
-    instance.fetch$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(CategoriesActions.FETCH_FAIL, TestData.error),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(CategoriesActions.FETCH_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.fetch$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 
@@ -83,12 +88,16 @@ describe('Categories Effects', () => {
 
     runner.queue(createAction(CategoriesActions.CREATE));
 
-    instance.create$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(CategoriesActions.CREATE_FAIL, TestData.error),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(CategoriesActions.CREATE_FAIL, TestData.error),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.create$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 });

@@ -5,6 +5,7 @@ import { createAction } from '../create-action';
 import { KitData } from '../../providers/kit-data';
 import { KitDataMock } from '../../mocks';
 import { Messages } from '../../constants';
+import { Observable } from 'rxjs/Observable';
 
 import { KitsEffects } from './kits.effects';
 import { KitsActions } from './kits.actions';
@@ -56,11 +57,15 @@ describe('Kits Effects', () => {
 
     runner.queue(createAction(KitsActions.FETCH));
 
-    instance.fetch$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(KitsActions.FETCH_FAIL, TestData.error),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(KitsActions.FETCH_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.fetch$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 
@@ -87,12 +92,16 @@ describe('Kits Effects', () => {
 
     runner.queue(createAction(KitsActions.DELETE));
 
-    instance.delete$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(KitsActions.DELETE_FAIL, TestData.error),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(KitsActions.DELETE_FAIL, TestData.error),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.delete$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 
@@ -122,11 +131,16 @@ describe('Kits Effects', () => {
 
     runner.queue(createAction(KitsActions.CREATE, { kit: TestData.kit, kitModels: TestData.kitModels.results }));
 
-    instance.create$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(KitsActions.CREATE_FAIL, TestData.error),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(KitsActions.CREATE_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+    ];
+    instance.create$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 
@@ -164,11 +178,16 @@ describe('Kits Effects', () => {
       kitModelsToDelete: TestData.deletedKitModels.results
     }));
 
-    instance.update$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(KitsActions.UPDATE_FAIL, TestData.error),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(KitsActions.UPDATE_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+    ];
+    instance.update$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 });

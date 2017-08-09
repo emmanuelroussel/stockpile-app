@@ -7,6 +7,7 @@ import { ItemDataMock, StoreMock } from '../../mocks';
 import { Store } from '@ngrx/store';
 import { Messages, Actions } from '../../constants';
 import { RentalPage } from '../../pages/rental/rental';
+import { Observable } from 'rxjs/Observable';
 
 import { ItemsEffects } from './items.effects';
 import { ItemsActions } from './items.actions';
@@ -42,30 +43,6 @@ describe('Items Effects', () => {
     expect(instance).toBeTruthy();
   });
 
-  /*it('fetches items', () => {
-    instance.itemData.items = TestData.items;
-
-    runner.queue(createAction(ItemsActions.FETCH));
-
-    instance.fetch$.subscribe(
-      res => expect(res).toEqual(createAction(ItemsActions.FETCH_SUCCESS, TestData.items))
-      err => fail(err)
-    );
-  });
-
-  it('returns error if fetch fails', () => {
-    instance.itemData.resolve = false;
-
-    runner.queue(createAction(ItemsActions.FETCH));
-
-    instance.fetch$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(ItemsActions.FETCH_FAIL, TestData.error),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
-    );
-  });*/
-
   it('creates an item', () => {
     runner.queue(createAction(ItemsActions.CREATE));
 
@@ -89,12 +66,16 @@ describe('Items Effects', () => {
 
     runner.queue(createAction(ItemsActions.CREATE));
 
-    instance.create$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(ItemsActions.CREATE_FAIL, TestData.error),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ItemsActions.CREATE_FAIL, TestData.error),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.create$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 
@@ -121,12 +102,16 @@ describe('Items Effects', () => {
 
     runner.queue(createAction(ItemsActions.UPDATE, TestData.item));
 
-    instance.update$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(ItemsActions.UPDATE_FAIL, TestData.error),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ItemsActions.UPDATE_FAIL, TestData.error),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.update$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 
@@ -153,12 +138,16 @@ describe('Items Effects', () => {
 
     runner.queue(createAction(ItemsActions.DELETE));
 
-    instance.delete$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(ItemsActions.DELETE_FAIL, TestData.error),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ItemsActions.DELETE_FAIL, TestData.error),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.delete$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 
@@ -190,12 +179,16 @@ describe('Items Effects', () => {
 
     runner.queue(createAction(ItemsActions.START_RENTAL, TestData.apiItem));
 
-    instance.startRental$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(ItemsActions.START_RENTAL_FAIL, TestData.error),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ItemsActions.START_RENTAL_FAIL, TestData.error),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.startRental$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 
@@ -264,12 +257,16 @@ describe('Items Effects', () => {
 
     runner.queue(createAction(ItemsActions.ADD_TO_RENTALS, TestData.apiItem));
 
-    instance.addToRentals$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(ItemsActions.ADD_TO_RENTALS_FAIL, TestData.error),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ItemsActions.ADD_TO_RENTALS_FAIL, TestData.error),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.addToRentals$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 });

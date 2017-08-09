@@ -69,7 +69,8 @@ export class KitsEffects {
       ])
       .catch(err => Observable.of(
         createAction(KitsActions.CREATE_FAIL, err),
-        createAction(AppActions.SHOW_MESSAGE, err.message)
+        createAction(AppActions.SHOW_MESSAGE, err.message),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
 
@@ -91,7 +92,8 @@ export class KitsEffects {
       ])
       .catch(err => Observable.of(
         createAction(KitsActions.UPDATE_FAIL, err),
-        createAction(AppActions.SHOW_MESSAGE, err.message)
+        createAction(AppActions.SHOW_MESSAGE, err.message),
+        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
       ))
     );
 }

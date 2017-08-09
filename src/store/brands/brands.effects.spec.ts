@@ -4,6 +4,7 @@ import { TestData } from '../../test-data';
 import { createAction } from '../create-action';
 import { ItemPropertyData } from '../../providers/item-property-data';
 import { ItemPropertyDataMock } from '../../mocks';
+import { Observable } from 'rxjs/Observable';
 
 import { BrandsEffects } from './brands.effects';
 import { BrandsActions } from './brands.actions';
@@ -54,11 +55,15 @@ describe('Brands Effects', () => {
 
     runner.queue(createAction(BrandsActions.FETCH));
 
-    instance.fetch$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(BrandsActions.FETCH_FAIL, TestData.error),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(BrandsActions.FETCH_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.fetch$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 
@@ -83,12 +88,16 @@ describe('Brands Effects', () => {
 
     runner.queue(createAction(BrandsActions.CREATE));
 
-    instance.create$.subscribe(
-      res => expect(res).toEqual(Observable.of(
-        createAction(BrandsActions.CREATE_FAIL, TestData.error),
-        createAction(AppActions.SHOW_MESSAGE, TestData.error.message),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
-      ))
+    let performedActions = [];
+    const expectedResult = [
+      createAction(BrandsActions.CREATE_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+    ];
+    instance.create$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
     );
   });
 });

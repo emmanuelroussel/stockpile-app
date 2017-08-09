@@ -189,7 +189,7 @@ export class BarcodeScannerMock {
 
 export class ToastMock {
   public showWithOptions(): any {
-    return Observable.fromPromise(Promise.resolve());
+    return Observable.of(null);
   }
 }
 
@@ -381,15 +381,15 @@ export class ApiMock {
   value = TestData.response;
 
   public get(): any {
-    return Observable.fromPromise(Promise.resolve(this.value));
+    return Observable.of(this.value);
   }
 
   public put(): any {
-    return Observable.fromPromise(Promise.resolve(this.value));
+    return Observable.of(this.value);
   }
 
   public delete(): any {
-    return Observable.fromPromise(Promise.resolve(this.value));
+    return Observable.of(this.value);
   }
 }
 
@@ -564,9 +564,9 @@ export class StoreMock {
 
 export function returnObservable(resolve: boolean, value?: any): any {
   if (resolve) {
-    return Observable.fromPromise(Promise.resolve(value));
+    return Observable.of(value);
   } else {
-    return Observable.fromPromise(Promise.reject(TestData.error));
+    return Observable.throw(TestData.error);
   }
 }
 
