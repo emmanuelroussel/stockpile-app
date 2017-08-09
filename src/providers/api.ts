@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
 import { ApiUrl } from './api-url';
-import { extractData, handleError } from '../services/auth-http-helpers';
+import { extractData, handleError } from '../utils/auth-http-helpers';
 
 @Injectable()
 export class Api {

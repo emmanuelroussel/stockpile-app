@@ -73,8 +73,8 @@ import { KitData } from '../providers/kit-data';
 import { Notifications } from '../providers/notifications';
 import { UserData } from '../providers/user-data';
 
-import { RavenErrorHandler } from '../services/raven-error-handler';
-import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
+import { RavenErrorHandler } from '../utils/raven-error-handler';
+import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
 
 @NgModule({
   declarations: [
