@@ -1,97 +1,46 @@
 import { Component } from '@angular/core';
-import { NavController, Events } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
-import { KitData } from '../../providers/kit-data';
-import { Notifications } from '../../providers/notifications';
-import { Actions, paginationLimit } from '../../constants';
+import { Actions } from '../../constants';
 import { EditKitPage } from '../edit-kit/edit-kit';
 import { ViewKitPage } from '../view-kit/view-kit';
+import { Kits } from '../../models/kits';
+import { KitsService } from '../../services/kits.service';
+
+import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
+
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'page-kits',
   templateUrl: 'kits.html'
 })
 export class KitsPage {
-  kits = [];
-  loadMoreItems = true;
-  offset;
-  loading = false;
+  kits: Observable<Kits>;
 
   constructor(
     public navCtrl: NavController,
-    public kitData: KitData,
-    public notifications: Notifications,
-    public events: Events
-  ) { }
+    public kitsService: KitsService
+  ) {}
 
   /**
-   * Gets kits from the api and listens to event to update kits if they are
-   * modified by the user.
+   * Gets kits.
    */
   ngOnInit() {
-    this.loading = true;
-    this.loadKits().then(
-      () => this.loading = false
-    );
-
-    this.events.subscribe('kit:edited', kit => {
-      const index = this.kits.findIndex(element => element.kitID === kit.kitID);
-      this.kits.splice(index, 1, kit);
-    });
-
-    this.events.subscribe('kit:added', kit => {
-      this.kits.push(kit);
-    });
-
-    this.events.subscribe('kit:deleted', kit => {
-      const index = this.kits.findIndex(element => element.kitID === kit.kitID);
-      this.kits.splice(index, 1);
-    });
-  }
-
- /**
-  * Gets all kits and resolves a promise when done for the infinite scroll
-  * component.
-  */
-  loadKits() {
-    return new Promise(resolve => {
-      this.kitData.getKits(
-        paginationLimit,
-        this.offset
-      ).subscribe(
-        (kits: any) => {
-          kits.results.forEach(kit => {
-            this.kits.push(kit);
-          });
-
-          if (!kits.results.length) {
-            this.loadMoreItems = false;
-          } else {
-            this.offset += paginationLimit;
-          }
-
-          resolve();
-        },
-        err => this.notifications.showToast(err)
-      );
-    });
+    this.kits = this.kitsService.getKits();
   }
 
   /**
-   * Pushes ViewKitPage on nav with the kit to view.
+   * Pushes page on nav with the kit to allow user to view it.
    */
-  onViewKit(kit) {
-    this.navCtrl.push(ViewKitPage, {
-      kit: kit
-    });
+  onViewKit(kitID: number) {
+    this.navCtrl.push(ViewKitPage, { kitID });
   }
 
   /**
-   * Pushes EditKitPage on nav.
+   * Pushes page on nav to allow user to add a new kit.
    */
   onAdd() {
-    this.navCtrl.push(EditKitPage, {
-      action: Actions.add
-    });
+    this.navCtrl.push(EditKitPage, { action: Actions.add });
   }
 }

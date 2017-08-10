@@ -5,13 +5,13 @@ import { Toast } from '@ionic-native/toast';
 @Injectable()
 export class Notifications {
 
-  constructor(public platform: Platform, public toast: Toast) { }
+  constructor(public platform: Platform, public toast: Toast) {}
 
   /**
    * Shows message as a Toast notification if you are on mobile or logs it to
    * the console when cordova is not be available.
    */
-  showToast(message: string) {
+  showMessage(message: string) {
     if (this.platform.is('cordova')) {
       this.toast.showWithOptions(
         {

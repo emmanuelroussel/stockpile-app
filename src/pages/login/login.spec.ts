@@ -1,9 +1,9 @@
-import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
+import { LoadingMessages } from '../../constants';
 
 import { LoginPage } from './login';
-import { TabsPage } from '../tabs/tabs';
 
 let fixture: ComponentFixture<LoginPage> = null;
 let instance: any = null;
@@ -24,52 +24,12 @@ describe('Login Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('changes root nav to TabsPage onLogin() if form is valid', fakeAsync(() => {
-    instance.login.email = TestData.credentials.email;
-    instance.login.password = TestData.credentials.password;
-    instance.userData.resolve = true;
-    spyOn(instance.navCtrl, 'setRoot');
-    instance.onLogin();
-    tick();
-    expect(instance.navCtrl.setRoot).toHaveBeenCalledWith(TabsPage);
-  }));
-
-  it('resets password and shows toast if error', fakeAsync(() => {
-    instance.login.email = TestData.credentials.email;
-    instance.login.password = TestData.credentials.password;
-    instance.userData.resolve = false;
-    spyOn(instance.notifications, 'showToast');
-    instance.onLogin();
-    tick();
-    expect(instance.login.password).toEqual('');
-    expect(instance.notifications.showToast).toHaveBeenCalled();
-  }));
-
-  it('keeps login button disabled of form is not valid', fakeAsync(() => {
-    instance.login.email = 'invalid email';
-    instance.login.password = TestData.credentials.password;
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0].disabled).toBe(true);
-    });
-
-    instance.login.email = TestData.credentials.email;
-    instance.login.password = '';
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0].disabled).toBe(true);
-    });
-  }));
-
-  it('enables login button if form is valid', fakeAsync(() => {
-    instance.login.email = TestData.credentials.email;
-    instance.login.password = TestData.credentials.password;
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(fixture.nativeElement.querySelectorAll('button[type="submit"]')[0].disabled).toBe(false);
-    });
-  }));
+  it('logs user in onLogin()', () => {
+    const form = { value: TestData.credentials };
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.userActions, 'loginUser');
+    instance.onLogin(form);
+    expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.loggingInUser);
+    expect(instance.userActions.loginUser).toHaveBeenCalledWith(form.value);
+  });
 });

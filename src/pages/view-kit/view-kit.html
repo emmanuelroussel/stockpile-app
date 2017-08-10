@@ -11,16 +11,18 @@
 
 <ion-content padding>
 	<ion-list>
-    <ion-item>{{kit?.name}}</ion-item>
+    <ion-item>{{(kit | async)?.name}}</ion-item>
 	</ion-list>
 
   <ion-list>
     <ion-list-header>Items</ion-list-header>
-    <ion-item *ngFor="let kitItem of kitItems">
-      <h2>{{ kitItem.brand }} {{ kitItem.model }}</h2>
+    <ion-item *ngFor="let kitModel of (kitModels | async)">
+      <h2>{{ kitModel.brand }} {{ kitModel.model }}</h2>
     </ion-item>
 
-    <ion-item *ngIf="!kitItems.length">
+    <ion-spinner class="center-spinner" *ngIf="showLoadingSpinner | async"></ion-spinner>
+
+    <ion-item *ngIf="!(kitModels | async) && !(showLoadingSpinner | async)">
       No items found
     </ion-item>
   </ion-list>

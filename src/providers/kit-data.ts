@@ -28,11 +28,11 @@ export class KitData {
     return this.api.get(`${Links.kit}/${kitID}`);
   }
 
-  getKitItems(kitID: number) {
+  getKitModels(kitID: number) {
     return this.api.get(`${Links.kit}/${kitID}${Links.model}`);
   }
 
-  addKitItem(kitID: number, modelID: number) {
+  addKitModel(kitID: number, modelID: number) {
     const body = {
       modelID
     };
@@ -40,19 +40,15 @@ export class KitData {
     return this.api.put(`${Links.kit}/${kitID}${Links.model}`, body);
   }
 
-  deleteKitItem(kitID: number, modelID: number) {
+  deleteKitModel(kitID: number, modelID: number) {
     return this.api.delete(`${Links.kit}/${kitID}${Links.model}/${modelID}`);
   }
 
-  addKit(kitName: string) {
-    const body = {
-      name: kitName
-    };
-
-    return this.api.put(Links.kit, body);
+  createKit(kit: any) {
+    return this.api.put(Links.kit, kit);
   }
 
-  editKit(kit) {
+  updateKit(kit: any) {
     return this.api.put(`${Links.kit}/${kit.kitID}`, kit);
   }
 

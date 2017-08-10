@@ -45,8 +45,8 @@
         "src/constants.ts",
         "src/mocks.ts",
         "src/test-data.ts",
-        "src/services/*",
-        "**/test.ts"
+        "**/test.ts",
+        "src/utils/*"
       ]
     },
     "karma": {

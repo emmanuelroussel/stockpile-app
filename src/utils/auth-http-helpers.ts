@@ -26,28 +26,18 @@ export const cloudSettings: CloudSettings = {
  * Logs error and gets message from api error and throw it.
  */
 export function handleError(error: Response | any, caught: any) {
-  let message: string;
-
-  // Don't report 404s because they are a normal behavior of the api most of
-  // the time. Ex: user scan item not present in the database
-  if (error.status !== 404) {
-    errorReport.reportError(error);
+  // Don't report 404s and 401a because they are a normal behavior of the api most of
+  // the time. Ex: user scans item not present in the database or wrong password
+  if (error.status !== 404 || error.status !== 401) {
+    errorReport.reportError(error.json());
   }
 
-  if (error instanceof Response) {
-    const body = error.json() || '';
-    message = body.message || JSON.stringify(body);
-  } else {
-    message = error.message ? error.message : error.toString();
-  }
-
-  return Observable.throw(message);
+  return Observable.throw(error.json());
 }
 
 /**
  * Transforms data from the api into json.
  */
 export function extractData(res: Response) {
-  const body = res.json();
-  return body || { };
+  return res.json() || {};
 }

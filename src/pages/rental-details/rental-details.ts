@@ -1,37 +1,39 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
+import { NgForm } from '@angular/forms';
 
-import { ItemData } from '../../providers/item-data';
-import { Notifications } from '../../providers/notifications';
-import { Messages } from '../../constants';
+import { ItemsActions } from '../../store/items/items.actions';
+import { ItemsService } from '../../services/items.service';
+import { Items } from '../../models/items';
+import { Observable } from 'rxjs/Observable';
+import { LoadingMessages } from '../../constants';
+import { LayoutActions } from '../../store/layout/layout.actions';
+
+import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
 
 @Component({
   selector: 'page-rental-details',
   templateUrl: 'rental-details.html'
 })
 export class RentalDetailsPage {
-  items = [];
-  details: {itemID?: number, startDate?: string, endDate?: string, notes?: string} = {};
+  items: Observable<Items>;
+  details: { endDate?: string, notes?: string } = {};
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
-    public itemData: ItemData,
-    public notifications: Notifications,
-    public loadingCtrl: LoadingController
-  ) { }
+    public itemsService: ItemsService,
+    public itemsActions: ItemsActions,
+    public layoutActions: LayoutActions
+  ) {}
 
   /**
-   * Gets items to rent and sets the rental's start date as today and return
-   * date to tomorrow as default.
+   * Gets items to rent and sets the rental's return date to tomorrow as default.
    */
   ngOnInit() {
-    this.items = this.navParams.get('items');
+    this.items = this.itemsService.getItems();
 
-    const today = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(today.getDate() + 1);
-    this.details.startDate = today.toISOString();
+    let tomorrow = new Date();
+    tomorrow.setDate((new Date()).getDate() + 1);
     this.details.endDate = tomorrow.toISOString();
   }
 
@@ -39,40 +41,15 @@ export class RentalDetailsPage {
    * Rents items by calling the api for each item in the list of items to rent.
    * Pops the nav back to the root (TabsPage) when done.
    */
-  onRent() {
-    // Transform date from ISO 8601 to MySQL date format
-    this.details.startDate = new Date(this.details.startDate).toISOString().substring(0, 10);
-    this.details.endDate = new Date(this.details.endDate).toISOString().substring(0, 10);
+  onRent(form: NgForm) {
+    // Transform dates from ISO 8601 to MySQL date format
+    const details = {
+      ...form.value,
+      startDate: (new Date()).toISOString().substring(0, 10), // today
+      endDate: form.value.endDate.substring(0, 10)
+    };
 
-    let loading = this.loadingCtrl.create({
-      content: 'Renting your item(s), please wait...'
-    });
-
-    loading.present();
-
-    let rentals = [];
-
-    for (const item of this.items) {
-      const rental = {
-        barcode: item.barcode,
-        startDate: this.details.startDate,
-        endDate: this.details.endDate,
-        notes: this.details.notes
-      };
-
-      rentals.push(this.itemData.rent(rental).toPromise());
-    }
-
-    Promise.all(rentals).then(
-      success => {
-        this.notifications.showToast(Messages.itemsRented);
-        loading.dismiss();
-        this.navCtrl.popToRoot();
-      },
-      err => {
-        loading.dismiss();
-        this.notifications.showToast(err);
-      }
-    );
+    this.layoutActions.showLoadingMessage(LoadingMessages.rentingItems);
+    this.itemsActions.rentItems(details);
   }
 }

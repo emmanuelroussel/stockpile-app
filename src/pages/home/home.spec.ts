@@ -1,10 +1,10 @@
 import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { TestUtils } from '../../test';
-import { Actions } from '../../constants';
+import { LoadingMessages } from '../../constants';
 import { TestData } from '../../test-data';
 
 import { HomePage } from './home';
-import { RentalPage } from '../rental/rental';
+import { Observable } from 'rxjs/Observable';
 
 let fixture: ComponentFixture<HomePage> = null;
 let instance: any = null;
@@ -25,43 +25,19 @@ describe('Home Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('gets kits', fakeAsync(() => {
+  it('gets kits', () => {
+    spyOn(instance.kitsActions, 'fetchKits');
     instance.ngOnInit();
-    tick();
-    expect(instance.kits).toEqual(TestData.kits.results);
-  }));
+    expect(instance.kitsActions.fetchKits).toHaveBeenCalled();
+  });
 
-  it('shows toast if error while getting kits', fakeAsync(() => {
-    instance.kitData.resolve = false;
-    spyOn(instance.notifications, 'showToast');
-    instance.ngOnInit();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
-
-  it('pushes rental page on pushPage() with \'Rent\' if item is avaiable', fakeAsync(() => {
-    instance.itemData.item = TestData.apiItem;
-    spyOn(instance.navCtrl, 'push');
+  it('starts rental on pushPage()', () => {
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.itemsActions, 'startRental');
     instance.pushPage(TestData.apiItem.barcode);
-    tick();
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { item: TestData.apiItem, action: Actions.rent });
-  }));
-
-  it('pushes rental page on pushPage() with \'Return\' if item is not available', fakeAsync(() => {
-    instance.itemData.item = TestData.rentedApiItem;
-    spyOn(instance.navCtrl, 'push');
-    instance.pushPage(TestData.rentedApiItem.barcode);
-    tick();
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalPage, { item: TestData.rentedApiItem, action: Actions.return });
-  }));
-
-  it('shows toast if error in pushPage()', fakeAsync(() => {
-    instance.itemData.resolve = false;
-    spyOn(instance.notifications, 'showToast');
-    instance.pushPage(TestData.item.barcode);
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
+    expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.startingRental);
+    expect(instance.itemsActions.startRental).toHaveBeenCalledWith(TestData.apiItem.barcode);
+  });
 
   it('calls barcodeScanner.scan() onScanBarcode()', fakeAsync(() => {
     spyOn(instance.barcodeScanner, 'scan').and.callThrough();
@@ -74,20 +50,20 @@ describe('Home Page', () => {
 
   it('does nothing if scan is cancelled', fakeAsync(() => {
     instance.barcodeScanner.cancel = true;
-    spyOn(instance.notifications, 'showToast');
+    spyOn(instance.notifications, 'showMessage');
     spyOn(instance, 'pushPage');
     instance.onScanBarcode();
     tick();
     expect(instance.pushPage).not.toHaveBeenCalled();
-    expect(instance.notifications.showToast).not.toHaveBeenCalled();
+    expect(instance.notifications.showMessage).not.toHaveBeenCalled();
   }));
 
-  it('shows toast if error in onScanBarcode()', fakeAsync(() => {
+  it('shows message if error in onScanBarcode()', fakeAsync(() => {
     instance.barcodeScanner.resolve = false;
-    spyOn(instance.notifications, 'showToast');
+    spyOn(instance.notifications, 'showMessage');
     instance.onScanBarcode();
     tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
+    expect(instance.notifications.showMessage).toHaveBeenCalledWith(TestData.error);
   }));
 
   it('creates an alert onTypeBarcode()', () => {
@@ -97,14 +73,14 @@ describe('Home Page', () => {
   });
 
   it('creates an alert onRentKit()', () => {
-    instance.kits = TestData.kits.results;
+    instance.kits = Observable.of(TestData.kits);
     spyOn(instance.alertCtrl, 'create').and.callThrough();
     instance.onRentKit();
     expect(instance.alertCtrl.create).toHaveBeenCalled();
   });
 
   it('creates an alert onRentKit() if there are no kits', () => {
-    instance.kits = [];
+    instance.kits = Observable.of({ results: [] });
     spyOn(instance.alertCtrl, 'create').and.callThrough();
     instance.onRentKit();
     expect(instance.alertCtrl.create).toHaveBeenCalled();

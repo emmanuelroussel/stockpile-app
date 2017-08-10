@@ -93,6 +93,37 @@ export class TestData {
     available: 0
   }];
 
+  public static itemsMap = {
+    ['banana']: {
+      barcode: 'banana',
+      brandID: 1,
+      modelID: 1,
+      categoryID: 1,
+      available: 1
+    },
+    ['apple']: {
+      barcode: 'apple',
+      brandID: 2,
+      modelID: 2,
+      categoryID: 1,
+      available: 0
+    },
+    ['mango']: {
+      barcode: 'mango',
+      brandID: 3,
+      modelID: 3,
+      categoryID: 2,
+      available: 1
+    },
+    ['orange']: {
+      barcode: 'orange',
+      brandID: 4,
+      modelID: 4,
+      categoryID: 2,
+      available: 0
+    }
+  };
+
   public static barcode = 'mango';
 
   public static itemsMinusOne = [{
@@ -135,7 +166,6 @@ export class TestData {
   };
 
   public static details = {
-    itemID: 1,
     startDate: '01/01/2017',
     endDate: '01/02/2017',
     notes: 'This is a note'
@@ -195,8 +225,8 @@ export class TestData {
   };
 
   public static credentials = {
-    email: 'luke@rebellion.com',
-    password: 'yodarocks'
+    email: 'email@example.com',
+    password: 'monkey'
   };
 
   public static queryText = 'Nik';
@@ -212,7 +242,9 @@ export class TestData {
     id: 1
   };
 
-  public static error = 'Error message';
+  public static error = {
+    message: 'Error message'
+  };
 
   public static barcodeData = {
     text: 'I am a barcode',
@@ -228,7 +260,7 @@ export class TestData {
     userID: 1,
     firstName: 'Dark',
     lastName: 'Vader',
-    email: 'vader@empire.xyz',
+    email: 'dark@vader.com',
     organizationID: 1
   };
 
@@ -294,7 +326,7 @@ export class TestData {
     ]
   };
 
-  public static kitItems = {
+  public static kitModels = {
     results: [
       { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon' },
       { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure' },
@@ -302,7 +334,7 @@ export class TestData {
     ]
   };
 
-  public static addedKitItems = {
+  public static addedKitModels = {
     results: [
       { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon' },
       { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure' },
@@ -311,14 +343,14 @@ export class TestData {
     ]
   };
 
-  public static deletedKitItems = {
+  public static deletedKitModels = {
     results: [
       { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure' },
       { kitID: 1, modelID: 3, model: 'e609', brandID: 3, brand: 'Sennheiser' }
     ]
   };
 
-  public static kitItemsWithBarcode = {
+  public static kitModelsWithBarcode = {
     results: [
       { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon', barcode: 'mango' },
       { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure' },
@@ -326,7 +358,7 @@ export class TestData {
     ]
   };
 
-  public static kitItemsWithEmptyBarcode = {
+  public static kitModelsWithEmptyBarcode = {
     results: [
       { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon', barcode: '' },
       { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure' },
@@ -334,12 +366,24 @@ export class TestData {
     ]
   };
 
-  public static kitItem = {
+  public static kitModel = {
     kitID: 1,
     modelID: 4,
     model: 'T5i',
     brandID: 4,
     brand: 'Canon'
+  };
+
+  public static kitModelNewBrand = {
+    brandID: 4,
+    brand: 'Canon',
+    model: '',
+    modelID: null
+  };
+
+  public static kitModelNewModel = {
+    modelID: 4,
+    model: 'T5i'
   };
 
   public static modelsToDelete = [1, 2, 3, 4];
@@ -357,4 +401,169 @@ export class TestData {
   public static limit = 10;
 
   public static offset = 10;
+
+  public static showAddNew = true;
+
+  public static loadMoreItems = true;
+
+  public static showLoadingSpinner = true;
+
+  public static tempItem = {
+    barcode: 'banana',
+    brand: 'Canon',
+    brandID: 1,
+    model: 'T5i',
+    modelID: 1,
+    category: 'Camera',
+    categoryID: 1
+  };
+
+  public static state = {
+    user: {
+      userID: 1,
+      firstName: 'Dark',
+      lastName: 'Vader',
+      email: 'dark@vader.com',
+      organizationID: 1,
+      archived: '',
+      loading: false
+    },
+    organization: {
+      name: 'Empire',
+      organizationID: 1,
+    },
+    kits: {
+      results: {
+        [1]: { kitID: 1, name: 'Canon T5i', organizationID: 4 },
+        [2]: { kitID: 2, name: 'Shure SM 58', organizationID: 5 },
+        [3]: { kitID: 3, name: 'Sennheiser e609', organizationID: 6 }
+      },
+      showLoadingSpinner: false,
+    },
+    kitModels: {
+      results: {
+        [1]: [
+          { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon' },
+          { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure' },
+          { kitID: 1, modelID: 3, model: 'e609', brandID: 3, brand: 'Sennheiser' }
+        ]
+      },
+      showLoadingSpinner: false
+    },
+    brands: {
+      results: {
+        [1]: { name: 'Canon', id: 1 },
+        [2]: { name: 'Nikon', id: 2 },
+        [3]: { name: 'Sennheiser', id: 3 }
+      },
+      filtered: [
+        { name: 'Nikon', id: 2 }
+      ],
+      showAddNew: false
+    },
+    models: {
+      results: {
+        [5]: { name: 'T5i', id: 5, brandID: 1 },
+        [6]: { name: 'e609', id: 6, brandID: 3 },
+        [7]: { name: 'MKE 600', id: 7, brandID: 2 },
+        [8]: { name: 'D5', id: 8, brandID: 2 }
+      },
+      filtered: [
+        { name: 'T5i', id: 5, brandID: 1 }
+      ],
+      showAddNew: false
+    },
+    categories: {
+      results: {
+        [1]: { name: 'Camera', id: 1 },
+        [2]: { name: 'Mic', id: 2 },
+        [3]: { name: 'Light', id: 3 }
+      },
+      filtered: [
+        { name: 'Camera', id: 1 },
+      ],
+      showAddNew: false
+    },
+    items: {
+      results: {
+        ['banana']: {
+          barcode: 'banana',
+          brandID: 1,
+          modelID: 1,
+          categoryID: 1,
+          available: 1
+        },
+        ['apple']: {
+          barcode: 'apple',
+          brandID: 2,
+          modelID: 2,
+          categoryID: 1,
+          available: 0
+        },
+        ['mango']: {
+          barcode: 'mango',
+          brandID: 3,
+          modelID: 3,
+          categoryID: 2,
+          available: 1
+        },
+        ['orange']: {
+          barcode: 'orange',
+          brandID: 4,
+          modelID: 4,
+          categoryID: 2,
+          available: 0
+        }
+      },
+      offset: 0,
+      loadMoreItems: true,
+      showAddNew: false,
+      tempItem: {
+        barcode: 'banana',
+        brand: 'Canon',
+        brandID: 1,
+        model: 'T5i',
+        modelID: 1,
+        category: 'Camera',
+        categoryID: 1,
+        available: 1
+      },
+      rentals: {
+        ['banana']: {
+          barcode: 'banana',
+          brandID: 1,
+          modelID: 1,
+          categoryID: 1,
+          available: 1
+        },
+        ['orange']: {
+          barcode: 'orange',
+          brandID: 4,
+          modelID: 4,
+          categoryID: 2,
+          available: 0
+        }
+      },
+      display: [
+        {
+          barcode: 'banana',
+          brandID: 1,
+          modelID: 1,
+          categoryID: 1,
+          available: 1
+        },
+        {
+          barcode: 'apple',
+          brandID: 2,
+          modelID: 2,
+          categoryID: 1,
+          available: 0
+        }
+      ],
+      showLoadingSpinner: false
+    },
+    layout: {
+      loadingMessage: 'Please wait...'
+    }
+  };
 }

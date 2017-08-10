@@ -1,7 +1,7 @@
-import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
-import { Messages } from '../../constants';
+import { LoadingMessages } from '../../constants';
 
 import { RentalDetailsPage } from './rental-details';
 
@@ -24,41 +24,22 @@ describe('RentalDetails Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('gets navParam items', () => {
-    instance.navParams.param = TestData.items;
+  it('initializes end date to tomorrow', () => {
+    let tomorrow = new Date();
+    tomorrow.setDate((new Date()).getDate() + 1);
     instance.ngOnInit();
-    expect(instance.items).toBeTruthy();
+    expect(instance.details.endDate.substring(0, 10)).toEqual(tomorrow.toISOString().substring(0, 10));
   });
 
-  it('calls itemData.rent for each item', fakeAsync(() => {
-    instance.details = TestData.details;
-    instance.items = TestData.items;
-    spyOn(instance.itemData, 'rent').and.callThrough();
-    instance.onRent();
-    tick();
-    expect(instance.itemData.rent).toHaveBeenCalledTimes(TestData.items.length);
-  }));
-
-  it('goes back to the root\'s nav on successful rent()', fakeAsync(() => {
-    instance.details = TestData.details;
-    instance.items = TestData.items;
-    spyOn(instance.navCtrl, 'popToRoot');
-    spyOn(instance.itemData, 'rent').and.callThrough();
-    spyOn(instance.notifications, 'showToast');
-    instance.onRent();
-    tick();
-    expect(instance.itemData.rent).toHaveBeenCalled();
-    expect(instance.navCtrl.popToRoot).toHaveBeenCalled();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.itemsRented);
-  }));
-
-  it('shows toast on error onRent()', fakeAsync(() => {
-    instance.details = TestData.details;
-    instance.itemData.resolve = false;
-    instance.items = TestData.items;
-    spyOn(instance.notifications, 'showToast');
-    instance.onRent();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
+  it('rents items', () => {
+    const form = { value: TestData.details };
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.itemsActions, 'rentItems');
+    instance.onRent(form);
+    expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.rentingItems);
+    expect(instance.itemsActions.rentItems).toHaveBeenCalledWith({
+      ...TestData.details,
+      startDate: (new Date()).toISOString().substring(0, 10)
+    });
+  });
 });

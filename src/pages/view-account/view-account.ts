@@ -1,62 +1,57 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, Events, AlertController } from 'ionic-angular';
+import { NavController, Platform, AlertController } from 'ionic-angular';
 
 import { EditAccountPage } from '../edit-account/edit-account';
 import { ChangePasswordPage } from '../change-password/change-password';
-import { LoginPage } from '../login/login';
-import { UserData } from '../../providers/user-data';
-import { Notifications } from '../../providers/notifications';
-import { Messages } from '../../constants';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
+import { UserActions } from '../../store/user/user.actions';
+import { LayoutActions } from '../../store/layout/layout.actions';
+import { LoadingMessages } from '../../constants';
+
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'page-view-account',
   templateUrl: 'view-account.html'
 })
 export class ViewAccountPage {
-  user;
+  user: Observable<User>;
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     public platform: Platform,
-    public events: Events,
     public alertCtrl: AlertController,
-    public userData: UserData,
-    public notifications: Notifications
-  ) { }
+    public userService: UserService,
+    public userActions: UserActions,
+    public layoutActions: LayoutActions
+  ) {}
 
   /**
-   * Gets user info and listens to event to update user if it is modified.
+   * Gets user.
    */
   ngOnInit() {
-    this.user = this.navParams.get('user');
-
-    this.events.subscribe('user:edited', user => {
-      this.user = user;
-    });
+    this.user = this.userService.getUser();
   }
 
   /**
-   * Pushes EditAccountPage on nav with user info.
+   * Pushes page on nav to allow users to edit their info.
    */
   onEditUser() {
-    this.navCtrl.push(EditAccountPage, {
-      // Copies user to pass by value, because modifying the user without
-      // saving would also modify this local copy
-      user: Object.assign({}, this.user)
-    });
+    this.navCtrl.push(EditAccountPage);
   }
 
   /**
-   * Pushes ChangePasswordPage on nav.
+   * Pushes pages on nav to allow user to change their password.
    */
   onChangePassword() {
     this.navCtrl.push(ChangePasswordPage);
   }
 
   /**
-   * Creates modal to prompt user for password to archive their account. This
-   * does not delete the account as this is an admin feature.
+   * Creates two alerts. First to warn user about deleting their account, second
+   * to prompt them for their password. This does not delete the account as this
+   * is an admin feature.
    */
   onDeleteAccount() {
     let passwordAlert = this.alertCtrl.create({
@@ -77,16 +72,8 @@ export class ViewAccountPage {
         {
           text: 'Delete',
           handler: data => {
-            this.userData.getUser().subscribe(
-              user => {
-                // Calls login to verify the password
-                this.userData.login(user.email, data.password).then(
-                  success => this.archiveUser(),
-                  err => this.notifications.showToast(Messages.wrongPassword)
-                );
-              },
-              err => this.notifications.showToast(err)
-            );
+            this.layoutActions.showLoadingMessage(LoadingMessages.archivingUser);
+            this.userActions.archiveUser(data.password);
           }
         }
       ]
@@ -108,24 +95,5 @@ export class ViewAccountPage {
     });
 
     confirmAlert.present();
-  }
-
-  /**
-   * Archives the user by setting the archived parameter to today's date in
-   * MySQL format.
-   */
-  private archiveUser() {
-    const body = {
-      archived: new Date().toISOString().substring(0, 10)
-    };
-
-    this.userData.editUser(body).subscribe(
-      success => {
-        this.notifications.showToast(Messages.userDeleted);
-        this.userData.logout();
-        this.navCtrl.setRoot(LoginPage);
-      },
-      err => this.notifications.showToast(err)
-    );
   }
 }

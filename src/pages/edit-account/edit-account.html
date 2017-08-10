@@ -9,20 +9,20 @@
 		<ion-list>
       <ion-item>
         <ion-label floating color="primary">First Name</ion-label>
-        <ion-input [(ngModel)]="user.firstName" required name="firstName" #firstName="ngModel"></ion-input>
+        <ion-input [ngModel]="(user | async)?.firstName" required name="firstName" #firstName="ngModel"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label floating color="primary">Last Name</ion-label>
-        <ion-input [(ngModel)]="user.lastName" required name="lastName" #lastName="ngModel"></ion-input>
+        <ion-input [ngModel]="(user | async)?.lastName" required name="lastName" #lastName="ngModel"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label floating color="primary">Email</ion-label>
-        <ion-input [(ngModel)]="user.email" required name="email" type="email" #email="ngModel"></ion-input>
+        <ion-input [ngModel]="(user | async)?.email" required name="email" type="email" #email="ngModel"></ion-input>
       </ion-item>
 		</ion-list>
 
-		<button ion-button (click)="onSave()" type="submit" block [disabled]="!userForm.valid">Save</button>
+		<button ion-button (click)="onSave(userForm)" type="submit" block [disabled]="!userForm.valid">Save</button>
 	</form>
 </ion-content>

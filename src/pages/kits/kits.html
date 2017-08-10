@@ -12,15 +12,15 @@
 <ion-content padding>
   <ion-list>
     <ion-list-header>Kits</ion-list-header>
-    <button ion-item *ngFor="let kit of kits" (click)="onViewKit(kit)">
+    <button ion-item *ngFor="let kit of (kits | async).results | mapToIterable" (click)="onViewKit(kit.kitID)">
       <h2>{{ kit.name }}</h2>
     </button>
 
-    <ion-item *ngIf="!kits.length && !loading">
+    <ion-item *ngIf="!((kits | async).results | mapToIterable).length && !(kits | async).showLoadingSpinner">
       No kits found <button ion-button item-right (click)="onAdd()">Add a kit</button>
     </ion-item>
 
-    <ion-spinner class="center-spinner" *ngIf="loading"></ion-spinner>
+    <ion-spinner class="center-spinner" *ngIf="(kits | async).showLoadingSpinner"></ion-spinner>
   </ion-list>
 
   <ion-infinite-scroll (ionInfinite)="$event.waitFor(loadKits())" [enabled]="loadMoreItems">

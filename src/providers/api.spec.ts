@@ -8,7 +8,7 @@ import { TestData } from '../test-data';
 import { Api } from './api';
 import { ApiUrlMock } from '../mocks';
 
-describe('KitData Provider', () => {
+describe('Api Provider', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({

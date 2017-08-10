@@ -11,9 +11,9 @@
 
 <ion-content padding>
 	<ion-list>
-    <ion-item>{{item?.brand}}</ion-item>
-    <ion-item>{{item?.model}}</ion-item>
-    <ion-item>{{item?.category}}</ion-item>
+    <ion-item>{{(item | async)?.brand}}</ion-item>
+    <ion-item>{{(item | async)?.model}}</ion-item>
+    <ion-item>{{(item | async)?.category}}</ion-item>
 	</ion-list>
 
   <ion-fab right bottom *ngIf="platform.is('android')">

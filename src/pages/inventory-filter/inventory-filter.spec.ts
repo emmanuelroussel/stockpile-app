@@ -1,6 +1,14 @@
 import { TestData } from '../../test-data';
 import { ViewController } from 'ionic-angular';
-import { NavParamsMock } from '../../mocks';
+import {
+  NavParamsMock,
+  BrandsActionsMock,
+  CategoriesActionsMock,
+  ModelsActionsMock,
+  BrandsServiceMock,
+  CategoriesServiceMock,
+  ModelsServiceMock,
+} from '../../mocks';
 
 import { InventoryFilterPage } from './inventory-filter';
 
@@ -11,7 +19,13 @@ describe('InventoryFilter Page', () => {
   beforeEach(() => {
     instance = new InventoryFilterPage(
       <any> new ViewController,
-      <any> new NavParamsMock
+      <any> new NavParamsMock,
+      <any> new BrandsServiceMock,
+      <any> new BrandsActionsMock,
+      <any> new ModelsServiceMock,
+      <any> new ModelsActionsMock,
+      <any> new CategoriesServiceMock,
+      <any> new CategoriesActionsMock,
     );
   });
 
@@ -19,40 +33,19 @@ describe('InventoryFilter Page', () => {
     expect(instance).toBeTruthy();
   });
 
-  it('gets navParam brands', () => {
-    instance.navParams.param = TestData.brands.results;
-    instance.ngOnInit();
-    expect(instance.brands).toEqual(TestData.brands.results);
-  });
-
-  it('gets navParam models', () => {
-    instance.navParams.param = TestData.models.results;
-    instance.ngOnInit();
-    expect(instance.models).toEqual(TestData.models.results);
-  });
-
-  it('gets navParam categories', () => {
-    instance.navParams.param = TestData.categories.results;
-    instance.ngOnInit();
-    expect(instance.categories).toEqual(TestData.categories.results);
-  });
-
   it('gets navParam selectedBrandID', () => {
-    spyOn(instance, 'onFilterModels');
     instance.navParams.param = TestData.apiItem.brandID;
     instance.ngOnInit();
     expect(instance.selectedBrandID).toEqual(TestData.apiItem.brandID);
   });
 
   it('gets navParam selectedModelID', () => {
-    spyOn(instance, 'onFilterModels');
     instance.navParams.param = TestData.apiItem.modelID;
     instance.ngOnInit();
     expect(instance.selectedModelID).toEqual(TestData.apiItem.modelID);
   });
 
   it('gets navParam selectedCategoryID', () => {
-    spyOn(instance, 'onFilterModels');
     instance.navParams.param = TestData.apiItem.categoryID;
     instance.ngOnInit();
     expect(instance.selectedCategoryID).toEqual(TestData.apiItem.categoryID);
@@ -73,10 +66,9 @@ describe('InventoryFilter Page', () => {
   });
 
   it('filters models on filterModels()', () => {
-    instance.models = TestData.models.results;
-    instance.selectedBrandID = TestData.apiItem.brandID;
+    spyOn(instance.modelsActions, 'filterModels');
     instance.onFilterModels();
-    expect(instance.filteredModels).toEqual(TestData.filteredModels);
+    expect(instance.modelsActions.filterModels).toHaveBeenCalled();
   });
 
   it('resets filters on resetFilters()', () => {

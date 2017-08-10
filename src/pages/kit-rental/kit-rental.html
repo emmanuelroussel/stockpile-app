@@ -7,24 +7,24 @@
 <ion-content padding>
 
   <ion-list>
-    <ion-item>{{ kit?.name }}</ion-item>
+    <ion-item>{{ (kit | async)?.name }}</ion-item>
 
     <ion-list-header>Items in kit</ion-list-header>
-    <ion-item *ngFor="let kitItem of kitItems">
-      <ion-icon name="checkmark" item-left *ngIf="kitItem.barcode"></ion-icon>
-      <h2>{{ kitItem.brand }} {{ kitItem.model }}</h2>
-      <button ion-button clear item-right color="dark" *ngIf="kitItem.barcode" (click)="onRemoveKitItem(kitItem.barcode)">
+    <ion-item *ngFor="let kitModel of (kitModels | async)">
+      <ion-icon name="checkmark" item-left *ngIf="isKitModelAdded(kitModel)"></ion-icon>
+      <h2>{{ kitModel.brand }} {{ kitModel.model }}</h2>
+      <button ion-button clear item-right color="dark" *ngIf="isKitModelAdded(kitModel)" (click)="onRemoveKitModel(kitModel)">
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-item>
 
-      <ion-list-header *ngIf="otherItems.length">Other Items</ion-list-header>
-      <ion-item *ngFor="let otherItem of otherItems">
-        <h2>{{ otherItem.brand }} {{ otherItem.model }}</h2>
-        <button ion-button clear item-right color="dark" (click)="onRemoveOtherItem(otherItem.barcode)">
-          <ion-icon name="close"></ion-icon>
-        </button>
-      </ion-item>
+    <ion-list-header *ngIf="getItemsNotInKit().length">Other Items</ion-list-header>
+    <ion-item *ngFor="let item of getItemsNotInKit()">
+      <h2>{{ item.brand }} {{ item.model }}</h2>
+      <button ion-button clear item-right color="dark" (click)="onRemoveItem(item.barcode)">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-item>
   </ion-list>
 
   <button ion-button (click)="onTypeBarcode()" block outline>

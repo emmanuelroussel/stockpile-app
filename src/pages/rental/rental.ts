@@ -1,12 +1,18 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events, Platform, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
-import { ItemData } from '../../providers/item-data';
-import { Notifications } from '../../providers/notifications';
-import { ViewItemPage } from '../view-item/view-item';
 import { RentalDetailsPage } from '../rental-details/rental-details';
-import { Actions, Messages } from '../../constants';
+import { Actions, Messages, LoadingMessages } from '../../constants';
+import { Notifications } from '../../providers/notifications';
+
+import { ItemsActions } from '../../store/items/items.actions';
+import { ItemsService } from '../../services/items.service';
+import { Items } from '../../models/items';
+import { Observable } from 'rxjs/Observable';
+import { LayoutActions } from '../../store/layout/layout.actions';
+
+import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
 
 @Component({
   selector: 'page-rental',
@@ -14,82 +20,49 @@ import { Actions, Messages } from '../../constants';
 })
 export class RentalPage {
   actions = Actions;
-  action: Actions = '';
-  items = [];
+  action: string = '';
+  items: Observable<Items>;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public itemData: ItemData,
-    public notifications: Notifications,
-    public events: Events,
     public barcodeScanner: BarcodeScanner,
     public platform: Platform,
+    public notifications: Notifications,
     public alertCtrl: AlertController,
-    public loadingCtrl: LoadingController
-  ) { }
+    public itemsService: ItemsService,
+    public itemsActions: ItemsActions,
+    public layoutActions: LayoutActions
+  ) {}
 
   /**
-   * Gets item and action (rent or return). Also listens to events and updates
-   * items in local list if they are modified or deleted.
+   * Gets items and action (rent or return).
    */
   ngOnInit() {
     this.action = this.navParams.get('action');
-    const item = this.navParams.get('item');
-    this.items.push(item);
-
-    this.events.subscribe('item:edited', barcode => {
-      const index = this.items.findIndex(item => item.barcode === barcode);
-
-      this.itemData.getItem(barcode).subscribe(
-        item => this.items.splice(index, 1, item),
-        err => this.notifications.showToast(err)
-      );
-    });
-
-    this.events.subscribe('item:deleted', barcode => {
-      const index = this.items.findIndex(item => item.barcode === barcode);
-
-      this.items.splice(index, 1);
-    });
+    this.items = this.itemsService.getItems();
   }
 
   /**
-   * Checks if item can be added to the rental. Shows why if not, adds it if yes.
+   * Tries to add the item to the rentals.
    */
   onAdd(barcode: string) {
-    this.itemData.getItem(barcode).subscribe(
-      item => {
-        if (item.available === 0 && this.action === Actions.rent) {
-          this.notifications.showToast(Messages.itemAlreadyRented);
-        } else if (item.available === 1 && this.action === Actions.return) {
-          this.notifications.showToast(Messages.itemNotRented);
-        } else if (this.items.some(listItem => listItem.barcode === item.barcode)) {
-          this.notifications.showToast(Messages.itemAlreadyAdded);
-        } else {
-          this.items.push(item);
-        }
-      },
-      err => this.notifications.showToast(err)
-    );
+    let items;
+    this.items.take(1).subscribe(i => items = i.rentals);
+
+    if (items[barcode]) {
+      this.notifications.showMessage(Messages.itemAlreadyAdded);
+    } else {
+      this.layoutActions.showLoadingMessage(LoadingMessages.addingToRentals);
+      this.itemsActions.addToRentals(barcode, this.action);
+    }
   }
 
   /**
-   * Pushes ViewItemPage on nav with item to view.
-   */
-  onViewItem(item) {
-    this.navCtrl.push(ViewItemPage, {
-      item: item
-    });
-  }
-
-  /**
-   * Pushes RentalDetailsPage on nav with items to rent.
+   * Pushes page on nav to allow users to finish renting the items.
    */
   onContinue() {
-    this.navCtrl.push(RentalDetailsPage, {
-      items: this.items
-    });
+    this.navCtrl.push(RentalDetailsPage);
   }
 
   /**
@@ -97,48 +70,14 @@ export class RentalPage {
    * return. Pops the nav when done.
    */
   onReturn() {
-    let loading = this.loadingCtrl.create({
-      content: 'Returning your item(s), please wait...'
-    });
-
-    loading.present();
-
     // Set return date to today in MySQL date format
     const returnDate = new Date().toISOString().substring(0, 10);
-    let returns = [];
-
-    // Get the rentalID of each item and then return it with today's date
-    for (const item of this.items) {
-      returns.push(
-        new Promise((resolve, reject) => {
-          this.itemData.getActiveRental(item.barcode).subscribe(
-            rental => {
-              this.itemData.return(rental.rentalID, returnDate).subscribe(
-                res => resolve(),
-                err => reject(err)
-              );
-            },
-            err => reject(err)
-          );
-        })
-      );
-    }
-
-    Promise.all(returns).then(
-      () => {
-        this.notifications.showToast(Messages.itemsReturned);
-        loading.dismiss();
-        this.navCtrl.pop();
-      },
-      err => {
-        loading.dismiss();
-        this.notifications.showToast(err);
-      }
-    );
+    this.layoutActions.showLoadingMessage(LoadingMessages.returningItems);
+    this.itemsActions.returnItems(returnDate);
   }
 
   /**
-   * Starts barcode scanner and calls onAdd() with barcode if it got a barcode.
+   * Starts barcode scanner and process barcode if it is present (i.e. user didn't cancel)
    */
   onScanBarcode() {
     this.barcodeScanner.scan().then(
@@ -147,13 +86,12 @@ export class RentalPage {
           this.onAdd(barcodeData.text);
         }
       },
-      err => this.notifications.showToast(err)
+      err => this.notifications.showMessage(err)
     );
   }
 
   /**
-   * Creates alert to let the user type in a barcode. Calls onAdd() with the
-   * result.
+   * Creates alert for user to enter a barcode and process barcode.
    */
   onTypeBarcode() {
     let alert = this.alertCtrl.create({
@@ -182,11 +120,9 @@ export class RentalPage {
   }
 
   /**
-   * Removes item with the barcode from the list of local items.
+   * Removes item from rentals.
    */
-  onRemoveItem(barcode) {
-    const index = this.items.findIndex(item => item.barcode === barcode);
-
-    this.items.splice(index, 1);
+  onRemoveItem(barcode: string) {
+    this.itemsActions.removeFromRentals(barcode);
   }
 }

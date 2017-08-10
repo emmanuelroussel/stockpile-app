@@ -1,7 +1,7 @@
-import { ComponentFixture, async, tick, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
-import { Messages } from '../../constants';
+import { LoadingMessages } from '../../constants';
 
 import { EditAccountPage } from './edit-account';
 
@@ -24,31 +24,19 @@ describe('EditAccount Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('gets navParam user', () => {
-    instance.navParams.param = TestData.user;
+  it('gets user', () => {
     instance.ngOnInit();
-    expect(instance.user).toEqual(TestData.user);
+    instance.user.take(1).subscribe(user => expect(user).toEqual(TestData.user));
   });
 
-  it('calls userData.editUser onSave()', fakeAsync(() => {
-    instance.user = TestData.user;
-    spyOn(instance.userData, 'editUser').and.callThrough();
-    spyOn(instance.notifications, 'showToast');
-    spyOn(instance.events, 'publish');
-    spyOn(instance.navCtrl, 'pop');
-    instance.onSave();
-    tick();
-    expect(instance.userData.editUser).toHaveBeenCalledWith(TestData.user);
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(Messages.userEdited);
-    expect(instance.events.publish).toHaveBeenCalledWith('user:edited', TestData.user);
-    expect(instance.navCtrl.pop).toHaveBeenCalled();
-  }));
-
-  it('it shows toast if error onSave()', fakeAsync(() => {
-    instance.userData.resolve = false;
-    spyOn(instance.notifications, 'showToast');
-    instance.onSave();
-    tick();
-    expect(instance.notifications.showToast).toHaveBeenCalledWith(TestData.error);
-  }));
+  it('dispatches action to update account', () => {
+    const form = {
+      value: TestData.user
+    };
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.userActions, 'updateUser');
+    instance.onSave(form);
+    expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.updatingUser);
+    expect(instance.userActions.updateUser).toHaveBeenCalledWith(TestData.user);
+  });
 });

@@ -9,10 +9,42 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Toast } from '@ionic-native/toast';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { AuthHttp } from 'angular2-jwt';
 import { StockpileApp } from './app.component';
 
-import { AddKitItemPage } from '../pages/add-kit-item/add-kit-item';
+import { AppActions } from '../store/app/app.actions';
+import { AppEffects } from '../store/app/app.effects';
+import { rootReducer } from '../store/root-reducer';
+import { OrganizationActions } from '../store/organization/organization.actions';
+import { OrganizationEffects } from '../store/organization/organization.effects';
+import { OrganizationService } from '../services/organization.service';
+import { UserActions } from '../store/user/user.actions';
+import { UserEffects } from '../store/user/user.effects';
+import { UserService } from '../services/user.service';
+import { KitsActions } from '../store/kits/kits.actions';
+import { KitsEffects } from '../store/kits/kits.effects';
+import { KitsService } from '../services/kits.service';
+import { KitModelsActions } from '../store/kit-models/kit-models.actions';
+import { KitModelsEffects } from '../store/kit-models/kit-models.effects';
+import { KitModelsService } from '../services/kit-models.service';
+import { BrandsActions } from '../store/brands/brands.actions';
+import { BrandsEffects } from '../store/brands/brands.effects';
+import { BrandsService } from '../services/brands.service';
+import { ModelsActions } from '../store/models/models.actions';
+import { ModelsEffects } from '../store/models/models.effects';
+import { ModelsService } from '../services/models.service';
+import { CategoriesActions } from '../store/categories/categories.actions';
+import { CategoriesEffects } from '../store/categories/categories.effects';
+import { CategoriesService } from '../services/categories.service';
+import { ItemsActions } from '../store/items/items.actions';
+import { ItemsEffects } from '../store/items/items.effects';
+import { ItemsService } from '../services/items.service';
+import { LayoutActions } from '../store/layout/layout.actions';
+import { LayoutService } from '../services/layout.service';
+
+import { AddKitModelPage } from '../pages/add-kit-model/add-kit-model';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { EditAccountPage } from '../pages/edit-account/edit-account';
 import { EditItemPage } from '../pages/edit-item/edit-item';
@@ -31,6 +63,8 @@ import { ViewAccountPage } from '../pages/view-account/view-account';
 import { ViewItemPage } from '../pages/view-item/view-item';
 import { ViewKitPage } from '../pages/view-kit/view-kit';
 
+import { MapToIterablePipe } from '../pipes/map-to-iterable.pipe';
+
 import { Api } from '../providers/api';
 import { ApiUrl } from '../providers/api-url';
 import { ItemData } from '../providers/item-data';
@@ -39,13 +73,13 @@ import { KitData } from '../providers/kit-data';
 import { Notifications } from '../providers/notifications';
 import { UserData } from '../providers/user-data';
 
-import { RavenErrorHandler } from '../services/raven-error-handler';
-import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
+import { RavenErrorHandler } from '../utils/raven-error-handler';
+import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
 
 @NgModule({
   declarations: [
     StockpileApp,
-    AddKitItemPage,
+    AddKitModelPage,
     ChangePasswordPage,
     EditAccountPage,
     EditItemPage,
@@ -57,6 +91,7 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     KitRentalPage,
     KitsPage,
     LoginPage,
+    MapToIterablePipe,
     RentalPage,
     RentalDetailsPage,
     TabsPage,
@@ -78,12 +113,22 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
       }
     }),
     CloudModule.forRoot(cloudSettings),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    StoreModule.provideStore(rootReducer),
+    EffectsModule.run(AppEffects),
+    EffectsModule.run(UserEffects),
+    EffectsModule.run(OrganizationEffects),
+    EffectsModule.run(KitsEffects),
+    EffectsModule.run(KitModelsEffects),
+    EffectsModule.run(BrandsEffects),
+    EffectsModule.run(ModelsEffects),
+    EffectsModule.run(CategoriesEffects),
+    EffectsModule.run(ItemsEffects),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     StockpileApp,
-    AddKitItemPage,
+    AddKitModelPage,
     ChangePasswordPage,
     EditAccountPage,
     EditItemPage,
@@ -106,14 +151,42 @@ import { getAuthHttp, cloudSettings } from '../services/auth-http-helpers';
     { provide: ErrorHandler, useClass: RavenErrorHandler },
     Api,
     ApiUrl,
+    AppActions,
+    BarcodeScanner,
+    BrandsActions,
+    BrandsEffects,
+    BrandsService,
+    CategoriesActions,
+    CategoriesEffects,
+    CategoriesService,
     ItemData,
     ItemPropertyData,
+    ItemsActions,
+    ItemsEffects,
+    ItemsService,
     KitData,
+    KitsActions,
+    KitsEffects,
+    KitsService,
+    KitModelsActions,
+    KitModelsEffects,
+    KitModelsService,
+    LayoutActions,
+    LayoutService,
+    MapToIterablePipe,
+    ModelsActions,
+    ModelsEffects,
+    ModelsService,
     Notifications,
-    UserData,
+    OrganizationActions,
+    OrganizationEffects,
+    OrganizationService,
     SplashScreen,
     StatusBar,
-    BarcodeScanner,
+    UserActions,
+    UserEffects,
+    UserData,
+    UserService,
     Toast,
     { provide: AuthHttp, useFactory: getAuthHttp, deps: [Http, Storage] }
   ]
