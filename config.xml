@@ -3,7 +3,7 @@
     <name>Stockpile</name>
     <description>An app that manages stuff for organizations</description>
     <author email="info@stockpileapp.co" href="https://stockpileapp.co">Stockpile Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://172.26.74.227:8101" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />
@@ -91,6 +91,8 @@
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <plugin name="cordova-custom-config" spec="~3.1.4" />
-    <engine name="ios" spec="~4.3.1" />
     <engine name="android" spec="~6.1.2" />
+    <engine name="ios" spec="~4.3.1" />
+    <allow-navigation href="http://172.26.74.227:8101" />
+    <plugin name="cordova-plugin-x-toast" spec="~2.6.0" />
 </widget>
