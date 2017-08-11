@@ -3,7 +3,7 @@
     <name>Stockpile</name>
     <description>An app that manages stuff for organizations</description>
     <author email="info@stockpileapp.co" href="https://stockpileapp.co">Stockpile Team</author>
-    <content original-src="index.html" src="http://172.26.74.227:8101" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />
