@@ -46,6 +46,13 @@ describe('EditKit Page', () => {
     expect(instance.kitModels).toEqual(TestData.kitModels.results);
   });
 
+  it('creates an alert if there are no kit models onSave()', () => {
+    instance.modelsToCreate = [];
+    spyOn(instance.alertCtrl, 'create').and.callThrough();
+    instance.onSave();
+    expect(instance.alertCtrl.create).toHaveBeenCalled();
+  });
+
   it('creates kit onSave() if action is add', () => {
     const form = {
       value: {
