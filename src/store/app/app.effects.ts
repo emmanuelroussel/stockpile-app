@@ -3,6 +3,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { App, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 import { AppActions } from './app.actions.ts';
 import { Notifications } from '../../providers/notifications';
 
@@ -13,7 +14,8 @@ export class AppEffects {
     public app: App,
     public platform: Platform,
     public splashScreen: SplashScreen,
-    public notifications: Notifications
+    public notifications: Notifications,
+    public statusBar: StatusBar
   ) {}
 
   /**
@@ -93,7 +95,10 @@ export class AppEffects {
   initializeApp$ = this.actions$
     .ofType(AppActions.INITIALIZE)
     .mergeMap(() => Observable.of(this.platform.ready())
-      .map(() => this.splashScreen.hide()))
+      .map(() => {
+        this.splashScreen.hide();
+        this.statusBar.styleDefault();
+      }))
     .ignoreElements();
 
   /**
