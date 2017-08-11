@@ -133,7 +133,9 @@ export class KitRentalPage {
           },
           {
             text: 'Continue',
-            handler: () => this.navCtrl.push(RentalDetailsPage)
+            handler: () => {
+              this.navCtrl.push(RentalDetailsPage);
+            }
           }
         ]
       });
