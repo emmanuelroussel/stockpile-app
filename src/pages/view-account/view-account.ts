@@ -89,7 +89,9 @@ export class ViewAccountPage {
         },
         {
           text: 'Delete',
-          handler: () => passwordAlert.present()
+          handler: () => {
+            passwordAlert.present();
+          }
         }
       ]
     });

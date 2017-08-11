@@ -1,12 +1,11 @@
 {
   "name": "Stockpile",
   "app_id": "1437b8f0",
-  "v2": true,
-  "typescript": true,
   "proxies": [
     {
       "path": "/",
       "proxyUrl": "https://stockpileapp.co"
     }
-  ]
+  ],
+  "type": "ionic-angular"
 }
