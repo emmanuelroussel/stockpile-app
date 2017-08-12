@@ -9,7 +9,6 @@ import {
 } from '../mocks';
 import { StockpileApp } from './app.component';
 import { ViewAccountPage } from '../pages/view-account/view-account';
-import { KitsPage } from '../pages/kits/kits';
 
 let instance: any = null;
 
@@ -35,7 +34,7 @@ describe('Root Component', () => {
     spyOn(instance.userActions, 'checkUserLoggedIn');
     instance.ngOnInit();
     expect(instance.userActions.checkUserLoggedIn).toHaveBeenCalled();
-  };
+  });
 
   it('pushes ViewAccountPage on viewInfo()', () => {
     spyOn(instance.menuCtrl, 'close');
@@ -43,14 +42,6 @@ describe('Root Component', () => {
     instance.onViewInfo();
     expect(instance.menuCtrl.close).toHaveBeenCalled();
     expect(instance.nav.push).toHaveBeenCalledWith(ViewAccountPage);
-  });
-
-  it('pushes KitsPage on nav on viewKits()', () => {
-    spyOn(instance.menuCtrl, 'close');
-    spyOn(instance.nav, 'push');
-    instance.onViewKits();
-    expect(instance.menuCtrl.close).toHaveBeenCalled();
-    expect(instance.nav.push).toHaveBeenCalledWith(KitsPage);
   });
 
   it('logs user out and closes side menu', () => {
