@@ -49,19 +49,41 @@ describe('Rental Page', () => {
     expect(instance.notifications.showMessage).toHaveBeenCalledWith(Messages.itemAlreadyAdded);
   });
 
-  it('pushes RentalDetailsPage on nav onContinue()', () => {
+  it('pushes RentalDetailsPage on nav onContinue() if items are added', () => {
+    instance.items = Observable.of({ rentals: TestData.itemsMap });
     spyOn(instance.navCtrl, 'push');
     instance.onContinue();
     expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalDetailsPage);
   });
 
-  it('returns item with today\'s date onReturn', () => {
+  it('shows alert onContinue() is rental is empty', () => {
+    instance.items = Observable.of({ rentals: {} });
+    spyOn(instance, 'alertEmptyRental');
+    instance.onContinue();
+    expect(instance.alertEmptyRental).toHaveBeenCalled();
+  });
+
+  it('returns item with today\'s date onReturn if items are added', () => {
+    instance.items = Observable.of({ rentals: TestData.itemsMap });
     const today = new Date().toISOString().substring(0, 10);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'returnItems');
     instance.onReturn();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.returningItems);
     expect(instance.itemsActions.returnItems).toHaveBeenCalledWith(today);
+  });
+
+  it('shows alert onReturn() is rental is empty', () => {
+    instance.items = Observable.of({ rentals: {} });
+    spyOn(instance, 'alertEmptyRental');
+    instance.onReturn();
+    expect(instance.alertEmptyRental).toHaveBeenCalled();
+  });
+
+  it('creates an alert on alertEmptyRental()', () => {
+    spyOn(instance.alertCtrl, 'create').and.callThrough();
+    instance.alertEmptyRental();
+    expect(instance.alertCtrl.create).toHaveBeenCalled();
   });
 
   it('calls barcodeScanner.scan() onScanBarcode()', fakeAsync(() => {
