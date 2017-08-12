@@ -117,7 +117,7 @@ export class ItemsEffects {
         createAction(AppActions.PUSH_PAGE, {
           page: RentalPage,
           navParams: {
-            action: action.payload.available ? constants.Actions.rent : constants.Actions.return
+            action: res.available ? constants.Actions.rent : constants.Actions.return
           }
         })
       ])

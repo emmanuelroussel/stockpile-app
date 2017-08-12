@@ -151,9 +151,9 @@ describe('Items Effects', () => {
     );
   });
 
-  it('starts a rental', () => {
+  it('starts a rental with rent', () => {
     instance.itemData.item = TestData.apiItem;
-    runner.queue(createAction(ItemsActions.START_RENTAL, TestData.apiItem));
+    runner.queue(createAction(ItemsActions.START_RENTAL, TestData.barcode));
 
     let performedActions = [];
     const expectedResult = [
@@ -163,6 +163,29 @@ describe('Items Effects', () => {
         page: RentalPage,
         navParams: {
           action: Actions.rent
+        }
+      })
+    ];
+
+    instance.startRental$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('starts a rental with return', () => {
+    instance.itemData.item = TestData.rentedApiItem;
+    runner.queue(createAction(ItemsActions.START_RENTAL, TestData.barcode));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ItemsActions.START_RENTAL_SUCCESS, TestData.rentedApiItem),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.PUSH_PAGE, {
+        page: RentalPage,
+        navParams: {
+          action: Actions.return
         }
       })
     ];
