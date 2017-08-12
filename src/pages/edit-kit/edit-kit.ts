@@ -80,9 +80,7 @@ export class EditKitPage {
           },
           {
             text: 'Add Item',
-            handler: () => {
-              this.onAddItem();
-            }
+            handler: () => this.onAddItem()
           }
         ]
       });
