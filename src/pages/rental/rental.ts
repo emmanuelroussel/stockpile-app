@@ -99,7 +99,7 @@ export class RentalPage {
   alertEmptyRental() {
     let alert = this.alertCtrl.create({
       title: 'No items in rental',
-      message: `Please add at least one item to ${this.action.toLowerCase()}`,
+      message: 'Please add at least one item to the rental',
       buttons: [
         {
           text: 'Cancel',
