@@ -7,15 +7,15 @@
 <ion-content padding>
   <form #itemForm="ngForm">
 		<ion-list>
-      <ion-item (click)="onPresentModal(itemProperties.brand)">
-        <ion-label floating color="primary">Brand</ion-label>
-        <ion-input [ngModel]="kitModel.brand" readonly required name="brand" #brand="ngModel"></ion-input>
-      </ion-item>
+      <button ion-item (click)="onPresentModal(itemProperties.brand)" tappable detail-none>
+        <ion-label color="primary">Brand</ion-label>
+        <ion-label>{{kitModel.brand}}</ion-label>
+      </button>
 
-      <ion-item [hidden]="!kitModel.brandID" (click)="onPresentModal(itemProperties.model)">
-        <ion-label floating color="primary">Model</ion-label>
-        <ion-input [ngModel]="kitModel.model" readonly required name="model" #model="ngModel"></ion-input>
-      </ion-item>
+      <button ion-item [hidden]="!kitModel.brandID" (click)="onPresentModal(itemProperties.model)" tappable detail-none>
+        <ion-label color="primary">Model</ion-label>
+        <ion-label>{{kitModel.model}}</ion-label>
+      </button>
 		</ion-list>
 
 		<button ion-button (click)="onAdd(itemForm)" type="submit" block [disabled]="!itemForm.valid">Add</button>

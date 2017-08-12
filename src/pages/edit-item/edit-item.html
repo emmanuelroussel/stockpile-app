@@ -12,20 +12,20 @@
 <ion-content padding>
   <form #itemForm="ngForm">
 		<ion-list>
-      <ion-item (click)="onPresentModal(itemProperties.brand)">
-        <ion-label floating color="primary">Brand</ion-label>
-        <ion-input [ngModel]="(tempItem | async).brand" readonly required name="brand" #brand="ngModel"></ion-input>
-      </ion-item>
+      <button ion-item (click)="onPresentModal(itemProperties.brand)" tappable detail-none>
+        <ion-label color="primary">Brand</ion-label>
+        <ion-label>{{(tempItem | async).brand}}</ion-label>
+      </button>
 
-      <ion-item [hidden]="!(tempItem | async).brandID" (click)="onPresentModal(itemProperties.model)">
-        <ion-label floating color="primary">Model</ion-label>
-        <ion-input [ngModel]="(tempItem | async).model" readonly required name="model" #model="ngModel"></ion-input>
-      </ion-item>
+      <button ion-item [hidden]="!(tempItem | async).brandID" (click)="onPresentModal(itemProperties.model)" tappable detail-none>
+        <ion-label color="primary">Model</ion-label>
+        <ion-label>{{(tempItem | async).model}}</ion-label>
+      </button>
 
-      <ion-item (click)="onPresentModal(itemProperties.category)">
-        <ion-label floating color="primary">Category</ion-label>
-        <ion-input [ngModel]="(tempItem | async).category" readonly required name="category" #category="ngModel"></ion-input>
-      </ion-item>
+      <button ion-item (click)="onPresentModal(itemProperties.category)" tappable detail-none>
+        <ion-label color="primary">Category</ion-label>
+        <ion-label>{{(tempItem | async).category}}</ion-label>
+      </button>
 		</ion-list>
 
 		<button ion-button (click)="onSave(itemForm)" type="submit" block [disabled]="!itemForm.valid">Save</button>
