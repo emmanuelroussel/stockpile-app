@@ -62,7 +62,15 @@ export class RentalPage {
    * Pushes page on nav to allow users to finish renting the items.
    */
   onContinue() {
-    this.navCtrl.push(RentalDetailsPage);
+    let items;
+    this.items.take(1).subscribe(i => items = i.rentals);
+
+    // Remind user to scan items if rental is empty
+    if (!Object.keys(items).length) {
+      this.alertEmptyRental();
+    } else {
+      this.navCtrl.push(RentalDetailsPage);
+    }
   }
 
   /**
@@ -70,10 +78,47 @@ export class RentalPage {
    * return. Pops the nav when done.
    */
   onReturn() {
-    // Set return date to today in MySQL date format
-    const returnDate = new Date().toISOString().substring(0, 10);
-    this.layoutActions.showLoadingMessage(LoadingMessages.returningItems);
-    this.itemsActions.returnItems(returnDate);
+    let items;
+    this.items.take(1).subscribe(i => items = i.rentals);
+
+    // Remind user to scan items if rental is empty
+    if (!Object.keys(items).length) {
+      this.alertEmptyRental();
+    } else {
+      // Set return date to today in MySQL date format
+      const returnDate = new Date().toISOString().substring(0, 10);
+      this.layoutActions.showLoadingMessage(LoadingMessages.returningItems);
+      this.itemsActions.returnItems(returnDate);
+    }
+  }
+
+  /**
+   * Creates an alert to warn the user that the rental is empty and prevent him
+   * or her to make an empty rental.
+   */
+  alertEmptyRental() {
+    let alert = this.alertCtrl.create({
+      title: 'No items in rental',
+      message: 'Please add at least one item to the rental',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Add item',
+          handler: () => {
+            if (this.platform.is('cordova')) {
+              this.onScanBarcode();
+            } else {
+              this.onTypeBarcode();
+            }
+          }
+        }
+      ]
+    });
+
+    alert.present();
   }
 
   /**
