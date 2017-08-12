@@ -94,4 +94,7 @@
     <engine name="android" spec="~6.1.2" />
     <engine name="ios" spec="~4.3.1" />
     <plugin name="cordova-plugin-x-toast" spec="~2.6.0" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="~6.0.8">
+        <variable name="CAMERA_USAGE_DESCRIPTION" value="The app needs to access your camera to scan barcodes" />
+    </plugin>
 </widget>
