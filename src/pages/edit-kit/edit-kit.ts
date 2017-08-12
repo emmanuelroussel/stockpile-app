@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NavController, NavParams, ModalController, Events } from 'ionic-angular';
+import { NavController, NavParams, ModalController, Events, AlertController } from 'ionic-angular';
 
 import { AddKitModelPage } from '../add-kit-model/add-kit-model';
 import { Kit } from '../../models/kits';
@@ -29,6 +29,7 @@ export class EditKitPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
+    public alertCtrl: AlertController,
     public events: Events,
     public kitsService: KitsService,
     public kitModelsService: KitModelsService,
@@ -68,15 +69,34 @@ export class EditKitPage {
    * Creates or updates the kit, and creates and deletes kit models.
    */
   onSave(form: NgForm) {
-    if (this.action === Actions.add) {
-      this.layoutActions.showLoadingMessage(LoadingMessages.creatingKit);
-      this.kitsActions.createKit(form.value, this.modelsToCreate);
-    } else {
-      let kitID;
-      this.kit.take(1).subscribe(kit => kitID = kit.kitID);
+    if (!this.modelsToCreate.length) {
+      let alert = this.alertCtrl.create({
+        title: 'No items in kit',
+        message: 'Please add at least one item to the kit',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel'
+          },
+          {
+            text: 'Add Item',
+            handler: () => this.onAddItem()
+          }
+        ]
+      });
 
-      this.layoutActions.showLoadingMessage(LoadingMessages.updatingKit);
-      this.kitsActions.updateKit({ name: form.value.name, kitID: kitID }, this.modelsToCreate, this.modelsToDelete);
+      alert.present();
+    } else {
+      if (this.action === Actions.add) {
+        this.layoutActions.showLoadingMessage(LoadingMessages.creatingKit);
+        this.kitsActions.createKit(form.value, this.modelsToCreate);
+      } else {
+        let kitID;
+        this.kit.take(1).subscribe(kit => kitID = kit.kitID);
+
+        this.layoutActions.showLoadingMessage(LoadingMessages.updatingKit);
+        this.kitsActions.updateKit({ name: form.value.name, kitID: kitID }, this.modelsToCreate, this.modelsToDelete);
+      }
     }
   }
 
