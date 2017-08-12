@@ -188,7 +188,7 @@ export class ItemsEffects {
         );
       }
 
-      return Observable.of(Promise.all(returns))
+      return Observable.from(Promise.all(returns))
         .concatMap(() => [
           createAction(ItemsActions.RETURN_SUCCESS),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
@@ -218,7 +218,7 @@ export class ItemsEffects {
         rentals.push(this.itemData.rent(rental).toPromise());
       }
 
-      return Observable.of(Promise.all(rentals))
+      return Observable.from(Promise.all(rentals))
         .concatMap(() => [
           createAction(ItemsActions.RENT_SUCCESS),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
