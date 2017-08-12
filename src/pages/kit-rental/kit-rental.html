@@ -27,7 +27,7 @@
     </ion-item>
   </ion-list>
 
-  <button ion-button (click)="onTypeBarcode()" block outline>
+  <button ion-button (click)="onTypeBarcode()" block outline *ngIf="!platform.is('cordova')">
     Add More Items
   </button>
   <button ion-button (click)="onScanBarcode()" block outline *ngIf="platform.is('cordova')">
