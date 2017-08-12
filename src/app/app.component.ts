@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, MenuController, LoadingController } from 'ionic-angular';
 
 import { ViewAccountPage } from '../pages/view-account/view-account';
-import { KitsPage } from '../pages/kits/kits';
 import { Organization } from '../models/organization';
 import { OrganizationService } from '../services/organization.service';
 import { User } from '../models/user';
@@ -65,14 +64,6 @@ export class StockpileApp {
   onViewInfo() {
     this.menuCtrl.close();
     this.nav.push(ViewAccountPage);
-  }
-
-  /**
-   * Closes side menu and pushes KitsPage.
-   */
-  onViewKits() {
-    this.menuCtrl.close();
-    this.nav.push(KitsPage);
   }
 
   /**
