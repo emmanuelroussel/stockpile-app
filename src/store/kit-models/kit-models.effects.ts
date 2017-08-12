@@ -46,7 +46,7 @@ export class KitModelsEffects {
         models.push(this.kitData.deleteKitModel(action.payload.kitID, modelID).toPromise());
       }
 
-      return Observable.of(Promise.all(models))
+      return Observable.from(Promise.all(models))
         .concatMap(res => [
           createAction(KitModelsActions.UPDATE_SUCCESS, res),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
