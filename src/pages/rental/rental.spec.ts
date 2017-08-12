@@ -56,7 +56,7 @@ describe('Rental Page', () => {
     expect(instance.navCtrl.push).toHaveBeenCalledWith(RentalDetailsPage);
   });
 
-  it('shows alert onContinue() is rental is empty', () => {
+  it('shows alert onContinue() if rental is empty', () => {
     instance.items = Observable.of({ rentals: {} });
     spyOn(instance, 'alertEmptyRental');
     instance.onContinue();
@@ -73,7 +73,7 @@ describe('Rental Page', () => {
     expect(instance.itemsActions.returnItems).toHaveBeenCalledWith(today);
   });
 
-  it('shows alert onReturn() is rental is empty', () => {
+  it('shows alert onReturn() if rental is empty', () => {
     instance.items = Observable.of({ rentals: {} });
     spyOn(instance, 'alertEmptyRental');
     instance.onReturn();
