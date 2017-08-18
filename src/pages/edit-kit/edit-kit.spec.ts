@@ -89,11 +89,17 @@ describe('EditKit Page', () => {
     );
   });
 
-  it('deletes item onDelete()', () => {
+  it('creates an alert onDelete()', () => {
+    spyOn(instance.alertCtrl, 'create').and.callThrough();
+    instance.onDelete();
+    expect(instance.alertCtrl.create).toHaveBeenCalled();
+  });
+
+  it('deletes item deleteKit()', () => {
     instance.kit = Observable.of(TestData.kit);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.kitsActions, 'deleteKit');
-    instance.onDelete();
+    instance.deleteKit();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.deletingKit);
     expect(instance.kitsActions.deleteKit).toHaveBeenCalledWith(TestData.kit.kitID);
   });

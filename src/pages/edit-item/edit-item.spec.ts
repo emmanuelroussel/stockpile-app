@@ -75,11 +75,17 @@ describe('EditItem Page', () => {
     expect(instance.itemsActions.updateItem).toHaveBeenCalledWith(TestData.item);
   });
 
-  it('deletes item onDelete()', () => {
+  it('creates an alert onDelete()', () => {
+    spyOn(instance.alertCtrl, 'create').and.callThrough();
+    instance.onDelete();
+    expect(instance.alertCtrl.create).toHaveBeenCalled();
+  });
+
+  it('deletes item on deleteItem()', () => {
     instance.tempItem = Observable.of(TestData.apiItem);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'deleteItem');
-    instance.onDelete();
+    instance.deleteItem();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.deletingItem);
     expect(instance.itemsActions.deleteItem).toHaveBeenCalledWith(TestData.apiItem.barcode);
   });
