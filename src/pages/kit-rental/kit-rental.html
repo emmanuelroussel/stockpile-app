@@ -11,8 +11,9 @@
 
     <ion-list-header>Items in kit</ion-list-header>
     <ion-item *ngFor="let kitModel of (kitModels | async)">
-      <ion-icon name="checkmark" item-left *ngIf="isKitModelAdded(kitModel)"></ion-icon>
-      <h2>{{ kitModel.brand }} {{ kitModel.model }}</h2>
+      <ion-icon item-left [name]="isKitModelAdded(kitModel) ? 'checkmark' : 'remove'"
+        [color]="isKitModelAdded(kitModel) ? 'dark' : 'disabled'"></ion-icon>
+      <h2 ion-text [color]="isKitModelAdded(kitModel) ? 'dark' : 'disabled'">{{ kitModel.brand }} {{ kitModel.model }}</h2>
       <button ion-button clear item-right color="dark" *ngIf="isKitModelAdded(kitModel)" (click)="onRemoveKitModel(kitModel)">
         <ion-icon name="close"></ion-icon>
       </button>
@@ -20,7 +21,7 @@
 
     <ion-list-header *ngIf="getItemsNotInKit().length">Other Items</ion-list-header>
     <ion-item *ngFor="let item of getItemsNotInKit()">
-      <h2>{{ item.brand }} {{ item.model }}</h2>
+      <h2 ion-text>{{ item.brand }} {{ item.model }}</h2>
       <button ion-button clear item-right color="dark" (click)="onRemoveItem(item.barcode)">
         <ion-icon name="close"></ion-icon>
       </button>
