@@ -7,6 +7,7 @@ import { Actions } from '../../constants';
 import { EditItemPage } from '../edit-item/edit-item';
 import { ViewItemPage } from '../view-item/view-item';
 import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
+import { PlatformMockIsCore, PlatformMockIsCordova } from '../../mocks';
 
 let fixture: ComponentFixture<InventoryPage> = null;
 let instance: any = null;
@@ -72,19 +73,34 @@ describe('Inventory Page', () => {
     });
   });
 
-  it('pushes EditItemPage on nav onAdd()', fakeAsync(() => {
-    spyOn(instance.barcodeScanner, 'scan').and.callThrough();
+  it('pushes EditItemPage on nav on pushPage()', () => {
     spyOn(instance.navCtrl, 'push');
+    instance.pushPage(TestData.barcode);
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditItemPage, {
+      barcode: TestData.barcode,
+      action: Actions.add
+    });
+  });
+
+  it('calls pushPage with barcode onAdd() if cordova is available', fakeAsync(() => {
+    instance.platform = new PlatformMockIsCordova();
+    spyOn(instance.barcodeScanner, 'scan').and.callThrough();
+    spyOn(instance, 'pushPage');
     instance.onAdd();
     tick();
     expect(instance.barcodeScanner.scan).toHaveBeenCalled();
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditItemPage, {
-      barcode: TestData.barcodeData.text,
-      action: Actions.add
-    });
+    expect(instance.pushPage).toHaveBeenCalledWith(TestData.barcodeData.text);
   }));
 
-  it('shows message if error in onAdd()', fakeAsync(() => {
+  it('creates an alert onAdd() if cordova is not available', () => {
+    instance.platform = new PlatformMockIsCore();
+    spyOn(instance.alertCtrl, 'create').and.callThrough();
+    instance.onAdd();
+    expect(instance.alertCtrl.create).toHaveBeenCalled();
+  });
+
+  it('shows message if error in onAdd() during scan', fakeAsync(() => {
+    instance.platform = new PlatformMockIsCordova();
     instance.barcodeScanner.resolve = false;
     spyOn(instance.notifications, 'showMessage');
     spyOn(instance.navCtrl, 'push');
@@ -95,6 +111,7 @@ describe('Inventory Page', () => {
   }));
 
   it('does nothing if scan is cancelled', fakeAsync(() => {
+    instance.platform = new PlatformMockIsCordova();
     instance.barcodeScanner.cancel = true;
     spyOn(instance.notifications, 'showMessage');
     spyOn(instance.navCtrl, 'push');

@@ -121,13 +121,13 @@ export class PlatformMock {
 
 export class PlatformMockIsCordova {
   public is(platform: string): Boolean {
-    return platform === 'cordova'
+    return platform === 'cordova';
   }
 }
 
 export class PlatformMockIsCore {
   public is(platform: string): Boolean {
-    return platform === 'core'
+    return platform === 'core';
   }
 }
 
