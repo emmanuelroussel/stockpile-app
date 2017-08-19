@@ -100,7 +100,7 @@ export class InventoryPage {
    */
   pushPage(barcode: string) {
     this.navCtrl.push(EditItemPage, {
-      barcode: barcode,
+      barcode,
       action: Actions.add
     });
   }
