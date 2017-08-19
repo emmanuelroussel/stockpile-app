@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, ModalController } from 'ionic-angular';
+import { NavParams, ModalController, AlertController } from 'ionic-angular';
 
 import { Actions, ItemProperties, LoadingMessages } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
@@ -31,7 +31,8 @@ export class EditItemPage {
     public brandsActions: BrandsActions,
     public modelsActions: ModelsActions,
     public categoriesActions: CategoriesActions,
-    public layoutActions: LayoutActions
+    public layoutActions: LayoutActions,
+    public alertCtrl: AlertController
   ) {}
 
   /**
@@ -87,9 +88,30 @@ export class EditItemPage {
   }
 
   /**
-   * Deletes the item.
+   * Confirms if user wants to delete the item.
    */
   onDelete() {
+    let alert = this.alertCtrl.create({
+      title: 'Are you sure you want to delete this item?',
+      message: 'It will be deleted permanently',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete',
+          handler: () => this.deleteItem()
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  /**
+   * Deletes the item.
+   */
+  deleteItem() {
     let barcode;
     this.tempItem.take(1).subscribe(i => barcode = i.barcode);
     this.layoutActions.showLoadingMessage(LoadingMessages.deletingItem);

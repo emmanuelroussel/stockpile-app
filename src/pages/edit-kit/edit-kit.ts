@@ -101,9 +101,30 @@ export class EditKitPage {
   }
 
   /**
-   * Deletes kit.
+   * Confirms if user wants to delete the kit.
    */
   onDelete() {
+    let alert = this.alertCtrl.create({
+      title: 'Are you sure you want to delete this kit?',
+      message: 'It will be deleted permanently',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete',
+          handler: () => this.deleteKit()
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  /**
+   * Deletes kit.
+   */
+  deleteKit() {
     let kitID;
     this.kit.take(1).subscribe(kit => kitID = kit.kitID);
 
