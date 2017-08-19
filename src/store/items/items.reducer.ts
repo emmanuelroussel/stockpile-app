@@ -63,7 +63,11 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
     case ItemsActions.DELETE_SUCCESS:
       const results = Object.assign({}, items.results);
       delete results[action.payload.id];
-      return { ...items, results };
+      return {
+        ...items,
+        results,
+        display: items.display.filter(item => item.barcode !== action.payload.id)
+      };
     case ItemsActions.RESET:
       return initialState;
     case ItemsActions.UPDATE_TEMP:
