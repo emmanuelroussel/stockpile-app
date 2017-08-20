@@ -3,6 +3,7 @@ import { Response } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
 import { ErrorReport } from './raven-error-handler';
+import { apiVersion } from '../constants';
 import 'rxjs/Rx';
 
 let errorReport = new ErrorReport();
@@ -12,6 +13,9 @@ let errorReport = new ErrorReport();
  */
 export function getAuthHttp(http, storage) {
   return new AuthHttp(new AuthConfig({
+    globalHeaders: [
+      { 'Accept-Version': apiVersion }
+    ],
     tokenGetter: (() => storage.get('id_token')),
   }), http);
 }
