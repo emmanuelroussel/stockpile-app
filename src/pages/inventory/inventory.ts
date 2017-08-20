@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, Platform, AlertController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { ItemData } from '../../providers/item-data';
@@ -43,7 +43,9 @@ export class InventoryPage {
     public itemsActions: ItemsActions,
     public brandsActions: BrandsActions,
     public modelsActions: ModelsActions,
-    public categoriesActions: CategoriesActions
+    public categoriesActions: CategoriesActions,
+    public platform: Platform,
+    public alertCtrl: AlertController
   ) {}
 
   /**
@@ -94,21 +96,54 @@ export class InventoryPage {
   }
 
   /**
-   * Starts barcode scanner and pushes page to edit item if barcode is present
-   * (i.e. user didn't cancel)
+   * Pushes page with the barcode to create.
+   */
+  pushPage(barcode: string) {
+    this.navCtrl.push(EditItemPage, {
+      barcode,
+      action: Actions.add
+    });
+  }
+
+  /**
+   * Starts barcode scanner if cordova is available or creates an alert to allow
+   * user to enter barcode. Calls pushPage with the input.
    */
   onAdd() {
-    this.barcodeScanner.scan().then(
-      barcodeData => {
-        if (!barcodeData.cancelled) {
-          this.navCtrl.push(EditItemPage, {
-            barcode: barcodeData.text,
-            action: Actions.add
-          });
-        }
-      },
-      err => this.notifications.showMessage(err)
-    );
+    if (this.platform.is('cordova')) {
+      this.barcodeScanner.scan().then(
+        barcodeData => {
+          if (!barcodeData.cancelled) {
+            this.pushPage(barcodeData.text);
+          }
+        },
+        err => this.notifications.showMessage(err)
+      );
+    } else {
+      let alert = this.alertCtrl.create({
+        title: 'Type Barcode',
+        inputs: [
+          {
+            name: 'barcode',
+            placeholder: 'Barcode'
+          }
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel'
+          },
+          {
+            text: 'Next',
+            handler: form => {
+              this.pushPage(form.barcode);
+            }
+          }
+        ]
+      });
+
+      alert.present();
+    }
   }
 
   /**
