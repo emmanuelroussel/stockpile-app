@@ -30,7 +30,7 @@ export const cloudSettings: CloudSettings = {
  * Logs error and gets message from api error and throw it.
  */
 export function handleError(error: Response | any, caught: any) {
-  // Don't report 404s and 401a because they are a normal behavior of the api most of
+  // Don't report 404s and 401s because they are a normal behavior of the api most of
   // the time. Ex: user scans item not present in the database or wrong password
   if (error.status !== 404 || error.status !== 401) {
     errorReport.reportError(error.json());
