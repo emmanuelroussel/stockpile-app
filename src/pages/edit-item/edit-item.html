@@ -17,7 +17,7 @@
         <ion-label>{{(tempItem | async).brand}}</ion-label>
       </button>
 
-      <button ion-item [hidden]="!(tempItem | async).brandID" (click)="onPresentModal(itemProperties.model)" tappable detail-none>
+      <button ion-item [disabled]="!(tempItem | async).brandID" (click)="onPresentModal(itemProperties.model)" tappable detail-none>
         <ion-label color="primary">Model</ion-label>
         <ion-label>{{(tempItem | async).model}}</ion-label>
       </button>
