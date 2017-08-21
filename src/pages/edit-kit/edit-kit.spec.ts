@@ -47,7 +47,7 @@ describe('EditKit Page', () => {
   });
 
   it('creates an alert if there are no kit models onSave()', () => {
-    instance.modelsToCreate = [];
+    instance.kitModels = [];
     spyOn(instance.alertCtrl, 'create').and.callThrough();
     instance.onSave();
     expect(instance.alertCtrl.create).toHaveBeenCalled();
@@ -60,6 +60,7 @@ describe('EditKit Page', () => {
       }
     };
     instance.action = Actions.add;
+    instance.kitModels = [TestData.kitModel.modelID];
     instance.modelsToCreate = [TestData.kitModel.modelID];
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.kitsActions, 'createKit');
@@ -76,6 +77,7 @@ describe('EditKit Page', () => {
     };
     instance.action = Actions.edit;
     instance.kit = Observable.of(TestData.kit);
+    instance.kitModels = [TestData.kitModel.modelID];
     instance.modelsToCreate = [TestData.kitModel.modelID];
     instance.modelsToDelete = [TestData.kitModels.results[0]];
     spyOn(instance.layoutActions, 'showLoadingMessage');

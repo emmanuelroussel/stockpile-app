@@ -69,7 +69,7 @@ export class EditKitPage {
    * Creates or updates the kit, and creates and deletes kit models.
    */
   onSave(form: NgForm) {
-    if (!this.modelsToCreate.length) {
+    if (!this.kitModels.length) {
       let alert = this.alertCtrl.create({
         title: 'No items in kit',
         message: 'Please add at least one item to the kit',
