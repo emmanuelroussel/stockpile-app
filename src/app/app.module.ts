@@ -9,6 +9,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Toast } from '@ionic-native/toast';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthHttp } from 'angular2-jwt';
@@ -159,6 +160,7 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     CategoriesActions,
     CategoriesEffects,
     CategoriesService,
+    InAppBrowser,
     ItemData,
     ItemPropertyData,
     ItemsActions,
