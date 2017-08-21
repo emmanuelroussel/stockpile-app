@@ -18,6 +18,18 @@ export function kitModelsReducer(kitModels: KitModels = initialState, action: Ac
         results[action.payload.results[0].kitID] = action.payload.results;
       }
       return { results, showLoadingSpinner: false };
+    case KitModelsActions.UPDATE_SUCCESS:
+      const newKitModels = action.payload.results.filter(kitModel => kitModel.kitID != null);
+      const existingKitModels = kitModels.results[action.payload.kitID].filter(kitModel => {
+        return !action.payload.kitModelsToDelete.find(id => id === kitModel.modelID);
+      });
+
+      return {
+        ...kitModels,
+        results: {
+          [action.payload.kitID]: [...existingKitModels, ...newKitModels]
+        }
+      };
     default:
       return kitModels;
   }
