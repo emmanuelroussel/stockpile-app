@@ -18,6 +18,13 @@ export function kitModelsReducer(kitModels: KitModels = initialState, action: Ac
         results[action.payload.results[0].kitID] = action.payload.results;
       }
       return { results, showLoadingSpinner: false };
+    case KitModelsActions.UPDATE_SUCCESS:
+      return {
+        ...kitModels,
+        results: {
+          [action.payload[0].kitID]: action.payload
+        }
+      };
     default:
       return kitModels;
   }
