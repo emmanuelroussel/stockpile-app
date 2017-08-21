@@ -48,7 +48,11 @@ export class KitModelsEffects {
 
       return Observable.from(Promise.all(models))
         .concatMap(res => [
-          createAction(KitModelsActions.UPDATE_SUCCESS, res),
+          createAction(KitModelsActions.UPDATE_SUCCESS, {
+            results: res,
+            kitID: action.payload.kitID,
+            kitModelsToDelete: action.payload.kitModelsToDelete
+          }),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, action.payload.message),
           createAction(AppActions.POP_NAV)
