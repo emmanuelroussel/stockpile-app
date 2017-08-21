@@ -27,6 +27,7 @@ Running apps on a device or emulator requires you to build the app locally. To d
 
 - Add platforms you want to run with `ionic cordova platform add ios` or `ionic cordova platform add android`
 - Run `ionic cordova prepare` to install the plugins for each platforms
+- *For iOS only*, run `npm install ios-sim`. This is the only way to get the emulator to work from the command line.
 - Run `ionic cordova emulate ios` or `ionic cordova emulate android` to emulate
 - Run `ionic cordova run ios` or `ionic cordova run android` to run on a real device connected to your computer
 
