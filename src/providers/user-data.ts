@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import * as Raven from 'raven-js';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
-import { Links } from '../constants';
+import { Links, apiVersion } from '../constants';
 import { ApiUrl } from './api-url';
 import { Api } from './api';
 import { extractData, handleError } from '../utils/auth-http-helpers';
@@ -25,8 +25,13 @@ export class UserData {
    * Calls api with credentials to log in and saves auth token.
    */
   login(credentials: any) {
+    let headers = new Headers();
+    headers.append('Accept-Version', apiVersion);
+
     // Using Http instead of Api because this request does not have authentication
-    return this.http.post(`${this.apiUrl.getUrl()}${Links.authenticate}`, credentials)
+    return this.http.post(`${this.apiUrl.getUrl()}${Links.authenticate}`,
+      credentials,
+      { headers })
       .map(extractData)
       .catch(handleError);
   }

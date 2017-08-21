@@ -70,3 +70,5 @@ export class ItemProperties {
 }
 
 export const paginationLimit = 10;
+
+export const apiVersion = '^1.0.0';

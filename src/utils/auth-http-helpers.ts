@@ -3,6 +3,7 @@ import { Response } from '@angular/http';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
 import { ErrorReport } from './raven-error-handler';
+import { apiVersion } from '../constants';
 import 'rxjs/Rx';
 
 let errorReport = new ErrorReport();
@@ -12,6 +13,9 @@ let errorReport = new ErrorReport();
  */
 export function getAuthHttp(http, storage) {
   return new AuthHttp(new AuthConfig({
+    globalHeaders: [
+      { 'Accept-Version': apiVersion }
+    ],
     tokenGetter: (() => storage.get('id_token')),
   }), http);
 }
@@ -26,7 +30,7 @@ export const cloudSettings: CloudSettings = {
  * Logs error and gets message from api error and throw it.
  */
 export function handleError(error: Response | any, caught: any) {
-  // Don't report 404s and 401a because they are a normal behavior of the api most of
+  // Don't report 404s and 401s because they are a normal behavior of the api most of
   // the time. Ex: user scans item not present in the database or wrong password
   if (error.status !== 404 || error.status !== 401) {
     errorReport.reportError(error.json());
