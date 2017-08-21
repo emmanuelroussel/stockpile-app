@@ -17,7 +17,11 @@
         <ion-label>{{kitModel.model}}</ion-label>
       </button>
 		</ion-list>
-
-		<button ion-button (click)="onAdd(itemForm)" type="submit" block [disabled]="!itemForm.valid">Add</button>
 	</form>
 </ion-content>
+
+<ion-footer padding>
+  <button ion-button (click)="onAdd(itemForm)" block [disabled]="!itemForm.valid">
+    Add
+  </button>
+</ion-footer>

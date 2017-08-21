@@ -29,8 +29,10 @@
         No items in this kit
       </ion-item>
 		</ion-list>
-
-    <button ion-button (click)="onAddItem()" block outline>Add Item to Kit</button>
-		<button ion-button (click)="onSave(kitForm)" type="submit" block [disabled]="!kitForm.valid">Save</button>
 	</form>
 </ion-content>
+
+<ion-footer padding>
+  <button ion-button (click)="onAddItem()" block outline>Add Item to Kit</button>
+	<button ion-button (click)="onSave(kitForm)" block [disabled]="!kitForm.valid">Save</button>
+</ion-footer>

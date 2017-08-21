@@ -16,7 +16,9 @@
       </button>
     </ion-item>
   </ion-list>
+</ion-content>
 
+<ion-footer padding>
   <button ion-button (click)="onTypeBarcode()" block outline *ngIf="!platform.is('cordova')">
     Add More Items
   </button>
@@ -29,4 +31,4 @@
   <button ion-button *ngIf="action === actions.return" (click)="onReturn()" block>
     Return
   </button>
-</ion-content>
+</ion-footer>

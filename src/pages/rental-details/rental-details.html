@@ -26,9 +26,11 @@
         {{ item.brand }} {{ item.model }}
       </ion-item>
     </ion-list>
-
-		<button ion-button (click)="onRent(rentalForm)" type="submit" block [disabled]="!rentalForm.valid">
-      Rent
-    </button>
 	</form>
 </ion-content>
+
+<ion-footer padding>
+  <button ion-button (click)="onRent(rentalForm)" block [disabled]="!rentalForm.valid">
+    Rent
+  </button>
+</ion-footer>
