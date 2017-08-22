@@ -193,6 +193,10 @@ export class ToastMock {
   }
 }
 
+export class InAppBrowserMock {
+  public create(): any {}
+}
+
 export class ModalMock {
   public create(): any {
     return new ModalMock;

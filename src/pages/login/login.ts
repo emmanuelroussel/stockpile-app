@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { UserActions } from '../../store/user/user.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';
-import { LoadingMessages } from '../../constants';
+import { LoadingMessages, subscribeUrl } from '../../constants';
 
 @Component({
   selector: 'page-login',
@@ -14,7 +15,8 @@ export class LoginPage {
 
   constructor(
     public userActions: UserActions,
-    public layoutActions: LayoutActions
+    public layoutActions: LayoutActions,
+    public browser: InAppBrowser
   ) {}
 
   /**
@@ -23,5 +25,12 @@ export class LoginPage {
   onLogin(form: NgForm) {
     this.layoutActions.showLoadingMessage(LoadingMessages.loggingInUser);
     this.userActions.loginUser(form.value);
+  }
+
+  /**
+   * Opens a browser and directs user to web page to subscribe to Stockpile.
+   */
+  onSignup() {
+    this.browser.create(subscribeUrl);
   }
 }

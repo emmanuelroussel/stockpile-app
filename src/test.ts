@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import {
   App,
   Config,
@@ -60,7 +61,8 @@ import {
   LayoutServiceMock,
   ModelsServiceMock,
   OrganizationServiceMock,
-  UserServiceMock
+  UserServiceMock,
+  InAppBrowserMock
 } from './mocks';
 import { BrandsActions } from './store/brands/brands.actions';
 import { CategoriesActions } from './store/categories/categories.actions';
@@ -161,6 +163,7 @@ export class TestUtils {
         { provide: ModelsService, useClass: ModelsServiceMock },
         { provide: OrganizationService, useClass: OrganizationServiceMock },
         { provide: UserService, useClass: UserServiceMock },
+        { provide: InAppBrowser, useClass: InAppBrowserMock }
       ],
       imports: [
         FormsModule,

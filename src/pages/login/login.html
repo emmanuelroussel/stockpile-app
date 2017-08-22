@@ -24,6 +24,9 @@
 </ion-content>
 
 <ion-footer padding>
+   <button ion-button (click)="onSignup()" block outline>
+     Create an account
+  </button>
   <button ion-button (click)="onLogin(loginForm)" block [disabled]="!loginForm.valid">
     Login
   </button>

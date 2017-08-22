@@ -1,7 +1,7 @@
 import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
-import { LoadingMessages } from '../../constants';
+import { LoadingMessages, subscribeUrl } from '../../constants';
 
 import { LoginPage } from './login';
 
@@ -31,5 +31,11 @@ describe('Login Page', () => {
     instance.onLogin(form);
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.loggingInUser);
     expect(instance.userActions.loginUser).toHaveBeenCalledWith(form.value);
+  });
+
+  it('navigates to subscribe url onSignup()', () => {
+    spyOn(instance.browser, 'create');
+    instance.onSignup();
+    expect(instance.browser.create).toHaveBeenCalledWith(subscribeUrl);
   });
 });
