@@ -27,7 +27,11 @@
         <ion-label>{{(tempItem | async).category}}</ion-label>
       </button>
 		</ion-list>
-
-		<button ion-button (click)="onSave(itemForm)" type="submit" block [disabled]="!itemForm.valid">Save</button>
 	</form>
 </ion-content>
+
+<ion-footer padding>
+  <button ion-button (click)="onSave(itemForm)" block [disabled]="!itemForm.valid">
+    Save
+  </button>
+</ion-footer>

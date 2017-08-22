@@ -22,7 +22,11 @@
         <ion-input [ngModel]="(user | async)?.email" required name="email" type="email" #email="ngModel"></ion-input>
       </ion-item>
 		</ion-list>
-
-		<button ion-button (click)="onSave(userForm)" type="submit" block [disabled]="!userForm.valid">Save</button>
 	</form>
 </ion-content>
+
+<ion-footer padding>
+  <button ion-button (click)="onSave(userForm)" block [disabled]="!userForm.valid">
+    Save
+  </button>
+</ion-footer>
