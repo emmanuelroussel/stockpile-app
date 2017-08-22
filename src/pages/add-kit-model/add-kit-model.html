@@ -12,7 +12,7 @@
         <ion-label>{{kitModel.brand}}</ion-label>
       </button>
 
-      <button ion-item [hidden]="!kitModel.brandID" (click)="onPresentModal(itemProperties.model)" tappable detail-none>
+      <button ion-item [disabled]="!kitModel.brandID" (click)="onPresentModal(itemProperties.model)" tappable detail-none>
         <ion-label color="primary">Model</ion-label>
         <ion-label>{{kitModel.model}}</ion-label>
       </button>
