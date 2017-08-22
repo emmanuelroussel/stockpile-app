@@ -20,10 +20,11 @@
 				</ion-input>
 			</ion-item>
 		</ion-list>
-
-		<ion-col>
-			<button ion-button (click)="onLogin(loginForm)" type="submit" block [disabled]="!loginForm.valid">Login</button>
-		</ion-col>
 	</form>
-
 </ion-content>
+
+<ion-footer padding>
+  <button ion-button (click)="onLogin(loginForm)" block [disabled]="!loginForm.valid">
+    Login
+  </button>
+</ion-footer>

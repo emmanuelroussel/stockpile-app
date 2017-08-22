@@ -16,11 +16,12 @@
     <ion-item>{{(user | async)?.email}}</ion-item>
 	</ion-list>
 
-  <button ion-button (click)="onDeleteAccount()" block outline>Delete Account</button>
-
-  <button ion-button (click)="onChangePassword()" block>Change Password</button>
-
   <ion-fab right bottom *ngIf="platform.is('android')">
     <button ion-fab color="secondary" (click)="onEditUser()"><ion-icon name="create"></ion-icon></button>
   </ion-fab>
 </ion-content>
+
+<ion-footer padding>
+  <button ion-button (click)="onDeleteAccount()" block outline>Delete Account</button>
+  <button ion-button (click)="onChangePassword()" block>Change Password</button>
+</ion-footer>
