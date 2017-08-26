@@ -11,6 +11,7 @@
 
 <ion-content padding>
 	<ion-list>
+    <ion-item>{{(item | async)?.barcode}}</ion-item>
     <ion-item>{{(item | async)?.brand}}</ion-item>
     <ion-item>{{(item | async)?.model}}</ion-item>
     <ion-item>{{(item | async)?.category}}</ion-item>

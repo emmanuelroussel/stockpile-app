@@ -12,6 +12,11 @@
 <ion-content padding>
   <form #itemForm="ngForm">
 		<ion-list>
+      <button ion-item disabled detail-none>
+        <ion-label color="primary">Barcode</ion-label>
+        <ion-label>{{(tempItem | async).barcode}}</ion-label>
+      </button>
+
       <button ion-item (click)="onPresentModal(itemProperties.brand)" tappable detail-none>
         <ion-label color="primary">Brand</ion-label>
         <ion-label>{{(tempItem | async).brand}}</ion-label>
