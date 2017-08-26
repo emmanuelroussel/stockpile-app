@@ -43,7 +43,8 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
           ...items.results,
           [action.payload.barcode]: action.payload
         },
-        display: [...items.display, action.payload]
+        display: [...items.display, action.payload],
+        tempItem: {}
       };
     case ItemsActions.UPDATE_SUCCESS:
       return {
@@ -58,7 +59,8 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
           } else {
             return item;
           }
-        })
+        }),
+        tempItem: {}
       };
     case ItemsActions.DELETE_SUCCESS:
       const results = Object.assign({}, items.results);
@@ -66,7 +68,8 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
       return {
         ...items,
         results,
-        display: items.display.filter(item => item.barcode !== action.payload.id)
+        display: items.display.filter(item => item.barcode !== action.payload.id),
+        tempItem: {}
       };
     case ItemsActions.RESET:
       return initialState;
