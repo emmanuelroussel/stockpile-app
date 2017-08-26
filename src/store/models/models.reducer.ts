@@ -6,11 +6,14 @@ import { Models } from '../../models/models';
 const initialState = {
   results: {},
   filtered: [],
-  showAddNew: false
+  showAddNew: false,
+  showLoadingSpinner: false
 };
 
 export function modelsReducer(models: Models = initialState, action: Action): Models {
   switch (action.type) {
+    case ModelsActions.FETCH:
+      return { ...models, showLoadingSpinner: true };
     case ModelsActions.FETCH_SUCCESS:
       return {
         ...models,
@@ -21,15 +24,24 @@ export function modelsReducer(models: Models = initialState, action: Action): Mo
           }, {})
         ),
         filtered: action.payload.results,
-        showAddNew: false
+        showAddNew: false,
+        showLoadingSpinner: false
       };
     case ModelsActions.CREATE_SUCCESS:
+    case ModelsActions.UPDATE_SUCCESS:
       return {
         ...models,
         results: {
           ...models.results,
           [action.payload.modelID]: action.payload
         }
+      };
+    case ModelsActions.DELETE_SUCCESS:
+      const results = Object.assign({}, models.results);
+      delete results[action.payload.id];
+      return {
+        ...models,
+        results
       };
     case ModelsActions.FILTER:
       return Object.assign({}, models, {

@@ -8,4 +8,5 @@ export interface Brands {
   readonly results: { [brandID: number]: Brand };
   readonly filtered: Array<Brand>;
   readonly showAddNew: boolean;
+  readonly showLoadingSpinner: boolean;
 }

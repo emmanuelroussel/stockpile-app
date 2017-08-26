@@ -299,6 +299,30 @@ export class ItemPropertyDataMock {
   public createCategory(): any {
     return returnObservable(this.resolve, TestData.response);
   }
+
+  public updateBrand(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+
+  public updateModel(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+
+  public updateCategory(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+
+  public deleteBrand(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+
+  public deleteModel(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+
+  public deleteCategory(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
 }
 
 export class KitDataMock {
@@ -400,12 +424,16 @@ export class ApiMock {
 export class BrandsActionsMock {
   public fetchBrands() {}
   public createBrand() {}
+  public updateBrand() {}
+  public deleteBrand() {}
   public filterBrands() {}
 }
 
 export class CategoriesActionsMock {
   public fetchCategories() {}
   public createCategory() {}
+  public updateCategory() {}
+  public deleteCategory() {}
   public filterCategories() {}
 }
 
@@ -443,6 +471,8 @@ export class LayoutActionsMock {
 export class ModelsActionsMock {
   public fetchModels() {}
   public createModel() {}
+  public updateModel() {}
+  public deleteModel() {}
   public filterModels() {}
 }
 

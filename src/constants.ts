@@ -21,10 +21,22 @@ export class Links {
 }
 
 export class Messages {
+  private static brandBaseSingular = 'Brand successfully';
+  private static modelBaseSingular = 'Model successfully';
+  private static categoryBaseSingular = 'Category successfully';
   private static itemBaseSingular = 'Item successfully';
   private static itemBasePlural = 'Item(s) successfully';
   private static kitBaseSingular = 'Kit successfully';
   private static itemAlready = 'Item is already';
+  public static brandAdded = `${Messages.brandBaseSingular} created`;
+  public static brandEdited = `${Messages.brandBaseSingular} updated`;
+  public static brandDeleted = `${Messages.brandBaseSingular} deleted`;
+  public static modelAdded = `${Messages.modelBaseSingular} created`;
+  public static modelEdited = `${Messages.modelBaseSingular} updated`;
+  public static modelDeleted = `${Messages.modelBaseSingular} deleted`;
+  public static categoryAdded = `${Messages.categoryBaseSingular} created`;
+  public static categoryEdited = `${Messages.categoryBaseSingular} updated`;
+  public static categoryDeleted = `${Messages.categoryBaseSingular} deleted`;
   public static itemAdded = `${Messages.itemBaseSingular} created`;
   public static itemEdited = `${Messages.itemBaseSingular} updated`;
   public static itemDeleted = `${Messages.itemBaseSingular} deleted`;
@@ -44,7 +56,14 @@ export class Messages {
 
 export class LoadingMessages {
   public static creatingBrand = 'Creating brand...';
+  public static updatingBrand = 'Updating brand...';
+  public static deletingBrand = 'Deleting brand...';
+  public static creatingModel = 'Creating model...';
+  public static updatingModel = 'Updating model...';
+  public static deletingModel = 'Deleting model...';
   public static creatingCategory = 'Creating category...';
+  public static updatingCategory = 'Updating category...';
+  public static deletingCategory = 'Deleting category...';
   public static creatingKit = 'Creating kit...';
   public static updatingKit = 'Updating kit...';
   public static deletingKit = 'Deleting kit...';
@@ -55,7 +74,6 @@ export class LoadingMessages {
   public static returningItems = 'Returning items...';
   public static addingToRentals = 'Verifying item status...';
   public static startingRental = 'Verifying item status...';
-  public static creatingModel = 'Creating model...';
   public static savingPassword = 'Saving password...';
   public static updatingUser = 'Updating account info...';
   public static loggingInUser = 'Logging in...';
@@ -64,8 +82,11 @@ export class LoadingMessages {
 
 export class ItemProperties {
   public static brand = 'Brand';
+  public static brandPlural = 'Brands';
   public static model = 'Model';
+  public static modelPlural = 'Models';
   public static category = 'Category';
+  public static categoryPlural = 'Categories';
   public static status = 'Status';
 }
 

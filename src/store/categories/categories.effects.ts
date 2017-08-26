@@ -7,6 +7,7 @@ import { CategoriesActions } from './categories.actions';
 import { AppActions } from '../app/app.actions.ts';
 import { ItemPropertyData } from '../../providers/item-property-data';
 import { LayoutActions } from '../layout/layout.actions';
+import { Messages } from '../../constants';
 
 @Injectable()
 export class CategoriesEffects {
@@ -35,15 +36,64 @@ export class CategoriesEffects {
   @Effect()
   create$ = this.actions$
     .ofType(CategoriesActions.CREATE)
-    .mergeMap(action => this.itemPropertyData.createCategory(action.payload)
-      .concatMap(res => [
-        createAction(CategoriesActions.CREATE_SUCCESS, res),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE)
-      ])
+    .mergeMap(action => this.itemPropertyData.createCategory(action.payload.name)
+      .concatMap(res => {
+        let success = [
+          createAction(CategoriesActions.CREATE_SUCCESS, res),
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+          createAction(AppActions.SHOW_MESSAGE, Messages.categoryAdded),
+        ];
+
+        if (action.payload.pop) {
+          success.push(createAction(AppActions.POP_NAV));
+        }
+
+        return success;
+      })
       .catch(err => Observable.of(
         createAction(CategoriesActions.CREATE_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, err.message)
       ))
     );
+
+    /**
+     * Updates category.
+     */
+    @Effect()
+    update$ = this.actions$
+      .ofType(CategoriesActions.UPDATE)
+      .mergeMap(action => this.itemPropertyData.updateCategory(action.payload, action.payload.categoryID)
+        .concatMap(res => [
+          createAction(CategoriesActions.UPDATE_SUCCESS, res),
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+          createAction(AppActions.SHOW_MESSAGE, Messages.categoryEdited),
+          createAction(AppActions.POP_NAV)
+        ])
+        .catch(err => Observable.of(
+          createAction(CategoriesActions.UPDATE_FAIL, err),
+          createAction(AppActions.SHOW_MESSAGE, err.message),
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        ))
+      );
+
+    /**
+     * Deletes category.
+     */
+    @Effect()
+    delete$ = this.actions$
+      .ofType(CategoriesActions.DELETE)
+      .mergeMap(action => this.itemPropertyData.deleteCategory(action.payload)
+        .concatMap(res => [
+          createAction(CategoriesActions.DELETE_SUCCESS, res),
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+          createAction(AppActions.SHOW_MESSAGE, Messages.categoryDeleted),
+          createAction(AppActions.POP_NAV)
+        ])
+        .catch(err => Observable.of(
+          createAction(CategoriesActions.DELETE_FAIL, err),
+          createAction(AppActions.SHOW_MESSAGE, err.message),
+          createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+        ))
+      );
 }
