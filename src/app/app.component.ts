@@ -59,6 +59,13 @@ export class StockpileApp {
   }
 
   /**
+   * Closes side menu.
+   */
+   closeMenu() {
+     this.menuCtrl.close();
+   }
+
+  /**
    * Closes side menu and pushes ViewAccountPage.
    */
   onViewInfo() {
