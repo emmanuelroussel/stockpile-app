@@ -36,6 +36,12 @@ describe('Root Component', () => {
     expect(instance.userActions.checkUserLoggedIn).toHaveBeenCalled();
   });
 
+  it('closes side menu', () => {
+    spyOn(instance.menuCtrl, 'close');
+    instance.closeMenu();
+    expect(instance.menuCtrl.close).toHaveBeenCalled();
+  });
+
   it('pushes ViewAccountPage on viewInfo()', () => {
     spyOn(instance.menuCtrl, 'close');
     spyOn(instance.nav, 'push');
