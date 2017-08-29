@@ -174,7 +174,7 @@ describe('Brands Effects', () => {
       createAction(BrandsActions.DELETE_SUCCESS, TestData.response),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.brandDeleted),
-      createAction(AppActions.POP_NAV)
+      createAction(AppActions.POP_NAV_TWICE)
     ];
 
     instance.delete$.take(expectedResult.length).subscribe(

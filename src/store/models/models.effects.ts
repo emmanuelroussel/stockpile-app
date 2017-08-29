@@ -88,7 +88,7 @@ export class ModelsEffects {
         createAction(ModelsActions.DELETE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, Messages.modelDeleted),
-        createAction(AppActions.POP_NAV)
+        createAction(AppActions.POP_NAV_TWICE)
       ])
       .catch(err => Observable.of(
         createAction(ModelsActions.DELETE_FAIL, err),
