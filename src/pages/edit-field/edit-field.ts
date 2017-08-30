@@ -96,7 +96,7 @@ export class EditFieldPage {
   onDelete() {
     let alert = this.alertCtrl.create({
       title: `Are you sure you want to delete this ${this.type.toLowerCase()}?`,
-      message: `It will also delete all items that have this ${this.type.toLowerCase()}`,
+      message: `Make sure no items currently have this ${this.type.toLowerCase()}`,
       buttons: [
         {
           text: 'Cancel',
