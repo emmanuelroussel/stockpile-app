@@ -5,7 +5,6 @@ import { ItemProperties, Actions } from '../../constants';
 
 import { FieldsPage } from './fields';
 import { EditFieldPage } from '../edit-field/edit-field';
-import { ViewFieldPage } from '../view-field/view-field';
 import { Observable } from 'rxjs/Observable';
 
 let fixture: ComponentFixture<FieldsPage> = null;
@@ -45,11 +44,12 @@ describe('Fields Page', () => {
     expect(instance.typePlural).toEqual(ItemProperties.brandPlural);
   });
 
-  it('pushes ViewFieldPage on nav on viewField()', () => {
+  it('pushes EditFieldPage on nav on viewField()', () => {
     instance.type = ItemProperties.brand;
     spyOn(instance.navCtrl, 'push');
     instance.onViewField(TestData.brand);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewFieldPage, {
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditFieldPage, {
+      action: Actions.edit,
       type: ItemProperties.brand,
       field: TestData.brand,
     });

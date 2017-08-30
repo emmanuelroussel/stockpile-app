@@ -2,11 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Actions } from '../../constants';
-import { ViewFieldPage } from '../view-field/view-field';
 import { EditFieldPage } from '../edit-field/edit-field';
 
 import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
-
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -36,9 +34,10 @@ export class FieldsPage {
    * Pushes page on nav with the field to allow user to view it.
    */
   onViewField(field: any) {
-    this.navCtrl.push(ViewFieldPage, {
+    this.navCtrl.push(EditFieldPage, {
+      action: Actions.edit,
       type: this.type,
-      field,
+      field: Object.assign({}, field),
     });
   }
 
