@@ -6,12 +6,9 @@ import { paginationLimit } from '../../constants';
 
 const initialState = {
   results: {},
-  offset: 0,
-  loadMoreItems: true,
   showAddNew: false,
   tempItem: {},
   rentals: {},
-  display: [],
   showLoadingSpinner: false
 };
 
@@ -19,7 +16,7 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
   switch (action.type) {
     case ItemsActions.FETCH:
       // Show loading only if there are no items, else it is the infinite scroll
-      return { ...items, showLoadingSpinner: items.display.length ? false : true };
+      return { ...items, showLoadingSpinner: Object.keys(items.results).length ? false : true };
     case ItemsActions.FETCH_SUCCESS:
       return {
         ...items,
@@ -30,10 +27,7 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
             return obj;
           }, {})
         ),
-        showAddNew: (items.offset === 0 && action.payload.results.length === 0),
-        offset: items.offset + paginationLimit,
-        loadMoreItems: !(action.payload.results.length < paginationLimit),
-        display: [...items.display, ...action.payload.results],
+        showAddNew: action.payload.results.length === 0,
         showLoadingSpinner: false
       };
     case ItemsActions.CREATE_SUCCESS:
@@ -43,7 +37,6 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
           ...items.results,
           [action.payload.barcode]: action.payload
         },
-        display: [...items.display, action.payload],
         tempItem: {}
       };
     case ItemsActions.UPDATE_SUCCESS:
@@ -53,13 +46,6 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
           ...items.results,
           [action.payload.barcode]: action.payload
         },
-        display: items.display.map(item => {
-          if (item.barcode === action.payload.barcode) {
-            return action.payload;
-          } else {
-            return item;
-          }
-        }),
         tempItem: {}
       };
     case ItemsActions.DELETE_SUCCESS:
@@ -68,7 +54,6 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
       return {
         ...items,
         results,
-        display: items.display.filter(item => item.barcode !== action.payload.id),
         tempItem: {}
       };
     case ItemsActions.RESET:

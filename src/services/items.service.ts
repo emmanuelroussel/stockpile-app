@@ -14,10 +14,6 @@ export class ItemsService {
     return this.store.select(appState => appState.items);
   }
 
-  getShouldLoadMoreItems(): Observable<boolean> {
-    return this.store.select(appState => appState.items.loadMoreItems);
-  }
-
   getShouldShowAddNew(): Observable<boolean> {
     return this.store.select(appState => appState.items.showAddNew);
   }
