@@ -99,4 +99,5 @@
         <variable name="CAMERA_USAGE_DESCRIPTION" value="The app needs to access your camera to scan barcodes" />
     </plugin>
     <plugin name="cordova-plugin-inappbrowser" spec="~1.7.1" />
+    <plugin name="cordova-plugin-wkwebview-engine" spec="https://github.com/ionic-team/cordova-plugin-wkwebview-engine.git"/>
 </widget>
