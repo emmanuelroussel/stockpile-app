@@ -98,8 +98,7 @@ export class AppEffects {
       .map(() => {
         this.splashScreen.hide();
         this.statusBar.styleDefault();
-        this.statusBar.overlaysWebView(false);
-        const statusBarColor = this.platform.is('android') ? '#6d435a' : '#f8f8f8';
+        const statusBarColor = this.platform.is('android') ? '#411a31' : '#f8f8f8';
         this.statusBar.backgroundColorByHexString(statusBarColor);
       }))
     .ignoreElements();
