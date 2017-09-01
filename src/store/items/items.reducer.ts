@@ -18,8 +18,7 @@ const initialState = {
 export function itemsReducer(items: Items = initialState, action: Action): Items {
   switch (action.type) {
     case ItemsActions.FETCH:
-      // Show loading only if there are no items, else it is the infinite scroll
-      return { ...items, showLoadingSpinner: items.display.length ? false : true };
+      return { ...items, showLoadingSpinner: true };
     case ItemsActions.FETCH_SUCCESS:
       return {
         ...items,
@@ -43,8 +42,7 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
           ...items.results,
           [action.payload.barcode]: action.payload
         },
-        display: [...items.display, action.payload],
-        tempItem: {}
+        display: [...items.display, action.payload]
       };
     case ItemsActions.UPDATE_SUCCESS:
       return {
@@ -59,8 +57,7 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
           } else {
             return item;
           }
-        }),
-        tempItem: {}
+        })
       };
     case ItemsActions.DELETE_SUCCESS:
       const results = Object.assign({}, items.results);
@@ -68,8 +65,7 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
       return {
         ...items,
         results,
-        display: items.display.filter(item => item.barcode !== action.payload.id),
-        tempItem: {}
+        display: items.display.filter(item => item.barcode !== action.payload.id)
       };
     case ItemsActions.RESET:
       return initialState;
@@ -101,6 +97,8 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
       const rentals = Object.assign({}, items.rentals);
       delete rentals[action.payload];
       return { ...items, rentals };
+    case ItemsActions.RESET_TEMP_ITEM:
+      return { ...items, tempItem: {} };
     default:
       return items;
   }

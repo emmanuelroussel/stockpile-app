@@ -77,7 +77,7 @@ describe('Kits Effects', () => {
       createAction(KitsActions.DELETE_SUCCESS, TestData.response),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.kitDeleted),
-      createAction(AppActions.POP_NAV_TWICE)
+      createAction(AppActions.POP_NAV)
     ];
 
     instance.delete$.take(expectedResult.length).subscribe(
@@ -106,15 +106,13 @@ describe('Kits Effects', () => {
   });
 
   it('creates a kit', () => {
-    runner.queue(createAction(KitsActions.CREATE, { kit: TestData.kit, kitModels: TestData.kitModels.results }));
+    runner.queue(createAction(KitsActions.CREATE, TestData.kit));
 
     let performedActions = [];
     const expectedResult = [
-      createAction(KitsActions.CREATE_SUCCESS, TestData.response),
+      createAction(KitsActions.CREATE_SUCCESS, TestData.kit),
       createAction(KitModelsActions.UPDATE, {
         kitID: TestData.kit.kitID,
-        kitModelsToCreate: TestData.kitModels.results,
-        kitModelsToDelete: [],
         message: Messages.kitAdded
       })
     ];
@@ -145,19 +143,13 @@ describe('Kits Effects', () => {
   });
 
   it('updates a kit', () => {
-    runner.queue(createAction(KitsActions.UPDATE, {
-      kit: TestData.kit,
-      kitModelsToCreate: TestData.kitModels.results,
-      kitModelsToDelete: TestData.deletedKitModels.results
-    }));
+    runner.queue(createAction(KitsActions.UPDATE, TestData.kit));
 
     let performedActions = [];
     const expectedResult = [
-      createAction(KitsActions.UPDATE_SUCCESS, TestData.response),
+      createAction(KitsActions.UPDATE_SUCCESS, TestData.kit),
       createAction(KitModelsActions.UPDATE, {
         kitID: TestData.kit.kitID,
-        kitModelsToCreate: TestData.kitModels.results,
-        kitModelsToDelete: TestData.deletedKitModels.results,
         message: Messages.kitEdited
       })
     ];

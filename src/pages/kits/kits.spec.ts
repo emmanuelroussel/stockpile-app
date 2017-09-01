@@ -4,7 +4,6 @@ import { TestData } from '../../test-data';
 import { Actions } from '../../constants';
 
 import { KitsPage } from './kits';
-import { ViewKitPage } from '../view-kit/view-kit';
 import { EditKitPage } from '../edit-kit/edit-kit';
 import { Observable } from 'rxjs/Observable';
 
@@ -32,10 +31,13 @@ describe('Kits Page', () => {
     expect(instance.kits).toEqual(Observable.of(TestData.kits));
   });
 
-  it('pushes ViewKitPage on nav on viewKit()', () => {
+  it('pushes EditKitPage on nav on viewKit()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.onViewKit(TestData.kit.kitID);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewKitPage, { kitID: TestData.kit.kitID });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditKitPage, {
+      action: Actions.edit,
+      kitID: TestData.kit.kitID
+    });
   });
 
   it('pushes EditKitPage on nav on onAdd()', () => {

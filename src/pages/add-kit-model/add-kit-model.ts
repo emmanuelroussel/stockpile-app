@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, Events } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 
 import { BrandsActions } from '../../store/brands/brands.actions';
 import { ModelsActions } from '../../store/models/models.actions';
+import { KitModelsActions } from '../../store/kit-models/kit-models.actions';
 
 import { ItemProperties } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
@@ -18,9 +19,9 @@ export class AddKitModelPage {
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
-    public events: Events,
     public brandsActions: BrandsActions,
     public modelsActions: ModelsActions,
+    public kitModelsActions: KitModelsActions
   ) {}
 
   /**
@@ -36,7 +37,7 @@ export class AddKitModelPage {
    * nav.
    */
   onAdd() {
-    this.events.publish('kit-item:added', this.kitModel);
+    this.kitModelsActions.createTemp(this.kitModel);
     this.navCtrl.pop();
   }
 

@@ -47,6 +47,8 @@ export class ItemsActions {
   static RENT_SUCCESS = type('[Items] Rent Success');
   static RENT_FAIL = type('[Items] Rent Fail');
 
+  static RESET_TEMP_ITEM = type('[Items] Reset Temp');
+
   constructor(
     private store: Store<AppState>
   ) {}
@@ -97,5 +99,9 @@ export class ItemsActions {
 
   rentItems(details: any) {
     this.store.dispatch(createAction(ItemsActions.RENT, details));
+  }
+
+  resetTempItem() {
+    this.store.dispatch(createAction(ItemsActions.RESET_TEMP_ITEM));
   }
 }

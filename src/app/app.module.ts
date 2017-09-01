@@ -61,8 +61,6 @@ import { RentalPage } from '../pages/rental/rental';
 import { RentalDetailsPage } from '../pages/rental-details/rental-details';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ViewAccountPage } from '../pages/view-account/view-account';
-import { ViewItemPage } from '../pages/view-item/view-item';
-import { ViewKitPage } from '../pages/view-kit/view-kit';
 
 import { MapToIterablePipe } from '../pipes/map-to-iterable.pipe';
 
@@ -97,8 +95,6 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     RentalDetailsPage,
     TabsPage,
     ViewAccountPage,
-    ViewItemPage,
-    ViewKitPage
   ],
   imports: [
     BrowserModule,
@@ -145,8 +141,6 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     RentalDetailsPage,
     TabsPage,
     ViewAccountPage,
-    ViewItemPage,
-    ViewKitPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: RavenErrorHandler },

@@ -14,7 +14,11 @@ export class KitModelsService {
     return this.store.select(appState => appState.kitModels.results[kitID]);
   }
 
-  getShouldShowLoadingSpinner(kitID: number): Observable<boolean> {
+  getShouldShowLoadingSpinner(): Observable<boolean> {
     return this.store.select(appState => appState.kitModels.showLoadingSpinner);
+  }
+
+  getTempKitModels(): Observable<Array<KitModel>> {
+    return this.store.select(appState => appState.kitModels.tempKitModels);
   }
 }

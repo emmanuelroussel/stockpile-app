@@ -41,6 +41,7 @@ export class EditItemPage {
    * If action is add, update the temp item with the barcode.
    */
   ngOnInit() {
+    this.itemsActions.resetTempItem();
     this.brandsActions.fetchBrands();
     this.modelsActions.fetchModels();
     this.categoriesActions.fetchCategories();
