@@ -19,10 +19,6 @@ describe('Items Service', () => {
     expect(instance.getItems()).toEqual(Observable.of(TestData.state.items));
   });
 
-  it('returns loadMoreItems', () => {
-    expect(instance.getShouldLoadMoreItems()).toEqual(Observable.of(TestData.state.items.loadMoreItems));
-  });
-
   it('returns showAddNew', () => {
     expect(instance.getShouldShowAddNew()).toEqual(Observable.of(TestData.state.items.showAddNew));
   });

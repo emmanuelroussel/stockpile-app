@@ -13,11 +13,8 @@ export interface Item {
 
 export interface Items {
   readonly results: { [barcode: string]: Item };
-  readonly offset: number;
-  readonly loadMoreItems: boolean;
   readonly showAddNew: boolean;
   readonly tempItem: any;
   readonly rentals: { [barcode: string]: Item };
-  readonly display: Array<Item>;
   readonly showLoadingSpinner: boolean;
 }

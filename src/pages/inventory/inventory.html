@@ -27,7 +27,7 @@
 
   <ion-list>
     <ion-list-header>Items</ion-list-header>
-    <button ion-item *ngFor="let item of (items | async).display | mapToIterable" (click)="onViewItem(item.barcode)">
+    <button ion-item *ngFor="let item of (items | async).results | mapToIterable" (click)="onViewItem(item.barcode)">
       <h2>{{ item.brand }} {{ item.model }}</h2>
     </button>
 
@@ -37,10 +37,6 @@
 
     <ion-spinner class="center-spinner" *ngIf="(items | async).showLoadingSpinner"></ion-spinner>
   </ion-list>
-
-  <ion-infinite-scroll (ionInfinite)="loadItems($event)" [enabled]="loadMoreItems | async">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 
   <ion-fab right bottom>
     <button ion-fab color="secondary" (click)="onOpenFilters($event)"><ion-icon name="options"></ion-icon></button>

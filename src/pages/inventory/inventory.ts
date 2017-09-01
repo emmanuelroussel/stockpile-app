@@ -28,7 +28,6 @@ export class InventoryPage {
   selectedModelID = -1;
   selectedCategoryID = -1;
   items: Observable<Items>;
-  loadMoreItems: Observable<boolean>;
   showAddNew: Observable<boolean>;
 
   constructor(
@@ -53,7 +52,6 @@ export class InventoryPage {
   ngOnInit() {
     this.items = this.itemsService.getItems();
     this.showAddNew = this.itemsService.getShouldShowAddNew();
-    this.loadMoreItems = this.itemsService.getShouldLoadMoreItems();
 
     this.brandsActions.fetchBrands();
     this.modelsActions.fetchModels();

@@ -28,14 +28,11 @@ export class ItemsEffects {
   @Effect()
   fetch$ = this.actions$
     .ofType(ItemsActions.FETCH)
-    .withLatestFrom(this.store$)
-    .mergeMap(([action, store]) => this.itemData.filterItems(
+    .mergeMap(action => this.itemData.filterItems(
         action.payload.brandID,
         action.payload.modelID,
         action.payload.categoryID,
         action.payload.available,
-        paginationLimit,
-        store.items.offset
       )
       .map(res => createAction(ItemsActions.FETCH_SUCCESS, res))
       .catch(err => Observable.of(
