@@ -7,7 +7,6 @@ import { UserDataMock StorageMock, StoreMock } from '../../mocks';
 import { Storage } from '@ionic/storage';
 import { Store } from '@ngrx/store';
 import { LoginPage } from '../../pages/login/login';
-import { Observable } from 'rxjs/Observable';
 
 import { UserEffects } from './user.effects';
 import { UserActions } from './user.actions';

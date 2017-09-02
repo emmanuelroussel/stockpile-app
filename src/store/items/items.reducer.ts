@@ -2,7 +2,6 @@ import { Action } from '@ngrx/store';
 
 import { ItemsActions } from './items.actions';
 import { Items } from '../../models/items';
-import { paginationLimit } from '../../constants';
 
 const initialState = {
   results: {},

@@ -4,7 +4,6 @@ import { createAction } from '../create-action';
 import { TestData } from '../../test-data';
 import { UserData } from '../../providers/user-data';
 import { UserDataMock } from '../../mocks';
-import { Observable } from 'rxjs/Observable';
 
 import { OrganizationEffects } from './organization.effects';
 import { OrganizationActions } from './organization.actions';

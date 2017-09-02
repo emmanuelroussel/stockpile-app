@@ -2,6 +2,7 @@ import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 import { AppState } from '../../models/app-state';
 // Importing constants with alias to avoid naming conflict with ngrx's Actions
 import * as constants from '../../constants';
@@ -11,7 +12,7 @@ import { createAction } from '../create-action';
 import { ItemsActions } from './items.actions.ts';
 import { AppActions } from '../app/app.actions.ts';
 import { ItemData } from '../../providers/item-data';
-import { paginationLimit, Messages } from '../../constants';
+import { Messages } from '../../constants';
 import { LayoutActions } from '../layout/layout.actions';
 
 @Injectable()
