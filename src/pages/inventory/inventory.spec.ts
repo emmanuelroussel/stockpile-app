@@ -5,7 +5,6 @@ import { TestData } from '../../test-data';
 import { InventoryPage } from './inventory';
 import { Actions } from '../../constants';
 import { EditItemPage } from '../edit-item/edit-item';
-import { ViewItemPage } from '../view-item/view-item';
 import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
 import { PlatformMockIsCore, PlatformMockIsCordova } from '../../mocks';
 
@@ -65,10 +64,11 @@ describe('Inventory Page', () => {
     );
   });
 
-  it('pushes ViewItemPage on nav on viewItem()', () => {
+  it('pushes EditItemPage on nav on viewItem()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.onViewItem(TestData.item.barcode);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(ViewItemPage, {
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditItemPage, {
+      action: Actions.edit,
       barcode: TestData.item.barcode
     });
   });

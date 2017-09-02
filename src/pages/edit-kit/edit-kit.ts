@@ -4,6 +4,7 @@ import { NavController, NavParams, ModalController, Events, AlertController } fr
 
 import { AddKitModelPage } from '../add-kit-model/add-kit-model';
 import { Kit } from '../../models/kits';
+import { KitModel } from '../../models/kit-models';
 import { KitsService } from '../../services/kits.service';
 import { KitsActions } from '../../store/kits/kits.actions';
 import { KitModelsService } from '../../services/kit-models.service';
@@ -21,9 +22,8 @@ export class EditKitPage {
   actions = Actions;
   action: Actions = '';
   kit: Observable<Kit>;
-  kitModels = [];
-  modelsToDelete = [];
-  modelsToCreate = [];
+  kitModels: Observable<Array<KitModel>>;
+  showLoadingSpinner: Observable<boolean>;
 
   constructor(
     public navCtrl: NavController,
@@ -44,32 +44,25 @@ export class EditKitPage {
    */
   ngOnInit() {
     this.action = this.navParams.get('action');
+    this.kitModels = this.kitModelsService.getTempKitModels();
+    this.kitModelsActions.resetTempKitModels();
+    this.showLoadingSpinner = this.kitModelsService.getShouldShowLoadingSpinner();
 
     if (this.action === Actions.edit) {
       const kitID = this.navParams.get('kitID');
+      this.kitModelsActions.fetchKitModels(kitID);
       this.kit = this.kitsService.getKit(kitID);
-
-      // Creating a local copy instead of using observables because of the
-      // complexity of managing kit models before the user saves the kit.
-      let kitModels;
-      this.kitModelsService.getKitModels(kitID).take(1).subscribe(k => kitModels = (k || []).slice());
-
-      this.kitModels = kitModels;
     }
-
-    // Listens to the event published when user adds a kit model and add it to
-    // local array of kit models.
-    this.events.subscribe('kit-item:added', kitModel => {
-      this.kitModels.push(kitModel);
-      this.modelsToCreate.push(kitModel.modelID);
-    });
   }
 
   /**
    * Creates or updates the kit, and creates and deletes kit models.
    */
   onSave(form: NgForm) {
-    if (!this.kitModels.length) {
+    let kitModels;
+    this.kitModels.take(1).subscribe(tempKitModels => kitModels = tempKitModels);
+
+    if (!kitModels.length) {
       let alert = this.alertCtrl.create({
         title: 'No items in kit',
         message: 'Please add at least one item to the kit',
@@ -89,13 +82,13 @@ export class EditKitPage {
     } else {
       if (this.action === Actions.add) {
         this.layoutActions.showLoadingMessage(LoadingMessages.creatingKit);
-        this.kitsActions.createKit(form.value, this.modelsToCreate);
+        this.kitsActions.createKit(form.value);
       } else {
         let kitID;
         this.kit.take(1).subscribe(kit => kitID = kit.kitID);
 
         this.layoutActions.showLoadingMessage(LoadingMessages.updatingKit);
-        this.kitsActions.updateKit({ name: form.value.name, kitID: kitID }, this.modelsToCreate, this.modelsToDelete);
+        this.kitsActions.updateKit({ name: form.value.name, kitID });
       }
     }
   }
@@ -140,10 +133,9 @@ export class EditKitPage {
   }
 
   /**
-   * Removes the kitModel from the list and mark it to be deleted.
+   * Removes the kitModel from the list.
    */
-  onRemoveFromList(index, kitModel) {
-    this.modelsToDelete.push(kitModel.modelID);
-    this.kitModels.splice(index, 1);
+  onRemoveFromList(modelID: number) {
+    this.kitModelsActions.deleteTemp(modelID);
   }
 }

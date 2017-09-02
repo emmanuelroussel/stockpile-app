@@ -101,4 +101,10 @@ describe('Items Actions', () => {
     instance.rentItems(TestData.details);
     expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.RENT, TestData.details));
   });
+
+  it('dispatches action RESET_TEMP_ITEM', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.resetTempItem();
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.RESET_TEMP_ITEM));
+  });
 });

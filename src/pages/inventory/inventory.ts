@@ -8,7 +8,6 @@ import { Notifications } from '../../providers/notifications';
 import { Actions } from '../../constants';
 import { EditItemPage } from '../edit-item/edit-item';
 import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
-import { ViewItemPage } from '../view-item/view-item';
 import { Items } from '../../models/items';
 import { ItemsActions } from '../../store/items/items.actions';
 import { ItemsService } from '../../services/items.service';
@@ -90,7 +89,7 @@ export class InventoryPage {
    * Pushes page with the item to view.
    */
   onViewItem(barcode: string) {
-    this.navCtrl.push(ViewItemPage, { barcode });
+    this.navCtrl.push(EditItemPage, { action: Actions.edit, barcode });
   }
 
   /**

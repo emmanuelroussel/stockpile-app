@@ -15,8 +15,7 @@ const initialState = {
 export function itemsReducer(items: Items = initialState, action: Action): Items {
   switch (action.type) {
     case ItemsActions.FETCH:
-      // Show loading only if there are no items, else it is the infinite scroll
-      return { ...items, showLoadingSpinner: Object.keys(items.results).length ? false : true };
+      return { ...items, showLoadingSpinner: true };
     case ItemsActions.FETCH_SUCCESS:
       return {
         ...items,
@@ -86,6 +85,8 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
       const rentals = Object.assign({}, items.rentals);
       delete rentals[action.payload];
       return { ...items, rentals };
+    case ItemsActions.RESET_TEMP_ITEM:
+      return { ...items, tempItem: {} };
     default:
       return items;
   }
