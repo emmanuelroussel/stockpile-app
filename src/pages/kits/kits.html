@@ -14,7 +14,6 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-list-header>Kits</ion-list-header>
     <button ion-item *ngFor="let kit of (kits | async).results | mapToIterable" (click)="onViewKit(kit.kitID)">
       <h2>{{ kit.name }}</h2>
     </button>

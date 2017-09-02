@@ -26,7 +26,6 @@
   </ion-segment>
 
   <ion-list>
-    <ion-list-header>Items</ion-list-header>
     <button ion-item *ngFor="let item of (items | async).results | mapToIterable" (click)="onViewItem(item.barcode)">
       <h2>{{ item.brand }} {{ item.model }}</h2>
     </button>
