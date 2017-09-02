@@ -2,6 +2,7 @@ import { StoreMock } from '../mocks';
 import { UserService } from './user.service';
 import { TestData } from '../test-data';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 let instance: UserService = null;
 

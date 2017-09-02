@@ -5,6 +5,7 @@ import { TestData } from '../../test-data';
 
 import { KitRentalPage } from './kit-rental';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 let fixture: ComponentFixture<KitRentalPage> = null;
 let instance: any = null;

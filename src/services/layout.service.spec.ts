@@ -2,6 +2,7 @@ import { StoreMock } from '../mocks';
 import { LayoutService } from './layout.service';
 import { TestData } from '../test-data';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 let instance: LayoutService = null;
 

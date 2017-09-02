@@ -6,6 +6,7 @@ import { TestData } from '../../test-data';
 import { RentalPage } from './rental';
 import { RentalDetailsPage } from '../rental-details/rental-details';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 let fixture: ComponentFixture<RentalPage> = null;
 let instance: any = null;

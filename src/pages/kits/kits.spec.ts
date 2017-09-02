@@ -7,6 +7,7 @@ import { KitsPage } from './kits';
 import { ViewKitPage } from '../view-kit/view-kit';
 import { EditKitPage } from '../edit-kit/edit-kit';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 let fixture: ComponentFixture<KitsPage> = null;
 let instance: any = null;

@@ -6,6 +6,7 @@ import { Actions, ItemProperties, LoadingMessages } from '../../constants';
 import { EditItemPage } from './edit-item';
 import { ItemFilterPage } from '../item-filter/item-filter';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 let fixture: ComponentFixture<EditItemPage> = null;
 let instance: any = null;
