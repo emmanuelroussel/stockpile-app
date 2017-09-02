@@ -12,8 +12,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-segment [(ngModel)]="segment" (ionChange)="onFilterItems()">
+<ion-content>
+  <ion-segment [(ngModel)]="segment" (ionChange)="onFilterItems()" padding>
     <ion-segment-button [value]="-1">
       All
     </ion-segment-button>

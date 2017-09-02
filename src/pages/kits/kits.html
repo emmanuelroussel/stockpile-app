@@ -12,7 +12,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-list>
     <button ion-item *ngFor="let kit of (kits | async).results | mapToIterable" (click)="onViewKit(kit.kitID)">
       <h2>{{ kit.name }}</h2>
