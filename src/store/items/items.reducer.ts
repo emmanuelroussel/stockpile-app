@@ -6,7 +6,6 @@ import { paginationLimit } from '../../constants';
 
 const initialState = {
   results: {},
-  showAddNew: false,
   tempItem: {},
   rentals: {},
   showLoadingSpinner: false
@@ -27,7 +26,6 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
             return obj;
           }, {})
         ),
-        showAddNew: action.payload.results.length === 0,
         showLoadingSpinner: false
       };
     case ItemsActions.CREATE_SUCCESS:

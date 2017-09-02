@@ -29,7 +29,6 @@ export class InventoryPage {
   selectedModelID = -1;
   selectedCategoryID = -1;
   items: Observable<Items>;
-  showAddNew: Observable<boolean>;
 
   constructor(
     public navCtrl: NavController,
@@ -52,7 +51,6 @@ export class InventoryPage {
    */
   ngOnInit() {
     this.items = this.itemsService.getItems();
-    this.showAddNew = this.itemsService.getShouldShowAddNew();
 
     this.brandsActions.fetchBrands();
     this.modelsActions.fetchModels();

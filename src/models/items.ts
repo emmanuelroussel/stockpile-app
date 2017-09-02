@@ -13,7 +13,6 @@ export interface Item {
 
 export interface Items {
   readonly results: { [barcode: string]: Item };
-  readonly showAddNew: boolean;
   readonly tempItem: any;
   readonly rentals: { [barcode: string]: Item };
   readonly showLoadingSpinner: boolean;
