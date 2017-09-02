@@ -33,22 +33,15 @@ describe('EditKit Page', () => {
     expect(instance.action).toEqual(Actions.add);
   });
 
-  it('adds a kitModel if event \'kit-item:added\' is published', () => {
-    instance.ngOnInit();
-    instance.kitModels = TestData.kitModels.results.slice();
-    instance.events.publish('kit-item:added', TestData.kitModel);
-    expect(instance.kitModels).toEqual(TestData.addedKitModels.results);
-    expect(instance.modelsToCreate).toEqual([TestData.kitModel.modelID]);
-  });
-
-  it('gets kit models if action is edit', () => {
+  it('fetches kit models if action is edit', () => {
     instance.navParams.param = Actions.edit;
+    spyOn(instance.kitModelsActions, 'fetchKitModels');
     instance.ngOnInit();
-    expect(instance.kitModels).toEqual(TestData.kitModels.results);
+    expect(instance.kitModelsActions.fetchKitModels).toHaveBeenCalled();
   });
 
   it('creates an alert if there are no kit models onSave()', () => {
-    instance.kitModels = [];
+    instance.kitModels = Observable.of([]);
     spyOn(instance.alertCtrl, 'create').and.callThrough();
     instance.onSave();
     expect(instance.alertCtrl.create).toHaveBeenCalled();
@@ -61,13 +54,12 @@ describe('EditKit Page', () => {
       }
     };
     instance.action = Actions.add;
-    instance.kitModels = [TestData.kitModel.modelID];
-    instance.modelsToCreate = [TestData.kitModel.modelID];
+    instance.kitModels = Observable.of([TestData.kitModel.modelID]);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.kitsActions, 'createKit');
     instance.onSave(form);
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.creatingKit);
-    expect(instance.kitsActions.createKit).toHaveBeenCalledWith(form.value, [TestData.kitModel.modelID]);
+    expect(instance.kitsActions.createKit).toHaveBeenCalledWith(form.value);
   });
 
   it('updates kit onSave() if action is edit', () => {
@@ -78,18 +70,15 @@ describe('EditKit Page', () => {
     };
     instance.action = Actions.edit;
     instance.kit = Observable.of(TestData.kit);
-    instance.kitModels = [TestData.kitModel.modelID];
-    instance.modelsToCreate = [TestData.kitModel.modelID];
-    instance.modelsToDelete = [TestData.kitModels.results[0]];
+    instance.kitModels = Observable.of([TestData.kitModel.modelID]);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.kitsActions, 'updateKit');
     instance.onSave(form);
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.updatingKit);
-    expect(instance.kitsActions.updateKit).toHaveBeenCalledWith(
-      { name: TestData.kit.name, kitID: TestData.kit.kitID },
-      [TestData.kitModel.modelID],
-      [TestData.kitModels.results[0]]
-    );
+    expect(instance.kitsActions.updateKit).toHaveBeenCalledWith({
+      name: TestData.kit.name,
+      kitID: TestData.kit.kitID
+    });
   });
 
   it('creates an alert onDelete()', () => {
@@ -98,7 +87,7 @@ describe('EditKit Page', () => {
     expect(instance.alertCtrl.create).toHaveBeenCalled();
   });
 
-  it('deletes item deleteKit()', () => {
+  it('deletes kit on deleteKit()', () => {
     instance.kit = Observable.of(TestData.kit);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.kitsActions, 'deleteKit');
@@ -114,9 +103,8 @@ describe('EditKit Page', () => {
   });
 
   it('removes kit models onRemoveFromList()', () => {
-    instance.kitModels = TestData.kitModels.results.slice();
-    instance.onRemoveFromList(0, TestData.kitModel);
-    expect(instance.kitModels).toEqual(TestData.deletedKitModels.results);
-    expect(instance.modelsToDelete).toEqual([TestData.kitModel.modelID]);
+    spyOn(instance.kitModelsActions, 'deleteTemp');
+    instance.onRemoveFromList(TestData.kitModel.modelID);
+    expect(instance.kitModelsActions.deleteTemp).toHaveBeenCalledWith(TestData.kitModel.modelID);
   });
 });

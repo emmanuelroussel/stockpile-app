@@ -43,7 +43,7 @@ export class KitsEffects {
         createAction(KitsActions.DELETE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, Messages.kitDeleted),
-        createAction(AppActions.POP_NAV_TWICE)
+        createAction(AppActions.POP_NAV)
       ])
       .catch(err => Observable.of(
         createAction(KitsActions.DELETE_FAIL, err),
@@ -58,13 +58,11 @@ export class KitsEffects {
   @Effect()
   create$ = this.actions$
     .ofType(KitsActions.CREATE)
-    .mergeMap(action => this.kitData.createKit(action.payload.kit)
+    .mergeMap(action => this.kitData.createKit(action.payload)
       .concatMap(res => [
         createAction(KitsActions.CREATE_SUCCESS, res),
         createAction(KitModelsActions.UPDATE, {
-          kitID: action.payload.kit.kitID,
-          kitModelsToCreate: action.payload.kitModels,
-          kitModelsToDelete: [],
+          kitID: res.kitID,
           message: Messages.kitAdded
         })
       ])
@@ -81,13 +79,11 @@ export class KitsEffects {
   @Effect()
   update$ = this.actions$
     .ofType(KitsActions.UPDATE)
-    .mergeMap(action => this.kitData.updateKit(action.payload.kit)
+    .mergeMap(action => this.kitData.updateKit(action.payload)
       .concatMap(res => [
         createAction(KitsActions.UPDATE_SUCCESS, res),
         createAction(KitModelsActions.UPDATE, {
-          kitID: action.payload.kit.kitID,
-          kitModelsToCreate: action.payload.kitModelsToCreate,
-          kitModelsToDelete: action.payload.kitModelsToDelete,
+          kitID: res.kitID,
           message: Messages.kitEdited
         })
       ])

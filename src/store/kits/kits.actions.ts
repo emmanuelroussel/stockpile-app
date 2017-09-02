@@ -36,11 +36,11 @@ export class KitsActions {
     this.store.dispatch(createAction(KitsActions.DELETE, kitID));
   }
 
-  createKit(kit: any, kitModels: any) {
-    this.store.dispatch(createAction(KitsActions.CREATE, { kit, kitModels }));
+  createKit(kit: any) {
+    this.store.dispatch(createAction(KitsActions.CREATE, kit));
   }
 
-  updateKit(kit: any, kitModelsToCreate: any, kitModelsToDelete: any) {
-    this.store.dispatch(createAction(KitsActions.UPDATE, { kit, kitModelsToCreate, kitModelsToDelete }));
+  updateKit(kit: any) {
+    this.store.dispatch(createAction(KitsActions.UPDATE, kit));
   }
 }

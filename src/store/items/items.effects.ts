@@ -52,8 +52,7 @@ export class ItemsEffects {
       .concatMap(res => [
         createAction(ItemsActions.CREATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-        createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded),
-        createAction(AppActions.POP_NAV)
+        createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded)
       ])
       .catch(err => Observable.of(
         createAction(ItemsActions.CREATE_FAIL, err),
@@ -72,8 +71,7 @@ export class ItemsEffects {
       .concatMap(res => [
         createAction(ItemsActions.UPDATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-        createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited),
-        createAction(AppActions.POP_NAV)
+        createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited)
       ])
       .catch(err => Observable.of(
         createAction(ItemsActions.UPDATE_FAIL, err),
@@ -93,7 +91,7 @@ export class ItemsEffects {
         createAction(ItemsActions.DELETE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, Messages.itemDeleted),
-        createAction(AppActions.POP_NAV_TWICE)
+        createAction(AppActions.POP_NAV)
       ])
       .catch(err => Observable.of(
         createAction(ItemsActions.DELETE_FAIL, err),

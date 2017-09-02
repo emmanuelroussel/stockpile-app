@@ -3,7 +3,8 @@ import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
 import { TestData } from '../../test-data';
 import { createAction } from '../create-action';
 import { KitData } from '../../providers/kit-data';
-import { KitDataMock } from '../../mocks';
+import { Store } from '@ngrx/store';
+import { KitDataMock, StoreMock } from '../../mocks';
 
 import { KitModelsEffects } from './kit-models.effects';
 import { KitModelsActions } from './kit-models.actions';
@@ -20,7 +21,8 @@ describe('KitModels Effects', () => {
     ],
     providers: [
       KitModelsEffects,
-      { provide: KitData, useClass: KitDataMock }
+      { provide: KitData, useClass: KitDataMock },
+      { provide: Store, useClass: StoreMock }
     ]
   }));
 

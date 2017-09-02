@@ -329,11 +329,11 @@ export class KitDataMock {
   }
 
   public createKit() {
-    return returnObservable(this.resolve, TestData.response);
+    return returnObservable(this.resolve, TestData.kit);
   }
 
   public updateKit() {
-    return returnObservable(this.resolve, TestData.response);
+    return returnObservable(this.resolve, TestData.kit);
   }
 
   public deleteKit() {
@@ -423,10 +423,14 @@ export class ItemsActionsMock {
   public removeFromRentals() {}
   public returnItems() {}
   public rentItems() {}
+  public resetTempItem() {}
 }
 
 export class KitModelsActionsMock {
   public fetchKitModels() {}
+  public deleteTemp() {}
+  public createTemp() {}
+  public resetTempKitModels() {}
 }
 
 export class KitsActionsMock {
@@ -510,6 +514,10 @@ export class KitModelsServiceMock {
 
   public getShouldShowLoadingSpinner() {
     return Observable.of(TestData.showLoadingSpinner);
+  }
+
+  public getTempKitModels() {
+    return Observable.of(TestData.kitModels);
   }
 }
 

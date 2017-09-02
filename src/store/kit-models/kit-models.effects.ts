@@ -1,7 +1,9 @@
+import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import { AppState } from '../../models/app-state';
 
 import { createAction } from '../create-action';
 import { KitModelsActions } from './kit-models.actions';
@@ -13,7 +15,8 @@ import { LayoutActions } from '../layout/layout.actions';
 export class KitModelsEffects {
   constructor(
     public actions$: Actions,
-    public kitData: KitData
+    public kitData: KitData,
+    public store$: Store<AppState>
   ) {}
 
   /**
@@ -36,27 +39,50 @@ export class KitModelsEffects {
   @Effect()
   update$ = this.actions$
     .ofType(KitModelsActions.UPDATE)
-    .mergeMap(action => {
+    .withLatestFrom(this.store$)
+    .mergeMap(([action, store]) => {
+      let kitModelsToCreate = [];
+      let kitModelsToDelete = [];
       let models = [];
+      let oldKitModels = store.kitModels.results[action.payload.kitID] || [];
 
-      for (const modelID of action.payload.kitModelsToCreate) {
+      // Figure out what kit models we need to create
+      store.kitModels.tempKitModels.map(kitModel => {
+        const isNew = !oldKitModels.find(oldKitModel => oldKitModel.modelID === kitModel.modelID);
+
+        if (isNew) {
+          kitModelsToCreate.push(kitModel.modelID);
+        }
+      });
+
+      // Figure out what kit models we need to delete
+      oldKitModels.map(oldKitModel => {
+        const isRemoved = !store.kitModels.tempKitModels.find(kitModel => kitModel.modelID === oldKitModel.modelID);
+
+        if (isRemoved) {
+          kitModelsToDelete.push(oldKitModel.modelID);
+        }
+      });
+
+      // Create the kit models
+      kitModelsToCreate.map(modelID => {
         models.push(this.kitData.addKitModel(action.payload.kitID, modelID).toPromise());
-      }
+      });
 
-      for (const modelID of action.payload.kitModelsToDelete) {
+      // Delete the kit models
+      kitModelsToDelete.map(modelID => {
         models.push(this.kitData.deleteKitModel(action.payload.kitID, modelID).toPromise());
-      }
+      });
 
       return Observable.from(Promise.all(models))
         .concatMap(res => [
           createAction(KitModelsActions.UPDATE_SUCCESS, {
             results: res,
             kitID: action.payload.kitID,
-            kitModelsToDelete: action.payload.kitModelsToDelete
+            kitModelsToDelete
           }),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-          createAction(AppActions.SHOW_MESSAGE, action.payload.message),
-          createAction(AppActions.POP_NAV)
+          createAction(AppActions.SHOW_MESSAGE, action.payload.message)
         ])
         .catch(err => Observable.of(
           createAction(KitModelsActions.UPDATE_FAIL, err),

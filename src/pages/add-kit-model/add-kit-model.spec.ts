@@ -34,11 +34,11 @@ describe('AddKitModel Page', () => {
   });
 
   it('pops nav onAdd()', () => {
-    spyOn(instance.events, 'publish');
+    spyOn(instance.kitModelsActions, 'createTemp');
     spyOn(instance.navCtrl, 'pop');
     instance.kitModel = TestData.kitModel;
     instance.onAdd();
-    expect(instance.events.publish).toHaveBeenCalledWith('kit-item:added', TestData.kitModel);
+    expect(instance.kitModelsActions.createTemp).toHaveBeenCalledWith(TestData.kitModel);
     expect(instance.navCtrl.pop).toHaveBeenCalled();
   });
 

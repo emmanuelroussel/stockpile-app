@@ -85,8 +85,7 @@ describe('Items Effects', () => {
     const expectedResult = [
       createAction(ItemsActions.CREATE_SUCCESS, TestData.apiItem),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-      createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded),
-      createAction(AppActions.POP_NAV)
+      createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded)
     ];
 
     instance.create$.take(expectedResult.length).subscribe(
@@ -121,8 +120,7 @@ describe('Items Effects', () => {
     const expectedResult = [
       createAction(ItemsActions.UPDATE_SUCCESS, TestData.apiItem),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-      createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited),
-      createAction(AppActions.POP_NAV)
+      createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited)
     ];
 
     instance.update$.take(expectedResult.length).subscribe(
@@ -158,7 +156,7 @@ describe('Items Effects', () => {
       createAction(ItemsActions.DELETE_SUCCESS, TestData.response),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.itemDeleted),
-      createAction(AppActions.POP_NAV_TWICE)
+      createAction(AppActions.POP_NAV)
     ];
 
     instance.delete$.take(expectedResult.length).subscribe(

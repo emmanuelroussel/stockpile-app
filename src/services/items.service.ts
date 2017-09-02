@@ -14,10 +14,6 @@ export class ItemsService {
     return this.store.select(appState => appState.items);
   }
 
-  getShouldShowAddNew(): Observable<boolean> {
-    return this.store.select(appState => appState.items.showAddNew);
-  }
-
   getItem(barcode: string): Observable<Item> {
     return this.store.select(appState => appState.items.results[barcode]);
   }

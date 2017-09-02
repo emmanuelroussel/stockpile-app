@@ -23,4 +23,8 @@ describe('KitModels Service', () => {
   it('returns showLoadingSpinner', () => {
     expect(instance.getShouldShowLoadingSpinner()).toEqual(Observable.of(TestData.state.kitModels.showLoadingSpinner));
   });
+
+  it('returns tempKitModels', () => {
+    expect(instance.getTempKitModels()).toEqual(Observable.of(TestData.state.kitModels.tempKitModels));
+  });
 });

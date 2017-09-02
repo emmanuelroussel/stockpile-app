@@ -9,7 +9,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <form #kitForm="ngForm">
 		<ion-list>
       <ion-item>
@@ -18,16 +18,18 @@
       </ion-item>
 
       <ion-list-header>Items</ion-list-header>
-      <ion-item *ngFor="let kitModel of kitModels; let i = index">
+      <ion-item *ngFor="let kitModel of (kitModels | async)">
         {{ kitModel.brand }} {{ kitModel.model }}
-        <button ion-button clear item-right color="dark" (click)="onRemoveFromList(i, kitModel)">
+        <button ion-button clear item-right color="dark" (click)="onRemoveFromList(kitModel.modelID)">
           <ion-icon name="close"></ion-icon>
         </button>
       </ion-item>
 
-      <ion-item *ngIf="!kitModels.length">
-        No items in this kit
+      <ion-item *ngIf="!(kitModels | async).length && !(showLoadingSpinner | async)">
+        No items found
       </ion-item>
+
+      <ion-spinner class="center-spinner" *ngIf="showLoadingSpinner | async"></ion-spinner>
 		</ion-list>
 	</form>
 </ion-content>
