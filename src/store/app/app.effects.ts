@@ -28,10 +28,10 @@ export class AppEffects {
       // We need to check if there is a previous page in the active nav because
       // we have to use the root nav instead when the page is accessed through
       // the side menu
-      if (this.app.getActiveNav().getPrevious()) {
-        this.app.getActiveNav().pop();
+      if (this.app.getActiveNavs()[0].getPrevious()) {
+        this.app.getActiveNavs()[0].pop();
       } else {
-        this.app.getRootNav().pop();
+        this.app.getRootNavs()[0].pop();
       }
     })
     .ignoreElements();
@@ -42,7 +42,7 @@ export class AppEffects {
   @Effect()
   popNavToRoot$ = this.actions$
     .ofType(AppActions.POP_NAV_TO_ROOT)
-    .do(() => this.app.getActiveNav().popToRoot())
+    .do(() => this.app.getActiveNavs()[0].popToRoot())
     .ignoreElements();
 
   /**
@@ -59,10 +59,10 @@ export class AppEffects {
      // We need to check if there is a previous page in the active nav because
      // we have to use the root nav instead when the page is accessed through
      // the side menu
-     if (this.app.getActiveNav().getPrevious()) {
-       nav = this.app.getActiveNav();
+     if (this.app.getActiveNavs()[0].getPrevious()) {
+       nav = this.app.getActiveNavs()[0];
      } else {
-       nav = this.app.getRootNav();
+       nav = this.app.getRootNavs()[0];
      }
      const parentIndex = nav.indexOf(nav.getPrevious());
      return Observable.of(nav.remove(parentIndex))
@@ -76,7 +76,7 @@ export class AppEffects {
   @Effect()
   setRootTo$ = this.actions$
     .ofType(AppActions.SET_ROOT_TO)
-    .do(action => this.app.getRootNav().setRoot(action.payload))
+    .do(action => this.app.getRootNavs()[0].setRoot(action.payload))
     .ignoreElements();
 
   /**
@@ -85,7 +85,7 @@ export class AppEffects {
   @Effect()
   pushPage$ = this.actions$
     .ofType(AppActions.PUSH_PAGE)
-    .do(action => this.app.getActiveNav().push(action.payload.page, action.payload.navParams))
+    .do(action => this.app.getActiveNavs()[0].push(action.payload.page, action.payload.navParams))
     .ignoreElements();
 
   /**
