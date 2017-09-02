@@ -5,6 +5,7 @@ import { TestData } from '../../test-data';
 
 import { HomePage } from './home';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 let fixture: ComponentFixture<HomePage> = null;
 let instance: any = null;

@@ -6,6 +6,7 @@ import { Actions, LoadingMessages } from '../../constants';
 import { EditKitPage } from './edit-kit';
 import { AddKitModelPage } from '../add-kit-model/add-kit-model';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 let fixture: ComponentFixture<EditKitPage> = null;
 let instance: any = null;

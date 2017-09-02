@@ -15,6 +15,7 @@ import { LoadingMessages } from '../../constants';
 import { ItemFilterPage } from './item-filter';
 import { ItemProperties } from '../../constants';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 let instance: ItemFilterPage = null;
 

@@ -4,7 +4,6 @@ import { type } from '../../utils';
 
 import { createAction } from '../create-action';
 import { AppState } from '../../models/app-state';
-import { UserData } from '../../providers/user-data';
 
 @Injectable()
 export class UserActions {
@@ -38,10 +37,7 @@ export class UserActions {
   static CHANGE_PASSWORD_SUCCESS = type('[User] Change Password Success');
   static CHANGE_PASSWORD_FAIL = type('[User] Change Password Fail');
 
-  constructor(
-    private store: Store<AppState>,
-    private userData: UserData
-  ) {}
+  constructor(private store: Store<AppState>) {}
 
   loginUser(credentials: any) {
     this.store.dispatch(createAction(UserActions.LOGIN, credentials));

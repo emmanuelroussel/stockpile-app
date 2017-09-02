@@ -5,7 +5,6 @@ import { createAction } from '../create-action';
 import { KitData } from '../../providers/kit-data';
 import { KitDataMock } from '../../mocks';
 import { Messages } from '../../constants';
-import { Observable } from 'rxjs/Observable';
 
 import { KitsEffects } from './kits.effects';
 import { KitsActions } from './kits.actions';

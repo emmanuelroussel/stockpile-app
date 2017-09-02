@@ -7,7 +7,6 @@ import { ItemDataMock, StoreMock } from '../../mocks';
 import { Store } from '@ngrx/store';
 import { Messages, Actions } from '../../constants';
 import { RentalPage } from '../../pages/rental/rental';
-import { Observable } from 'rxjs/Observable';
 
 import { ItemsEffects } from './items.effects';
 import { ItemsActions } from './items.actions';

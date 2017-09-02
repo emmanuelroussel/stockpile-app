@@ -4,7 +4,8 @@
 // IONIC:
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 import { TestData } from './test-data';
 
 export class ApiUrlMock {

@@ -5,7 +5,6 @@ import { createAction } from '../create-action';
 import { KitData } from '../../providers/kit-data';
 import { Store } from '@ngrx/store';
 import { KitDataMock, StoreMock } from '../../mocks';
-import { Observable } from 'rxjs/Observable';
 
 import { KitModelsEffects } from './kit-models.effects';
 import { KitModelsActions } from './kit-models.actions';

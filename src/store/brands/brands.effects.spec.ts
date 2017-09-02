@@ -4,7 +4,6 @@ import { TestData } from '../../test-data';
 import { createAction } from '../create-action';
 import { ItemPropertyData } from '../../providers/item-property-data';
 import { ItemPropertyDataMock } from '../../mocks';
-import { Observable } from 'rxjs/Observable';
 
 import { BrandsEffects } from './brands.effects';
 import { BrandsActions } from './brands.actions';

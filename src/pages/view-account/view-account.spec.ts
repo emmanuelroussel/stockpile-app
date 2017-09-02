@@ -6,6 +6,7 @@ import { ViewAccountPage } from './view-account';
 import { EditAccountPage } from '../edit-account/edit-account';
 import { ChangePasswordPage } from '../change-password/change-password';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 let fixture: ComponentFixture<ViewAccountPage> = null;
 let instance: any = null;
