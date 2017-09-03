@@ -41,7 +41,7 @@ export class ModelsEffects {
         let success = [
           createAction(ModelsActions.CREATE_SUCCESS, res),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-          createAction(AppActions.SHOW_MESSAGE, Messages.categoryAdded),
+          createAction(AppActions.SHOW_MESSAGE, Messages.modelAdded),
         ];
 
         if (action.payload.pop) {
