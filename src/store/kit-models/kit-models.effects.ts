@@ -42,16 +42,25 @@ export class KitModelsEffects {
     .withLatestFrom(this.store$)
     .mergeMap(([action, store]) => {
       let kitModelsToCreate = [];
+      let kitModelsToUpdate = [];
       let kitModelsToDelete = [];
       let models = [];
       let oldKitModels = store.kitModels.results[action.payload.kitID] || [];
 
-      // Figure out what kit models we need to create
+      // Figure out what kit models we need to create and update
       store.kitModels.tempKitModels.map(kitModel => {
-        const isNew = !oldKitModels.find(oldKitModel => oldKitModel.modelID === kitModel.modelID);
+        const existingKitModel = oldKitModels.find(oldKitModel => oldKitModel.modelID === kitModel.modelID);
 
-        if (isNew) {
-          kitModelsToCreate.push(kitModel.modelID);
+        if (!existingKitModel) {
+          kitModelsToCreate.push({
+            modelID: kitModel.modelID,
+            quantity: kitModel.quantity
+          });
+        } else if (existingKitModel.quantity !== kitModel.quantity) {
+          kitModelsToUpdate.push({
+            modelID: kitModel.modelID,
+            quantity: kitModel.quantity
+          });
         }
       });
 
@@ -65,9 +74,14 @@ export class KitModelsEffects {
       });
 
       // Create the kit models
-      kitModelsToCreate.map(modelID => {
-        models.push(this.kitData.addKitModel(action.payload.kitID, modelID).toPromise());
+      kitModelsToCreate.map(kitModel => {
+        models.push(this.kitData.addKitModel(action.payload.kitID, kitModel).toPromise());
       });
+
+      // Update the kit models
+      kitModelsToUpdate.map(kitModel => {
+        models.push(this.kitData.updateKitModel(action.payload.kitID, kitModel).toPromise());
+      })
 
       // Delete the kit models
       kitModelsToDelete.map(modelID => {
@@ -77,9 +91,8 @@ export class KitModelsEffects {
       return Observable.from(Promise.all(models))
         .concatMap(res => [
           createAction(KitModelsActions.UPDATE_SUCCESS, {
-            results: res,
-            kitID: action.payload.kitID,
-            kitModelsToDelete
+            results: store.kitModels.tempKitModels,
+            kitID: action.payload.kitID
           }),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, action.payload.message)

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Add Item to Kit</ion-title>
+    <ion-title>{{ action }} Kit Item</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -16,12 +16,19 @@
         <ion-label color="primary">Model</ion-label>
         <ion-label>{{kitModel.model}}</ion-label>
       </button>
+
+      <ion-item detail-none>
+        <ion-label color="primary">Quantity</ion-label>
+        <ion-select [(ngModel)]="kitModel.quantity" name="quantity">
+          <ion-option *ngFor="let number of numbers" [value]="number">{{ number }}</ion-option>
+        </ion-select>
+      </ion-item>
 		</ion-list>
 	</form>
 </ion-content>
 
 <ion-footer padding>
-  <button ion-button (click)="onAdd(itemForm)" block [disabled]="!itemForm.valid">
-    Add
+  <button ion-button (click)="onSave(itemForm)" block [disabled]="!itemForm.valid">
+    Save
   </button>
 </ion-footer>

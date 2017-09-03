@@ -28,6 +28,12 @@ describe('KitModels Actions', () => {
     expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(KitModelsActions.CREATE_TEMP, TestData.kitModel));
   });
 
+  it('dispatches action UPDATE_TEMP', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.updateTemp(TestData.kitModel);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(KitModelsActions.UPDATE_TEMP, TestData.kitModel));
+  });
+
   it('dispatches action DELETE_TEMP', () => {
     spyOn(instance.store, 'dispatch');
     instance.deleteTemp(TestData.kitModel.modelID);

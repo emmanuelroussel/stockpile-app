@@ -73,7 +73,7 @@ export class EditKitPage {
           },
           {
             text: 'Add Item',
-            handler: () => this.onAddItem()
+            handler: () => this.onAddItem(Actions.add)
           }
         ]
       });
@@ -126,10 +126,13 @@ export class EditKitPage {
   }
 
   /**
-   * Pushes page on nav to allow user to choose a brand and model.
+   * Pushes page on nav to allow user to choose a brand, model, and quantity.
    */
-  onAddItem() {
-    this.navCtrl.push(AddKitModelPage);
+  onAddItem(action: Actions, kitModel: any = {}) {
+    this.navCtrl.push(AddKitModelPage, {
+      action,
+      kitModel: Object.assign({}, kitModel)
+    });
   }
 
   /**

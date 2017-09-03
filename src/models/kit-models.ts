@@ -4,6 +4,7 @@ export interface KitModel {
   readonly model: string;
   readonly brandID: number;
   readonly brand: string;
+  readonly quantity: number;
 }
 
 export interface KitModels {
