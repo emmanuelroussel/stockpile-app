@@ -27,7 +27,8 @@ import {
   ModalController,
   AlertController,
   Events,
-  LoadingController
+  LoadingController,
+  DeepLinker
 } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 import {
@@ -62,7 +63,8 @@ import {
   ModelsServiceMock,
   OrganizationServiceMock,
   UserServiceMock,
-  InAppBrowserMock
+  InAppBrowserMock,
+  DeepLinkerMock
 } from './mocks';
 import { BrandsActions } from './store/brands/brands.actions';
 import { CategoriesActions } from './store/categories/categories.actions';
@@ -163,7 +165,8 @@ export class TestUtils {
         { provide: ModelsService, useClass: ModelsServiceMock },
         { provide: OrganizationService, useClass: OrganizationServiceMock },
         { provide: UserService, useClass: UserServiceMock },
-        { provide: InAppBrowser, useClass: InAppBrowserMock }
+        { provide: InAppBrowser, useClass: InAppBrowserMock },
+        { provide: DeepLinker, useValue: DeepLinkerMock },
       ],
       imports: [
         FormsModule,

@@ -86,6 +86,14 @@ export class NavMock {
   public getPrevious(): any {
     return Promise.resolve();
   }
+
+  public registerChildNav(): any {
+    return ;
+  }
+}
+
+export class DeepLinkerMock {
+
 }
 
 export class PlatformMock {
@@ -430,6 +438,7 @@ export class KitModelsActionsMock {
   public fetchKitModels() {}
   public deleteTemp() {}
   public createTemp() {}
+  public updateTemp() {}
   public resetTempKitModels() {}
 }
 

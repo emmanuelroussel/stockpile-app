@@ -85,25 +85,44 @@ describe('KitRental Page', () => {
   }));
 
   it('pushes RentalDetailsPage on nav onContinue()', () => {
-    instance.kitModels = Observable.of(TestData.kitModels.results);
-    instance.items = Observable.of({ rentals: TestData.kitModels.results });
+    instance.kitModels = Observable.of([
+      TestData.kitModel
+    ]);
+    instance.items = Observable.of({ rentals: [ TestData.kitModel, TestData.kitModel ] });
     spyOn(instance.navCtrl, 'push');
     instance.onContinue();
     expect(instance.navCtrl.push).toHaveBeenCalled();
   });
 
   it('shows alert if not all kitModels are scanned onContinue()', () => {
-    instance.kitModels = Observable.of(TestData.kitModels.results);
-    instance.items = Observable.of({ rentals: TestData.deletedKitModels.results });
+    instance.kitModels = Observable.of([
+      TestData.kitModel
+    ]);
+    instance.items = Observable.of({ rentals: [ TestData.kitModel ] });
     spyOn(instance.alertCtrl, 'create').and.callThrough();
     instance.onContinue();
     expect(instance.alertCtrl.create).toHaveBeenCalled();
   });
 
-  it('returns true if kit model is added on isKitModelAdded()', () => {
-    instance.items = Observable.of({ rentals: TestData.kitModels.results });
-    const remaining = instance.isKitModelAdded(TestData.kitModels.results[0]);
-    expect(remaining).toBeTruthy();
+  it('returns true if all kit models are added on isKitModelAdded()', () => {
+    instance.items = Observable.of({
+      rentals: {
+        [1]: TestData.kitModel,
+        [2]: TestData.kitModel
+      }
+    });
+    const remaining = instance.isKitModelAdded(TestData.kitModel);
+    expect(remaining).toEqual(true);
+  });
+
+  it('returns false if not all kit models are added on isKitModelAdded()', () => {
+    instance.items = Observable.of({
+      rentals: {
+        [1]: TestData.kitModel
+      }
+    });
+    const remaining = instance.isKitModelAdded(TestData.kitModel);
+    expect(remaining).toEqual(false);
   });
 
   it('removes item from rentals on onRemoveKitModel()', () => {
@@ -111,6 +130,27 @@ describe('KitRental Page', () => {
     spyOn(instance.itemsActions, 'removeFromRentals');
     instance.onRemoveKitModel(TestData.kitModel);
     expect(instance.itemsActions.removeFromRentals).toHaveBeenCalledWith(TestData.items[3].barcode);
+  });
+
+  it('returns items not in kit on getItemsNotInKit()', () => {
+    instance.items = Observable.of({ rentals: TestData.itemsMap });
+    instance.kitModels = Observable.of(TestData.kitModels.results);
+    spyOn(instance.itemsActions, 'removeFromRentals');
+    const itemsNotInKit = instance.getItemsNotInKit();
+    expect(itemsNotInKit).toEqual([TestData.itemsMap['orange']]);
+  });
+
+  it('returns number of kit models scanned on getNumberAdded()', () => {
+    const items = {
+      rentals: {
+        [1]: TestData.kitModel,
+        [2]: TestData.kitModel,
+        [3]: TestData.kitModel
+      }
+    };
+    instance.items = Observable.of(items);
+    const number = instance.getNumberAdded(TestData.kitModel);
+    expect(number).toEqual(Object.keys(items.rentals).length);
   });
 
   it('removes item from rentals on onRemoveItem()', () => {

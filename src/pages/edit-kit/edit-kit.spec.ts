@@ -98,8 +98,11 @@ describe('EditKit Page', () => {
 
   it('pushes AddKitModelPage onAddItem()', () => {
     spyOn(instance.navCtrl, 'push');
-    instance.onAddItem();
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(AddKitModelPage);
+    instance.onAddItem(Actions.add, TestData.kitModel);
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(AddKitModelPage, {
+      action: Actions.add,
+      kitModel: TestData.kitModel
+    });
   });
 
   it('removes kit models onRemoveFromList()', () => {

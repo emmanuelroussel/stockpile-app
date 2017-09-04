@@ -145,13 +145,11 @@ export class KitRentalPage {
   }
 
   /**
-   * Returns whether there is an item corresponding to the kit model that has
-   * been added to the rentals or not.
+   * Returns whether all items corresponding to the kit model have been added to
+   * the rentals or not.
    */
   isKitModelAdded(kitModel: KitModel) {
-    let items;
-    this.items.take(1).subscribe(i => items = Object.keys(i.rentals).map((key) => i.rentals[key]));
-    return items.find(item => kitModel.brandID === item.brandID && kitModel.modelID === item.modelID);
+    return this.getNumberAdded(kitModel) >= kitModel.quantity;
   }
 
   /**
@@ -163,8 +161,18 @@ export class KitRentalPage {
     this.kitModels.take(1).subscribe(k => kitModels = k);
     this.items.take(1).subscribe(i => items = Object.keys(i.rentals).map((key) => i.rentals[key]));
     return items.filter(item => !kitModels.find(kitModel => {
-      return kitModel.brandID === item.brandID && kitModel.modelID === item.modelID;
+      return kitModel.modelID === item.modelID;
     }));
+  }
+
+  /**
+   * Returns the number of items corresponding to the kit model added to rentals.
+   */
+  getNumberAdded(kitModel: KitModel) {
+    let items;
+    this.items.take(1).subscribe(i => items = Object.keys(i.rentals).map((key) => i.rentals[key]));
+    const itemsAdded = items.filter(item => item.modelID === kitModel.modelID);
+    return itemsAdded.length;
   }
 
   /**
@@ -173,7 +181,7 @@ export class KitRentalPage {
   onRemoveKitModel(kitModel: KitModel) {
     let items;
     this.items.take(1).subscribe(i => items = Object.keys(i.rentals).map((key) => i.rentals[key]));
-    let item = items.find(item => kitModel.brandID === item.brandID && kitModel.modelID === item.modelID);
+    let item = items.find(item => kitModel.modelID === item.modelID);
 
     this.itemsActions.removeFromRentals(item.barcode);
   }
