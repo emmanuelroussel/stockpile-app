@@ -328,41 +328,41 @@ export class TestData {
 
   public static kitModels = {
     results: [
-      { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon' },
-      { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure' },
-      { kitID: 1, modelID: 3, model: 'e609', brandID: 3, brand: 'Sennheiser' }
+      { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon', quantity: 2 },
+      { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure', quantity: 1 },
+      { kitID: 1, modelID: 3, model: 'e609', brandID: 3, brand: 'Sennheiser', quantity: 1 }
     ]
   };
 
   public static addedKitModels = {
     results: [
-      { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon' },
-      { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure' },
-      { kitID: 1, modelID: 3, model: 'e609', brandID: 3, brand: 'Sennheiser' },
-      { kitID: 1, modelID: 4, model: 'T5i', brandID: 4, brand: 'Canon' }
+      { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon', quantity: 2 },
+      { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure', quantity: 1 },
+      { kitID: 1, modelID: 3, model: 'e609', brandID: 3, brand: 'Sennheiser', quantity: 1 },
+      { kitID: 1, modelID: 4, model: 'T5i', brandID: 4, brand: 'Canon', quantity: 1 }
     ]
   };
 
   public static deletedKitModels = {
     results: [
-      { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure' },
-      { kitID: 1, modelID: 3, model: 'e609', brandID: 3, brand: 'Sennheiser' }
+      { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure', quantity: 1 },
+      { kitID: 1, modelID: 3, model: 'e609', brandID: 3, brand: 'Sennheiser', quantity: 1 }
     ]
   };
 
   public static kitModelsWithBarcode = {
     results: [
-      { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon', barcode: 'mango' },
-      { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure' },
-      { kitID: 1, modelID: 3, model: 'e609', brandID: 3, brand: 'Sennheiser' }
+      { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon', barcode: 'mango', quantity: 1 },
+      { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure', quantity: 1 },
+      { kitID: 1, modelID: 3, model: 'e609', brandID: 3, brand: 'Sennheiser', quantity: 1 }
     ]
   };
 
   public static kitModelsWithEmptyBarcode = {
     results: [
-      { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon', barcode: '' },
-      { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure' },
-      { kitID: 1, modelID: 3, model: 'e609', brandID: 3, brand: 'Sennheiser' }
+      { kitID: 1, modelID: 1, model: 'T5i', brandID: 1, brand: 'Canon', barcode: '', quantity: 2 },
+      { kitID: 1, modelID: 2, model: 'SM58', brandID: 2, brand: 'Shure', quantity: 1 },
+      { kitID: 1, modelID: 3, model: 'e609', brandID: 3, brand: 'Sennheiser', quantity: 1 }
     ]
   };
 
@@ -371,7 +371,8 @@ export class TestData {
     modelID: 4,
     model: 'T5i',
     brandID: 4,
-    brand: 'Canon'
+    brand: 'Canon',
+    quantity: 2
   };
 
   public static kitModelNewBrand = {

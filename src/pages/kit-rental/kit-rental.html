@@ -11,10 +11,11 @@
 
     <ion-list-header>Items in kit</ion-list-header>
     <ion-item *ngFor="let kitModel of (kitModels | async)">
-      <ion-icon item-left [name]="isKitModelAdded(kitModel) ? 'checkmark' : 'remove'"
-        [color]="isKitModelAdded(kitModel) ? 'dark' : 'disabled'"></ion-icon>
+      <span ion-text item-left [color]="isKitModelAdded(kitModel) ? 'dark' : 'disabled'">
+        {{ getNumberAdded(kitModel) }}/{{ kitModel.quantity }}
+      </span>
       <h2 ion-text [color]="isKitModelAdded(kitModel) ? 'dark' : 'disabled'">{{ kitModel.brand }} {{ kitModel.model }}</h2>
-      <button ion-button clear item-right color="dark" *ngIf="isKitModelAdded(kitModel)" (click)="onRemoveKitModel(kitModel)">
+      <button ion-button clear item-right color="dark" *ngIf="getNumberAdded(kitModel) > 0" (click)="onRemoveKitModel(kitModel)">
         <ion-icon name="close"></ion-icon>
       </button>
     </ion-item>

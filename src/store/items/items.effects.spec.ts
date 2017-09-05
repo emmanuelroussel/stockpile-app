@@ -85,7 +85,8 @@ describe('Items Effects', () => {
     const expectedResult = [
       createAction(ItemsActions.CREATE_SUCCESS, TestData.apiItem),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-      createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded)
+      createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded),
+      createAction(AppActions.POP_NAV)
     ];
 
     instance.create$.take(expectedResult.length).subscribe(

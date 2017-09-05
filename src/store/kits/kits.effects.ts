@@ -64,7 +64,8 @@ export class KitsEffects {
         createAction(KitModelsActions.UPDATE, {
           kitID: res.kitID,
           message: Messages.kitAdded
-        })
+        }),
+        createAction(AppActions.POP_NAV)
       ])
       .catch(err => Observable.of(
         createAction(KitsActions.CREATE_FAIL, err),

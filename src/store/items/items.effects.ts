@@ -52,7 +52,8 @@ export class ItemsEffects {
       .concatMap(res => [
         createAction(ItemsActions.CREATE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-        createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded)
+        createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded),
+        createAction(AppActions.POP_NAV)
       ])
       .catch(err => Observable.of(
         createAction(ItemsActions.CREATE_FAIL, err),

@@ -1,7 +1,7 @@
 import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
-import { ItemProperties } from '../../constants';
+import { ItemProperties, Actions } from '../../constants';
 
 import { AddKitModelPage } from './add-kit-model';
 import { ItemFilterPage } from '../item-filter/item-filter';
@@ -25,20 +25,39 @@ describe('AddKitModel Page', () => {
     expect(fixture).toBeTruthy();
   });
 
-  it('gets brands and models', () => {
+  it('gets brands, models, and action', () => {
+    instance.navParams.param = Actions.edit;
     spyOn(instance.brandsActions, 'fetchBrands');
     spyOn(instance.modelsActions, 'fetchModels');
     instance.ngOnInit();
     expect(instance.brandsActions.fetchBrands).toHaveBeenCalled();
     expect(instance.modelsActions.fetchModels).toHaveBeenCalled();
+    expect(instance.action).toEqual(Actions.edit);
   });
 
-  it('pops nav onAdd()', () => {
+  it('initializes quantity to 1', () => {
+    instance.navParams.param = Actions.add;
+    instance.ngOnInit();
+    expect(instance.kitModel.quantity).toEqual(1);
+  });
+
+  it('creates item onSave() if action is add', () => {
     spyOn(instance.kitModelsActions, 'createTemp');
     spyOn(instance.navCtrl, 'pop');
     instance.kitModel = TestData.kitModel;
-    instance.onAdd();
+    instance.action = Actions.add;
+    instance.onSave();
     expect(instance.kitModelsActions.createTemp).toHaveBeenCalledWith(TestData.kitModel);
+    expect(instance.navCtrl.pop).toHaveBeenCalled();
+  });
+
+  it('updates item onSave() if action is edit', () => {
+    spyOn(instance.kitModelsActions, 'updateTemp');
+    spyOn(instance.navCtrl, 'pop');
+    instance.kitModel = TestData.kitModel;
+    instance.action = Actions.edit;
+    instance.onSave();
+    expect(instance.kitModelsActions.updateTemp).toHaveBeenCalledWith(TestData.kitModel);
     expect(instance.navCtrl.pop).toHaveBeenCalled();
   });
 

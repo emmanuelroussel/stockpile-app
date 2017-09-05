@@ -32,12 +32,12 @@ export class KitData {
     return this.api.get(`${Links.kit}/${kitID}${Links.model}`);
   }
 
-  addKitModel(kitID: number, modelID: number) {
-    const body = {
-      modelID
-    };
+  addKitModel(kitID: number, kitModel: any) {
+    return this.api.put(`${Links.kit}/${kitID}${Links.model}`, kitModel);
+  }
 
-    return this.api.put(`${Links.kit}/${kitID}${Links.model}`, body);
+  updateKitModel(kitID: number, kitModel: any) {
+    return this.api.put(`${Links.kit}/${kitID}${Links.model}/${kitModel.modelID}`, kitModel);
   }
 
   deleteKitModel(kitID: number, modelID: number) {

@@ -113,7 +113,8 @@ describe('Kits Effects', () => {
       createAction(KitModelsActions.UPDATE, {
         kitID: TestData.kit.kitID,
         message: Messages.kitAdded
-      })
+      }),
+      createAction(AppActions.POP_NAV)
     ];
 
     instance.create$.take(expectedResult.length).subscribe(

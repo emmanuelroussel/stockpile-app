@@ -18,6 +18,7 @@ export class KitModelsActions {
 
   static DELETE_TEMP = type('[Kit Models] Delete Temp');
   static CREATE_TEMP = type('[Kit Models] Create Temp');
+  static UPDATE_TEMP = type('[Kit Models] Update Temp');
   static RESET_TEMP_KIT_MODELS = type('[Kit Models] Reset Temp')
 
   constructor(
@@ -34,6 +35,10 @@ export class KitModelsActions {
 
   createTemp(kitModel: any) {
     this.store.dispatch(createAction(KitModelsActions.CREATE_TEMP, kitModel));
+  }
+
+  updateTemp(kitModel: any) {
+    this.store.dispatch(createAction(KitModelsActions.UPDATE_TEMP, kitModel));
   }
 
   resetTempKitModels() {

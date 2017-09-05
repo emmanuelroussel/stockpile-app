@@ -48,7 +48,15 @@ describe('KitData Provider', () => {
 
   it('calls api to add kit item', () => {
     instance.api.value = TestData.kitModel;
-    instance.addKitModel(TestData.kit.kitID, TestData.kitModel.modelID).subscribe(
+    instance.addKitModel(TestData.kit.kitID, TestData.kitModel).subscribe(
+      res => expect(res).toEqual(TestData.kitModel),
+      err => fail(err)
+    );
+  });
+
+  it('calls api to update kit item', () => {
+    instance.api.value = TestData.kitModel;
+    instance.updateKitModel(TestData.kit.kitID, TestData.kitModel).subscribe(
       res => expect(res).toEqual(TestData.kitModel),
       err => fail(err)
     );

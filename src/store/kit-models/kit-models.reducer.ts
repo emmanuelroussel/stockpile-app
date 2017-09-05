@@ -25,18 +25,12 @@ export function kitModelsReducer(kitModels: KitModels = initialState, action: Ac
         showLoadingSpinner: false
       };
     case KitModelsActions.UPDATE_SUCCESS:
-      const previousKitModels = kitModels.results[action.payload.kitID] || [];
-      const newKitModels = action.payload.results.filter(kitModel => kitModel.kitID != null);
-      const existingKitModels = previousKitModels.filter(kitModel => {
-        return !action.payload.kitModelsToDelete.find(id => id === kitModel.modelID);
-      });
-
       return {
         ...kitModels,
         results: {
-          [action.payload.kitID]: [...existingKitModels, ...newKitModels]
+          [action.payload.kitID]: action.payload.results
         },
-        tempKitModels: [...existingKitModels, ...newKitModels],
+        tempKitModels: action.payload.results,
       };
     case KitModelsActions.DELETE_TEMP:
       return {
@@ -48,6 +42,13 @@ export function kitModelsReducer(kitModels: KitModels = initialState, action: Ac
         ...kitModels,
         tempKitModels: [...kitModels.tempKitModels, action.payload],
       }
+    case KitModelsActions.UPDATE_TEMP:
+      return {
+        ...kitModels,
+        tempKitModels: kitModels.tempKitModels.map(kitModel => {
+          return kitModel.modelID === action.payload.modelID ? action.payload : kitModel;
+        })
+      };
     case KitModelsActions.RESET_TEMP_KIT_MODELS:
       return { ...kitModels, tempKitModels: [] };
     default:
