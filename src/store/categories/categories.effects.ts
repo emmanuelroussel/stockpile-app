@@ -88,7 +88,7 @@ export class CategoriesEffects {
           createAction(CategoriesActions.DELETE_SUCCESS, res),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, Messages.categoryDeleted),
-          createAction(AppActions.POP_NAV_TWICE)
+          createAction(AppActions.POP_NAV)
         ])
         .catch(err => Observable.of(
           createAction(CategoriesActions.DELETE_FAIL, err),

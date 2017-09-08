@@ -174,7 +174,7 @@ describe('Models Effects', () => {
       createAction(ModelsActions.DELETE_SUCCESS, TestData.response),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.modelDeleted),
-      createAction(AppActions.POP_NAV_TWICE)
+      createAction(AppActions.POP_NAV)
     ];
 
     instance.delete$.take(expectedResult.length).subscribe(

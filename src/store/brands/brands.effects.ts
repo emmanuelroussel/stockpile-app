@@ -88,7 +88,7 @@ export class BrandsEffects {
         createAction(BrandsActions.DELETE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, Messages.brandDeleted),
-        createAction(AppActions.POP_NAV_TWICE)
+        createAction(AppActions.POP_NAV)
       ])
       .catch(err => Observable.of(
         createAction(BrandsActions.DELETE_FAIL, err),
