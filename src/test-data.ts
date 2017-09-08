@@ -567,4 +567,6 @@ export class TestData {
       loadingMessage: 'Please wait...'
     }
   };
+
+  public static pop = true;
 }

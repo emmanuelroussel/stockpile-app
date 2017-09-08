@@ -6,11 +6,14 @@ import { Categories } from '../../models/categories';
 const initialState = {
   results: {},
   filtered: [],
-  showAddNew: false
+  showAddNew: false,
+  showLoadingSpinner: false
 };
 
 export function categoriesReducer(categories: Categories = initialState, action: Action): Categories {
   switch (action.type) {
+    case CategoriesActions.FETCH:
+      return { ...categories, showLoadingSpinner: true };
     case CategoriesActions.FETCH_SUCCESS:
       return {
         ...categories,
@@ -22,15 +25,24 @@ export function categoriesReducer(categories: Categories = initialState, action:
           }, {})
         ),
         filtered: action.payload.results,
-        showAddNew: false
+        showAddNew: false,
+        showLoadingSpinner: false
       };
     case CategoriesActions.CREATE_SUCCESS:
+    case CategoriesActions.UPDATE_SUCCESS:
       return {
         ...categories,
         results: {
           ...categories.results,
           [action.payload.categoryID]: action.payload
         }
+      };
+    case CategoriesActions.DELETE_SUCCESS:
+      const results = Object.assign({}, categories.results);
+      delete results[action.payload.id];
+      return {
+        ...categories,
+        results
       };
     case CategoriesActions.FILTER:
       return Object.assign({}, categories, {

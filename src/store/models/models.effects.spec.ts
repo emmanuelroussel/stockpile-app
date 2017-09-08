@@ -9,6 +9,7 @@ import { ModelsEffects } from './models.effects';
 import { ModelsActions } from './models.actions';
 import { AppActions } from '../app/app.actions';
 import { LayoutActions } from '../layout/layout.actions';
+import { Messages } from '../../constants';
 
 let instance: ModelsEffects = null;
 let runner: EffectsRunner = null;
@@ -67,12 +68,37 @@ describe('Models Effects', () => {
   });
 
   it('creates a model', () => {
-    runner.queue(createAction(ModelsActions.CREATE));
+    runner.queue(createAction(ModelsActions.CREATE, {
+      model: TestData.model,
+      pop: false
+    }));
 
     let performedActions = [];
     const expectedResult = [
       createAction(ModelsActions.CREATE_SUCCESS, TestData.response),
-      createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, Messages.modelAdded),
+    ];
+
+    instance.create$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('creates a model and pops nav', () => {
+    runner.queue(createAction(ModelsActions.CREATE, {
+      model: TestData.model,
+      pop: true
+    }));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ModelsActions.CREATE_SUCCESS, TestData.response),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, Messages.modelAdded),
+      createAction(AppActions.POP_NAV)
     ];
 
     instance.create$.take(expectedResult.length).subscribe(
@@ -85,7 +111,10 @@ describe('Models Effects', () => {
   it('returns error if create fails', () => {
     instance.itemPropertyData.resolve = false;
 
-    runner.queue(createAction(ModelsActions.CREATE));
+    runner.queue(createAction(ModelsActions.CREATE, {
+      model: TestData.model,
+      pop: TestData.pop
+    }));
 
     let performedActions = [];
     const expectedResult = [
@@ -94,6 +123,78 @@ describe('Models Effects', () => {
       createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
     ];
     instance.create$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('updates a model', () => {
+    runner.queue(createAction(ModelsActions.UPDATE, TestData.model));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ModelsActions.UPDATE_SUCCESS, TestData.response),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, Messages.modelEdited),
+      createAction(AppActions.POP_NAV)
+    ];
+
+    instance.update$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('returns error if update fails', () => {
+    instance.itemPropertyData.resolve = false;
+
+    runner.queue(createAction(ModelsActions.UPDATE, TestData.model));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ModelsActions.UPDATE_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+    ];
+    instance.update$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('deletes a model', () => {
+    runner.queue(createAction(ModelsActions.DELETE));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ModelsActions.DELETE_SUCCESS, TestData.response),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, Messages.modelDeleted),
+      createAction(AppActions.POP_NAV)
+    ];
+
+    instance.delete$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('returns error if delete fails', () => {
+    instance.itemPropertyData.resolve = false;
+
+    runner.queue(createAction(ModelsActions.DELETE));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ModelsActions.DELETE_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+    ];
+    instance.delete$.take(expectedResult.length).subscribe(
       res => performedActions.push(res),
       err => fail(err),
       () => expect(performedActions).toEqual(expectedResult)

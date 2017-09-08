@@ -24,8 +24,23 @@ describe('Categories Actions', () => {
 
   it('dispatches action CREATE', () => {
     spyOn(instance.store, 'dispatch');
-    instance.createCategory(TestData.category.name);
-    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(CategoriesActions.CREATE, { name: TestData.category.name }));
+    instance.createCategory(TestData.category.name, TestData.pop);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(CategoriesActions.CREATE, {
+      name: TestData.category.name,
+      pop: TestData.pop
+    }));
+  });
+
+  it('dispatches action UPDATE', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.updateCategory(TestData.category);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(CategoriesActions.UPDATE, TestData.category));
+  });
+
+  it('dispatches action DELETE', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.deleteCategory(TestData.category.categoryID);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(CategoriesActions.DELETE, TestData.category.categoryID));
   });
 
   it('dispatches action FILTER', () => {

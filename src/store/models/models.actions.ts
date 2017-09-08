@@ -16,6 +16,14 @@ export class ModelsActions {
   static CREATE_SUCCESS = type('[Models] Create Success');
   static CREATE_FAIL = type('[Models] Create Fail');
 
+  static UPDATE = type('[Models] Update');
+  static UPDATE_SUCCESS = type('[Models] Update Success');
+  static UPDATE_FAIL = type('[Models] Update Fail');
+
+  static DELETE = type('[Models] Delete');
+  static DELETE_SUCCESS = type('[Models] Delete Success');
+  static DELETE_FAIL = type('[Models] Delete Fail');
+
   static FILTER = type('[Models] Filter');
 
   constructor(
@@ -26,8 +34,17 @@ export class ModelsActions {
     this.store.dispatch(createAction(ModelsActions.FETCH));
   }
 
-  createModel(name: string, brandID: number) {
-    this.store.dispatch(createAction(ModelsActions.CREATE, { name, brandID }));
+  // pop determines whether the nav should poped after the model is created.
+  createModel(name: string, brandID: number, pop: boolean = false) {
+    this.store.dispatch(createAction(ModelsActions.CREATE, { model: { name, brandID }, pop }));
+  }
+
+  updateModel(model: any) {
+    this.store.dispatch(createAction(ModelsActions.UPDATE, model));
+  }
+
+  deleteModel(modelID: number) {
+    this.store.dispatch(createAction(ModelsActions.DELETE, modelID));
   }
 
   filterModels(brandID: number, text: string = '') {

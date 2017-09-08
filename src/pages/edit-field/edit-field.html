@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ action }} {{ type }}</ion-title>
+    <ion-buttons *ngIf="action === actions.edit" end>
+      <button ion-button icon-only (click)="onDelete()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form #fieldForm="ngForm">
+		<ion-list>
+      <button ion-item *ngIf="type === itemProperties.model" (click)="onSelectBrand()" tappable detail-none>
+        <ion-label color="primary">Brand</ion-label>
+        <ion-label>{{field?.brand}}</ion-label>
+      </button>
+
+      <ion-item>
+        <ion-label floating color="primary">Name</ion-label>
+        <ion-input [ngModel]="field?.name" required name="name" #name="ngModel"></ion-input>
+      </ion-item>
+		</ion-list>
+	</form>
+</ion-content>
+
+<ion-footer padding>
+  <button ion-button (click)="onSave(fieldForm)" block [disabled]="!fieldForm.valid">
+    Save
+  </button>
+</ion-footer>

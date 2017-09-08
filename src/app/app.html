@@ -12,6 +12,15 @@
         <h3>{{(user | async)?.email}}</h3>
         <p>{{(organization | async)?.name}}</p>
       </button>
+      <button ion-item (click)="onViewBrands()">
+        Brands
+      </button>
+      <button ion-item (click)="onViewModels()">
+        Models
+      </button>
+      <button ion-item (click)="onViewCategories()">
+        Categories
+      </button>
       <button ion-item (click)="onLogout()">
         Logout
       </button>

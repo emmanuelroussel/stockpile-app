@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ typePlural }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onAdd()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>{{ typePlural }}</ion-list-header>
+    <button ion-item *ngFor="let field of (fields | async).results | mapToIterable" (click)="onViewField(field)">
+      <h2>{{ field.name }}</h2>
+    </button>
+
+    <ion-item *ngIf="!((fields | async).results | mapToIterable).length && !(fields | async).showLoadingSpinner">
+      No {{ typePlural.toLowerCase() }} found <button ion-button item-right (click)="onAdd()">Add a {{ type.toLowerCase() }}</button>
+    </ion-item>
+
+    <ion-spinner class="center-spinner" *ngIf="(fields | async).showLoadingSpinner"></ion-spinner>
+  </ion-list>
+</ion-content>

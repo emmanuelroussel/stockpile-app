@@ -9,6 +9,7 @@ import { BrandsEffects } from './brands.effects';
 import { BrandsActions } from './brands.actions';
 import { AppActions } from '../app/app.actions';
 import { LayoutActions } from '../layout/layout.actions';
+import { Messages } from '../../constants';
 
 let instance: BrandsEffects = null;
 let runner: EffectsRunner = null;
@@ -67,12 +68,37 @@ describe('Brands Effects', () => {
   });
 
   it('creates a brand', () => {
-    runner.queue(createAction(BrandsActions.CREATE));
+    runner.queue(createAction(BrandsActions.CREATE, {
+      name: TestData.brand.name,
+      pop: false
+    }));
 
     let performedActions = [];
     const expectedResult = [
       createAction(BrandsActions.CREATE_SUCCESS, TestData.response),
-      createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, Messages.brandAdded),
+    ];
+
+    instance.create$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('creates a brand and pops nav', () => {
+    runner.queue(createAction(BrandsActions.CREATE, {
+      name: TestData.brand.name,
+      pop: true
+    }));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(BrandsActions.CREATE_SUCCESS, TestData.response),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, Messages.brandAdded),
+      createAction(AppActions.POP_NAV)
     ];
 
     instance.create$.take(expectedResult.length).subscribe(
@@ -85,7 +111,10 @@ describe('Brands Effects', () => {
   it('returns error if create fails', () => {
     instance.itemPropertyData.resolve = false;
 
-    runner.queue(createAction(BrandsActions.CREATE));
+    runner.queue(createAction(BrandsActions.CREATE, {
+      name: TestData.brand.name,
+      pop: true
+    }));
 
     let performedActions = [];
     const expectedResult = [
@@ -94,6 +123,78 @@ describe('Brands Effects', () => {
       createAction(LayoutActions.HIDE_LOADING_MESSAGE)
     ];
     instance.create$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('updates a brand', () => {
+    runner.queue(createAction(BrandsActions.UPDATE, TestData.brand));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(BrandsActions.UPDATE_SUCCESS, TestData.response),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, Messages.brandEdited),
+      createAction(AppActions.POP_NAV)
+    ];
+
+    instance.update$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('returns error if update fails', () => {
+    instance.itemPropertyData.resolve = false;
+
+    runner.queue(createAction(BrandsActions.UPDATE, TestData.brand));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(BrandsActions.UPDATE_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+    ];
+    instance.update$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('deletes a brand', () => {
+    runner.queue(createAction(BrandsActions.DELETE, TestData.brand.brandID));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(BrandsActions.DELETE_SUCCESS, TestData.response),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, Messages.brandDeleted),
+      createAction(AppActions.POP_NAV)
+    ];
+
+    instance.delete$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('returns error if delete fails', () => {
+    instance.itemPropertyData.resolve = false;
+
+    runner.queue(createAction(BrandsActions.DELETE, TestData.brand.brandID));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(BrandsActions.DELETE_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+    ];
+    instance.delete$.take(expectedResult.length).subscribe(
       res => performedActions.push(res),
       err => fail(err),
       () => expect(performedActions).toEqual(expectedResult)

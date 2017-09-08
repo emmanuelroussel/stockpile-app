@@ -6,11 +6,14 @@ import { Brands } from '../../models/brands';
 const initialState = {
   results: {},
   filtered: [],
-  showAddNew: false
+  showAddNew: false,
+  showLoadingSpinner: false
 };
 
 export function brandsReducer(brands: Brands = initialState, action: Action): Brands {
   switch (action.type) {
+    case BrandsActions.FETCH:
+      return { ...brands, showLoadingSpinner: true };
     case BrandsActions.FETCH_SUCCESS:
       return {
         ...brands,
@@ -22,15 +25,24 @@ export function brandsReducer(brands: Brands = initialState, action: Action): Br
           }, {})
         ),
         filtered: action.payload.results,
-        showAddNew: false
+        showAddNew: false,
+        showLoadingSpinner: false
       };
     case BrandsActions.CREATE_SUCCESS:
+    case BrandsActions.UPDATE_SUCCESS:
       return {
         ...brands,
         results: {
           ...brands.results,
           [action.payload.brandID]: action.payload
         }
+      };
+    case BrandsActions.DELETE_SUCCESS:
+      const results = Object.assign({}, brands.results);
+      delete results[action.payload.id];
+      return {
+        ...brands,
+        results
       };
     case BrandsActions.FILTER:
       const filtered = Object.keys(brands.results)

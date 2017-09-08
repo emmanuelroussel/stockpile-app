@@ -30,6 +30,22 @@ describe('KitData Provider', () => {
     );
   });
 
+  it('calls api to update brand', () => {
+    instance.api.value = TestData.response;
+    instance.updateBrand(TestData.brand, TestData.brand.brandID).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  });
+
+  it('calls api to delete brand', () => {
+    instance.api.value = TestData.response;
+    instance.deleteBrand(TestData.brand.brandID).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  });
+
   it('calls api to get models', () => {
     instance.api.value = TestData.models.results;
     instance.getModels().subscribe(
@@ -46,6 +62,22 @@ describe('KitData Provider', () => {
     );
   });
 
+  it('calls api to update model', () => {
+    instance.api.value = TestData.response;
+    instance.updateModel(TestData.model, TestData.model.modelID).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  });
+
+  it('calls api to delete model', () => {
+    instance.api.value = TestData.response;
+    instance.deleteModel(TestData.model.modelID).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  });
+
   it('calls api to get categories', () => {
     instance.api.value = TestData.categories.results;
     instance.getCategories().subscribe(
@@ -57,6 +89,22 @@ describe('KitData Provider', () => {
   it('calls api to create category', () => {
     instance.api.value = TestData.response;
     instance.createCategory(TestData.category.name).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  });
+
+  it('calls api to update category', () => {
+    instance.api.value = TestData.response;
+    instance.updateCategory(TestData.category, TestData.category.categoryID).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  });
+
+  it('calls api to delete category', () => {
+    instance.api.value = TestData.response;
+    instance.deleteCategory(TestData.category.categoryID).subscribe(
       res => expect(res).toEqual(TestData.response),
       err => fail(err)
     );

@@ -9,6 +9,7 @@ import { CategoriesEffects } from './categories.effects';
 import { CategoriesActions } from './categories.actions';
 import { AppActions } from '../app/app.actions';
 import { LayoutActions } from '../layout/layout.actions';
+import { Messages } from '../../constants';
 
 let instance: CategoriesEffects = null;
 let runner: EffectsRunner = null;
@@ -38,7 +39,7 @@ describe('Categories Effects', () => {
     expect(instance).toBeTruthy();
   });
 
-  it('fetches catgories', () => {
+  it('fetches categories', () => {
     instance.itemPropertyData.categories = TestData.categories;
 
     runner.queue(createAction(CategoriesActions.FETCH));
@@ -67,12 +68,37 @@ describe('Categories Effects', () => {
   });
 
   it('creates a category', () => {
-    runner.queue(createAction(CategoriesActions.CREATE));
+    runner.queue(createAction(CategoriesActions.CREATE, {
+      name: TestData.category.name,
+      pop: false
+    }));
 
     let performedActions = [];
     const expectedResult = [
       createAction(CategoriesActions.CREATE_SUCCESS, TestData.response),
-      createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, Messages.categoryAdded),
+    ];
+
+    instance.create$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('creates a category and pops nav', () => {
+    runner.queue(createAction(CategoriesActions.CREATE, {
+      name: TestData.category.name,
+      pop: true
+    }));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(CategoriesActions.CREATE_SUCCESS, TestData.response),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, Messages.categoryAdded),
+      createAction(AppActions.POP_NAV)
     ];
 
     instance.create$.take(expectedResult.length).subscribe(
@@ -85,7 +111,10 @@ describe('Categories Effects', () => {
   it('returns error if create fails', () => {
     instance.itemPropertyData.resolve = false;
 
-    runner.queue(createAction(CategoriesActions.CREATE));
+    runner.queue(createAction(CategoriesActions.CREATE, {
+      name: TestData.category.name,
+      pop: TestData.pop
+    }));
 
     let performedActions = [];
     const expectedResult = [
@@ -94,6 +123,78 @@ describe('Categories Effects', () => {
       createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
     ];
     instance.create$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('updates a category', () => {
+    runner.queue(createAction(CategoriesActions.UPDATE, TestData.category));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(CategoriesActions.UPDATE_SUCCESS, TestData.response),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, Messages.categoryEdited),
+      createAction(AppActions.POP_NAV)
+    ];
+
+    instance.update$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('returns error if update fails', () => {
+    instance.itemPropertyData.resolve = false;
+
+    runner.queue(createAction(CategoriesActions.UPDATE, TestData.category));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(CategoriesActions.UPDATE_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+    ];
+    instance.update$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('deletes a category', () => {
+    runner.queue(createAction(CategoriesActions.DELETE));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(CategoriesActions.DELETE_SUCCESS, TestData.response),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(AppActions.SHOW_MESSAGE, Messages.categoryDeleted),
+      createAction(AppActions.POP_NAV)
+    ];
+
+    instance.delete$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('returns error if delete fails', () => {
+    instance.itemPropertyData.resolve = false;
+
+    runner.queue(createAction(CategoriesActions.DELETE));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(CategoriesActions.DELETE_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message),
+      createAction(LayoutActions.HIDE_LOADING_MESSAGE)
+    ];
+    instance.delete$.take(expectedResult.length).subscribe(
       res => performedActions.push(res),
       err => fail(err),
       () => expect(performedActions).toEqual(expectedResult)

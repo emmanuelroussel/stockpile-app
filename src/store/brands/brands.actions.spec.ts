@@ -24,8 +24,23 @@ describe('Brands Actions', () => {
 
   it('dispatches action CREATE', () => {
     spyOn(instance.store, 'dispatch');
-    instance.createBrand(TestData.brand.name);
-    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(BrandsActions.CREATE, { name: TestData.brand.name }));
+    instance.createBrand(TestData.brand.name, TestData.pop);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(BrandsActions.CREATE, {
+      name: TestData.brand.name,
+      pop: TestData.pop
+    }));
+  });
+
+  it('dispatches action UPDATE', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.updateBrand(TestData.brand);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(BrandsActions.UPDATE, TestData.brand));
+  });
+
+  it('dispatches action DELETE', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.deleteBrand(TestData.brand.brandID);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(BrandsActions.DELETE, TestData.brand.brandID));
   });
 
   it('dispatches action FILTER', () => {

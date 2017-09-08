@@ -8,6 +8,14 @@ import { User } from '../models/user';
 import { UserService } from '../services/user.service';
 import { UserActions } from '../store/user/user.actions';
 import { LayoutService } from '../services/layout.service';
+import { BrandsService } from '../services/brands.service';
+import { CategoriesService } from '../services/categories.service';
+import { ModelsService } from '../services/models.service';
+import { BrandsActions } from '../store/brands/brands.actions';
+import { ModelsActions } from '../store/models/models.actions';
+import { CategoriesActions } from '../store/categories/categories.actions';
+import { ItemProperties } from '../constants';
+import { FieldsPage } from '../pages/fields/fields';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -28,7 +36,13 @@ export class StockpileApp {
     public loadingCtrl: LoadingController,
     public userService: UserService,
     public userActions: UserActions,
-    public layoutService: LayoutService
+    public layoutService: LayoutService,
+    public brandsService: BrandsService,
+    public modelsService: ModelsService,
+    public categoriesService: CategoriesService,
+    public brandsActions: BrandsActions,
+    public modelsActions: ModelsActions,
+    public categoriesActions: CategoriesActions
   ) {}
 
   /**
@@ -71,6 +85,45 @@ export class StockpileApp {
   onViewInfo() {
     this.menuCtrl.close();
     this.nav.push(ViewAccountPage);
+  }
+
+  /**
+   * Fetches brands, closes side menu and pushes Fields page with brands.
+   */
+  onViewBrands() {
+    this.brandsActions.fetchBrands();
+    this.menuCtrl.close();
+    this.nav.push(FieldsPage, {
+      fields: this.brandsService.getBrands(),
+      type: ItemProperties.brand,
+      typePlural: ItemProperties.brandPlural
+    });
+  }
+
+  /**
+   * Fetches models, closes side menu and pushes Fields page with models.
+   */
+  onViewModels() {
+    this.modelsActions.fetchModels();
+    this.menuCtrl.close();
+    this.nav.push(FieldsPage, {
+      fields: this.modelsService.getModels(),
+      type: ItemProperties.model,
+      typePlural: ItemProperties.modelPlural
+    });
+  }
+
+  /**
+   * Fetches categories, closes side menu and pushes Fields page with categories.
+   */
+  onViewCategories() {
+    this.categoriesActions.fetchCategories();
+    this.menuCtrl.close();
+    this.nav.push(FieldsPage, {
+      fields: this.categoriesService.getCategories(),
+      type: ItemProperties.category,
+      typePlural: ItemProperties.categoryPlural
+    });
   }
 
   /**

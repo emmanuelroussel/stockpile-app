@@ -24,11 +24,26 @@ describe('Models Actions', () => {
 
   it('dispatches action CREATE', () => {
     spyOn(instance.store, 'dispatch');
-    instance.createModel(TestData.model.name, TestData.model.brandID);
+    instance.createModel(TestData.model.name, TestData.model.brandID, TestData.pop);
     expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ModelsActions.CREATE, {
-      name: TestData.model.name,
-      brandID: TestData.model.brandID
+      model: {
+        name: TestData.model.name,
+        brandID: TestData.model.brandID
+      },
+      pop: TestData.pop
     }));
+  });
+
+  it('dispatches action UPDATE', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.updateModel(TestData.model);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ModelsActions.UPDATE, TestData.model));
+  });
+
+  it('dispatches action DELETE', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.deleteModel(TestData.model.modelID);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ModelsActions.DELETE, TestData.model.modelID));
   });
 
   it('dispatches action FILTER', () => {

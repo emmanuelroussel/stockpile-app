@@ -49,7 +49,9 @@ import { AddKitModelPage } from '../pages/add-kit-model/add-kit-model';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { EditAccountPage } from '../pages/edit-account/edit-account';
 import { EditItemPage } from '../pages/edit-item/edit-item';
+import { EditFieldPage } from '../pages/edit-field/edit-field';
 import { EditKitPage } from '../pages/edit-kit/edit-kit';
+import { FieldsPage } from '../pages/fields/fields';
 import { HomePage } from '../pages/home/home';
 import { InventoryFilterPage } from '../pages/inventory-filter/inventory-filter';
 import { InventoryPage } from '../pages/inventory/inventory';
@@ -82,7 +84,9 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     ChangePasswordPage,
     EditAccountPage,
     EditItemPage,
+    EditFieldPage,
     EditKitPage,
+    FieldsPage,
     HomePage,
     InventoryFilterPage,
     InventoryPage,
@@ -129,7 +133,9 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     ChangePasswordPage,
     EditAccountPage,
     EditItemPage,
+    EditFieldPage,
     EditKitPage,
+    FieldsPage,
     HomePage,
     InventoryFilterPage,
     InventoryPage,
