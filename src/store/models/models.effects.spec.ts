@@ -78,7 +78,7 @@ describe('Models Effects', () => {
     const expectedResult = [
       createAction(ModelsActions.CREATE_SUCCESS, TestData.response),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-      createAction(AppActions.SHOW_MESSAGE, Messages.categoryAdded),
+      createAction(AppActions.SHOW_MESSAGE, Messages.modelAdded),
     ];
 
     instance.create$.take(expectedResult.length).subscribe(
@@ -98,7 +98,7 @@ describe('Models Effects', () => {
     const expectedResult = [
       createAction(ModelsActions.CREATE_SUCCESS, TestData.response),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-      createAction(AppActions.SHOW_MESSAGE, Messages.categoryAdded),
+      createAction(AppActions.SHOW_MESSAGE, Messages.modelAdded),
       createAction(AppActions.POP_NAV)
     ];
 
