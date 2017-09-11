@@ -121,7 +121,8 @@ describe('Items Effects', () => {
     const expectedResult = [
       createAction(ItemsActions.UPDATE_SUCCESS, TestData.apiItem),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-      createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited)
+      createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited),
+      createAction(AppActions.POP_NAV)
     ];
 
     instance.update$.take(expectedResult.length).subscribe(
