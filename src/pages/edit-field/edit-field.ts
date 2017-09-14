@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavParams, ModalController, AlertController } from 'ionic-angular';
-import { NgForm } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { Actions, ItemProperties, LoadingMessages } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
@@ -19,6 +19,9 @@ export class EditFieldPage {
   action: Actions = '';
   type: string = '';
   field;
+  fieldForm: FormGroup;
+  blur = { name: false };
+  errors = { brand: false };
 
   constructor(
     public navParams: NavParams,
@@ -27,7 +30,8 @@ export class EditFieldPage {
     public modelsActions: ModelsActions,
     public categoriesActions: CategoriesActions,
     public layoutActions: LayoutActions,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public formBuilder: FormBuilder
   ) {}
 
   /**
@@ -35,57 +39,72 @@ export class EditFieldPage {
    * edit, also get the field.
    */
   ngOnInit() {
+    // Initializing field to avoid undefined errors later
+    this.field = {};
+
     this.action = this.navParams.get('action');
     this.type = this.navParams.get('type');
 
     if (this.action === Actions.edit) {
       this.field = this.navParams.get('field');
     }
+
+    this.fieldForm = this.formBuilder.group({
+      name: ['', Validators.required]
+    });
   }
 
   /**
    * Updates or creates field depending on the action.
    */
-  onSave(form: NgForm) {
-    if (this.action === Actions.add) {
-      switch (this.type) {
-        case ItemProperties.brand:
-          this.layoutActions.showLoadingMessage(LoadingMessages.creatingBrand);
-          this.brandsActions.createBrand(form.value.name, true);
-          break;
-        case ItemProperties.model:
-          this.layoutActions.showLoadingMessage(LoadingMessages.creatingModel);
-          this.modelsActions.createModel(form.value.name, this.field.brandID, true);
-          break;
-        case ItemProperties.category:
-          this.layoutActions.showLoadingMessage(LoadingMessages.creatingCategory);
-          this.categoriesActions.createCategory(form.value.name, true);
-          break;
-      }
-    } else if (this.action === Actions.edit) {
-      switch (this.type) {
-        case ItemProperties.brand:
-          this.layoutActions.showLoadingMessage(LoadingMessages.updatingBrand);
-          this.brandsActions.updateBrand({
-            name: form.value.name,
-            brandID: this.field.brandID
-          });
-          break;
-        case ItemProperties.model:
-          this.layoutActions.showLoadingMessage(LoadingMessages.updatingModel);
-          this.modelsActions.updateModel({
-            modelID: this.field.modelID,
-            name: form.value.name,
-            brandID: this.field.brandID
-          });
-          break;
-        case ItemProperties.category:
-          this.layoutActions.showLoadingMessage(LoadingMessages.updatingCategory);
-          this.categoriesActions.updateCategory({
-            name: form.value.name,
-            categoryID: this.field.categoryID
-          });
-          break;
+  onSave() {
+    this.blur.name = true;
+
+    if (this.type === ItemProperties.model) {
+      this.errors.brand = this.field.brand ? false : true;
+    }
+
+    if (this.fieldForm.valid && !this.errors.brand) {
+      if (this.action === Actions.add) {
+        switch (this.type) {
+          case ItemProperties.brand:
+            this.layoutActions.showLoadingMessage(LoadingMessages.creatingBrand);
+            this.brandsActions.createBrand(this.fieldForm.value.name, true);
+            break;
+          case ItemProperties.model:
+            this.layoutActions.showLoadingMessage(LoadingMessages.creatingModel);
+            this.modelsActions.createModel(this.fieldForm.value.name, this.field.brandID, true);
+            break;
+          case ItemProperties.category:
+            this.layoutActions.showLoadingMessage(LoadingMessages.creatingCategory);
+            this.categoriesActions.createCategory(this.fieldForm.value.name, true);
+            break;
+        }
+      } else if (this.action === Actions.edit) {
+        switch (this.type) {
+          case ItemProperties.brand:
+            this.layoutActions.showLoadingMessage(LoadingMessages.updatingBrand);
+            this.brandsActions.updateBrand({
+              name: this.fieldForm.value.name,
+              brandID: this.field.brandID
+            });
+            break;
+          case ItemProperties.model:
+            this.layoutActions.showLoadingMessage(LoadingMessages.updatingModel);
+            this.modelsActions.updateModel({
+              modelID: this.field.modelID,
+              name: this.fieldForm.value.name,
+              brandID: this.field.brandID
+            });
+            break;
+          case ItemProperties.category:
+            this.layoutActions.showLoadingMessage(LoadingMessages.updatingCategory);
+            this.categoriesActions.updateCategory({
+              name: this.fieldForm.value.name,
+              categoryID: this.field.categoryID
+            });
+            break;
+        }
       }
     }
   }
@@ -158,5 +177,8 @@ export class EditFieldPage {
       brand: brand.name,
       brandID: brand.brandID
     };
+    this.errors.brand = false;
   }
+
+  get name() { return this.fieldForm.get('name'); }
 }

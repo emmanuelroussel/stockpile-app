@@ -17,6 +17,11 @@ export class AddKitModelPage {
   kitModel: { brandID?: number, brand?: string, modelID?: number, model?: string, quantity?: number } = {};
   numbers: Array<number> = [];
   action: Actions = '';
+  errors = {
+    brand: false,
+    model: false,
+    quantity: false
+  };
 
   constructor(
     public navCtrl: NavController,
@@ -49,16 +54,31 @@ export class AddKitModelPage {
    * Creates or updates kit item and pops nav.
    */
   onSave() {
-    switch (this.action) {
-      case Actions.add:
-        this.kitModelsActions.createTemp(this.kitModel);
-        break;
-      case Actions.edit:
-        this.kitModelsActions.updateTemp(this.kitModel);
-        break;
-    };
+    this.checkIfErrors();
 
-    this.navCtrl.pop();
+    if (!this.errors.brand && !this.errors.model && !this.errors.quantity) {
+      switch (this.action) {
+        case Actions.add:
+          this.kitModelsActions.createTemp(this.kitModel);
+          break;
+        case Actions.edit:
+          this.kitModelsActions.updateTemp(this.kitModel);
+          break;
+      };
+
+      this.navCtrl.pop();
+    }
+  }
+
+  /**
+   * Checks for errors in the form. Used instead of Angular's Reactive Forms
+   * Validation, because Angular's Validators require inputs, and we had to use
+   * labels as a work around to make ion-items tappable.
+   */
+  checkIfErrors() {
+    this.errors.brand = this.kitModel.brand ? false : true;
+    this.errors.model = this.kitModel.model ? false : true;
+    this.errors.quantity = this.kitModel.quantity ? false : true;
   }
 
   /**
@@ -73,6 +93,14 @@ export class AddKitModelPage {
       if (element) {
         const modifiedkitModel = this.getNewKitModelProperties(type, element);
         this.kitModel = { ...this.kitModel, ...modifiedkitModel };
+        switch (type) {
+          case ItemProperties.brand:
+            this.errors.brand = false;
+            break;
+          case ItemProperties.model:
+            this.errors.model = false;
+            break;
+        }
       }
    });
 

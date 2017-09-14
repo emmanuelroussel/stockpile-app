@@ -5,28 +5,43 @@
 </ion-header>
 
 <ion-content>
-  <form #userForm="ngForm">
-		<ion-list>
-      <ion-item>
-        <ion-label floating color="primary">First Name</ion-label>
-        <ion-input [ngModel]="(user | async)?.firstName" required name="firstName" #firstName="ngModel"></ion-input>
-      </ion-item>
+  <form [formGroup]="userForm" (ngSubmit)="onSave()">
+    <ion-item>
+      <ion-label floating color="primary">First Name</ion-label>
+      <ion-input [ngModel]="(user | async)?.firstName" type="text"
+        formControlName="firstName" (ionBlur)="blur.firstName = true"></ion-input>
+    </ion-item>
+    <p ion-text *ngIf="firstName.errors?.required && blur.firstName" color="danger" padding-left>
+      First Name is required
+    </p>
 
-      <ion-item>
-        <ion-label floating color="primary">Last Name</ion-label>
-        <ion-input [ngModel]="(user | async)?.lastName" required name="lastName" #lastName="ngModel"></ion-input>
-      </ion-item>
+    <ion-item>
+      <ion-label floating color="primary">Last Name</ion-label>
+      <ion-input [ngModel]="(user | async)?.lastName" type="text"
+        formControlName="lastName" (ionBlur)="blur.lastName = true"></ion-input>
+    </ion-item>
+    <p ion-text *ngIf="lastName.errors?.required && blur.lastName" color="danger" padding-left>
+      Last Name is required
+    </p>
 
-      <ion-item>
-        <ion-label floating color="primary">Email</ion-label>
-        <ion-input [ngModel]="(user | async)?.email" required name="email" type="email" #email="ngModel"></ion-input>
-      </ion-item>
-		</ion-list>
+    <ion-item>
+      <ion-label floating color="primary">Email</ion-label>
+      <ion-input [ngModel]="(user | async)?.email" type="email"
+        formControlName="email" (ionBlur)="blur.email = true"></ion-input>
+    </ion-item>
+    <div [hidden]="email.valid || !blur.email" padding-left>
+      <p ion-text *ngIf="email.errors?.required" color="danger">
+        Email is required
+      </p>
+      <p ion-text *ngIf="!email.errors?.required && email.errors?.email" color="danger">
+        Please enter a valid email
+      </p>
+    </div>
+
+    <div padding>
+      <button ion-button type="submit" block>
+        Save
+      </button>
+    </div>
 	</form>
 </ion-content>
-
-<ion-footer padding>
-  <button ion-button (click)="onSave(userForm)" block [disabled]="!userForm.valid">
-    Save
-  </button>
-</ion-footer>

@@ -5,19 +5,28 @@
 </ion-header>
 
 <ion-content>
-  <form #rentalForm="ngForm">
+  <form [formGroup]="rentalForm" (ngSubmit)="onRent()">
 		<ion-list>
       <ion-list-header>Rental Details</ion-list-header>
 
       <ion-item>
 				<ion-label floating color="primary">Return Date</ion-label>
         <!-- Displays date in the following format: Sun 01 Jan, 2017 -->
-        <ion-datetime displayFormat="DDD D MMM, YYYY" pickerFormat="DD MMM YYYY" [ngModel]="details.endDate"  name="endDate" #date="ngModel" required>
+        <ion-datetime displayFormat="DDD D MMM, YYYY" pickerFormat="DD MMM YYYY" type="text" formControlName="endDate">
         </ion-datetime>
 			</ion-item>
+      <div [hidden]="endDate.valid" padding-left>
+        <p ion-text *ngIf="endDate.errors?.required" color="danger">
+          End date is required
+        </p>
+        <p ion-text *ngIf="!endDate.errors?.required && endDate.errors?.invalid" color="danger">
+          End date should be in the future
+        </p>
+      </div>
+
       <ion-item>
         <ion-label floating color="primary">Notes</ion-label>
-        <ion-textarea [ngModel]="details.notes" name="notes" #notes="ngModel"></ion-textarea>
+        <ion-textarea type="text" formControlName="notes"></ion-textarea>
       </ion-item>
 
       <ion-list-header>Scanned Items</ion-list-header>
@@ -26,11 +35,11 @@
         {{ item.brand }} {{ item.model }}
       </ion-item>
     </ion-list>
+
+    <div padding>
+      <button ion-button type="submit" block>
+        Rent
+      </button>
+    </div>
 	</form>
 </ion-content>
-
-<ion-footer padding>
-  <button ion-button (click)="onRent(rentalForm)" block [disabled]="!rentalForm.valid">
-    Rent
-  </button>
-</ion-footer>

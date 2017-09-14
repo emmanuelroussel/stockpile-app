@@ -61,6 +61,27 @@ describe('AddKitModel Page', () => {
     expect(instance.navCtrl.pop).toHaveBeenCalled();
   });
 
+  it('does not update item onSave() if there are errors', () => {
+    spyOn(instance.kitModelsActions, 'updateTemp');
+    spyOn(instance.navCtrl, 'pop');
+    instance.action = Actions.edit;
+    instance.onSave();
+    expect(instance.kitModelsActions.updateTemp).not.toHaveBeenCalled();
+    expect(instance.navCtrl.pop).not.toHaveBeenCalled();
+  });
+
+  it('updates errors on checkIfErrors()', () => {
+    instance.kitModel = {
+      brand: TestData.kitModel.brand
+    };
+    instance.checkIfErrors();
+    expect(instance.errors).toEqual({
+      brand: false,
+      model: true,
+      quantity: true
+    });
+  });
+
   it('creates a modal on presentModal()', () => {
     instance.kitModel = TestData.kitModel;
     spyOn(instance.modalCtrl, 'create').and.callThrough();

@@ -5,30 +5,37 @@
 </ion-header>
 
 <ion-content>
-  <form #itemForm="ngForm">
-		<ion-list>
-      <button ion-item (click)="onPresentModal(itemProperties.brand)" tappable detail-none>
-        <ion-label color="primary">Brand</ion-label>
-        <ion-label>{{kitModel.brand}}</ion-label>
-      </button>
+  <form #itemForm="ngForm" (ngSubmit)="onSave()">
+    <button ion-item type="button" (click)="onPresentModal(itemProperties.brand)" tappable detail-none>
+      <ion-label color="primary">Brand</ion-label>
+      <ion-label>{{kitModel.brand}}</ion-label>
+    </button>
+    <p ion-text *ngIf="errors.brand" color="danger" padding-left>
+      Brand is required
+    </p>
 
-      <button ion-item [disabled]="!kitModel.brandID" (click)="onPresentModal(itemProperties.model)" tappable detail-none>
-        <ion-label color="primary">Model</ion-label>
-        <ion-label>{{kitModel.model}}</ion-label>
-      </button>
+    <button ion-item type="button" [disabled]="!kitModel.brandID" (click)="onPresentModal(itemProperties.model)" tappable detail-none>
+      <ion-label color="primary">Model</ion-label>
+      <ion-label>{{kitModel.model}}</ion-label>
+    </button>
+    <p ion-text *ngIf="errors.model" color="danger" padding-left>
+      Model is required
+    </p>
 
-      <ion-item detail-none>
-        <ion-label color="primary">Quantity</ion-label>
-        <ion-select [(ngModel)]="kitModel.quantity" name="quantity">
-          <ion-option *ngFor="let number of numbers" [value]="number">{{ number }}</ion-option>
-        </ion-select>
-      </ion-item>
-		</ion-list>
+    <ion-item detail-none>
+      <ion-label color="primary">Quantity</ion-label>
+      <ion-select [(ngModel)]="kitModel.quantity" name="quantity">
+        <ion-option *ngFor="let number of numbers" [value]="number">{{ number }}</ion-option>
+      </ion-select>
+    </ion-item>
+    <p ion-text *ngIf="errors.quantity" color="danger" padding-left>
+      Quantity is required
+    </p>
+
+    <div padding>
+      <button ion-button type="submit" block>
+        Save
+      </button>
+    </div>
 	</form>
 </ion-content>
-
-<ion-footer padding>
-  <button ion-button (click)="onSave(itemForm)" block [disabled]="!itemForm.valid">
-    Save
-  </button>
-</ion-footer>

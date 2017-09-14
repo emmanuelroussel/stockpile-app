@@ -10,23 +10,27 @@
 </ion-header>
 
 <ion-content padding>
-  <form #fieldForm="ngForm">
-		<ion-list>
-      <button ion-item *ngIf="type === itemProperties.model" (click)="onSelectBrand()" tappable detail-none>
-        <ion-label color="primary">Brand</ion-label>
-        <ion-label>{{field?.brand}}</ion-label>
-      </button>
+  <form [formGroup]="fieldForm" (ngSubmit)="onSave()">
+    <button ion-item type="button" *ngIf="type === itemProperties.model" (click)="onSelectBrand()" tappable detail-none>
+      <ion-label color="primary">Brand</ion-label>
+      <ion-label>{{field?.brand}}</ion-label>
+    </button>
+    <p ion-text *ngIf="errors.brand" color="danger" padding-left>
+      Brand is required
+    </p>
 
-      <ion-item>
-        <ion-label floating color="primary">Name</ion-label>
-        <ion-input [ngModel]="field?.name" required name="name" #name="ngModel"></ion-input>
-      </ion-item>
-		</ion-list>
+    <ion-item>
+      <ion-label floating color="primary">Name</ion-label>
+      <ion-input [ngModel]="field?.name" type="text" formControlName="name" (ionBlur)="blur.name = true"></ion-input>
+    </ion-item>
+    <p ion-text *ngIf="name.errors?.required && blur.name" color="danger" padding-left>
+      Name is required
+    </p>
+
+    <div padding>
+      <button ion-button type="submit" block>
+        Save
+      </button>
+    </div>
 	</form>
 </ion-content>
-
-<ion-footer padding>
-  <button ion-button (click)="onSave(fieldForm)" block [disabled]="!fieldForm.valid">
-    Save
-  </button>
-</ion-footer>

@@ -21,6 +21,10 @@ describe('EditField Page', () => {
     fixture.destroy();
   });
 
+  const updateForm = (name: string) => {
+    instance.fieldForm.controls['name'].setValue(name);
+  }
+
   it('is created', () => {
     expect(instance).toBeTruthy();
     expect(fixture).toBeTruthy();
@@ -44,62 +48,82 @@ describe('EditField Page', () => {
     expect(instance.field).toEqual(Actions.edit);
   });
 
+  it('updates form with values', () => {
+    instance.ngOnInit();
+    updateForm(TestData.brand.name);
+    expect(instance.fieldForm.value).toEqual({
+      name: TestData.brand.name
+    });
+  });
+
+  it('validates name', () => {
+    instance.ngOnInit();
+    updateForm('');
+    expect(instance.fieldForm.controls.name.valid).toEqual(false);
+    updateForm(TestData.brand.name);
+    expect(instance.fieldForm.controls.name.valid).toEqual(true);
+  });
+
+  it('sets blur to true onSave()', () => {
+    instance.fieldForm = { valid: false };
+    instance.onSave();
+    expect(instance.blur.name).toEqual(true);
+  });
+
   it('creates brand if action is add', () => {
-    const form = {
-      value: {
-        name: TestData.brand.name
-      }
+    instance.fieldForm = {
+      value: { name: TestData.brand.name },
+      valid: true
     };
     instance.action = Actions.add;
     instance.type = ItemProperties.brand;
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.brandsActions, 'createBrand');
-    instance.onSave(form);
+    instance.onSave();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.creatingBrand);
     expect(instance.brandsActions.createBrand).toHaveBeenCalledWith(TestData.brand.name, true);
   });
 
   it('creates model if action is add', () => {
-    const form = {
-      value: {
-        name: TestData.model.name
-      }
+    instance.fieldForm = {
+      value: { name: TestData.model.name },
+      valid: true
     };
     instance.action = Actions.add;
     instance.type = ItemProperties.model;
     instance.field = TestData.model;
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.modelsActions, 'createModel');
-    instance.onSave(form);
+    instance.onSave();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.creatingModel);
     expect(instance.modelsActions.createModel).toHaveBeenCalledWith(TestData.model.name, TestData.model.brandID, true);
   });
 
   it('creates category if action is add', () => {
-    const form = {
-      value: {
-        name: TestData.category.name
-      }
+    instance.fieldForm = {
+      value: { name: TestData.category.name },
+      valid: true
     };
     instance.action = Actions.add;
     instance.type = ItemProperties.category;
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.categoriesActions, 'createCategory');
-    instance.onSave(form);
+    instance.onSave();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.creatingCategory);
     expect(instance.categoriesActions.createCategory).toHaveBeenCalledWith(TestData.category.name, true);
   });
 
   it('updates brand if action is edit', () => {
-    const form = {
-      value: TestData.brand
+    instance.fieldForm = {
+      value: TestData.brand,
+      valid: true
     };
     instance.action = Actions.edit;
     instance.type = ItemProperties.brand;
     instance.field = TestData.brand;
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.brandsActions, 'updateBrand');
-    instance.onSave(form);
+    instance.onSave();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.updatingBrand);
     expect(instance.brandsActions.updateBrand).toHaveBeenCalledWith({
       name: TestData.brand.name,
@@ -108,15 +132,16 @@ describe('EditField Page', () => {
   });
 
   it('updates model if action is edit', () => {
-    const form = {
-      value: TestData.model
+    instance.fieldForm = {
+      value: TestData.model,
+      valid: true
     };
     instance.action = Actions.edit;
     instance.type = ItemProperties.model;
     instance.field = TestData.model;
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.modelsActions, 'updateModel');
-    instance.onSave(form);
+    instance.onSave();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.updatingModel);
     expect(instance.modelsActions.updateModel).toHaveBeenCalledWith({
       modelID: TestData.model.modelID,
@@ -126,20 +151,48 @@ describe('EditField Page', () => {
   });
 
   it('updates category if action is edit', () => {
-    const form = {
-      value: TestData.category
+    instance.fieldForm = {
+      value: TestData.category,
+      valid: true
     };
     instance.action = Actions.edit;
     instance.type = ItemProperties.category;
     instance.field = TestData.category;
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.categoriesActions, 'updateCategory');
-    instance.onSave(form);
+    instance.onSave();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.updatingCategory);
     expect(instance.categoriesActions.updateCategory).toHaveBeenCalledWith({
       name: TestData.category.name,
       categoryID: TestData.category.categoryID
     });
+  });
+
+  it('does not update field if form is invalid', () => {
+    instance.fieldForm = {
+      valid: false
+    };
+    instance.action = Actions.edit;
+    instance.type = ItemProperties.category;
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.categoriesActions, 'updateCategory');
+    instance.onSave();
+    expect(instance.layoutActions.showLoadingMessage).not.toHaveBeenCalledWith();
+    expect(instance.categoriesActions.updateCategory).not.toHaveBeenCalled();
+  });
+
+  it('does not update model if there is a brand error', () => {
+    instance.fieldForm = {
+      valid: true
+    };
+    instance.errors.brand = true;
+    instance.action = Actions.edit;
+    instance.type = ItemProperties.category;
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.categoriesActions, 'updateCategory');
+    instance.onSave();
+    expect(instance.layoutActions.showLoadingMessage).not.toHaveBeenCalledWith();
+    expect(instance.categoriesActions.updateCategory).not.toHaveBeenCalled();
   });
 
   it('creates an alert onDelete()', () => {
@@ -200,5 +253,12 @@ describe('EditField Page', () => {
 
     instance.updateModel(TestData.brand);
     expect(instance.field).toEqual(newField);
+  });
+
+  it('gets name', () => {
+    instance.fieldForm = {
+      get: (key: string) => TestData.model[key]
+    };
+    expect(instance.name).toEqual(TestData.model.name);
   });
 });
