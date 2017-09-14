@@ -9,7 +9,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <form [formGroup]="fieldForm" (ngSubmit)="onSave()">
     <button ion-item type="button" *ngIf="type === itemProperties.model" (click)="onSelectBrand()" tappable detail-none>
       <ion-label color="primary">Brand</ion-label>

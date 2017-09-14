@@ -9,7 +9,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-list>
     <ion-list-header>{{ typePlural }}</ion-list-header>
     <button ion-item *ngFor="let field of (fields | async).results | mapToIterable" (click)="onViewField(field)">
