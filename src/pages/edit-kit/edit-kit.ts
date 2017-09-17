@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { NavController, NavParams, ModalController, Events, AlertController } from 'ionic-angular';
 
 import { AddKitModelPage } from '../add-kit-model/add-kit-model';
@@ -19,6 +19,8 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: 'edit-kit.html'
 })
 export class EditKitPage {
+  kitForm: FormGroup;
+  blur = { name: false };
   actions = Actions;
   action: Actions = '';
   kit: Observable<Kit>;
@@ -35,7 +37,8 @@ export class EditKitPage {
     public kitModelsService: KitModelsService,
     public kitModelsActions: KitModelsActions,
     public kitsActions: KitsActions,
-    public layoutActions: LayoutActions
+    public layoutActions: LayoutActions,
+    public formBuilder: FormBuilder
   ) {}
 
   /**
@@ -48,6 +51,10 @@ export class EditKitPage {
     this.kitModelsActions.resetTempKitModels();
     this.showLoadingSpinner = this.kitModelsService.getShouldShowLoadingSpinner();
 
+    this.kitForm = this.formBuilder.group({
+      name: ['', Validators.required],
+    });
+
     if (this.action === Actions.edit) {
       const kitID = this.navParams.get('kitID');
       this.kitModelsActions.fetchKitModels(kitID);
@@ -58,37 +65,41 @@ export class EditKitPage {
   /**
    * Creates or updates the kit, and creates and deletes kit models.
    */
-  onSave(form: NgForm) {
-    let kitModels;
-    this.kitModels.take(1).subscribe(tempKitModels => kitModels = tempKitModels);
+  onSave() {
+    this.blur.name = true;
 
-    if (!kitModels.length) {
-      let alert = this.alertCtrl.create({
-        title: 'No items in kit',
-        message: 'Please add at least one item to the kit',
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel'
-          },
-          {
-            text: 'Add Item',
-            handler: () => this.onAddItem(Actions.add)
-          }
-        ]
-      });
+    if (this.kitForm.valid) {
+      let kitModels;
+      this.kitModels.take(1).subscribe(tempKitModels => kitModels = tempKitModels);
 
-      alert.present();
-    } else {
-      if (this.action === Actions.add) {
-        this.layoutActions.showLoadingMessage(LoadingMessages.creatingKit);
-        this.kitsActions.createKit(form.value);
+      if (!kitModels.length) {
+        let alert = this.alertCtrl.create({
+          title: 'No items in kit',
+          message: 'Please add at least one item to the kit',
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel'
+            },
+            {
+              text: 'Add Item',
+              handler: () => this.onAddItem(Actions.add)
+            }
+          ]
+        });
+
+        alert.present();
       } else {
-        let kitID;
-        this.kit.take(1).subscribe(kit => kitID = kit.kitID);
+        if (this.action === Actions.add) {
+          this.layoutActions.showLoadingMessage(LoadingMessages.creatingKit);
+          this.kitsActions.createKit(this.kitForm.value);
+        } else {
+          let kitID;
+          this.kit.take(1).subscribe(kit => kitID = kit.kitID);
 
-        this.layoutActions.showLoadingMessage(LoadingMessages.updatingKit);
-        this.kitsActions.updateKit({ name: form.value.name, kitID });
+          this.layoutActions.showLoadingMessage(LoadingMessages.updatingKit);
+          this.kitsActions.updateKit({ name: this.kitForm.value.name, kitID });
+        }
       }
     }
   }
@@ -141,4 +152,6 @@ export class EditKitPage {
   onRemoveFromList(modelID: number) {
     this.kitModelsActions.deleteTemp(modelID);
   }
+
+  get name() { return this.kitForm.get('name'); }
 }

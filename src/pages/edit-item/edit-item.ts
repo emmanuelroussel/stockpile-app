@@ -22,6 +22,11 @@ export class EditItemPage {
   itemProperties = ItemProperties;
   action: Actions = '';
   tempItem: Observable<any>;
+  errors = {
+    brand: false,
+    model: false,
+    category: false
+  };
 
   constructor(
     public navParams: NavParams,
@@ -72,20 +77,38 @@ export class EditItemPage {
    * Updates or creates item depending on the action.
    */
   onSave() {
-    let item;
-    this.tempItem.take(1).subscribe(i => item = {
-      modelID: i.modelID,
-      categoryID: i.categoryID,
-      barcode: i.barcode
-    });
+    this.checkIfErrors();
 
-    if (this.action === Actions.add) {
-      this.layoutActions.showLoadingMessage(LoadingMessages.creatingItem);
-      this.itemsActions.createItem(item);
-    } else if (this.action === Actions.edit) {
-      this.layoutActions.showLoadingMessage(LoadingMessages.updatingItem);
-      this.itemsActions.updateItem(item);
+    if (!this.errors.brand && !this.errors.model && !this.errors.category) {
+      let item;
+      this.tempItem.take(1).subscribe(i => item = {
+        modelID: i.modelID,
+        categoryID: i.categoryID,
+        barcode: i.barcode
+      });
+
+      if (this.action === Actions.add) {
+        this.layoutActions.showLoadingMessage(LoadingMessages.creatingItem);
+        this.itemsActions.createItem(item);
+      } else if (this.action === Actions.edit) {
+        this.layoutActions.showLoadingMessage(LoadingMessages.updatingItem);
+        this.itemsActions.updateItem(item);
+      }
     }
+  }
+
+  /**
+   * Checks for errors in the form. Used instead of Angular's Reactive Forms
+   * Validation, because Angular's Validators require inputs, and we had to use
+   * labels as a work around to make ion-items tappable.
+   */
+  checkIfErrors() {
+    let item;
+    this.tempItem.take(1).subscribe(i => item = i);
+
+    this.errors.brand = item.brand ? false : true;
+    this.errors.model = item.model ? false : true;
+    this.errors.category = item.category ? false : true;
   }
 
   /**
@@ -152,18 +175,21 @@ export class EditItemPage {
           modelID: null,
           model: ''
         });
+        this.errors.brand = false;
         break;
       case ItemProperties.model:
         this.itemsActions.updateTempItem({
           modelID: element.modelID,
           model: element.name
         });
+        this.errors.model = false;
         break;
       case ItemProperties.category:
         this.itemsActions.updateTempItem({
           categoryID: element.categoryID,
           category: element.name
         });
+        this.errors.category = false;
         break;
     }
   }

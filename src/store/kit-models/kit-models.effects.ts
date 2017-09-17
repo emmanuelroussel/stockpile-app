@@ -95,7 +95,8 @@ export class KitModelsEffects {
             kitID: action.payload.kitID
           }),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-          createAction(AppActions.SHOW_MESSAGE, action.payload.message)
+          createAction(AppActions.SHOW_MESSAGE, action.payload.message),
+          createAction(AppActions.POP_NAV)
         ])
         .catch(err => Observable.of(
           createAction(KitModelsActions.UPDATE_FAIL, err),

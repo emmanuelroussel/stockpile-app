@@ -7,7 +7,7 @@ import 'zone.js/dist/jasmine-patch';
 import 'zone.js/dist/async-test';
 import 'zone.js/dist/fake-async-test';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
@@ -133,7 +133,7 @@ export class TestUtils {
       ],
       providers: [
         App, Form, Keyboard, DomController, MenuController, GestureController,
-        NgForm, AlertController, Events,
+        NgForm, AlertController, Events, FormBuilder, Validators,
         { provide: Platform, useClass: PlatformMock },
         { provide: Config, useClass: ConfigMock },
         { provide: NavController, useClass: NavMock },
@@ -166,7 +166,7 @@ export class TestUtils {
         { provide: OrganizationService, useClass: OrganizationServiceMock },
         { provide: UserService, useClass: UserServiceMock },
         { provide: InAppBrowser, useClass: InAppBrowserMock },
-        { provide: DeepLinker, useValue: DeepLinkerMock },
+        { provide: DeepLinker, useClass: DeepLinkerMock }
       ],
       imports: [
         FormsModule,

@@ -37,7 +37,7 @@ export class CategoriesEffects {
   @Effect()
   create$ = this.actions$
     .ofType(CategoriesActions.CREATE)
-    .mergeMap(action => this.itemPropertyData.createCategory(action.payload.name)
+    .mergeMap(action => this.itemPropertyData.createCategory({ name: action.payload.name })
       .concatMap(res => {
         let success = [
           createAction(CategoriesActions.CREATE_SUCCESS, res),

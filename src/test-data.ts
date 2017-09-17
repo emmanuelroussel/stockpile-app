@@ -200,7 +200,8 @@ export class TestData {
   public static model = {
     name: 'T5i',
     modelID: 1,
-    brandID: 4
+    brandID: 4,
+    brand: 'Canon'
   };
 
   public static filteredModels = [
@@ -265,9 +266,9 @@ export class TestData {
   };
 
   public static passwords = {
-    currentPassword: 'monkey',
-    newPassword: 'donkey',
-    confirmPassword: 'donkey'
+    currentPassword: 'monkey1',
+    newPassword: 'donkey1',
+    confirmPassword: 'donkey1'
   };
 
   public static organization = {

@@ -10,33 +10,41 @@
 </ion-header>
 
 <ion-content>
-  <form #itemForm="ngForm">
-		<ion-list>
-      <button ion-item disabled detail-none>
-        <ion-label color="primary">Barcode</ion-label>
-        <ion-label>{{(tempItem | async).barcode}}</ion-label>
-      </button>
+  <form (ngSubmit)="onSave()">
+    <button ion-item type="button" disabled detail-none>
+      <ion-label color="primary">Barcode</ion-label>
+      <ion-label>{{(tempItem | async).barcode}}</ion-label>
+    </button>
 
-      <button ion-item (click)="onPresentModal(itemProperties.brand)" tappable detail-none>
-        <ion-label color="primary">Brand</ion-label>
-        <ion-label>{{(tempItem | async).brand}}</ion-label>
-      </button>
+    <button ion-item type="button" (click)="onPresentModal(itemProperties.brand)" tappable detail-none>
+      <ion-label color="primary">Brand</ion-label>
+      <ion-label>{{(tempItem | async).brand}}</ion-label>
+    </button>
+    <p ion-text *ngIf="errors.brand" color="danger" padding-left>
+      Brand is required
+    </p>
 
-      <button ion-item [disabled]="!(tempItem | async).brandID" (click)="onPresentModal(itemProperties.model)" tappable detail-none>
-        <ion-label color="primary">Model</ion-label>
-        <ion-label>{{(tempItem | async).model}}</ion-label>
-      </button>
+    <button ion-item type="button" [disabled]="!(tempItem | async).brandID"
+      (click)="onPresentModal(itemProperties.model)" tappable detail-none>
+      <ion-label color="primary">Model</ion-label>
+      <ion-label>{{(tempItem | async).model}}</ion-label>
+    </button>
+    <p ion-text *ngIf="errors.model" color="danger" padding-left>
+      Model is required
+    </p>
 
-      <button ion-item (click)="onPresentModal(itemProperties.category)" tappable detail-none>
-        <ion-label color="primary">Category</ion-label>
-        <ion-label>{{(tempItem | async).category}}</ion-label>
+    <button ion-item type="button" (click)="onPresentModal(itemProperties.category)" tappable detail-none>
+      <ion-label color="primary">Category</ion-label>
+      <ion-label>{{(tempItem | async).category}}</ion-label>
+    </button>
+    <p ion-text *ngIf="errors.category" color="danger" padding-left>
+      Category is required
+    </p>
+
+    <div padding>
+      <button ion-button type="submit" block>
+        Save
       </button>
-		</ion-list>
+    </div>
 	</form>
 </ion-content>
-
-<ion-footer padding>
-  <button ion-button (click)="onSave(itemForm)" block [disabled]="!itemForm.valid">
-    Save
-  </button>
-</ion-footer>

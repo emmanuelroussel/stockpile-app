@@ -76,6 +76,31 @@ describe('EditItem Page', () => {
     expect(instance.itemsActions.updateItem).toHaveBeenCalledWith(TestData.item);
   });
 
+  it('does not update item onSave() if there are errors', () => {
+    instance.action = Actions.edit;
+    instance.tempItem = Observable.of({
+      brand: TestData.apiItem.brand
+    });
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.itemsActions, 'updateItem');
+    instance.onSave();
+    expect(instance.layoutActions.showLoadingMessage).not.toHaveBeenCalled();
+    expect(instance.itemsActions.updateItem).not.toHaveBeenCalled();
+  });
+
+  it('updates errors on checkIfErrors()', () => {
+    instance.tempItem = Observable.of({
+      brand: TestData.apiItem.brand,
+      model: TestData.apiItem.model
+    });
+    instance.checkIfErrors();
+    expect(instance.errors).toEqual({
+      brand: false,
+      model: false,
+      category: true
+    });
+  });
+
   it('creates an alert onDelete()', () => {
     spyOn(instance.alertCtrl, 'create').and.callThrough();
     instance.onDelete();

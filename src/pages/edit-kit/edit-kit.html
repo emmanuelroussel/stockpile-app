@@ -10,15 +10,19 @@
 </ion-header>
 
 <ion-content>
-  <form #kitForm="ngForm">
-		<ion-list>
-      <ion-item>
-        <ion-label floating color="primary">Name</ion-label>
-        <ion-input [ngModel]="(kit | async)?.name" required name="name" #name="ngModel"></ion-input>
-      </ion-item>
+  <form [formGroup]="kitForm" (ngSubmit)="onSave()">
+    <ion-item>
+      <ion-label floating color="primary">Name</ion-label>
+      <ion-input [ngModel]="(kit | async)?.name" type="text" formControlName="name" (ionBlur)="blur.name = true"></ion-input>
+    </ion-item>
+    <p ion-text *ngIf="name.errors?.required && blur.name" color="danger" padding-left>
+      Name is required
+    </p>
 
+    <ion-list>
       <ion-list-header>Items</ion-list-header>
-      <button ion-item *ngFor="let kitModel of (kitModels | async)" (click)="onAddItem(actions.edit, kitModel)" detail-none>
+      <button ion-item *ngFor="let kitModel of (kitModels | async)"
+        (click)="onAddItem(actions.edit, kitModel)" type="button" detail-none>
         <span item-left>{{ kitModel.quantity }}</span>
         {{ kitModel.brand }} {{ kitModel.model }}
         <button ion-button clear item-right color="dark" (click)="onRemoveFromList(kitModel.modelID)">
@@ -32,10 +36,14 @@
 
       <ion-spinner class="center-spinner" *ngIf="showLoadingSpinner | async"></ion-spinner>
 		</ion-list>
+
+    <div padding>
+      <button ion-button type="button" (click)="onAddItem(actions.add)" block outline>
+        Add Item to Kit
+      </button>
+    	<button ion-button type="submit" block>
+        Save
+      </button>
+    </div>
 	</form>
 </ion-content>
-
-<ion-footer padding>
-  <button ion-button (click)="onAddItem(actions.add)" block outline>Add Item to Kit</button>
-	<button ion-button (click)="onSave(kitForm)" block [disabled]="!kitForm.valid">Save</button>
-</ion-footer>

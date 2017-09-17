@@ -22,6 +22,10 @@ describe('EditKit Page', () => {
     fixture.destroy();
   });
 
+  const updateForm = (name: string) => {
+    instance.kitForm.controls['name'].setValue(name);
+  }
+
   it('is created', () => {
     expect(instance).toBeTruthy();
     expect(fixture).toBeTruthy();
@@ -40,45 +44,73 @@ describe('EditKit Page', () => {
     expect(instance.kitModelsActions.fetchKitModels).toHaveBeenCalled();
   });
 
+  it('updates form with values', () => {
+    instance.ngOnInit();
+    updateForm(TestData.kit.name);
+    expect(instance.kitForm.value).toEqual({ name: TestData.kit.name });
+  });
+
+  it('validates name', () => {
+    instance.ngOnInit();
+    updateForm('');
+    expect(instance.kitForm.controls.name.valid).toEqual(false);
+    updateForm(TestData.kit.name);
+    expect(instance.kitForm.controls.name.valid).toEqual(true);
+  });
+
   it('creates an alert if there are no kit models onSave()', () => {
+    instance.kitForm = { valid: true };
     instance.kitModels = Observable.of([]);
     spyOn(instance.alertCtrl, 'create').and.callThrough();
     instance.onSave();
     expect(instance.alertCtrl.create).toHaveBeenCalled();
   });
 
+  it('sets blur to true onSave()', () => {
+    instance.kitForm = { valid: false };
+    instance.onSave();
+    expect(instance.blur.name).toEqual(true);
+  });
+
   it('creates kit onSave() if action is add', () => {
-    const form = {
-      value: {
-        name: TestData.kit.name
-      }
+    instance.kitForm = {
+      value: { name: TestData.kit.name },
+      valid: true
     };
     instance.action = Actions.add;
     instance.kitModels = Observable.of([TestData.kitModel.modelID]);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.kitsActions, 'createKit');
-    instance.onSave(form);
+    instance.onSave();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.creatingKit);
-    expect(instance.kitsActions.createKit).toHaveBeenCalledWith(form.value);
+    expect(instance.kitsActions.createKit).toHaveBeenCalledWith({ name: TestData.kit.name });
   });
 
   it('updates kit onSave() if action is edit', () => {
-    const form = {
-      value: {
-        name: TestData.kit.name
-      }
+    instance.kitForm = {
+      value: { name: TestData.kit.name },
+      valid: true
     };
     instance.action = Actions.edit;
     instance.kit = Observable.of(TestData.kit);
     instance.kitModels = Observable.of([TestData.kitModel.modelID]);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.kitsActions, 'updateKit');
-    instance.onSave(form);
+    instance.onSave();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.updatingKit);
     expect(instance.kitsActions.updateKit).toHaveBeenCalledWith({
       name: TestData.kit.name,
       kitID: TestData.kit.kitID
     });
+  });
+
+  it('it does not save kit onSave() if the form is invalid', () => {
+    instance.kitForm = { valid: false };
+    spyOn(instance.kitsActions, 'updateKit');
+    spyOn(instance.kitsActions, 'createKit');
+    instance.onSave();
+    expect(instance.kitsActions.updateKit).not.toHaveBeenCalled();
+    expect(instance.kitsActions.createKit).not.toHaveBeenCalled();
   });
 
   it('creates an alert onDelete()', () => {
@@ -109,5 +141,12 @@ describe('EditKit Page', () => {
     spyOn(instance.kitModelsActions, 'deleteTemp');
     instance.onRemoveFromList(TestData.kitModel.modelID);
     expect(instance.kitModelsActions.deleteTemp).toHaveBeenCalledWith(TestData.kitModel.modelID);
+  });
+
+  it('gets name', () => {
+    instance.kitForm = {
+      get: (key: string) => TestData.kit[key]
+    };
+    expect(instance.name).toEqual(TestData.kit.name);
   });
 });

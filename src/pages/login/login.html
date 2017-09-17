@@ -9,31 +9,35 @@
 		<img src="assets/img/stockpile_logo.svg" alt="Stockpile logo">
 	</div>
 
-	<form #loginForm="ngForm" novalidate>
-		<ion-list>
-			<ion-item>
-				<ion-label floating color="dark">Email</ion-label>
-				<ion-input [(ngModel)]="login.email" name="email" type="email"
-          #username="ngModel" spellcheck="false" autocapitalize="off" required
-          pattern="[a-zA-Z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-zA-Z0-9-]+(\.[a-z0-9-]+)*"  minlength="4" >
-				</ion-input>
-			</ion-item>
+	<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+		<ion-item>
+			<ion-label floating color="primary">Email</ion-label>
+			<ion-input type="email" formControlName="email" (ionBlur)="blur.email = true"></ion-input>
+		</ion-item>
+    <div [hidden]="email.valid || !blur.email" padding-left>
+      <p ion-text *ngIf="email.errors?.required" color="danger">
+        Email is required
+      </p>
+      <p ion-text *ngIf="!email.errors?.required && email.errors?.email" color="danger">
+        Please enter a valid email
+      </p>
+    </div>
 
-			<ion-item>
-				<ion-label floating color="dark">Password</ion-label>
-				<ion-input [(ngModel)]="login.password" name="password" type="password"
-          #password="ngModel" minlength="4" required>
-				</ion-input>
-			</ion-item>
-		</ion-list>
+		<ion-item>
+			<ion-label floating color="primary">Password</ion-label>
+			<ion-input type="password" formControlName="password" (ionBlur)="blur.password = true"></ion-input>
+		</ion-item>
+    <p ion-text *ngIf="password.errors?.required && blur.password" color="danger" padding-left>
+      Password is required
+    </p>
+
+    <div padding>
+      <button ion-button type="button" (click)="onSignup()" block outline>
+        Create an account
+      </button>
+      <button ion-button type="submit" block>
+        Login
+      </button>
+    </div>
 	</form>
 </ion-content>
-
-<ion-footer padding>
-   <button ion-button (click)="onSignup()" block outline>
-     Create an account
-  </button>
-  <button ion-button (click)="onLogin(loginForm)" block [disabled]="!loginForm.valid">
-    Login
-  </button>
-</ion-footer>

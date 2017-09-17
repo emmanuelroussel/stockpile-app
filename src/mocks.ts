@@ -92,9 +92,7 @@ export class NavMock {
   }
 }
 
-export class DeepLinkerMock {
-
-}
+export class DeepLinkerMock {}
 
 export class PlatformMock {
   currPlatform: string = 'core';
