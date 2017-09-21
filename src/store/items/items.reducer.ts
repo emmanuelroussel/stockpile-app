@@ -26,6 +26,8 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
         ),
         showLoadingSpinner: false
       };
+    case ItemsActions.FETCH_FAIL:
+      return { ...items, showLoadingSpinner: false };
     case ItemsActions.CREATE_SUCCESS:
       return {
         ...items,

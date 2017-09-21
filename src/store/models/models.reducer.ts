@@ -27,6 +27,8 @@ export function modelsReducer(models: Models = initialState, action: Action): Mo
         showAddNew: false,
         showLoadingSpinner: false
       };
+    case ModelsActions.FETCH_FAIL:
+      return { ...models, showLoadingSpinner: false };
     case ModelsActions.CREATE_SUCCESS:
     case ModelsActions.UPDATE_SUCCESS:
       return {

@@ -25,7 +25,7 @@ export function customFieldsReducer(customFields: CustomFields = initialState, a
         showLoadingSpinner: false
       };
     case CustomFieldsActions.FETCH_FAIL:
-      return { ...customFields, loading: false };
+      return { ...customFields, showLoadingSpinner: false };
     case CustomFieldsActions.DELETE_SUCCESS:
       const results = Object.assign({}, customFields.results);
       delete results[action.payload.id];

@@ -24,6 +24,8 @@ export function kitModelsReducer(kitModels: KitModels = initialState, action: Ac
         tempKitModels: action.payload.results,
         showLoadingSpinner: false
       };
+    case KitModelsActions.FETCH_FAIL:
+      return { ...kitModels, showLoadingSpinner: false };
     case KitModelsActions.UPDATE_SUCCESS:
       return {
         ...kitModels,

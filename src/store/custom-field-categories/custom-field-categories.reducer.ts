@@ -26,6 +26,8 @@ export function customFieldCategoriesReducer(
         tempCustomFieldCategories: action.payload.results,
         showLoadingSpinner: false
       };
+    case CustomFieldCategoriesActions.FETCH_FAIL:
+      return { ...customFieldCategories, showLoadingSpinner: false };
     case CustomFieldCategoriesActions.UPDATE_SUCCESS:
       return {
         ...customFieldCategories,
