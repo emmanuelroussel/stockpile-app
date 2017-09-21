@@ -75,39 +75,15 @@ export class EditCustomFieldPage {
     this.blur.name = true;
 
     if (this.customFieldForm.valid) {
-      let customFieldCategories;
-      this.customFieldCategories.take(1).subscribe(
-        tempCustomFieldCategories => customFieldCategories = tempCustomFieldCategories
-      );
-
-      if (!customFieldCategories.length) {
-        let alert = this.alertCtrl.create({
-          title: 'No categories associated to custom field',
-          message: 'Please apply the custom fields to at least one category',
-          buttons: [
-            {
-              text: 'Cancel',
-              role: 'cancel'
-            },
-            {
-              text: 'Add Category',
-              handler: () => this.onModifyCategories()
-            }
-          ]
-        });
-
-        alert.present();
+      if (this.action === Actions.add) {
+        this.layoutActions.showLoadingMessage(LoadingMessages.creatingCustomField);
+        this.customFieldsActions.createCustomField(this.customFieldForm.value);
       } else {
-        if (this.action === Actions.add) {
-          this.layoutActions.showLoadingMessage(LoadingMessages.creatingCustomField);
-          this.customFieldsActions.createCustomField(this.customFieldForm.value);
-        } else {
-          let customFieldID;
-          this.customField.take(1).subscribe(customField => customFieldID = customField.customFieldID);
+        let customFieldID;
+        this.customField.take(1).subscribe(customField => customFieldID = customField.customFieldID);
 
-          this.layoutActions.showLoadingMessage(LoadingMessages.updatingCustomField);
-          this.customFieldsActions.updateCustomField({ name: this.customFieldForm.value.name, customFieldID });
-        }
+        this.layoutActions.showLoadingMessage(LoadingMessages.updatingCustomField);
+        this.customFieldsActions.updateCustomField({ name: this.customFieldForm.value.name, customFieldID });
       }
     }
   }
@@ -142,6 +118,13 @@ export class EditCustomFieldPage {
 
     this.layoutActions.showLoadingMessage(LoadingMessages.deletingCustomField);
     this.customFieldsActions.deleteCustomField(customFieldID);
+  }
+
+  /**
+   * Selects all categories.
+   */
+  onSelectAll() {
+    this.customFieldCategoriesActions.resetTempCustomFieldCategories();
   }
 
   /**

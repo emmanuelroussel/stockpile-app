@@ -26,13 +26,16 @@
       </ion-item>
 
       <ion-item *ngIf="!(customFieldCategories | async).length && !(showLoadingSpinner | async)">
-        No categories found
+        All
       </ion-item>
 
       <ion-spinner class="center-spinner" *ngIf="showLoadingSpinner | async"></ion-spinner>
 		</ion-list>
 
     <div padding>
+      <button ion-button type="button" (click)="onSelectAll()" *ngIf="(customFieldCategories | async).length" block outline>
+        Select all categories
+      </button>
       <button ion-button type="button" (click)="onModifyCategories()" block outline>
         Modify categories
       </button>

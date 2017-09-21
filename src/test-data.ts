@@ -588,7 +588,8 @@ export class TestData {
           organizationID: 1
         }
       ],
-      showLoadingSpinner: false
+      showLoadingSpinner: false,
+      selectAll: true
     },
     customFields: {
       results: [

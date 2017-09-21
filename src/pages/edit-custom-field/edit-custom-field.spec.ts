@@ -57,14 +57,6 @@ describe('EditCustomField Page', () => {
     expect(instance.customFieldForm.controls.name.valid).toEqual(true);
   });
 
-  it('creates an alert if there are no categories onSave()', () => {
-    instance.customFieldForm = { valid: true };
-    instance.customFieldCategories = Observable.of([]);
-    spyOn(instance.alertCtrl, 'create').and.callThrough();
-    instance.onSave();
-    expect(instance.alertCtrl.create).toHaveBeenCalled();
-  });
-
   it('sets blur to true onSave()', () => {
     instance.customFieldForm = { valid: false };
     instance.onSave();
@@ -125,6 +117,12 @@ describe('EditCustomField Page', () => {
     instance.deleteCustomField();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.deletingCustomField);
     expect(instance.customFieldsActions.deleteCustomField).toHaveBeenCalledWith(TestData.customField.customFieldID);
+  });
+
+  it('resets tempCustomFieldCategories onSelectAll()', () => {
+    spyOn(instance.customFieldCategoriesActions, 'resetTempCustomFieldCategories');
+    instance.onSelectAll();
+    expect(instance.customFieldCategoriesActions.resetTempCustomFieldCategories).toHaveBeenCalled();
   });
 
   it('creates an alert onModifyCategories()', () => {
