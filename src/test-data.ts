@@ -566,8 +566,107 @@ export class TestData {
     },
     layout: {
       loadingMessage: 'Please wait...'
+    },
+    customFieldCategories: {
+      results: [
+        {
+          categoryID: 1,
+          customFieldID: 1,
+          name: 'Camera',
+          organizationID: 1
+        },
+        {
+          categoryID: 2,
+          customFieldID: 1,
+          name: 'Mic',
+          organizationID: 1
+        },
+        {
+          categoryID: 3,
+          customFieldID: 1,
+          name: 'Light',
+          organizationID: 1
+        }
+      ],
+      showLoadingSpinner: false
+    },
+    customFields: {
+      results: [
+        {
+          name: 'Cost',
+          customFieldID: 1,
+          organizationID: 1
+        },
+        {
+          name: 'Serial number',
+          customFieldID: 2,
+          organizationID: 1
+        },
+        {
+          name: 'Notes',
+          customFieldID: 3,
+          organizationID: 1
+        }
+      ],
+      showLoadingSpinner: false
     }
   };
 
   public static pop = true;
+
+  public static customField = {
+    name: 'Cost',
+    customFieldID: 1,
+    organizationID: 1
+  };
+
+  public static customFields = {
+    results: [
+      {
+        name: 'Cost',
+        customFieldID: 1,
+        organizationID: 1
+      },
+      {
+        name: 'Serial number',
+        customFieldID: 2,
+        organizationID: 1
+      },
+      {
+        name: 'Notes',
+        customFieldID: 3,
+        organizationID: 1
+      }
+    ]
+  };
+
+  public static customFieldCategory = {
+    categoryID: 1,
+    customFieldID: 1,
+    name: 'Camera',
+    organizationID: 1
+  };
+
+  public static customFieldCategories = {
+    results: [
+      {
+        categoryID: 1,
+        customFieldID: 1,
+        name: 'Camera',
+        organizationID: 1
+      },
+      {
+        categoryID: 2,
+        customFieldID: 1,
+        name: 'Mic',
+        organizationID: 1
+      },
+      {
+        categoryID: 3,
+        customFieldID: 1,
+        name: 'Light',
+        organizationID: 1
+      }
+    ]
+  };
 }

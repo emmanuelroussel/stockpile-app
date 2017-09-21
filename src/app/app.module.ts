@@ -44,10 +44,18 @@ import { ItemsEffects } from '../store/items/items.effects';
 import { ItemsService } from '../services/items.service';
 import { LayoutActions } from '../store/layout/layout.actions';
 import { LayoutService } from '../services/layout.service';
+import { CustomFieldsActions } from '../store/custom-fields/custom-fields.actions';
+import { CustomFieldsEffects } from '../store/custom-fields/custom-fields.effects';
+import { CustomFieldsService } from '../services/custom-fields.service';
+import { CustomFieldCategoriesActions } from '../store/custom-field-categories/custom-field-categories.actions';
+import { CustomFieldCategoriesEffects } from '../store/custom-field-categories/custom-field-categories.effects';
+import { CustomFieldCategoriesService } from '../services/custom-field-categories.service';
 
 import { AddKitModelPage } from '../pages/add-kit-model/add-kit-model';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
+import { CustomFieldsPage } from '../pages/custom-fields/custom-fields';
 import { EditAccountPage } from '../pages/edit-account/edit-account';
+import { EditCustomFieldPage } from '../pages/edit-custom-field/edit-custom-field';
 import { EditItemPage } from '../pages/edit-item/edit-item';
 import { EditFieldPage } from '../pages/edit-field/edit-field';
 import { EditKitPage } from '../pages/edit-kit/edit-kit';
@@ -68,6 +76,7 @@ import { MapToIterablePipe } from '../pipes/map-to-iterable.pipe';
 
 import { Api } from '../providers/api';
 import { ApiUrl } from '../providers/api-url';
+import { CustomFieldData } from '../providers/custom-field-data';
 import { ItemData } from '../providers/item-data';
 import { ItemPropertyData } from '../providers/item-property-data';
 import { KitData } from '../providers/kit-data';
@@ -82,7 +91,9 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     StockpileApp,
     AddKitModelPage,
     ChangePasswordPage,
+    CustomFieldsPage,
     EditAccountPage,
+    EditCustomFieldPage,
     EditItemPage,
     EditFieldPage,
     EditKitPage,
@@ -125,13 +136,17 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     EffectsModule.run(ModelsEffects),
     EffectsModule.run(CategoriesEffects),
     EffectsModule.run(ItemsEffects),
+    EffectsModule.run(CustomFieldsEffects),
+    EffectsModule.run(CustomFieldCategoriesEffects),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     StockpileApp,
     AddKitModelPage,
     ChangePasswordPage,
+    CustomFieldsPage,
     EditAccountPage,
+    EditCustomFieldPage,
     EditItemPage,
     EditFieldPage,
     EditKitPage,
@@ -160,6 +175,13 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     CategoriesActions,
     CategoriesEffects,
     CategoriesService,
+    CustomFieldCategoriesActions,
+    CustomFieldCategoriesEffects,
+    CustomFieldCategoriesService,
+    CustomFieldData,
+    CustomFieldsActions,
+    CustomFieldsEffects,
+    CustomFieldsService,
     InAppBrowser,
     ItemData,
     ItemPropertyData,

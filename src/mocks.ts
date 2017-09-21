@@ -236,6 +236,41 @@ export class AlertMock {
   public present(): any {}
 }
 
+export class CustomFieldDataMock {
+  customFields = TestData.customFields.results;
+  customField = TestData.customField;
+  customFieldCategories = TestData.customFieldCategories.results;
+  resolve: boolean = true;
+
+  public getCustomFields() {
+    return returnObservable(this.resolve, this.customFields);
+  }
+
+  public getCustomField() {
+    return returnObservable(this.resolve, this.customField);
+  }
+
+  public createCustomField() {
+    return returnObservable(this.resolve, TestData.customField);
+  }
+
+  public updateCustomField() {
+    return returnObservable(this.resolve, TestData.customField);
+  }
+
+  public deleteCustomField() {
+    return returnObservable(this.resolve, TestData.response);
+  }
+
+  public getCategories() {
+    return returnObservable(this.resolve, this.customFieldCategories);
+  }
+
+  public updateCategories() {
+    return returnObservable(this.resolve, TestData.response);
+  }
+}
+
 export class ItemDataMock {
   allItems = TestData.items;
   item = TestData.apiItem;
@@ -444,6 +479,21 @@ export class CategoriesActionsMock {
   public filterCategories() {}
 }
 
+export class CustomFieldCategoriesActionsMock {
+  public fetchCustomFieldCategories() {}
+  public deleteTemp() {}
+  public createTemp() {}
+  public updateTemp() {}
+  public resetTempCustomFieldCategories() {}
+}
+
+export class CustomFieldsActionsMock {
+  public fetchCustomFields() {}
+  public deleteCustomField() {}
+  public createCustomField() {}
+  public updateCustomField() {}
+}
+
 export class ItemsActionsMock {
   public fetchItems() {}
   public createItem() {}
@@ -519,6 +569,30 @@ export class CategoriesServiceMock {
 
   public getShouldShowAddNew() {
     return Observable.of(TestData.showAddNew);
+  }
+}
+
+export class CustomFieldCategoriesServiceMock {
+  public getCustomFieldCategories() {
+    return Observable.of(TestData.customFieldCategories);
+  }
+
+  public getShouldShowLoadingSpinner() {
+    return Observable.of(TestData.showLoadingSpinner);
+  }
+
+  public getTempCustomFieldCategories() {
+    return Observable.of(TestData.customFieldCategories.results);
+  }
+}
+
+export class CustomFieldsServiceMock {
+  public getCustomFields() {
+    return Observable.of(TestData.customFields);
+  }
+
+  public getCustomField() {
+    return Observable.of(TestData.customField);
   }
 }
 

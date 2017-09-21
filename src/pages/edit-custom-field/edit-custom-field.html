@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ action }} Custom Field</ion-title>
+    <ion-buttons *ngIf="action === actions.edit" end>
+      <button ion-button icon-only (click)="onDelete()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="customFieldForm" (ngSubmit)="onSave()">
+    <ion-item>
+      <ion-label floating color="primary">Name</ion-label>
+      <ion-input [ngModel]="(customField | async)?.name" type="text" formControlName="name" (ionBlur)="blur.name = true"></ion-input>
+    </ion-item>
+    <p ion-text *ngIf="name.errors?.required && blur.name" color="danger" padding-left>
+      Name is required
+    </p>
+
+    <ion-list>
+      <ion-list-header>Categories</ion-list-header>
+      <ion-item *ngFor="let category of (customFieldCategories | async)">
+        {{ category.name }}
+      </ion-item>
+
+      <ion-item *ngIf="!(customFieldCategories | async).length && !(showLoadingSpinner | async)">
+        No categories found
+      </ion-item>
+
+      <ion-spinner class="center-spinner" *ngIf="showLoadingSpinner | async"></ion-spinner>
+		</ion-list>
+
+    <div padding>
+      <button ion-button type="button" (click)="onModifyCategories()" block outline>
+        Modify categories
+      </button>
+    	<button ion-button type="submit" block>
+        Save
+      </button>
+    </div>
+	</form>
+</ion-content>
