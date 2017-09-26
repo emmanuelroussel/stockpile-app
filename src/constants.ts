@@ -92,6 +92,6 @@ export class ItemProperties {
 
 export const paginationLimit = 10;
 
-export const apiVersion = '^1.0.0';
+export const apiVersion = '^2.0.0';
 
 export const subscribeUrl = 'https://stockpileapp.co/subscribe';

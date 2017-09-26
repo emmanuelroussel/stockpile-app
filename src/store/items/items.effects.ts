@@ -208,15 +208,11 @@ export class ItemsEffects {
     .ofType(ItemsActions.RENT)
     .withLatestFrom(this.store$)
     .mergeMap(([action, store]) => {
-      let rentals = [];
-      const items = Object.keys(store.items.rentals).map((key) => store.items.rentals[key]);
+      const items = Object.keys(store.items.rentals).map((key) => {
+        return { barcode: store.items.rentals[key].barcode };
+      });
 
-      for (const item of items) {
-        const rental = { ...action.payload, barcode: item.barcode };
-        rentals.push(this.itemData.rent(rental).toPromise());
-      }
-
-      return Observable.from(Promise.all(rentals))
+      return this.itemData.rent({ ...action.payload, items })
         .concatMap(() => [
           createAction(ItemsActions.RENT_SUCCESS),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
