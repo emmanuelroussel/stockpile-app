@@ -81,7 +81,7 @@ export class KitModelsEffects {
       // Update the kit models
       kitModelsToUpdate.map(kitModel => {
         models.push(this.kitData.updateKitModel(action.payload.kitID, kitModel).toPromise());
-      })
+      });
 
       // Delete the kit models
       kitModelsToDelete.map(modelID => {

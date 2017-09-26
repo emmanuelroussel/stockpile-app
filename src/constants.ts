@@ -3,7 +3,7 @@ export class Actions {
   public static return = 'Return';
   public static add = 'Add';
   public static edit = 'Edit';
-};
+}
 
 export class Links {
   public static authenticate = '/auth';
