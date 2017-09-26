@@ -6,7 +6,7 @@ import { EditKitPage } from '../edit-kit/edit-kit';
 import { Kits } from '../../models/kits';
 import { KitsService } from '../../services/kits.service';
 
-import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
+import { MapToIterablePipe, SortPipe } from '../../pipes';
 
 import { Observable } from 'rxjs/Observable';
 

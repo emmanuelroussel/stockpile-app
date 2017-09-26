@@ -64,7 +64,7 @@ import { RentalDetailsPage } from '../pages/rental-details/rental-details';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ViewAccountPage } from '../pages/view-account/view-account';
 
-import { MapToIterablePipe } from '../pipes/map-to-iterable.pipe';
+import { MapToIterablePipe, SortPipe } from '../pipes';
 
 import { Api } from '../providers/api';
 import { ApiUrl } from '../providers/api-url';
@@ -97,6 +97,7 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     MapToIterablePipe,
     RentalPage,
     RentalDetailsPage,
+    SortPipe,
     TabsPage,
     ViewAccountPage,
   ],
@@ -183,6 +184,7 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     OrganizationActions,
     OrganizationEffects,
     OrganizationService,
+    SortPipe,
     SplashScreen,
     StatusBar,
     UserActions,

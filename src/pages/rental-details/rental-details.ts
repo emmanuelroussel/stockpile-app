@@ -10,7 +10,7 @@ import { LoadingMessages } from '../../constants';
 import { LayoutActions } from '../../store/layout/layout.actions';
 import { dateLessThan } from '../../utils/validators';
 
-import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
+import { MapToIterablePipe } from '../../pipes';
 
 @Component({
   selector: 'page-rental-details',
