@@ -8,6 +8,6 @@ export class MapToIterablePipe {
     if (!map) {
       return null;
     }
-    return Object.keys(map).map(key => map[key]);
+    return Object.values(map);
   }
 }
