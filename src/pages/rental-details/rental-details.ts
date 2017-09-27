@@ -16,6 +16,7 @@ import { MapToIterablePipe } from '../../pipes';
   templateUrl: 'rental-details.html'
 })
 export class RentalDetailsPage {
+  readonly timezoneOffset: number = (new Date()).getTimezoneOffset() / (60 * 24);
   items: Observable<Items>;
   rentalForm: FormGroup;
 
@@ -36,8 +37,7 @@ export class RentalDetailsPage {
     // We need to offset the date by the difference between the user's timezone
     // and UTC 0 to have an accurate date
     let tomorrow = new Date();
-    const offset = tomorrow.getTimezoneOffset() / (60 * 24);
-    tomorrow.setDate((new Date()).getDate() - offset + 1);
+    tomorrow.setDate(tomorrow.getDate() - this.timezoneOffset + 1);
 
     this.rentalForm = this.formBuilder.group({
       endDate: [
@@ -57,8 +57,7 @@ export class RentalDetailsPage {
       // We need to offset the date by the difference between the user's timezone
       // and UTC 0 to have an accurate date
       let today = new Date();
-      const offset = today.getTimezoneOffset() / (60 * 24);
-      today.setDate((new Date()).getDate() - offset);
+      today.setDate(today.getDate() - this.timezoneOffset);
 
       // Transform dates from ISO 8601 to MySQL date format
       const details = {

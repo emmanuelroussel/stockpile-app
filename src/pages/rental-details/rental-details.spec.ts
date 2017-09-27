@@ -31,8 +31,7 @@ describe('RentalDetails Page', () => {
 
   it('initializes end date to tomorrow', () => {
     let tomorrow = new Date();
-    const offset = tomorrow.getTimezoneOffset() / (60 * 24);
-    tomorrow.setDate((new Date()).getDate() - offset + 1);
+    tomorrow.setDate(tomorrow.getDate() - instance.timezoneOffset + 1);
     instance.ngOnInit();
     expect(instance.rentalForm.value.endDate.substring(0, 10)).toEqual(tomorrow.toISOString().substring(0, 10));
   });
@@ -66,8 +65,7 @@ describe('RentalDetails Page', () => {
       valid: true
     };
     let today = new Date();
-    const offset = today.getTimezoneOffset() / (60 * 24);
-    today.setDate((new Date()).getDate() - offset);
+    today.setDate(today.getDate() - instance.timezoneOffset);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'rentItems');
     instance.onRent();
