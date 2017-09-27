@@ -33,8 +33,11 @@ export class RentalDetailsPage {
   ngOnInit() {
     this.items = this.itemsService.getItems();
 
+    // We need to offset the date by the difference between the user's timezone
+    // and UTC 0 to have an accurate date
     let tomorrow = new Date();
-    tomorrow.setDate((new Date()).getDate() + 1);
+    const offset = tomorrow.getTimezoneOffset() / (60 * 24);
+    tomorrow.setDate((new Date()).getDate() - offset + 1);
 
     this.rentalForm = this.formBuilder.group({
       endDate: [
@@ -51,10 +54,16 @@ export class RentalDetailsPage {
    */
   onRent() {
     if (this.rentalForm.valid) {
+      // We need to offset the date by the difference between the user's timezone
+      // and UTC 0 to have an accurate date
+      let today = new Date();
+      const offset = today.getTimezoneOffset() / (60 * 24);
+      today.setDate((new Date()).getDate() - offset);
+
       // Transform dates from ISO 8601 to MySQL date format
       const details = {
         ...this.rentalForm.value,
-        startDate: (new Date()).toISOString().substring(0, 10), // today
+        startDate: today.toISOString().substring(0, 10), // today
         endDate: this.rentalForm.value.endDate.substring(0, 10)
       };
 
