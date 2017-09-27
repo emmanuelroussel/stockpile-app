@@ -16,8 +16,6 @@ import { ItemsService } from '../../services/items.service';
 import { Items } from '../../models/items';
 import { Observable } from 'rxjs/Observable';
 
-import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
-
 @Component({
   selector: 'page-kit-rental',
   templateUrl: 'kit-rental.html'

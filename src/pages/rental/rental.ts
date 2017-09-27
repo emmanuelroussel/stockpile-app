@@ -12,7 +12,7 @@ import { Items } from '../../models/items';
 import { Observable } from 'rxjs/Observable';
 import { LayoutActions } from '../../store/layout/layout.actions';
 
-import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
+import { MapToIterablePipe } from '../../pipes';
 
 @Component({
   selector: 'page-rental',

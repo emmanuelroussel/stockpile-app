@@ -89,7 +89,7 @@ import { KitData } from './providers/kit-data';
 import { ItemPropertyData } from './providers/item-property-data';
 import { UserData } from './providers/user-data';
 import { Notifications } from './providers/notifications';
-import { MapToIterablePipe } from './pipes/map-to-iterable.pipe';
+import { MapToIterablePipe, SortPipe } from './pipes';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare var __karma__: any;
@@ -129,7 +129,8 @@ export class TestUtils {
     return TestBed.configureTestingModule({
       declarations: [
         ...components,
-        MapToIterablePipe
+        MapToIterablePipe,
+        SortPipe
       ],
       providers: [
         App, Form, Keyboard, DomController, MenuController, GestureController,

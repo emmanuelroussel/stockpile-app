@@ -64,7 +64,7 @@ export class AddKitModelPage {
         case Actions.edit:
           this.kitModelsActions.updateTemp(this.kitModel);
           break;
-      };
+      }
 
       this.navCtrl.pop();
     }

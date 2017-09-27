@@ -11,8 +11,6 @@ import { CategoriesActions } from '../../store/categories/categories.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';
 import { Observable } from 'rxjs/Observable';
 
-import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
-
 @Component({
   selector: 'page-edit-item',
   templateUrl: 'edit-item.html'

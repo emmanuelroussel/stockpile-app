@@ -4,6 +4,7 @@ export interface Model {
   readonly brand: string;
   readonly name: string;
   readonly organizationID: number;
+  readonly sortIndex: number;
 }
 
 export interface Models {

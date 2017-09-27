@@ -14,7 +14,7 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let kit of (kits | async).results | mapToIterable" (click)="onViewKit(kit.kitID)">
+    <button ion-item *ngFor="let kit of (kits | async).results | mapToIterable | sort" (click)="onViewKit(kit.kitID)">
       <h2>{{ kit.name }}</h2>
     </button>
 

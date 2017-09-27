@@ -8,9 +8,8 @@ import { Items } from '../../models/items';
 import { Observable } from 'rxjs/Observable';
 import { LoadingMessages } from '../../constants';
 import { LayoutActions } from '../../store/layout/layout.actions';
-import { dateLessThan } from '../../utils/validators';
 
-import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
+import { MapToIterablePipe } from '../../pipes';
 
 @Component({
   selector: 'page-rental-details',
@@ -75,7 +74,7 @@ export class RentalDetailsPage {
       const endDate = control.value.substring(0, 10);
 
       return startDate > endDate ? { invalid: endDate } : null;
-    }
+    };
   }
 
   get endDate() { return this.rentalForm.get('endDate'); }

@@ -2,6 +2,7 @@ export interface Brand {
   readonly brandID: number;
   readonly name: string;
   readonly organizationID: number;
+  readonly sortIndex: number;
 }
 
 export interface Brands {
