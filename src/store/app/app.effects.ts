@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { App, Platform } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { AppActions } from './app.actions.ts';
+import { AppActions } from './app.actions';
 import { Notifications } from '../../providers/notifications';
 
 @Injectable()

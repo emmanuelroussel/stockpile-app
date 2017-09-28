@@ -5,7 +5,7 @@ import 'rxjs/add/observable/of';
 
 import { createAction } from '../create-action';
 import { BrandsActions } from './brands.actions';
-import { AppActions } from '../app/app.actions.ts';
+import { AppActions } from '../app/app.actions';
 import { ItemPropertyData } from '../../providers/item-property-data';
 import { LayoutActions } from '../layout/layout.actions';
 import { Messages } from '../../constants';
