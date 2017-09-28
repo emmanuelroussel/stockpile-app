@@ -8,7 +8,7 @@ import { AppState } from '../../models/app-state';
 import { createAction } from '../create-action';
 import { KitModelsActions } from './kit-models.actions';
 import { KitData } from '../../providers/kit-data';
-import { AppActions } from '../app/app.actions.ts';
+import { AppActions } from '../app/app.actions';
 import { LayoutActions } from '../layout/layout.actions';
 
 @Injectable()

@@ -5,7 +5,7 @@ import 'rxjs/add/observable/of';
 
 import { createAction } from '../create-action';
 import { KitsActions } from './kits.actions';
-import { AppActions } from '../app/app.actions.ts';
+import { AppActions } from '../app/app.actions';
 import { KitData } from '../../providers/kit-data';
 import { KitModelsActions } from '../kit-models/kit-models.actions';
 import { Messages } from '../../constants';

@@ -9,7 +9,7 @@ import { AppState } from '../../models/app-state';
 
 import { createAction } from '../create-action';
 import { UserActions } from './user.actions';
-import { AppActions } from '../app/app.actions.ts';
+import { AppActions } from '../app/app.actions';
 import { UserData } from '../../providers/user-data';
 import { TabsPage } from '../../pages/tabs/tabs';
 import { OrganizationActions } from '../organization/organization.actions';

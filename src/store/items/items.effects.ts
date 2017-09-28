@@ -9,8 +9,8 @@ import * as constants from '../../constants';
 import { RentalPage } from '../../pages/rental/rental';
 
 import { createAction } from '../create-action';
-import { ItemsActions } from './items.actions.ts';
-import { AppActions } from '../app/app.actions.ts';
+import { ItemsActions } from './items.actions';
+import { AppActions } from '../app/app.actions';
 import { ItemData } from '../../providers/item-data';
 import { Messages } from '../../constants';
 import { LayoutActions } from '../layout/layout.actions';

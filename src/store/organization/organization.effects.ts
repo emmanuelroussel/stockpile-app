@@ -4,8 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 import { createAction } from '../create-action';
-import { OrganizationActions } from './organization.actions.ts';
-import { AppActions } from '../app/app.actions.ts';
+import { OrganizationActions } from './organization.actions';
+import { AppActions } from '../app/app.actions';
 import { UserData } from '../../providers/user-data';
 
 @Injectable()
