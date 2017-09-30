@@ -105,14 +105,7 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(StockpileApp, {
-      tabsHideOnSubPages: true,
-      platforms: {
-        android: {
-          tabsPlacement: 'top',
-          tabsHighlight: true,
-          tabsLayout: 'icon-hide'
-        }
-      }
+      tabsHideOnSubPages: true
     }),
     CloudModule.forRoot(cloudSettings),
     IonicStorageModule.forRoot(),
