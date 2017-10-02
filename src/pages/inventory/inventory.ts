@@ -90,16 +90,6 @@ export class InventoryPage {
   }
 
   /**
-   * Pushes page with the barcode to create.
-   */
-  pushPage(barcode: string) {
-    this.navCtrl.push(EditItemPage, {
-      barcode,
-      action: Actions.add
-    });
-  }
-
-  /**
    * Starts barcode scanner if cordova is available or creates an alert to allow
    * user to enter barcode. Calls pushPage with the input.
    */
@@ -108,7 +98,7 @@ export class InventoryPage {
       this.barcodeScanner.scan().then(
         barcodeData => {
           if (!barcodeData.cancelled) {
-            this.pushPage(barcodeData.text);
+            this.itemsActions.startCreate(barcodeData.text);
           }
         },
         err => this.notifications.showMessage(err)
@@ -130,7 +120,7 @@ export class InventoryPage {
           {
             text: 'Next',
             handler: form => {
-              this.pushPage(form.barcode);
+              this.itemsActions.startCreate(form.barcode);
             }
           }
         ]

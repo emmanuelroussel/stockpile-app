@@ -49,6 +49,8 @@ export class ItemsActions {
 
   static RESET_TEMP_ITEM = type('[Items] Reset Temp');
 
+  static START_CREATE = type('[Items] Start Create');
+
   constructor(
     private store: Store<AppState>
   ) {}
@@ -103,5 +105,9 @@ export class ItemsActions {
 
   resetTempItem() {
     this.store.dispatch(createAction(ItemsActions.RESET_TEMP_ITEM));
+  }
+
+  startCreate(barcode: string) {
+    this.store.dispatch(createAction(ItemsActions.START_CREATE, barcode));
   }
 }
