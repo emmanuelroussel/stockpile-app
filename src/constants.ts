@@ -52,6 +52,7 @@ export class Messages {
   public static passwordsDontMatch = 'Passwords don\'t match';
   public static wrongPassword = 'Password is incorrect';
   public static userDeleted = 'Account succesfully deleted';
+  public static itemAlreadyExists = 'An item with this barcode already exists';
 }
 
 export class LoadingMessages {

@@ -14,6 +14,7 @@ import { AppActions } from '../app/app.actions';
 import { ItemData } from '../../providers/item-data';
 import { Messages } from '../../constants';
 import { LayoutActions } from '../layout/layout.actions';
+import { EditItemPage } from '../../pages/edit-item/edit-item';
 
 @Injectable()
 export class ItemsEffects {
@@ -227,4 +228,33 @@ export class ItemsEffects {
           createAction(AppActions.SHOW_MESSAGE, err.message)
         ));
     });
+
+  /**
+   * Checks whether or not a user can create an item with a specific barcode.
+   */
+  @Effect()
+  startCreate$ = this.actions$
+    .ofType(ItemsActions.START_CREATE)
+    .mergeMap(action => this.itemData.getItem(action.payload)
+      // If we get an item, it means an item with the barcode already exists
+      .map(() => createAction(AppActions.SHOW_MESSAGE, constants.Messages.itemAlreadyExists))
+      .catch(err => {
+        // Push the page if we receive a 404 (barcode doesn't exist)
+        if (err.code === 'NotFoundError') {
+          return Observable.of(
+            createAction(AppActions.PUSH_PAGE, {
+              page: EditItemPage,
+              navParams: {
+                barcode: action.payload,
+                action: constants.Actions.add
+              }
+            })
+          );
+        } else {
+          return Observable.of(
+            createAction(AppActions.SHOW_MESSAGE, err.message)
+          );
+        }
+      })
+    );
 }

@@ -7,6 +7,7 @@ import { ItemDataMock, StoreMock } from '../../mocks';
 import { Store } from '@ngrx/store';
 import { Messages, Actions } from '../../constants';
 import { RentalPage } from '../../pages/rental/rental';
+import { EditItemPage } from '../../pages/edit-item/edit-item';
 
 import { ItemsEffects } from './items.effects';
 import { ItemsActions } from './items.actions';
@@ -324,6 +325,43 @@ describe('Items Effects', () => {
       createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
     ];
     instance.addToRentals$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('pushes page to add item if item does not exist', () => {
+    instance.itemData.resolve = false;
+    runner.queue(createAction(ItemsActions.START_CREATE, TestData.barcode));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(AppActions.PUSH_PAGE, {
+        page: EditItemPage,
+        navParams: {
+          barcode: TestData.barcode,
+          action: Actions.add
+        }
+      })
+    ];
+
+    instance.startCreate$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('does not push page to add item if item exists', () => {
+    runner.queue(createAction(ItemsActions.START_CREATE, TestData.barcode));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(AppActions.SHOW_MESSAGE, Messages.itemAlreadyExists)
+    ];
+
+    instance.startCreate$.take(expectedResult.length).subscribe(
       res => performedActions.push(res),
       err => fail(err),
       () => expect(performedActions).toEqual(expectedResult)

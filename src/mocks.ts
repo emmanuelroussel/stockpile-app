@@ -458,6 +458,7 @@ export class ItemsActionsMock {
   public returnItems() {}
   public rentItems() {}
   public resetTempItem() {}
+  public startCreate() {}
 }
 
 export class KitModelsActionsMock {

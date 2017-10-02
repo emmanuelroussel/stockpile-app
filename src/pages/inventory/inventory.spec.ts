@@ -73,23 +73,14 @@ describe('Inventory Page', () => {
     });
   });
 
-  it('pushes EditItemPage on nav on pushPage()', () => {
-    spyOn(instance.navCtrl, 'push');
-    instance.pushPage(TestData.barcode);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditItemPage, {
-      barcode: TestData.barcode,
-      action: Actions.add
-    });
-  });
-
-  it('calls pushPage with barcode onAdd() if cordova is available', fakeAsync(() => {
+  it('calls startCreate with barcode onAdd() if cordova is available', fakeAsync(() => {
     instance.platform = new PlatformMockIsCordova();
     spyOn(instance.barcodeScanner, 'scan').and.callThrough();
-    spyOn(instance, 'pushPage');
+    spyOn(instance.itemsActions, 'startCreate');
     instance.onAdd();
     tick();
     expect(instance.barcodeScanner.scan).toHaveBeenCalled();
-    expect(instance.pushPage).toHaveBeenCalledWith(TestData.barcodeData.text);
+    expect(instance.itemsActions.startCreate).toHaveBeenCalledWith(TestData.barcodeData.text);
   }));
 
   it('creates an alert onAdd() if cordova is not available', () => {
