@@ -279,7 +279,8 @@ describe('Items Effects', () => {
 
     let performedActions = [];
     const expectedResult = [
-      createAction(ItemsActions.ADD_TO_RENTALS_FAIL, { message: Messages.itemAlreadyRented }),
+      createAction(ItemsActions.ADD_TO_RENTALS_FAIL),
+      createAction(AppActions.SHOW_MESSAGE, Messages.itemAlreadyRented),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE)
     ];
 
@@ -299,7 +300,8 @@ describe('Items Effects', () => {
 
     let performedActions = [];
     const expectedResult = [
-      createAction(ItemsActions.ADD_TO_RENTALS_FAIL, { message: Messages.itemNotRented }),
+      createAction(ItemsActions.ADD_TO_RENTALS_FAIL),
+      createAction(AppActions.SHOW_MESSAGE, Messages.itemNotRented),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE)
     ];
 

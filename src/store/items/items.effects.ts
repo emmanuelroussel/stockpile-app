@@ -136,12 +136,14 @@ export class ItemsEffects {
       .concatMap(res => {
         if (!res.available && action.payload.action === constants.Actions.rent) {
           return [
-            createAction(ItemsActions.ADD_TO_RENTALS_FAIL, { message: Messages.itemAlreadyRented }),
+            createAction(ItemsActions.ADD_TO_RENTALS_FAIL),
+            createAction(AppActions.SHOW_MESSAGE, Messages.itemAlreadyRented),
             createAction(LayoutActions.HIDE_LOADING_MESSAGE)
           ];
         } else if (res.available && action.payload.action === constants.Actions.return) {
           return [
-            createAction(ItemsActions.ADD_TO_RENTALS_FAIL, { message: Messages.itemNotRented }),
+            createAction(ItemsActions.ADD_TO_RENTALS_FAIL),
+            createAction(AppActions.SHOW_MESSAGE, Messages.itemNotRented),
             createAction(LayoutActions.HIDE_LOADING_MESSAGE)
           ];
         } else {
