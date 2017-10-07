@@ -22,7 +22,7 @@
     <ion-list>
       <ion-list-header>Categories</ion-list-header>
       <ion-item *ngFor="let category of (customFieldCategories | async)">
-        {{ category.name }}
+        {{ category.categoryName }}
       </ion-item>
 
       <ion-item *ngIf="!(customFieldCategories | async).length && !(showLoadingSpinner | async)">

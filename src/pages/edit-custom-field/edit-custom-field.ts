@@ -149,7 +149,7 @@ export class EditCustomFieldPage {
       currentCategories.map(category => {
         return inputs.push({
           label: category.name,
-          value: category,
+          value: { categoryID: category.categoryID, categoryName: category.name },
           type: 'checkbox',
           checked: selectedCategories.find(
             selectedCategory => selectedCategory.categoryID === category.categoryID
