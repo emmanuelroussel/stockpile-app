@@ -71,4 +71,16 @@ export class ItemData {
   getActiveRental(barcode: string) {
     return this.api.get(`${Links.item}/${barcode}${Links.rental}${Links.active}`);
   }
+
+  getItemCustomFields(barcode: string) {
+    return this.api.get(`${Links.item}/${barcode}${Links.customField}`);
+  }
+
+  getItemCustomFieldsByCategory(categoryID: number) {
+    return this.api.get(`${Links.category}/${categoryID}${Links.customField}`);
+  }
+
+  updateItemCustomField(barcode: string, customFieldID: number, itemCustomField: any) {
+    return this.api.put(`${Links.item}/${barcode}${Links.customField}/${customFieldID}`, itemCustomField);
+  }
 }

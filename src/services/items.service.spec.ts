@@ -27,4 +27,12 @@ describe('Items Service', () => {
   it('returns temp item', () => {
     expect(instance.getTempItem()).toEqual(Observable.of(TestData.state.items.tempItem));
   });
+
+  it('returns temp item custom fields', () => {
+    expect(instance.getTempItemCustomFields()).toEqual(Observable.of(TestData.state.items.tempItemCustomFields));
+  });
+
+  it('returns showLoadingSpinner', () => {
+    expect(instance.getShouldShowLoadingSpinner()).toEqual(Observable.of(TestData.state.items.showLoadingSpinner));
+  });
 });

@@ -307,6 +307,14 @@ export class ItemDataMock {
   public getActiveRental(): any {
     return returnObservable(this.resolve, TestData.item);
   }
+
+  public getItemCustomFields(): any {
+    return returnObservable(this.resolve, this.allItems);
+  }
+
+  public getItemCustomFieldsByCategory(): any {
+    return returnObservable(this.resolve, this.allItems);
+  }
 }
 
 export class ItemPropertyDataMock {
@@ -508,6 +516,9 @@ export class ItemsActionsMock {
   public returnItems() {}
   public rentItems() {}
   public resetTempItem() {}
+  public resetTempItemCustomFields() {}
+  public fetchItemCustomFields() {}
+  public fetchItemCustomFieldsByCategory() {}
 }
 
 export class KitModelsActionsMock {
@@ -615,6 +626,14 @@ export class ItemsServiceMock {
 
   public getTempItem() {
     return Observable.of(TestData.apiItem);
+  }
+
+  public getTempItemCustomFields() {
+    return Observable.of(TestData.itemCustomFields);
+  }
+
+  public getShouldShowLoadingSpinner() {
+    return Observable.of(TestData.showLoadingSpinner);
   }
 }
 
