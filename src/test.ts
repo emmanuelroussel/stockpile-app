@@ -47,6 +47,7 @@ import {
   LoadingMock,
   BrandsActionsMock,
   CategoriesActionsMock,
+  ExternalRentersActionsMock,
   ItemsActionsMock,
   KitModelsActionsMock,
   KitsActionsMock,
@@ -56,6 +57,7 @@ import {
   UserActionsMock,
   BrandsServiceMock,
   CategoriesServiceMock,
+  ExternalRentersServiceMock,
   ItemsServiceMock,
   KitModelsServiceMock,
   KitsServiceMock,
@@ -68,6 +70,7 @@ import {
 } from './mocks';
 import { BrandsActions } from './store/brands/brands.actions';
 import { CategoriesActions } from './store/categories/categories.actions';
+import { ExternalRentersActions } from './store/external-renters/external-renters.actions';
 import { ItemsActions } from './store/items/items.actions';
 import { KitModelsActions } from './store/kit-models/kit-models.actions';
 import { KitsActions } from './store/kits/kits.actions';
@@ -77,6 +80,7 @@ import { OrganizationActions } from './store/organization/organization.actions';
 import { UserActions } from './store/user/user.actions';
 import { BrandsService } from './services/brands.service';
 import { CategoriesService } from './services/categories.service';
+import { ExternalRentersService } from './services/external-renters.service';
 import { ItemsService } from './services/items.service';
 import { KitModelsService } from './services/kit-models.service';
 import { KitsService } from './services/kits.service';
@@ -150,6 +154,7 @@ export class TestUtils {
         { provide: LoadingController, useClass: LoadingMock },
         { provide: BrandsActions, useClass: BrandsActionsMock },
         { provide: CategoriesActions, useClass: CategoriesActionsMock },
+        { provide: ExternalRentersActions, useClass: ExternalRentersActionsMock },
         { provide: ItemsActions, useClass: ItemsActionsMock },
         { provide: KitModelsActions, useClass: KitModelsActionsMock },
         { provide: KitsActions, useClass: KitsActionsMock },
@@ -159,6 +164,7 @@ export class TestUtils {
         { provide: UserActions, useClass: UserActionsMock },
         { provide: BrandsService, useClass: BrandsServiceMock },
         { provide: CategoriesService, useClass: CategoriesServiceMock },
+        { provide: ExternalRentersService, useClass: ExternalRentersServiceMock },
         { provide: ItemsService, useClass: ItemsServiceMock },
         { provide: KitModelsService, useClass: KitModelsServiceMock },
         { provide: KitsService, useClass: KitsServiceMock },

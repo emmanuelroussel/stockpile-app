@@ -7,6 +7,7 @@ import { brandsReducer } from './brands/brands.reducer';
 import { modelsReducer } from './models/models.reducer';
 import { categoriesReducer } from './categories/categories.reducer';
 import { layoutReducer } from './layout/layout.reducer';
+import { externalRentersReducer } from './external-renters/external-renters.reducer';
 
 export const rootReducer = {
   user: userReducer,
@@ -17,5 +18,6 @@ export const rootReducer = {
   brands: brandsReducer,
   models: modelsReducer,
   categories: categoriesReducer,
-  layout: layoutReducer
+  layout: layoutReducer,
+  externalRenters: externalRentersReducer
 };

@@ -567,8 +567,61 @@ export class TestData {
     },
     layout: {
       loadingMessage: 'Please wait...'
+    },
+    externalRenters: {
+      results: {
+        [1]: {
+          externalRenterID: 1,
+          name: 'Luke',
+          email: 'luke@email.com',
+          phone: '1234567890'
+        },
+        [2]: {
+          externalRenterID: 2,
+          name: 'Anakin',
+          email: 'anakin@email.com',
+          phone: '0987654321'
+        },
+        [3]: {
+          externalRenterID: 3,
+          name: 'Obi Wan',
+          email: 'obiwan@email.com',
+          phone: '1029384756'
+        }
+      },
+      showLoadingSpinner: false
     }
   };
 
   public static pop = true;
+
+  public static externalRenter = {
+    externalRenterID: 1,
+    name: 'Luke',
+    email: 'luke@email.com',
+    phone: '1234567890'
+  };
+
+  public static externalRenters = {
+    results: [
+      {
+        externalRenterID: 1,
+        name: 'Luke',
+        email: 'luke@email.com',
+        phone: '1234567890'
+      },
+      {
+        externalRenterID: 2,
+        name: 'Anakin',
+        email: 'anakin@email.com',
+        phone: '0987654321'
+      },
+      {
+        externalRenterID: 3,
+        name: 'Obi Wan',
+        email: 'obiwan@email.com',
+        phone: '1029384756'
+      }
+    ]
+  };
 }

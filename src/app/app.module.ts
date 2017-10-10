@@ -44,13 +44,18 @@ import { ItemsEffects } from '../store/items/items.effects';
 import { ItemsService } from '../services/items.service';
 import { LayoutActions } from '../store/layout/layout.actions';
 import { LayoutService } from '../services/layout.service';
+import { ExternalRentersActions } from '../store/external-renters/external-renters.actions';
+import { ExternalRentersEffects } from '../store/external-renters/external-renters.effects';
+import { ExternalRentersService } from '../services/external-renters.service';
 
 import { AddKitModelPage } from '../pages/add-kit-model/add-kit-model';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { EditAccountPage } from '../pages/edit-account/edit-account';
+import { EditExternalRenterPage } from '../pages/edit-external-renter/edit-external-renter';
 import { EditItemPage } from '../pages/edit-item/edit-item';
 import { EditFieldPage } from '../pages/edit-field/edit-field';
 import { EditKitPage } from '../pages/edit-kit/edit-kit';
+import { ExternalRentersPage } from '../pages/external-renters/external-renters';
 import { FieldsPage } from '../pages/fields/fields';
 import { HomePage } from '../pages/home/home';
 import { InventoryFilterPage } from '../pages/inventory-filter/inventory-filter';
@@ -68,6 +73,7 @@ import { MapToIterablePipe, SortPipe } from '../pipes';
 
 import { Api } from '../providers/api';
 import { ApiUrl } from '../providers/api-url';
+import { ExternalRenterData } from '../providers/external-renter-data';
 import { ItemData } from '../providers/item-data';
 import { ItemPropertyData } from '../providers/item-property-data';
 import { KitData } from '../providers/kit-data';
@@ -83,9 +89,11 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     AddKitModelPage,
     ChangePasswordPage,
     EditAccountPage,
+    EditExternalRenterPage,
     EditItemPage,
     EditFieldPage,
     EditKitPage,
+    ExternalRentersPage,
     FieldsPage,
     HomePage,
     InventoryFilterPage,
@@ -119,6 +127,7 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     EffectsModule.run(ModelsEffects),
     EffectsModule.run(CategoriesEffects),
     EffectsModule.run(ItemsEffects),
+    EffectsModule.run(ExternalRentersEffects),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -126,9 +135,11 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     AddKitModelPage,
     ChangePasswordPage,
     EditAccountPage,
+    EditExternalRenterPage,
     EditItemPage,
     EditFieldPage,
     EditKitPage,
+    ExternalRentersPage,
     FieldsPage,
     HomePage,
     InventoryFilterPage,
@@ -154,6 +165,10 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     CategoriesActions,
     CategoriesEffects,
     CategoriesService,
+    ExternalRentersActions,
+    ExternalRenterData,
+    ExternalRentersEffects,
+    ExternalRentersService,
     InAppBrowser,
     ItemData,
     ItemPropertyData,

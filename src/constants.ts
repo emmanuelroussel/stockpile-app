@@ -18,6 +18,7 @@ export class Links {
   public static password = '/password';
   public static kit = '/kit';
   public static active = '/active';
+  public static externalRenter = '/external-renter';
 }
 
 export class Messages {
@@ -27,6 +28,7 @@ export class Messages {
   private static itemBaseSingular = 'Item successfully';
   private static itemBasePlural = 'Item(s) successfully';
   private static kitBaseSingular = 'Kit successfully';
+  private static externalRenterBaseSingular = 'External Renter successfully';
   private static itemAlready = 'Item is already';
   public static brandAdded = `${Messages.brandBaseSingular} created`;
   public static brandEdited = `${Messages.brandBaseSingular} updated`;
@@ -37,6 +39,9 @@ export class Messages {
   public static categoryAdded = `${Messages.categoryBaseSingular} created`;
   public static categoryEdited = `${Messages.categoryBaseSingular} updated`;
   public static categoryDeleted = `${Messages.categoryBaseSingular} deleted`;
+  public static externalRenterAdded = `${Messages.externalRenterBaseSingular} created`;
+  public static externalRenterEdited = `${Messages.externalRenterBaseSingular} updated`;
+  public static externalRenterDeleted = `${Messages.externalRenterBaseSingular} deleted`;
   public static itemAdded = `${Messages.itemBaseSingular} created`;
   public static itemEdited = `${Messages.itemBaseSingular} updated`;
   public static itemDeleted = `${Messages.itemBaseSingular} deleted`;
@@ -65,6 +70,9 @@ export class LoadingMessages {
   public static creatingCategory = 'Creating category...';
   public static updatingCategory = 'Updating category...';
   public static deletingCategory = 'Deleting category...';
+  public static creatingExternalRenter = 'Creating external renter...';
+  public static updatingExternalRenter = 'Updating external renter...';
+  public static deletingExternalRenter = 'Deleting external renter...';
   public static creatingKit = 'Creating kit...';
   public static updatingKit = 'Updating kit...';
   public static deletingKit = 'Deleting kit...';

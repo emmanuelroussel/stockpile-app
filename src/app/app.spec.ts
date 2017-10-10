@@ -16,6 +16,7 @@ import {
 import { StockpileApp } from './app.component';
 import { ViewAccountPage } from '../pages/view-account/view-account';
 import { FieldsPage } from '../pages/fields/fields';
+import { ExternalRentersPage } from '../pages/external-renters/external-renters';
 import { TestData } from '../test-data';
 import { ItemProperties } from '../constants';
 import { Observable } from 'rxjs/Observable';
@@ -64,6 +65,14 @@ describe('Root Component', () => {
     instance.onViewInfo();
     expect(instance.menuCtrl.close).toHaveBeenCalled();
     expect(instance.nav.push).toHaveBeenCalledWith(ViewAccountPage);
+  });
+
+  it('pushes ExternalRentersPage on viewExternalRenters()', () => {
+    spyOn(instance.menuCtrl, 'close');
+    spyOn(instance.nav, 'push');
+    instance.onViewExternalRenters();
+    expect(instance.menuCtrl.close).toHaveBeenCalled();
+    expect(instance.nav.push).toHaveBeenCalledWith(ExternalRentersPage);
   });
 
   it('pushes FieldsPage with brands on viewBrands()', () => {

@@ -7,6 +7,7 @@ import { Models } from './models';
 import { Categories } from './categories';
 import { Items } from './items';
 import { Layout } from './layout';
+import { ExternalRenters } from './external-renters';
 
 export interface AppState {
   readonly user: User;
@@ -18,4 +19,5 @@ export interface AppState {
   readonly categories: Categories;
   readonly items: Items;
   readonly layout: Layout;
+  readonly externalRenters: ExternalRenters;
 }

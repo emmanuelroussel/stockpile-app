@@ -274,6 +274,28 @@ export class ItemDataMock {
   }
 }
 
+export class ExternalRenterDataMock {
+  externalRenters = TestData.externalRenters;
+  externalRenter = TestData.externalRenter;
+  resolve: boolean = true;
+
+  public getExternalRenters(): any {
+    return returnObservable(this.resolve, this.externalRenters);
+  }
+
+  public createExternalRenter(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+
+  public updateExternalRenter(): any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+
+  public deleteExternalRenter() :any {
+    return returnObservable(this.resolve, TestData.response);
+  }
+}
+
 export class ItemPropertyDataMock {
   brands = TestData.brands;
   brand = TestData.brand;
@@ -444,6 +466,14 @@ export class CategoriesActionsMock {
   public filterCategories() {}
 }
 
+export class ExternalRentersActionsMock {
+  public fetchExternalRenters() {}
+  public createExternalRenter() {}
+  public updateExternalRenter() {}
+  public deleteExternalRenter() {}
+  public filteredItems() {}
+}
+
 export class ItemsActionsMock {
   public fetchItems() {}
   public createItem() {}
@@ -516,6 +546,20 @@ export class BrandsServiceMock {
 export class CategoriesServiceMock {
   public getCategories() {
     return Observable.of(TestData.categories);
+  }
+
+  public getShouldShowAddNew() {
+    return Observable.of(TestData.showAddNew);
+  }
+}
+
+export class ExternalRentersServiceMock {
+  public getExternalRenters() {
+    return Observable.of(TestData.externalRenters);
+  }
+
+  public getExternalRenter() {
+    return Observable.of(TestData.externalRenter);
   }
 
   public getShouldShowAddNew() {
