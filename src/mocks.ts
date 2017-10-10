@@ -519,6 +519,7 @@ export class ItemsActionsMock {
   public resetTempItemCustomFields() {}
   public fetchItemCustomFields() {}
   public fetchItemCustomFieldsByCategory() {}
+  public startCreate() {}
 }
 
 export class KitModelsActionsMock {

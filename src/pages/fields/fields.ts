@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { Actions } from '../../constants';
+import { Actions, ItemProperties } from '../../constants';
 import { EditFieldPage } from '../edit-field/edit-field';
 
-import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
+import { MapToIterablePipe, SortPipe } from '../../pipes';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -15,6 +15,7 @@ export class FieldsPage {
   fields: Observable<any>;
   type: string;
   typePlural: string;
+  itemProperties = ItemProperties;
 
   constructor(
     public navCtrl: NavController,

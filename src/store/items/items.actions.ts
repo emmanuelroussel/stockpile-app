@@ -62,6 +62,8 @@ export class ItemsActions {
   static UPDATE_ITEM_CUSTOM_FIELDS_SUCCESS = type('[Items] Update Item Custom Fields Success');
   static UPDATE_ITEM_CUSTOM_FIELDS_FAIL = type('[Items] Update Item Custom Fields Fail');
 
+  static START_CREATE = type('[Items] Start Create');
+
   constructor(
     private store: Store<AppState>
   ) {}
@@ -128,5 +130,9 @@ export class ItemsActions {
 
   fetchItemCustomFieldsByCategory(categoryID: number) {
     this.store.dispatch(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY, categoryID));
+  }
+  
+  startCreate(barcode: string) {
+    this.store.dispatch(createAction(ItemsActions.START_CREATE, barcode));
   }
 }

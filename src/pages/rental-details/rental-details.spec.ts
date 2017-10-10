@@ -31,7 +31,7 @@ describe('RentalDetails Page', () => {
 
   it('initializes end date to tomorrow', () => {
     let tomorrow = new Date();
-    tomorrow.setDate((new Date()).getDate() + 1);
+    tomorrow.setDate(tomorrow.getDate() - instance.timezoneOffset + 1);
     instance.ngOnInit();
     expect(instance.rentalForm.value.endDate.substring(0, 10)).toEqual(tomorrow.toISOString().substring(0, 10));
   });
@@ -64,13 +64,15 @@ describe('RentalDetails Page', () => {
       value: TestData.details,
       valid: true
     };
+    let today = new Date();
+    today.setDate(today.getDate() - instance.timezoneOffset);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'rentItems');
     instance.onRent();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.rentingItems);
     expect(instance.itemsActions.rentItems).toHaveBeenCalledWith({
       ...TestData.details,
-      startDate: (new Date()).toISOString().substring(0, 10)
+      startDate: today.toISOString().substring(0, 10)
     });
   });
 

@@ -12,8 +12,9 @@
 <ion-content>
   <ion-list>
     <ion-list-header>{{ typePlural }}</ion-list-header>
-    <button ion-item *ngFor="let field of (fields | async).results | mapToIterable" (click)="onViewField(field)">
-      <h2>{{ field.name }}</h2>
+    <button ion-item *ngFor="let field of (fields | async).results | mapToIterable | sort" (click)="onViewField(field)">
+      <h2 *ngIf="type !== itemProperties.model">{{ field.name }}</h2>
+      <h2 *ngIf="type === itemProperties.model">{{ field.brand }} {{ field.name }}</h2>
     </button>
 
     <ion-item *ngIf="!((fields | async).results | mapToIterable).length && !(fields | async).showLoadingSpinner">

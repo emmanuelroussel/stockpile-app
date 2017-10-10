@@ -3,7 +3,7 @@ export class Actions {
   public static return = 'Return';
   public static add = 'Add';
   public static edit = 'Edit';
-};
+}
 
 export class Links {
   public static authenticate = '/auth';
@@ -58,6 +58,7 @@ export class Messages {
   public static passwordsDontMatch = 'Passwords don\'t match';
   public static wrongPassword = 'Password is incorrect';
   public static userDeleted = 'Account succesfully deleted';
+  public static itemAlreadyExists = 'An item with this barcode already exists';
 }
 
 export class LoadingMessages {
@@ -101,6 +102,6 @@ export class ItemProperties {
 
 export const paginationLimit = 10;
 
-export const apiVersion = '^1.0.0';
+export const apiVersion = '^2.0.0';
 
 export const subscribeUrl = 'https://stockpileapp.co/subscribe';

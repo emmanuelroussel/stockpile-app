@@ -9,11 +9,12 @@ import * as constants from '../../constants';
 import { RentalPage } from '../../pages/rental/rental';
 
 import { createAction } from '../create-action';
-import { ItemsActions } from './items.actions.ts';
-import { AppActions } from '../app/app.actions.ts';
+import { ItemsActions } from './items.actions';
+import { AppActions } from '../app/app.actions';
 import { ItemData } from '../../providers/item-data';
 import { Messages } from '../../constants';
 import { LayoutActions } from '../layout/layout.actions';
+import { EditItemPage } from '../../pages/edit-item/edit-item';
 
 @Injectable()
 export class ItemsEffects {
@@ -167,12 +168,14 @@ export class ItemsEffects {
       .concatMap(res => {
         if (!res.available && action.payload.action === constants.Actions.rent) {
           return [
-            createAction(ItemsActions.ADD_TO_RENTALS_FAIL, { message: Messages.itemAlreadyRented }),
+            createAction(ItemsActions.ADD_TO_RENTALS_FAIL),
+            createAction(AppActions.SHOW_MESSAGE, Messages.itemAlreadyRented),
             createAction(LayoutActions.HIDE_LOADING_MESSAGE)
           ];
         } else if (res.available && action.payload.action === constants.Actions.return) {
           return [
-            createAction(ItemsActions.ADD_TO_RENTALS_FAIL, { message: Messages.itemNotRented }),
+            createAction(ItemsActions.ADD_TO_RENTALS_FAIL),
+            createAction(AppActions.SHOW_MESSAGE, Messages.itemNotRented),
             createAction(LayoutActions.HIDE_LOADING_MESSAGE)
           ];
         } else {
@@ -239,15 +242,11 @@ export class ItemsEffects {
     .ofType(ItemsActions.RENT)
     .withLatestFrom(this.store$)
     .mergeMap(([action, store]) => {
-      let rentals = [];
-      const items = Object.keys(store.items.rentals).map((key) => store.items.rentals[key]);
+      const items = Object.keys(store.items.rentals).map((key) => {
+        return { barcode: store.items.rentals[key].barcode };
+      });
 
-      for (const item of items) {
-        const rental = { ...action.payload, barcode: item.barcode };
-        rentals.push(this.itemData.rent(rental).toPromise());
-      }
-
-      return Observable.from(Promise.all(rentals))
+      return this.itemData.rent({ ...action.payload, items })
         .concatMap(() => [
           createAction(ItemsActions.RENT_SUCCESS),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
@@ -293,6 +292,35 @@ export class ItemsEffects {
       .catch(err => Observable.of(
         createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY_FAIL, err),
         createAction(AppActions.SHOW_MESSAGE, err.message)
-      ))
+      ))       
+    );
+
+  /**
+   * Checks whether or not a user can create an item with a specific barcode.
+   */
+  @Effect()
+  startCreate$ = this.actions$
+    .ofType(ItemsActions.START_CREATE)
+    .mergeMap(action => this.itemData.getItem(action.payload)
+      // If we get an item, it means an item with the barcode already exists
+      .map(() => createAction(AppActions.SHOW_MESSAGE, constants.Messages.itemAlreadyExists))
+      .catch(err => {
+        // Push the page if we receive a 404 (barcode doesn't exist)
+        if (err.code === 'NotFoundError') {
+          return Observable.of(
+            createAction(AppActions.PUSH_PAGE, {
+              page: EditItemPage,
+              navParams: {
+                barcode: action.payload,
+                action: constants.Actions.add
+              }
+            })
+          );
+        } else {
+          return Observable.of(
+            createAction(AppActions.SHOW_MESSAGE, err.message)
+          );
+        }
+      })
     );
 }

@@ -2,6 +2,7 @@ export interface Category {
   readonly categoryID: number;
   readonly name: string;
   readonly organizationID: number;
+  readonly sortIndex: number;
 }
 
 export interface Categories {

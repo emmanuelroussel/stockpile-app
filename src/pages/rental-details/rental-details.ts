@@ -8,15 +8,15 @@ import { Items } from '../../models/items';
 import { Observable } from 'rxjs/Observable';
 import { LoadingMessages } from '../../constants';
 import { LayoutActions } from '../../store/layout/layout.actions';
-import { dateLessThan } from '../../utils/validators';
 
-import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
+import { MapToIterablePipe } from '../../pipes';
 
 @Component({
   selector: 'page-rental-details',
   templateUrl: 'rental-details.html'
 })
 export class RentalDetailsPage {
+  readonly timezoneOffset: number = (new Date()).getTimezoneOffset() / (60 * 24);
   items: Observable<Items>;
   rentalForm: FormGroup;
 
@@ -34,8 +34,10 @@ export class RentalDetailsPage {
   ngOnInit() {
     this.items = this.itemsService.getItems();
 
+    // We need to offset the date by the difference between the user's timezone
+    // and UTC 0 to have an accurate date
     let tomorrow = new Date();
-    tomorrow.setDate((new Date()).getDate() + 1);
+    tomorrow.setDate(tomorrow.getDate() - this.timezoneOffset + 1);
 
     this.rentalForm = this.formBuilder.group({
       endDate: [
@@ -52,10 +54,15 @@ export class RentalDetailsPage {
    */
   onRent() {
     if (this.rentalForm.valid) {
+      // We need to offset the date by the difference between the user's timezone
+      // and UTC 0 to have an accurate date
+      let today = new Date();
+      today.setDate(today.getDate() - this.timezoneOffset);
+
       // Transform dates from ISO 8601 to MySQL date format
       const details = {
         ...this.rentalForm.value,
-        startDate: (new Date()).toISOString().substring(0, 10), // today
+        startDate: today.toISOString().substring(0, 10), // today
         endDate: this.rentalForm.value.endDate.substring(0, 10)
       };
 
@@ -75,7 +82,7 @@ export class RentalDetailsPage {
       const endDate = control.value.substring(0, 10);
 
       return startDate > endDate ? { invalid: endDate } : null;
-    }
+    };
   }
 
   get endDate() { return this.rentalForm.get('endDate'); }

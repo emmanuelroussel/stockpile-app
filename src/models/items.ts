@@ -18,6 +18,7 @@ export interface Item {
   readonly barcode: string;
   readonly notes: string;
   readonly available: boolean;
+  readonly sortIndex: number;
 }
 
 export interface Items {

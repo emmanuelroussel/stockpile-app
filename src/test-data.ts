@@ -244,6 +244,7 @@ export class TestData {
   };
 
   public static error = {
+    code: 'NotFoundError',
     message: 'Error message'
   };
 

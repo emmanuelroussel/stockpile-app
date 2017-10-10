@@ -125,4 +125,10 @@ describe('Items Actions', () => {
     instance.fetchItemCustomFieldsByCategory(TestData.category.categoryID);
     expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY, TestData.category.categoryID));
   });
+
+  it('dispatches action START_CREATE', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.startCreate(TestData.barcode);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.START_CREATE, TestData.barcode));
+  });
 });

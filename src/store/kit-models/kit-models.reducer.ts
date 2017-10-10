@@ -43,7 +43,7 @@ export function kitModelsReducer(kitModels: KitModels = initialState, action: Ac
       return {
         ...kitModels,
         tempKitModels: [...kitModels.tempKitModels, action.payload],
-      }
+      };
     case KitModelsActions.UPDATE_TEMP:
       return {
         ...kitModels,
