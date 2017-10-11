@@ -32,14 +32,14 @@ export class ExternalRentersPage {
   }
 
   /**
-   * Pushes page on nav to allow user to view the external field.
+   * Pushes page on nav to allow user to view the external renter.
    */
   onViewExternalRenter(externalRenterID: number) {
     this.navCtrl.push(EditExternalRenterPage, { action: Actions.edit, externalRenterID });
   }
 
   /**
-   * Pushes page on nav to allow user to add a new external field.
+   * Pushes page on nav to allow user to add a new external renter.
    */
   onAdd() {
     this.navCtrl.push(EditExternalRenterPage, { action: Actions.add });

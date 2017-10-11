@@ -97,6 +97,7 @@ export class ItemProperties {
   public static category = 'Category';
   public static categoryPlural = 'Categories';
   public static status = 'Status';
+  public static externalRenter = 'External Renter';
 }
 
 export const paginationLimit = 10;

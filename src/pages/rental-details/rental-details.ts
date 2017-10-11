@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 import { ItemsActions } from '../../store/items/items.actions';
 import { ItemsService } from '../../services/items.service';
 import { Items } from '../../models/items';
+import { ExternalRenter } from '../../models/external-renters';
 import { Observable } from 'rxjs/Observable';
-import { LoadingMessages } from '../../constants';
+import { LoadingMessages, ItemProperties } from '../../constants';
 import { LayoutActions } from '../../store/layout/layout.actions';
+import { ItemFilterPage } from '../item-filter/item-filter';
+import { ExternalRentersActions } from '../../store/external-renters/external-renters.actions';
 
 import { MapToIterablePipe } from '../../pipes';
 
@@ -19,13 +22,16 @@ export class RentalDetailsPage {
   readonly timezoneOffset: number = (new Date()).getTimezoneOffset() / (60 * 24);
   items: Observable<Items>;
   rentalForm: FormGroup;
+  externalRenter: ExternalRenter;
 
   constructor(
     public navCtrl: NavController,
+    public modalCtrl: ModalController,
     public itemsService: ItemsService,
     public itemsActions: ItemsActions,
     public layoutActions: LayoutActions,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public externalRentersActions: ExternalRentersActions,
   ) {}
 
   /**
@@ -33,6 +39,7 @@ export class RentalDetailsPage {
    */
   ngOnInit() {
     this.items = this.itemsService.getItems();
+    this.externalRentersActions.fetchExternalRenters();
 
     // We need to offset the date by the difference between the user's timezone
     // and UTC 0 to have an accurate date
@@ -62,6 +69,7 @@ export class RentalDetailsPage {
       // Transform dates from ISO 8601 to MySQL date format
       const details = {
         ...this.rentalForm.value,
+        externalRenterID: this.externalRenter.externalRenterID,
         startDate: today.toISOString().substring(0, 10), // today
         endDate: this.rentalForm.value.endDate.substring(0, 10)
       };
@@ -83,6 +91,24 @@ export class RentalDetailsPage {
 
       return startDate > endDate ? { invalid: endDate } : null;
     };
+  }
+
+  /**
+   * Presents modal to allow users to choose an external renter.
+   */
+  onSelectExternalRenter() {
+    let modal = this.modalCtrl.create(ItemFilterPage, {
+      type: ItemProperties.externalRenter
+    });
+
+    modal.onDidDismiss(element => {
+      // If user cancelled, element will be undefined
+      if (element) {
+        this.externalRenter = element;
+      }
+   });
+
+   modal.present();
   }
 
   get endDate() { return this.rentalForm.get('endDate'); }

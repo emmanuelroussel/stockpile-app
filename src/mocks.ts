@@ -471,7 +471,7 @@ export class ExternalRentersActionsMock {
   public createExternalRenter() {}
   public updateExternalRenter() {}
   public deleteExternalRenter() {}
-  public filteredItems() {}
+  public filterExternalRenters() {}
 }
 
 export class ItemsActionsMock {

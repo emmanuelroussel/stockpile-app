@@ -24,6 +24,11 @@
         </p>
       </div>
 
+      <button ion-item type="button" (click)="onSelectExternalRenter()" tappable detail-none>
+        <ion-label color="primary">External Renter</ion-label>
+        <ion-label>{{ externalRenter?.name }}</ion-label>
+      </button>
+
       <ion-item>
         <ion-label floating color="primary">Notes</ion-label>
         <ion-textarea type="text" formControlName="notes"></ion-textarea>

@@ -77,7 +77,7 @@ export class EditExternalRenterPage {
   }
 
   /**
-   * Confirms if user wants to delete the kit.
+   * Confirms if user wants to delete the external renter.
    */
   onDelete() {
     let alert = this.alertCtrl.create({
@@ -98,7 +98,7 @@ export class EditExternalRenterPage {
   }
 
   /**
-   * Deletes kit.
+   * Deletes external renter.
    */
   deleteExternalRenter() {
     let externalRenterID;
