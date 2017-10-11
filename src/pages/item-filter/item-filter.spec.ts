@@ -5,9 +5,11 @@ import {
   NavParamsMock,
   BrandsActionsMock,
   CategoriesActionsMock,
+  ExternalRentersActionsMock,
   ModelsActionsMock,
   BrandsServiceMock,
   CategoriesServiceMock,
+  ExternalRentersServiceMock,
   ModelsServiceMock,
   LayoutActionsMock
 } from '../../mocks';
@@ -32,6 +34,8 @@ describe('ItemFilter Page', () => {
       <any> new ModelsServiceMock,
       <any> new CategoriesActionsMock,
       <any> new CategoriesServiceMock,
+      <any> new ExternalRentersActionsMock,
+      <any> new ExternalRentersServiceMock,
       <any> new LayoutActionsMock
     );
   });
@@ -96,6 +100,18 @@ describe('ItemFilter Page', () => {
     expect(instance.categoriesActions.filterCategories).toHaveBeenCalledWith(TestData.queryText);
   });
 
+  it('filters external renters on onSearch()', () => {
+    instance.type = ItemProperties.externalRenter;
+    const event = {
+      target: {
+        value: TestData.queryText
+      }
+    };
+    spyOn(instance.externalRentersActions, 'filterExternalRenters');
+    instance.onSearch(event);
+    expect(instance.externalRentersActions.filterExternalRenters).toHaveBeenCalledWith(TestData.queryText);
+  });
+
   it('dismisses modal on dismiss()', () => {
     spyOn(instance.viewCtrl, 'dismiss');
     instance.onDismiss(TestData.brand);
@@ -138,5 +154,15 @@ describe('ItemFilter Page', () => {
     instance.createNewElement(TestData.category.name);
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.creatingCategory);
     expect(instance.categoriesActions.createCategory).toHaveBeenCalledWith(TestData.category.name);
+  });
+
+  it('creates new external renter on createNewElement() if type is external renter', () => {
+    instance.elements = Observable.of(TestData.externalRenters);
+    instance.type = ItemProperties.externalRenter;
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.externalRentersActions, 'createExternalRenter');
+    instance.createNewElement(TestData.externalRenter.name);
+    expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.creatingExternalRenter);
+    expect(instance.externalRentersActions.createExternalRenter).toHaveBeenCalledWith({ name: TestData.externalRenter.name });
   });
 });

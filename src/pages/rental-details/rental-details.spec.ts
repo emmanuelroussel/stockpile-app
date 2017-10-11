@@ -1,8 +1,9 @@
 import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
-import { LoadingMessages } from '../../constants';
+import { LoadingMessages, ItemProperties } from '../../constants';
 
+import { ItemFilterPage } from '../item-filter/item-filter';
 import { RentalDetailsPage } from './rental-details';
 
 let fixture: ComponentFixture<RentalDetailsPage> = null;
@@ -64,6 +65,7 @@ describe('RentalDetails Page', () => {
       value: TestData.details,
       valid: true
     };
+    instance.externalRenter = TestData.externalRenter;
     let today = new Date();
     today.setDate(today.getDate() - instance.timezoneOffset);
     spyOn(instance.layoutActions, 'showLoadingMessage');
@@ -72,6 +74,7 @@ describe('RentalDetails Page', () => {
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.rentingItems);
     expect(instance.itemsActions.rentItems).toHaveBeenCalledWith({
       ...TestData.details,
+      externalRenterID: TestData.externalRenter.externalRenterID,
       startDate: today.toISOString().substring(0, 10)
     });
   });
@@ -83,6 +86,14 @@ describe('RentalDetails Page', () => {
     instance.onRent();
     expect(instance.layoutActions.showLoadingMessage).not.toHaveBeenCalled();
     expect(instance.itemsActions.rentItems).not.toHaveBeenCalled();
+  });
+
+  it('creates a modal on onSelectExternalRenter()', () => {
+    spyOn(instance.modalCtrl, 'create').and.callThrough();
+    instance.onSelectExternalRenter();
+    expect(instance.modalCtrl.create).toHaveBeenCalledWith(ItemFilterPage, {
+      type: ItemProperties.externalRenter
+    });
   });
 
   it('gets endDate', () => {

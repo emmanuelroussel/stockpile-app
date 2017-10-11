@@ -44,6 +44,9 @@ import { ItemsEffects } from '../store/items/items.effects';
 import { ItemsService } from '../services/items.service';
 import { LayoutActions } from '../store/layout/layout.actions';
 import { LayoutService } from '../services/layout.service';
+import { ExternalRentersActions } from '../store/external-renters/external-renters.actions';
+import { ExternalRentersEffects } from '../store/external-renters/external-renters.effects';
+import { ExternalRentersService } from '../services/external-renters.service';
 import { CustomFieldsActions } from '../store/custom-fields/custom-fields.actions';
 import { CustomFieldsEffects } from '../store/custom-fields/custom-fields.effects';
 import { CustomFieldsService } from '../services/custom-fields.service';
@@ -55,10 +58,12 @@ import { AddKitModelPage } from '../pages/add-kit-model/add-kit-model';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { CustomFieldsPage } from '../pages/custom-fields/custom-fields';
 import { EditAccountPage } from '../pages/edit-account/edit-account';
+import { EditExternalRenterPage } from '../pages/edit-external-renter/edit-external-renter';
 import { EditCustomFieldPage } from '../pages/edit-custom-field/edit-custom-field';
 import { EditItemPage } from '../pages/edit-item/edit-item';
 import { EditFieldPage } from '../pages/edit-field/edit-field';
 import { EditKitPage } from '../pages/edit-kit/edit-kit';
+import { ExternalRentersPage } from '../pages/external-renters/external-renters';
 import { FieldsPage } from '../pages/fields/fields';
 import { HomePage } from '../pages/home/home';
 import { InventoryFilterPage } from '../pages/inventory-filter/inventory-filter';
@@ -76,6 +81,7 @@ import { MapToIterablePipe, SortPipe } from '../pipes';
 
 import { Api } from '../providers/api';
 import { ApiUrl } from '../providers/api-url';
+import { ExternalRenterData } from '../providers/external-renter-data';
 import { CustomFieldData } from '../providers/custom-field-data';
 import { ItemData } from '../providers/item-data';
 import { ItemPropertyData } from '../providers/item-property-data';
@@ -93,10 +99,12 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     ChangePasswordPage,
     CustomFieldsPage,
     EditAccountPage,
+    EditExternalRenterPage,
     EditCustomFieldPage,
     EditItemPage,
     EditFieldPage,
     EditKitPage,
+    ExternalRentersPage,
     FieldsPage,
     HomePage,
     InventoryFilterPage,
@@ -130,6 +138,7 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     EffectsModule.run(ModelsEffects),
     EffectsModule.run(CategoriesEffects),
     EffectsModule.run(ItemsEffects),
+    EffectsModule.run(ExternalRentersEffects),
     EffectsModule.run(CustomFieldsEffects),
     EffectsModule.run(CustomFieldCategoriesEffects),
   ],
@@ -140,10 +149,12 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     ChangePasswordPage,
     CustomFieldsPage,
     EditAccountPage,
+    EditExternalRenterPage,
     EditCustomFieldPage,
     EditItemPage,
     EditFieldPage,
     EditKitPage,
+    ExternalRentersPage,
     FieldsPage,
     HomePage,
     InventoryFilterPage,
@@ -169,6 +180,10 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     CategoriesActions,
     CategoriesEffects,
     CategoriesService,
+    ExternalRentersActions,
+    ExternalRenterData,
+    ExternalRentersEffects,
+    ExternalRentersService,
     CustomFieldCategoriesActions,
     CustomFieldCategoriesEffects,
     CustomFieldCategoriesService,

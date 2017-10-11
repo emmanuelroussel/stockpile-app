@@ -48,6 +48,7 @@ import {
   LoadingMock,
   BrandsActionsMock,
   CategoriesActionsMock,
+  ExternalRentersActionsMock,
   CustomFieldCategoriesActionsMock,
   CustomFieldsActionsMock,
   ItemsActionsMock,
@@ -59,6 +60,7 @@ import {
   UserActionsMock,
   BrandsServiceMock,
   CategoriesServiceMock,
+  ExternalRentersServiceMock,
   CustomFieldCategoriesServiceMock,
   CustomFieldsServiceMock,
   ItemsServiceMock,
@@ -75,6 +77,7 @@ import { BrandsActions } from './store/brands/brands.actions';
 import { CustomFieldCategoriesActions } from './store/custom-field-categories/custom-field-categories.actions';
 import { CustomFieldsActions } from './store/custom-fields/custom-fields.actions';
 import { CategoriesActions } from './store/categories/categories.actions';
+import { ExternalRentersActions } from './store/external-renters/external-renters.actions';
 import { ItemsActions } from './store/items/items.actions';
 import { KitModelsActions } from './store/kit-models/kit-models.actions';
 import { KitsActions } from './store/kits/kits.actions';
@@ -84,6 +87,7 @@ import { OrganizationActions } from './store/organization/organization.actions';
 import { UserActions } from './store/user/user.actions';
 import { BrandsService } from './services/brands.service';
 import { CategoriesService } from './services/categories.service';
+import { ExternalRentersService } from './services/external-renters.service';
 import { CustomFieldCategoriesService } from './services/custom-field-categories.service';
 import { CustomFieldsService } from './services/custom-fields.service';
 import { ItemsService } from './services/items.service';
@@ -161,6 +165,7 @@ export class TestUtils {
         { provide: LoadingController, useClass: LoadingMock },
         { provide: BrandsActions, useClass: BrandsActionsMock },
         { provide: CategoriesActions, useClass: CategoriesActionsMock },
+        { provide: ExternalRentersActions, useClass: ExternalRentersActionsMock },
         { provide: CustomFieldCategoriesActions, useClass: CustomFieldCategoriesActionsMock },
         { provide: CustomFieldsActions, useClass: CustomFieldsActionsMock },
         { provide: ItemsActions, useClass: ItemsActionsMock },
@@ -172,6 +177,7 @@ export class TestUtils {
         { provide: UserActions, useClass: UserActionsMock },
         { provide: BrandsService, useClass: BrandsServiceMock },
         { provide: CategoriesService, useClass: CategoriesServiceMock },
+        { provide: ExternalRentersService, useClass: ExternalRentersServiceMock },
         { provide: CustomFieldCategoriesService, useClass: CustomFieldCategoriesServiceMock },
         { provide: CustomFieldsService, useClass: CustomFieldsServiceMock },
         { provide: ItemsService, useClass: ItemsServiceMock },

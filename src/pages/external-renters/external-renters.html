@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>External Renters</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onAdd()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let externalRenter of (externalRenters | async).results | mapToIterable | sort"
+      (click)="onViewExternalRenter(externalRenter.externalRenterID)">
+      <h2>{{ externalRenter.name }}</h2>
+    </button>
+
+    <ion-item *ngIf="!((externalRenters | async).results | mapToIterable).length && !(externalRenters | async).showLoadingSpinner">
+      No external renters found <button ion-button item-right (click)="onAdd()">Add an external renter</button>
+    </ion-item>
+
+    <ion-spinner class="center-spinner" *ngIf="(externalRenters | async).showLoadingSpinner"></ion-spinner>
+  </ion-list>
+</ion-content>

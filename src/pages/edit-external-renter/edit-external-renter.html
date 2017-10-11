@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ action }} External Renter</ion-title>
+    <ion-buttons *ngIf="action === actions.edit" end>
+      <button ion-button icon-only (click)="onDelete()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="externalRenterForm" (ngSubmit)="onSave()">
+    <ion-item>
+      <ion-label floating color="primary">Name</ion-label>
+      <ion-input [ngModel]="(externalRenter | async)?.name" type="text" formControlName="name" (ionBlur)="blur.name = true"></ion-input>
+    </ion-item>
+    <p ion-text *ngIf="name.errors?.required && blur.name" color="danger" padding-left>
+      Name is required
+    </p>
+
+    <ion-item>
+      <ion-label floating color="primary">Email</ion-label>
+      <ion-input [ngModel]="(externalRenter | async)?.email" type="email" formControlName="email" (ionBlur)="blur.email = true"></ion-input>
+    </ion-item>
+    <p ion-text *ngIf="email.errors?.required && blur.email" color="danger" padding-left>
+      Please enter a valid email
+    </p>
+
+    <ion-item>
+      <ion-label floating color="primary">Phone Number</ion-label>
+      <ion-input [ngModel]="(externalRenter | async)?.phone" type="number" formControlName="phone" (ionBlur)="blur.phone = true"></ion-input>
+    </ion-item>
+
+    <div padding>
+    	<button ion-button type="submit" block>
+        Save
+      </button>
+    </div>
+	</form>
+</ion-content>

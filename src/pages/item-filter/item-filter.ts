@@ -4,10 +4,13 @@ import { ItemProperties, LoadingMessages } from '../../constants';
 import { BrandsService } from '../../services/brands.service';
 import { ModelsService } from '../../services/models.service';
 import { CategoriesService } from '../../services/categories.service';
+import { ExternalRentersService } from '../../services/external-renters.service';
 import { BrandsActions } from '../../store/brands/brands.actions';
 import { ModelsActions } from '../../store/models/models.actions';
 import { CategoriesActions } from '../../store/categories/categories.actions';
+import { ExternalRentersActions } from '../../store/external-renters/external-renters.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';
+import { EditExternalRenterPage } from '../../pages/edit-external-renter/edit-external-renter';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -31,6 +34,8 @@ export class ItemFilterPage {
     public modelsService: ModelsService,
     public categoriesActions: CategoriesActions,
     public categoriesService: CategoriesService,
+    public externalRentersActions: ExternalRentersActions,
+    public externalRentersService: ExternalRentersService,
     public layoutActions: LayoutActions
   ) {}
 
@@ -58,6 +63,10 @@ export class ItemFilterPage {
         this.elements = this.categoriesService.getCategories();
         this.showAddNew = this.categoriesService.getShouldShowAddNew();
         break;
+      case ItemProperties.externalRenter:
+        this.elements = this.externalRentersService.getExternalRenters();
+        this.showAddNew = this.externalRentersService.getShouldShowAddNew();
+        break;
     }
   }
 
@@ -82,6 +91,9 @@ export class ItemFilterPage {
         break;
       case ItemProperties.category:
         this.categoriesActions.filterCategories(text);
+        break;
+      case ItemProperties.externalRenter:
+        this.externalRentersActions.filterExternalRenters(text);
         break;
     }
   }
@@ -138,6 +150,9 @@ export class ItemFilterPage {
         this.layoutActions.showLoadingMessage(LoadingMessages.creatingCategory);
         this.categoriesActions.createCategory(name);
         break;
+      case ItemProperties.externalRenter:
+        this.layoutActions.showLoadingMessage(LoadingMessages.creatingExternalRenter);
+        this.externalRentersActions.createExternalRenter({ name });
     }
 
     // Workaround to detect when the brand, model or category has been

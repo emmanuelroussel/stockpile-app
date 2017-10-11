@@ -7,6 +7,7 @@ import { Models } from './models';
 import { Categories } from './categories';
 import { Items } from './items';
 import { Layout } from './layout';
+import { ExternalRenters } from './external-renters';
 import { CustomFields } from './custom-fields';
 import { CustomFieldCategories } from './custom-field-categories';
 
@@ -20,6 +21,7 @@ export interface AppState {
   readonly categories: Categories;
   readonly items: Items;
   readonly layout: Layout;
+  readonly externalRenters: ExternalRenters;
   readonly customFields: CustomFields;
   readonly customFieldCategories: CustomFieldCategories;
 }

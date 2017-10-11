@@ -7,6 +7,7 @@ import { brandsReducer } from './brands/brands.reducer';
 import { modelsReducer } from './models/models.reducer';
 import { categoriesReducer } from './categories/categories.reducer';
 import { layoutReducer } from './layout/layout.reducer';
+import { externalRentersReducer } from './external-renters/external-renters.reducer';
 import { customFieldsReducer } from './custom-fields/custom-fields.reducer';
 import { customFieldCategoriesReducer } from './custom-field-categories/custom-field-categories.reducer';
 
@@ -20,6 +21,7 @@ export const rootReducer = {
   models: modelsReducer,
   categories: categoriesReducer,
   layout: layoutReducer,
+  externalRenters: externalRentersReducer,
   customFields: customFieldsReducer,
   customFieldCategories: customFieldCategoriesReducer
 };

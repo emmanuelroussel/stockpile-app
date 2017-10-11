@@ -12,6 +12,9 @@
         <h3>{{(user | async)?.email}}</h3>
         <p>{{(organization | async)?.name}}</p>
       </button>
+      <button ion-item (click)="onViewExternalRenters()">
+        External Renters
+      </button>
       <button ion-item (click)="onViewCustomFields()">
         Custom Fields
       </button>

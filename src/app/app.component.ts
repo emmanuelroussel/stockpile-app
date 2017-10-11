@@ -16,6 +16,7 @@ import { ModelsActions } from '../store/models/models.actions';
 import { CategoriesActions } from '../store/categories/categories.actions';
 import { ItemProperties } from '../constants';
 import { FieldsPage } from '../pages/fields/fields';
+import { ExternalRentersPage } from '../pages/external-renters/external-renters';
 import { CustomFieldsPage } from '../pages/custom-fields/custom-fields';
 
 import { Observable } from 'rxjs/Observable';
@@ -86,6 +87,14 @@ export class StockpileApp {
   onViewInfo() {
     this.menuCtrl.close();
     this.nav.push(ViewAccountPage);
+  }
+
+  /**
+   * Closes side menu and pushes ExternalRentersPage.
+   */
+  onViewExternalRenters() {
+    this.menuCtrl.close();
+    this.nav.push(ExternalRentersPage);
   }
 
   /**
