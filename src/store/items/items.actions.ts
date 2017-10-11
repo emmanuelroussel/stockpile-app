@@ -48,6 +48,19 @@ export class ItemsActions {
   static RENT_FAIL = type('[Items] Rent Fail');
 
   static RESET_TEMP_ITEM = type('[Items] Reset Temp');
+  static RESET_TEMP_ITEM_CUSTOM_FIELDS = type('[Items] Reset Temp Item Custom Fields');
+
+  static FETCH_ITEM_CUSTOM_FIELDS = type('[Items] Fetch Item Custom Fields');
+  static FETCH_ITEM_CUSTOM_FIELDS_SUCCESS = type('[Items] Fetch Item Custom Fields Success');
+  static FETCH_ITEM_CUSTOM_FIELDS_FAIL = type('[Items] Fetch Item Custom Fields Fail');
+
+  static FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY = type('[Items] Fetch Item Custom Fields By Category');
+  static FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY_SUCCESS = type('[Items] Fetch Item Custom Fields Success By Category');
+  static FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY_FAIL = type('[Items] Fetch Item Custom Fields Fail By Category');
+
+  static UPDATE_ITEM_CUSTOM_FIELDS = type('[Items] Update Item Custom Fields');
+  static UPDATE_ITEM_CUSTOM_FIELDS_SUCCESS = type('[Items] Update Item Custom Fields Success');
+  static UPDATE_ITEM_CUSTOM_FIELDS_FAIL = type('[Items] Update Item Custom Fields Fail');
 
   static START_CREATE = type('[Items] Start Create');
 
@@ -59,12 +72,12 @@ export class ItemsActions {
     this.store.dispatch(createAction(ItemsActions.FETCH, { brandID, modelID, categoryID, available }));
   }
 
-  createItem(item: any) {
-    this.store.dispatch(createAction(ItemsActions.CREATE, item));
+  createItem(item: any, itemCustomFields: Array<any>) {
+    this.store.dispatch(createAction(ItemsActions.CREATE, { item, itemCustomFields }));
   }
 
-  updateItem(item: any) {
-    this.store.dispatch(createAction(ItemsActions.UPDATE, item));
+  updateItem(item: any, itemCustomFields: Array<any>) {
+    this.store.dispatch(createAction(ItemsActions.UPDATE, { item, itemCustomFields }));
   }
 
   deleteItem(barcode: string) {
@@ -107,6 +120,18 @@ export class ItemsActions {
     this.store.dispatch(createAction(ItemsActions.RESET_TEMP_ITEM));
   }
 
+  resetTempItemCustomFields() {
+    this.store.dispatch(createAction(ItemsActions.RESET_TEMP_ITEM_CUSTOM_FIELDS));
+  }
+
+  fetchItemCustomFields(barcode: string) {
+    this.store.dispatch(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS, barcode));
+  }
+
+  fetchItemCustomFieldsByCategory(categoryID: number) {
+    this.store.dispatch(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY, categoryID));
+  }
+  
   startCreate(barcode: string) {
     this.store.dispatch(createAction(ItemsActions.START_CREATE, barcode));
   }

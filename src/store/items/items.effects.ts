@@ -49,13 +49,13 @@ export class ItemsEffects {
   @Effect()
   create$ = this.actions$
     .ofType(ItemsActions.CREATE)
-    .mergeMap(action => this.itemData.createItem(action.payload)
-      .concatMap(res => [
-        createAction(ItemsActions.CREATE_SUCCESS, res),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-        createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded),
-        createAction(AppActions.POP_NAV)
-      ])
+    .mergeMap(action => this.itemData.createItem(action.payload.item)
+      .map(res => createAction(ItemsActions.UPDATE_ITEM_CUSTOM_FIELDS, {
+        item: res,
+        itemCustomFields: action.payload.itemCustomFields,
+        success: ItemsActions.CREATE_SUCCESS,
+        fail: ItemsActions.CREATE_FAIL
+      }))
       .catch(err => Observable.of(
         createAction(ItemsActions.CREATE_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
@@ -69,19 +69,50 @@ export class ItemsEffects {
   @Effect()
   update$ = this.actions$
     .ofType(ItemsActions.UPDATE)
-    .mergeMap(action => this.itemData.updateItem(action.payload, action.payload.barcode)
-      .concatMap(res => [
-        createAction(ItemsActions.UPDATE_SUCCESS, res),
-        createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-        createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited),
-        createAction(AppActions.POP_NAV)
-      ])
+    .mergeMap(action => this.itemData.updateItem(action.payload.item, action.payload.item.barcode)
+      .map(res => createAction(ItemsActions.UPDATE_ITEM_CUSTOM_FIELDS, {
+        item: res,
+        itemCustomFields: action.payload.itemCustomFields,
+        success: ItemsActions.UPDATE_SUCCESS,
+        fail: ItemsActions.UPDATE_FAIL
+      }))
       .catch(err => Observable.of(
         createAction(ItemsActions.UPDATE_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, err.message)
       ))
     );
+
+    /**
+     * Updates an item's custom fields.
+     */
+    @Effect()
+    updateItemCustomFields$ = this.actions$
+      .ofType(ItemsActions.UPDATE_ITEM_CUSTOM_FIELDS)
+      .mergeMap(action => {
+        let requests = [];
+
+        action.payload.itemCustomFields.map(itemCustomField => {
+          requests.push(this.itemData.updateItemCustomField(
+            action.payload.item.barcode,
+            itemCustomField.customFieldID,
+            { value: itemCustomField.value }
+          ).toPromise());
+        });
+
+        return Observable.from(Promise.all(requests))
+          .concatMap(res => [
+            createAction(action.payload.success, action.payload.item),
+            createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+            createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited),
+            createAction(AppActions.POP_NAV)
+          ])
+          .catch(err => Observable.of(
+            createAction(action.payload.fail, err),
+            createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+            createAction(AppActions.SHOW_MESSAGE, err.message)
+          ));
+      });
 
   /**
    * Deletes an item.
@@ -228,6 +259,41 @@ export class ItemsEffects {
           createAction(AppActions.SHOW_MESSAGE, err.message)
         ));
     });
+
+  /**
+   * Fetches item custom fields.
+   */
+  @Effect()
+  fetchItemCustomFields$ = this.actions$
+    .ofType(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS)
+    .mergeMap(action => this.itemData.getItemCustomFields(action.payload)
+      .map(res => createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_SUCCESS, res))
+      .catch(err => Observable.of(
+        createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_FAIL, err),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
+      ))
+    );
+
+  /**
+   * Fetches item custom fields by category.
+   */
+  @Effect()
+  fetchItemCustomFieldsByCategory$ = this.actions$
+    .ofType(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY)
+    .mergeMap(action => this.itemData.getItemCustomFieldsByCategory(action.payload)
+      .map(res => {
+        let itemCustomFields = [];
+        res.results.map(customField => itemCustomFields.push({ ...customField, value: null }));
+
+        return createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY_SUCCESS, {
+          results: itemCustomFields
+        });
+      })
+      .catch(err => Observable.of(
+        createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY_FAIL, err),
+        createAction(AppActions.SHOW_MESSAGE, err.message)
+      ))       
+    );
 
   /**
    * Checks whether or not a user can create an item with a specific barcode.

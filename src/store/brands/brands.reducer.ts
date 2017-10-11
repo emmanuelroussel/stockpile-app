@@ -28,6 +28,8 @@ export function brandsReducer(brands: Brands = initialState, action: Action): Br
         showAddNew: false,
         showLoadingSpinner: false
       };
+    case BrandsActions.FETCH_FAIL:
+      return { ...brands, showLoadingSpinner: false };
     case BrandsActions.CREATE_SUCCESS:
     case BrandsActions.UPDATE_SUCCESS:
       return {

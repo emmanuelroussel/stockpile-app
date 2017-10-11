@@ -84,4 +84,32 @@ describe('ItemData Provider', () => {
       err => fail(err)
     );
   });
+
+  it('calls api to get item custom fields', () => {
+    instance.api.value = TestData.response;
+    instance.getItemCustomFields(TestData.barcode).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  });
+
+  it('calls api to get item custom fields by category', () => {
+    instance.api.value = TestData.response;
+    instance.getItemCustomFieldsByCategory(TestData.category.categoryID).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  });
+
+  it('calls api to update item custom fields', () => {
+    instance.api.value = TestData.response;
+    instance.updateItemCustomField(
+      TestData.barcode,
+      TestData.customField.customFieldID,
+      TestData.customField
+    ).subscribe(
+      res => expect(res).toEqual(TestData.response),
+      err => fail(err)
+    );
+  });
 });

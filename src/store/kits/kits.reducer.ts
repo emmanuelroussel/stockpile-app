@@ -25,7 +25,7 @@ export function kitsReducer(kits: Kits = initialState, action: Action): Kits {
         showLoadingSpinner: false
       };
     case KitsActions.FETCH_FAIL:
-      return { ...kits, loading: false };
+      return { ...kits, showLoadingSpinner: false };
     case KitsActions.DELETE_SUCCESS:
       const results = Object.assign({}, kits.results);
       delete results[action.payload.id];

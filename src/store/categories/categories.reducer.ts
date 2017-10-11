@@ -28,6 +28,8 @@ export function categoriesReducer(categories: Categories = initialState, action:
         showAddNew: false,
         showLoadingSpinner: false
       };
+    case CategoriesActions.FETCH_FAIL:
+      return { ...categories, showLoadingSpinner: false };
     case CategoriesActions.CREATE_SUCCESS:
     case CategoriesActions.UPDATE_SUCCESS:
       return {

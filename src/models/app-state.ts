@@ -8,6 +8,8 @@ import { Categories } from './categories';
 import { Items } from './items';
 import { Layout } from './layout';
 import { ExternalRenters } from './external-renters';
+import { CustomFields } from './custom-fields';
+import { CustomFieldCategories } from './custom-field-categories';
 
 export interface AppState {
   readonly user: User;
@@ -20,4 +22,6 @@ export interface AppState {
   readonly items: Items;
   readonly layout: Layout;
   readonly externalRenters: ExternalRenters;
+  readonly customFields: CustomFields;
+  readonly customFieldCategories: CustomFieldCategories;
 }

@@ -6,6 +6,7 @@ import { Items } from '../../models/items';
 const initialState = {
   results: {},
   tempItem: {},
+  tempItemCustomFields: [],
   rentals: {},
   showLoadingSpinner: false
 };
@@ -26,15 +27,9 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
         ),
         showLoadingSpinner: false
       };
+    case ItemsActions.FETCH_FAIL:
+      return { ...items, showLoadingSpinner: false };
     case ItemsActions.CREATE_SUCCESS:
-      return {
-        ...items,
-        results: {
-          ...items.results,
-          [action.payload.barcode]: action.payload
-        },
-        tempItem: {}
-      };
     case ItemsActions.UPDATE_SUCCESS:
       return {
         ...items,
@@ -42,6 +37,7 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
           ...items.results,
           [action.payload.barcode]: action.payload
         },
+        tempItemCustomFields: [],
         tempItem: {}
       };
     case ItemsActions.DELETE_SUCCESS:
@@ -84,6 +80,25 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
       return { ...items, rentals };
     case ItemsActions.RESET_TEMP_ITEM:
       return { ...items, tempItem: {} };
+    case ItemsActions.RESET_TEMP_ITEM_CUSTOM_FIELDS:
+      return { ...items, tempItemCustomFields: [] };
+    case ItemsActions.FETCH_ITEM_CUSTOM_FIELDS:
+    case ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY:
+      return {
+        ...items,
+        showLoadingSpinner: true,
+        tempItemCustomFields: []
+      };
+    case ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_FAIL:
+    case ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY_FAIL:
+      return { ...items, showLoadingSpinner: false };
+    case ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_SUCCESS:
+    case ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY_SUCCESS:
+      return {
+        ...items,
+        tempItemCustomFields: action.payload.results,
+        showLoadingSpinner: false
+      };
     default:
       return items;
   }
