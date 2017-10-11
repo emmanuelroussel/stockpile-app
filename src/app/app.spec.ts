@@ -16,6 +16,7 @@ import {
 import { StockpileApp } from './app.component';
 import { ViewAccountPage } from '../pages/view-account/view-account';
 import { FieldsPage } from '../pages/fields/fields';
+import { CustomFieldsPage } from '../pages/custom-fields/custom-fields';
 import { TestData } from '../test-data';
 import { ItemProperties } from '../constants';
 import { Observable } from 'rxjs/Observable';
@@ -106,6 +107,14 @@ describe('Root Component', () => {
       typePlural: ItemProperties.categoryPlural
     });
     expect(instance.categoriesActions.fetchCategories).toHaveBeenCalled();
+  });
+
+  it('pushes CustomFieldsPage on viewCustomFields()', () => {
+    spyOn(instance.menuCtrl, 'close');
+    spyOn(instance.nav, 'push');
+    instance.onViewCustomFields();
+    expect(instance.menuCtrl.close).toHaveBeenCalled();
+    expect(instance.nav.push).toHaveBeenCalledWith(CustomFieldsPage);
   });
 
   it('logs user out and closes side menu', () => {

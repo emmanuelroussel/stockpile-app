@@ -35,14 +35,20 @@ describe('Items Actions', () => {
 
   it('dispatches action CREATE', () => {
     spyOn(instance.store, 'dispatch');
-    instance.createItem(TestData.item);
-    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.CREATE, TestData.item));
+    instance.createItem(TestData.item, TestData.itemCustomFields.results);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.CREATE, {
+      item: TestData.item,
+      itemCustomFields: TestData.itemCustomFields.results
+    ));
   });
 
   it('dispatches action UPDATE', () => {
     spyOn(instance.store, 'dispatch');
-    instance.updateItem(TestData.item);
-    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.UPDATE, TestData.item));
+    instance.updateItem(TestData.item, TestData.itemCustomFields.results);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.UPDATE, {
+      item: TestData.item,
+      itemCustomFields: TestData.itemCustomFields.results
+    ));
   });
 
   it('dispatches action DELETE', () => {
@@ -106,6 +112,18 @@ describe('Items Actions', () => {
     spyOn(instance.store, 'dispatch');
     instance.resetTempItem();
     expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.RESET_TEMP_ITEM));
+  });
+
+  it('dispatches action FETCH_ITEM_CUSTOM_FIELDS', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.fetchItemCustomFields(TestData.barcode);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS, TestData.barcode));
+  });
+
+  it('dispatches action FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.fetchItemCustomFieldsByCategory(TestData.category.categoryID);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY, TestData.category.categoryID));
   });
 
   it('dispatches action START_CREATE', () => {

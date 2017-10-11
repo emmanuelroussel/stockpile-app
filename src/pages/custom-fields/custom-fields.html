@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Custom Fields</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="onAdd()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let customField of (customFields | async).results | mapToIterable" (click)="onViewCustomField(customField.customFieldID)">
+      <h2>{{ customField.name }}</h2>
+    </button>
+
+    <ion-item *ngIf="!((customFields | async).results | mapToIterable).length && !(customFields | async).showLoadingSpinner">
+      No custom fields found <button ion-button item-right (click)="onAdd()">Add a custom field</button>
+    </ion-item>
+
+    <ion-spinner class="center-spinner" *ngIf="(customFields | async).showLoadingSpinner"></ion-spinner>
+  </ion-list>
+</ion-content>

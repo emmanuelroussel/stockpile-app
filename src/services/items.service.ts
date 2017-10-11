@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { AppState } from '../models/app-state';
-import { Items, Item } from '../models/items';
+import { Items, Item, ItemCustomField } from '../models/items';
 
 @Injectable()
 export class ItemsService {
@@ -20,5 +20,13 @@ export class ItemsService {
 
   getTempItem(): Observable<any> {
     return this.store.select(appState => appState.items.tempItem);
+  }
+
+  getTempItemCustomFields(): Observable<Array<ItemCustomField>> {
+    return this.store.select(appState => appState.items.tempItemCustomFields);
+  }
+
+  getShouldShowLoadingSpinner(): Observable<boolean> {
+    return this.store.select(appState => appState.items.showLoadingSpinner);
   }
 }

@@ -16,6 +16,7 @@ import { ModelsActions } from '../store/models/models.actions';
 import { CategoriesActions } from '../store/categories/categories.actions';
 import { ItemProperties } from '../constants';
 import { FieldsPage } from '../pages/fields/fields';
+import { CustomFieldsPage } from '../pages/custom-fields/custom-fields';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -124,6 +125,14 @@ export class StockpileApp {
       type: ItemProperties.category,
       typePlural: ItemProperties.categoryPlural
     });
+  }
+
+  /**
+   * Closes side menu and pushes CustomFieldsPage.
+   */
+  onViewCustomFields() {
+    this.menuCtrl.close();
+    this.nav.push(CustomFieldsPage);
   }
 
   /**

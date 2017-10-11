@@ -531,6 +531,26 @@ export class TestData {
         categoryID: 1,
         available: 1
       },
+      tempItemCustomFields: [
+        {
+          categoryName: 'Camera',
+          customFieldID: 1,
+          customFieldName: 'Cost',
+          value: '350',
+        },
+        {
+          categoryName: 'Camera',
+          customFieldID: 2,
+          customFieldName: 'Serial number',
+          value: '1234567890',
+        },
+        {
+          categoryName: 'Camera',
+          customFieldID: 3,
+          customFieldName: 'Notes',
+          value: 'This is a note',
+        }
+      ],
       rentals: {
         ['banana']: {
           barcode: 'banana',
@@ -567,8 +587,184 @@ export class TestData {
     },
     layout: {
       loadingMessage: 'Please wait...'
+    },
+    customFieldCategories: {
+      results: [
+        {
+          categoryID: 1,
+          customFieldID: 1,
+          name: 'Camera',
+          organizationID: 1
+        },
+        {
+          categoryID: 2,
+          customFieldID: 1,
+          name: 'Mic',
+          organizationID: 1
+        },
+        {
+          categoryID: 3,
+          customFieldID: 1,
+          name: 'Light',
+          organizationID: 1
+        }
+      ],
+      showLoadingSpinner: false,
+      selectAll: true
+    },
+    customFields: {
+      results: [
+        {
+          name: 'Cost',
+          customFieldID: 1,
+          organizationID: 1
+        },
+        {
+          name: 'Serial number',
+          customFieldID: 2,
+          organizationID: 1
+        },
+        {
+          name: 'Notes',
+          customFieldID: 3,
+          organizationID: 1
+        }
+      ],
+      showLoadingSpinner: false
     }
   };
 
   public static pop = true;
+
+  public static customField = {
+    name: 'Cost',
+    customFieldID: 1,
+    organizationID: 1
+  };
+
+  public static customFields = {
+    results: [
+      {
+        name: 'Cost',
+        customFieldID: 1,
+        organizationID: 1
+      },
+      {
+        name: 'Serial number',
+        customFieldID: 2,
+        organizationID: 1
+      },
+      {
+        name: 'Notes',
+        customFieldID: 3,
+        organizationID: 1
+      }
+    ]
+  };
+
+  public static customFieldCategory = {
+    categoryID: 1,
+    customFieldID: 1,
+    name: 'Camera',
+    organizationID: 1
+  };
+
+  public static customFieldCategories = {
+    results: [
+      {
+        categoryID: 1,
+        customFieldID: 1,
+        name: 'Camera',
+        organizationID: 1
+      },
+      {
+        categoryID: 2,
+        customFieldID: 1,
+        name: 'Mic',
+        organizationID: 1
+      },
+      {
+        categoryID: 3,
+        customFieldID: 1,
+        name: 'Light',
+        organizationID: 1
+      }
+    ]
+  };
+
+  public static itemCustomField = {
+    categoryName: 'Camera',
+    customFieldID: 1,
+    customFieldName: 'Serial number',
+    value: '1234567890',
+  };
+
+  public static itemCustomFields = {
+    results: [
+      {
+        categoryName: 'Camera',
+        customFieldID: 1,
+        customFieldName: 'Cost',
+        value: '350',
+      },
+      {
+        categoryName: 'Camera',
+        customFieldID: 2,
+        customFieldName: 'Serial number',
+        value: '1234567890',
+      },
+      {
+        categoryName: 'Camera',
+        customFieldID: 3,
+        customFieldName: 'Notes',
+        value: 'This is a note',
+      }
+    ]
+  };
+
+  public static itemCustomFieldsNullValues = {
+    results: [
+      {
+        categoryName: 'Camera',
+        customFieldID: 1,
+        customFieldName: 'Cost',
+        value: null,
+      },
+      {
+        categoryName: 'Camera',
+        customFieldID: 2,
+        customFieldName: 'Serial number',
+        value: null,
+      },
+      {
+        categoryName: 'Camera',
+        customFieldID: 3,
+        customFieldName: 'Notes',
+        value: null,
+      }
+    ]
+  };
+
+  public static itemCustomFieldsForm = {
+    value: {
+      1: '350',
+      2: '1234567890',
+      3: 'This is a note'
+    }
+  };
+
+  public static itemCustomFieldsValues = [
+    {
+      customFieldID: '1',
+      value: '350',
+    },
+    {
+      customFieldID: '2',
+      value: '1234567890',
+    },
+    {
+      customFieldID: '3',
+      value: 'This is a note',
+    }
+  ];
 }

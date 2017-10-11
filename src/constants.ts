@@ -18,12 +18,15 @@ export class Links {
   public static password = '/password';
   public static kit = '/kit';
   public static active = '/active';
+  public static customField = '/custom-field';
+  public static customFieldCategory = '/category';
 }
 
 export class Messages {
   private static brandBaseSingular = 'Brand successfully';
   private static modelBaseSingular = 'Model successfully';
   private static categoryBaseSingular = 'Category successfully';
+  private static customFieldBaseSingular = 'Custom field successfully';
   private static itemBaseSingular = 'Item successfully';
   private static itemBasePlural = 'Item(s) successfully';
   private static kitBaseSingular = 'Kit successfully';
@@ -37,6 +40,9 @@ export class Messages {
   public static categoryAdded = `${Messages.categoryBaseSingular} created`;
   public static categoryEdited = `${Messages.categoryBaseSingular} updated`;
   public static categoryDeleted = `${Messages.categoryBaseSingular} deleted`;
+  public static customFieldAdded = `${Messages.customFieldBaseSingular} created`;
+  public static customFieldEdited = `${Messages.customFieldBaseSingular} updated`;
+  public static customFieldDeleted = `${Messages.customFieldBaseSingular} deleted`;
   public static itemAdded = `${Messages.itemBaseSingular} created`;
   public static itemEdited = `${Messages.itemBaseSingular} updated`;
   public static itemDeleted = `${Messages.itemBaseSingular} deleted`;
@@ -62,6 +68,9 @@ export class LoadingMessages {
   public static creatingModel = 'Creating model...';
   public static updatingModel = 'Updating model...';
   public static deletingModel = 'Deleting model...';
+  public static creatingCustomField = 'Creating custom field...';
+  public static updatingCustomField = 'Updating custom field...';
+  public static deletingCustomField = 'Deleting custom field...';
   public static creatingCategory = 'Creating category...';
   public static updatingCategory = 'Updating category...';
   public static deletingCategory = 'Deleting category...';

@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="onSave()">
+  <form #itemForm="ngForm" (ngSubmit)="onSave(itemForm)">
     <button ion-item type="button" disabled detail-none>
       <ion-label color="primary">Barcode</ion-label>
       <ion-label>{{(tempItem | async).barcode}}</ion-label>
@@ -40,6 +40,13 @@
     <p ion-text *ngIf="errors.category" color="danger" padding-left>
       Category is required
     </p>
+
+    <ion-item *ngFor="let customField of (itemCustomFields | async)">
+      <ion-label floating color="primary">{{ customField.customFieldName }}</ion-label>
+      <ion-input [ngModel]="customField?.value" type="text" [name]="customField.customFieldID"></ion-input>
+    </ion-item>
+
+    <ion-spinner class="center-spinner" *ngIf="showLoadingSpinner | async"></ion-spinner>
 
     <div padding>
       <button ion-button type="submit" block>

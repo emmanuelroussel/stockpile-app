@@ -61,9 +61,9 @@ describe('EditItem Page', () => {
     instance.tempItem = Observable.of(TestData.apiItem);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'createItem');
-    instance.onSave();
+    instance.onSave(TestData.itemCustomFieldsForm);
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.creatingItem);
-    expect(instance.itemsActions.createItem).toHaveBeenCalledWith(TestData.item);
+    expect(instance.itemsActions.createItem).toHaveBeenCalledWith(TestData.item, TestData.itemCustomFieldsValues);
   });
 
   it('updates item onSave() if action is edit', () => {
@@ -71,9 +71,9 @@ describe('EditItem Page', () => {
     instance.tempItem = Observable.of(TestData.apiItem);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'updateItem');
-    instance.onSave();
+    instance.onSave(TestData.itemCustomFieldsForm);
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.updatingItem);
-    expect(instance.itemsActions.updateItem).toHaveBeenCalledWith(TestData.item);
+    expect(instance.itemsActions.updateItem).toHaveBeenCalledWith(TestData.item, TestData.itemCustomFieldsValues);
   });
 
   it('does not update item onSave() if there are errors', () => {

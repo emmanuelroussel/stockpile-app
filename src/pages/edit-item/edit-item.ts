@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { NavParams, ModalController, AlertController } from 'ionic-angular';
 
 import { Actions, ItemProperties, LoadingMessages } from '../../constants';
@@ -9,6 +10,7 @@ import { BrandsActions } from '../../store/brands/brands.actions';
 import { ModelsActions } from '../../store/models/models.actions';
 import { CategoriesActions } from '../../store/categories/categories.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';
+import { ItemCustomField } from '../../models/items';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -20,11 +22,13 @@ export class EditItemPage {
   itemProperties = ItemProperties;
   action: Actions = '';
   tempItem: Observable<any>;
+  itemCustomFields: Observable<Array<ItemCustomField>>;
   errors = {
     brand: false,
     model: false,
     category: false
   };
+  showLoadingSpinner: Observable<boolean>;
 
   constructor(
     public navParams: NavParams,
@@ -45,10 +49,13 @@ export class EditItemPage {
    */
   ngOnInit() {
     this.itemsActions.resetTempItem();
+    this.itemsActions.resetTempItemCustomFields();
     this.brandsActions.fetchBrands();
     this.modelsActions.fetchModels();
     this.categoriesActions.fetchCategories();
     this.tempItem = this.itemsService.getTempItem();
+    this.itemCustomFields = this.itemsService.getTempItemCustomFields();
+    this.showLoadingSpinner = this.itemsService.getShouldShowLoadingSpinner();
 
     this.action = this.navParams.get('action');
     const barcode = this.navParams.get('barcode');
@@ -59,6 +66,7 @@ export class EditItemPage {
       let item;
       this.itemsService.getItem(barcode).take(1).subscribe(i => item = i);
 
+      this.itemsActions.fetchItemCustomFields(barcode);
       this.itemsActions.updateTempItem({
         brand: item.brand,
         brandID: item.brandID,
@@ -74,7 +82,7 @@ export class EditItemPage {
   /**
    * Updates or creates item depending on the action.
    */
-  onSave() {
+  onSave(form: NgForm) {
     this.checkIfErrors();
 
     if (!this.errors.brand && !this.errors.model && !this.errors.category) {
@@ -85,12 +93,21 @@ export class EditItemPage {
         barcode: i.barcode
       });
 
+      // Transform the values from the form to an array
+      let itemCustomFieldsList = [];
+      Object.entries(form.value).map(input => {
+        itemCustomFieldsList.push({
+          customFieldID: input[0],
+          value: input[1]
+        });
+      });
+
       if (this.action === Actions.add) {
         this.layoutActions.showLoadingMessage(LoadingMessages.creatingItem);
-        this.itemsActions.createItem(item);
+        this.itemsActions.createItem(item, itemCustomFieldsList);
       } else if (this.action === Actions.edit) {
         this.layoutActions.showLoadingMessage(LoadingMessages.updatingItem);
-        this.itemsActions.updateItem(item);
+        this.itemsActions.updateItem(item, itemCustomFieldsList);
       }
     }
   }
@@ -183,6 +200,9 @@ export class EditItemPage {
         this.errors.model = false;
         break;
       case ItemProperties.category:
+        // Since category changed, fetch custom fields related to the new category
+        this.itemsActions.fetchItemCustomFieldsByCategory(element.categoryID);
+
         this.itemsActions.updateTempItem({
           categoryID: element.categoryID,
           category: element.name

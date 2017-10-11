@@ -80,14 +80,19 @@ describe('Items Effects', () => {
   });
 
   it('creates an item', () => {
-    runner.queue(createAction(ItemsActions.CREATE));
+    runner.queue(createAction(ItemsActions.CREATE, {
+      item: TestData.apiItem,
+      itemCustomFields: TestData.itemCustomFields
+    }));
 
     let performedActions = [];
     const expectedResult = [
-      createAction(ItemsActions.CREATE_SUCCESS, TestData.apiItem),
-      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-      createAction(AppActions.SHOW_MESSAGE, Messages.itemAdded),
-      createAction(AppActions.POP_NAV)
+      createAction(ItemsActions.UPDATE_ITEM_CUSTOM_FIELDS, {
+        item: TestData.apiItem,
+        itemCustomFields: TestData.itemCustomFields,
+        success: ItemsActions.CREATE_SUCCESS,
+        fail: ItemsActions.CREATE_FAIL
+      })
     ];
 
     instance.create$.take(expectedResult.length).subscribe(
@@ -100,7 +105,10 @@ describe('Items Effects', () => {
   it('returns error if create fails', () => {
     instance.itemData.resolve = false;
 
-    runner.queue(createAction(ItemsActions.CREATE));
+    runner.queue(createAction(ItemsActions.CREATE, {
+      item: TestData.apiItem,
+      itemCustomFields: TestData.itemCustomFields
+    }));
 
     let performedActions = [];
     const expectedResult = [
@@ -116,14 +124,19 @@ describe('Items Effects', () => {
   });
 
   it('updates an item', () => {
-    runner.queue(createAction(ItemsActions.UPDATE, TestData.apiItem));
+    runner.queue(createAction(ItemsActions.UPDATE, {
+      item: TestData.apiItem,
+      itemCustomFields: TestData.itemCustomFields
+    }));
 
     let performedActions = [];
     const expectedResult = [
-      createAction(ItemsActions.UPDATE_SUCCESS, TestData.apiItem),
-      createAction(LayoutActions.HIDE_LOADING_MESSAGE),
-      createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited),
-      createAction(AppActions.POP_NAV)
+      createAction(ItemsActions.UPDATE_ITEM_CUSTOM_FIELDS, {
+        item: TestData.apiItem,
+        itemCustomFields: TestData.itemCustomFields,
+        success: ItemsActions.UPDATE_SUCCESS,
+        fail: ItemsActions.UPDATE_FAIL
+      })
     ];
 
     instance.update$.take(expectedResult.length).subscribe(
@@ -136,7 +149,10 @@ describe('Items Effects', () => {
   it('returns error if update fails', () => {
     instance.itemData.resolve = false;
 
-    runner.queue(createAction(ItemsActions.UPDATE, TestData.item));
+    runner.queue(createAction(ItemsActions.UPDATE, {
+      item: TestData.apiItem,
+      itemCustomFields: TestData.itemCustomFields
+    }));
 
     let performedActions = [];
     const expectedResult = [
@@ -331,6 +347,34 @@ describe('Items Effects', () => {
     );
   });
 
+  it('fetches item custom fields', () => {
+    instance.itemData.allItems = TestData.itemCustomFields;
+
+    runner.queue(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS, TestData.barcode));
+
+    instance.fetchItemCustomFields$.subscribe(
+      res => expect(res).toEqual(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_SUCCESS, TestData.itemCustomFields)),
+      err => fail(err)
+    );
+  });
+
+  it('returns error if fetch item custom fields fails', () => {
+    instance.itemData.resolve = false;
+
+    runner.queue(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS, TestData.barcode));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.fetchItemCustomFields$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
   it('pushes page to add item if item does not exist', () => {
     instance.itemData.resolve = false;
     runner.queue(createAction(ItemsActions.START_CREATE, TestData.barcode));
@@ -347,6 +391,34 @@ describe('Items Effects', () => {
     ];
 
     instance.startCreate$.take(expectedResult.length).subscribe(
+      res => performedActions.push(res),
+      err => fail(err),
+      () => expect(performedActions).toEqual(expectedResult)
+    );
+  });
+
+  it('fetches item custom fields by category', () => {
+    instance.itemData.allItems = TestData.itemCustomFields;
+
+    runner.queue(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY, TestData.category.categoryID));
+
+    instance.fetchItemCustomFieldsByCategory$.subscribe(
+      res => expect(res).toEqual(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY_SUCCESS, TestData.itemCustomFieldsNullValues)),
+      err => fail(err)
+    );
+  });
+
+  it('returns error if fetch item custom fields fails', () => {
+    instance.itemData.resolve = false;
+
+    runner.queue(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY, TestData.barcode));
+
+    let performedActions = [];
+    const expectedResult = [
+      createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY_FAIL, TestData.error),
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+    ];
+    instance.fetchItemCustomFieldsByCategory$.take(expectedResult.length).subscribe(
       res => performedActions.push(res),
       err => fail(err),
       () => expect(performedActions).toEqual(expectedResult)
