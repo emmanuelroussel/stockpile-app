@@ -131,7 +131,7 @@ export class ItemsActions {
   fetchItemCustomFieldsByCategory(categoryID: number) {
     this.store.dispatch(createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY, categoryID));
   }
-  
+
   startCreate(barcode: string) {
     this.store.dispatch(createAction(ItemsActions.START_CREATE, barcode));
   }
