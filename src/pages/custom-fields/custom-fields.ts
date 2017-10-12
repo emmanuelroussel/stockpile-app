@@ -3,11 +3,11 @@ import { NavController } from 'ionic-angular';
 
 import { Actions } from '../../constants';
 import { CustomFieldPage } from '../custom-field/custom-field';
-import { CustomFields } from '../../models/custom-fields';
+import { CustomFields } from '../../models';
 import { CustomFieldsService } from '../../services/custom-fields.service';
 import { CustomFieldsActions } from '../../store/custom-fields/custom-fields.actions';
 
-import { MapToIterablePipe } from '../../pipes/map-to-iterable.pipe';
+import { MapToIterablePipe } from '../../pipes';
 
 import { Observable } from 'rxjs/Observable';
 

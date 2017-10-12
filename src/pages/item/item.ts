@@ -10,7 +10,7 @@ import { BrandsActions } from '../../store/brands/brands.actions';
 import { ModelsActions } from '../../store/models/models.actions';
 import { CategoriesActions } from '../../store/categories/categories.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';
-import { ItemCustomField } from '../../models/items';
+import { ItemCustomField } from '../../models';
 import { Observable } from 'rxjs/Observable';
 
 @Component({

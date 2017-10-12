@@ -6,8 +6,7 @@ import { RentalDetailsPage } from '../rental-details/rental-details';
 import { Actions, Messages } from '../../constants';
 import { Notifications } from '../../providers/notifications';
 
-import { Kit } from '../../models/kits';
-import { KitModel } from '../../models/kit-models';
+import { Kit, KitModel } from '../../models';
 import { KitsService } from '../../services/kits.service';
 import { KitModelsService } from '../../services/kit-models.service';
 import { KitModelsActions } from '../../store/kit-models/kit-models.actions';

@@ -8,7 +8,7 @@ import { Notifications } from '../../providers/notifications';
 
 import { ItemsActions } from '../../store/items/items.actions';
 import { ItemsService } from '../../services/items.service';
-import { Items } from '../../models/items';
+import { Items } from '../../models';
 import { Observable } from 'rxjs/Observable';
 import { LayoutActions } from '../../store/layout/layout.actions';
 

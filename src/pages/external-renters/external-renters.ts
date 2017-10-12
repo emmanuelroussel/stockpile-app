@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 
 import { Actions } from '../../constants';
 import { ExternalRenterPage } from '../external-renter/external-renter';
-import { ExternalRenters } from '../../models/external-renters';
+import { ExternalRenters } from '../../models';
 import { ExternalRentersService } from '../../services/external-renters.service';
 import { ExternalRentersActions } from '../../store/external-renters/external-renters.actions';
 

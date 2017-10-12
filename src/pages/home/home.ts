@@ -10,7 +10,7 @@ import { ItemsService } from '../../services/items.service';
 import { KitsService } from '../../services/kits.service';
 import { KitsActions } from '../../store/kits/kits.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';
-import { Kits } from '../../models/kits';
+import { Kits } from '../../models';
 import { KitPage } from '../kit/kit';
 import { KitRentalPage } from '../kit-rental/kit-rental';
 import { Observable } from 'rxjs/Observable';

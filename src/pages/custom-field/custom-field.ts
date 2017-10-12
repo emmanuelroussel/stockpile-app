@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 
-import { CustomField } from '../../models/custom-fields';
-import { CustomFieldCategory } from '../../models/custom-field-categories';
-import { Categories } from '../../models/categories';
+import { CustomField, CustomFieldCategory, Categories } from '../../models';
 import { CustomFieldsService } from '../../services/custom-fields.service';
 import { CustomFieldsActions } from '../../store/custom-fields/custom-fields.actions';
 import { CustomFieldCategoriesService } from '../../services/custom-field-categories.service';

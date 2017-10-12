@@ -3,8 +3,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { NavController, NavParams, ModalController, Events, AlertController } from 'ionic-angular';
 
 import { AddKitModelPage } from '../add-kit-model/add-kit-model';
-import { Kit } from '../../models/kits';
-import { KitModel } from '../../models/kit-models';
+import { Kit, KitModel } from '../../models';
 import { KitsService } from '../../services/kits.service';
 import { KitsActions } from '../../store/kits/kits.actions';
 import { KitModelsService } from '../../services/kit-models.service';

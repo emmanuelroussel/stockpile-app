@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 
-import { ExternalRenter } from '../../models/external-renters';
+import { ExternalRenter } from '../../models';
 import { ExternalRentersService } from '../../services/external-renters.service';
 import { ExternalRentersActions } from '../../store/external-renters/external-renters.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';

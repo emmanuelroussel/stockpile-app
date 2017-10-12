@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { AppState } from '../models/app-state';
-import { ExternalRenters, ExternalRenter } from '../models/external-renters';
+import { AppState, ExternalRenters, ExternalRenter } from '../models';
 
 @Injectable()
 export class ExternalRentersService {

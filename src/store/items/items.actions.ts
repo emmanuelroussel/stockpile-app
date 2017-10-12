@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { type } from '../../utils';
 
 import { createAction } from '../create-action';
-import { AppState } from '../../models/app-state';
+import { AppState } from '../../models';
 
 @Injectable()
 export class ItemsActions {

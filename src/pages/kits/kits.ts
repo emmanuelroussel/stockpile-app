@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 
 import { Actions } from '../../constants';
 import { KitPage } from '../kit/kit';
-import { Kits } from '../../models/kits';
+import { Kits } from '../../models';
 import { KitsService } from '../../services/kits.service';
 
 import { MapToIterablePipe, SortPipe } from '../../pipes';

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import { AppState } from '../../models/app-state';
+import { AppState } from '../../models';
 
 import { createAction } from '../create-action';
 import { KitModelsActions } from './kit-models.actions';

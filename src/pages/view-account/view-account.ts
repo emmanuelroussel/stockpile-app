@@ -3,7 +3,7 @@ import { NavController, Platform, AlertController } from 'ionic-angular';
 
 import { EditAccountPage } from '../edit-account/edit-account';
 import { ChangePasswordPage } from '../change-password/change-password';
-import { User } from '../../models/user';
+import { User } from '../../models';
 import { UserService } from '../../services/user.service';
 import { UserActions } from '../../store/user/user.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';

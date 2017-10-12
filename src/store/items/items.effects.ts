@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import { AppState } from '../../models/app-state';
+import { AppState } from '../../models';
 // Importing constants with alias to avoid naming conflict with ngrx's Actions
 import * as constants from '../../constants';
 import { RentalPage } from '../../pages/rental/rental';

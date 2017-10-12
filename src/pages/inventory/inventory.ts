@@ -8,7 +8,7 @@ import { Notifications } from '../../providers/notifications';
 import { Actions } from '../../constants';
 import { ItemPage } from '../item/item';
 import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
-import { Items } from '../../models/items';
+import { Items } from '../../models';
 import { ItemsActions } from '../../store/items/items.actions';
 import { ItemsService } from '../../services/items.service';
 import { BrandsActions } from '../../store/brands/brands.actions';
