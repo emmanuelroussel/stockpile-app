@@ -15,10 +15,10 @@ import { Actions, LoadingMessages } from '../../constants';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'page-edit-kit',
-  templateUrl: 'edit-kit.html'
+  selector: 'page-kit',
+  templateUrl: 'kit.html'
 })
-export class EditKitPage {
+export class KitPage {
   kitForm: FormGroup;
   blur = { name: false };
   actions = Actions;

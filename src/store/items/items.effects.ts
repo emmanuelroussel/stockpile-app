@@ -14,7 +14,7 @@ import { AppActions } from '../app/app.actions';
 import { ItemData } from '../../providers/item-data';
 import { Messages } from '../../constants';
 import { LayoutActions } from '../layout/layout.actions';
-import { EditItemPage } from '../../pages/edit-item/edit-item';
+import { ItemPage } from '../../pages/item/item';
 
 @Injectable()
 export class ItemsEffects {
@@ -292,7 +292,7 @@ export class ItemsEffects {
       .catch(err => Observable.of(
         createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY_FAIL, err),
         createAction(AppActions.SHOW_MESSAGE, err.message)
-      ))       
+      ))
     );
 
   /**
@@ -309,7 +309,7 @@ export class ItemsEffects {
         if (err.code === 'NotFoundError') {
           return Observable.of(
             createAction(AppActions.PUSH_PAGE, {
-              page: EditItemPage,
+              page: ItemPage,
               navParams: {
                 barcode: action.payload,
                 action: constants.Actions.add

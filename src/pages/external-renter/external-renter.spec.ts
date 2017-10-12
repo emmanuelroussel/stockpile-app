@@ -3,16 +3,16 @@ import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { Actions, LoadingMessages } from '../../constants';
 
-import { EditExternalRenterPage } from './edit-external-renter';
+import { ExternalRenterPage } from './external-renter';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-let fixture: ComponentFixture<EditExternalRenterPage> = null;
+let fixture: ComponentFixture<ExternalRenterPage> = null;
 let instance: any = null;
 
-describe('EditExternalRenter Page', () => {
+describe('ExternalRenter Page', () => {
 
-  beforeEach(async(() => TestUtils.beforeEachCompiler([EditExternalRenterPage]).then(compiled => {
+  beforeEach(async(() => TestUtils.beforeEachCompiler([ExternalRenterPage]).then(compiled => {
     fixture = compiled.fixture;
     instance = compiled.instance;
   })));

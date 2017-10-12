@@ -3,16 +3,16 @@ import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { Actions, LoadingMessages, ItemProperties } from '../../constants';
 
-import { EditCustomFieldPage } from './edit-custom-field';
+import { CustomFieldPage } from './custom-field';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-let fixture: ComponentFixture<EditCustomFieldPage> = null;
+let fixture: ComponentFixture<CustomFieldPage> = null;
 let instance: any = null;
 
-describe('EditCustomField Page', () => {
+describe('CustomField Page', () => {
 
-  beforeEach(async(() => TestUtils.beforeEachCompiler([EditCustomFieldPage]).then(compiled => {
+  beforeEach(async(() => TestUtils.beforeEachCompiler([CustomFieldPage]).then(compiled => {
     fixture = compiled.fixture;
     instance = compiled.instance;
   })));

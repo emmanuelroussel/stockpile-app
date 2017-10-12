@@ -8,7 +8,7 @@ import { AppState } from '../../models/app-state';
 import { createAction } from '../create-action';
 import { CustomFieldCategoriesActions } from './custom-field-categories.actions';
 import { CustomFieldData } from '../../providers/custom-field-data';
-import { AppActions } from '../app/app.actions.ts';
+import { AppActions } from '../app/app.actions';
 import { LayoutActions } from '../layout/layout.actions';
 
 @Injectable()

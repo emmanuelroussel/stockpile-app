@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { Actions } from '../../constants';
-import { EditCustomFieldPage } from '../edit-custom-field/edit-custom-field';
+import { CustomFieldPage } from '../custom-field/custom-field';
 import { CustomFields } from '../../models/custom-fields';
 import { CustomFieldsService } from '../../services/custom-fields.service';
 import { CustomFieldsActions } from '../../store/custom-fields/custom-fields.actions';
@@ -36,13 +36,13 @@ export class CustomFieldsPage {
    * Pushes page on nav with the custom field to allow user to view it.
    */
   onViewCustomField(customFieldID: number) {
-    this.navCtrl.push(EditCustomFieldPage, { action: Actions.edit, customFieldID });
+    this.navCtrl.push(CustomFieldPage, { action: Actions.edit, customFieldID });
   }
 
   /**
    * Pushes page on nav to allow user to add a new kit.
    */
   onAdd() {
-    this.navCtrl.push(EditCustomFieldPage, { action: Actions.add });
+    this.navCtrl.push(CustomFieldPage, { action: Actions.add });
   }
 }

@@ -5,7 +5,7 @@ import 'rxjs/add/observable/of';
 
 import { createAction } from '../create-action';
 import { CustomFieldsActions } from './custom-fields.actions';
-import { AppActions } from '../app/app.actions.ts';
+import { AppActions } from '../app/app.actions';
 import { CustomFieldData } from '../../providers/custom-field-data';
 import { CustomFieldCategoriesActions } from '../custom-field-categories/custom-field-categories.actions';
 import { Messages } from '../../constants';

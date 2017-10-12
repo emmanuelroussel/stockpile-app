@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Actions, ItemProperties } from '../../constants';
-import { EditFieldPage } from '../edit-field/edit-field';
+import { FieldPage } from '../field/field';
 
 import { MapToIterablePipe, SortPipe } from '../../pipes';
 import { Observable } from 'rxjs/Observable';
@@ -35,7 +35,7 @@ export class FieldsPage {
    * Pushes page on nav with the field to allow user to view it.
    */
   onViewField(field: any) {
-    this.navCtrl.push(EditFieldPage, {
+    this.navCtrl.push(FieldPage, {
       action: Actions.edit,
       type: this.type,
       field: Object.assign({}, field),
@@ -46,7 +46,7 @@ export class FieldsPage {
    * Pushes page on nav to allow user to add a new field.
    */
   onAdd() {
-    this.navCtrl.push(EditFieldPage, {
+    this.navCtrl.push(FieldPage, {
       action: Actions.add,
       type: this.type
     });

@@ -11,10 +11,10 @@ import { Actions, LoadingMessages } from '../../constants';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'page-edit-external-renter',
-  templateUrl: 'edit-external-renter.html'
+  selector: 'page-external-renter',
+  templateUrl: 'external-renter.html'
 })
-export class EditExternalRenterPage {
+export class ExternalRenterPage {
   externalRenterForm: FormGroup;
   blur = {
     name: false,

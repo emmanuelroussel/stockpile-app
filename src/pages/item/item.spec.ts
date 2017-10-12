@@ -3,17 +3,17 @@ import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { Actions, ItemProperties, LoadingMessages } from '../../constants';
 
-import { EditItemPage } from './edit-item';
+import { ItemPage } from './item';
 import { ItemFilterPage } from '../item-filter/item-filter';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-let fixture: ComponentFixture<EditItemPage> = null;
+let fixture: ComponentFixture<ItemPage> = null;
 let instance: any = null;
 
-describe('EditItem Page', () => {
+describe('Item Page', () => {
 
-  beforeEach(async(() => TestUtils.beforeEachCompiler([EditItemPage]).then(compiled => {
+  beforeEach(async(() => TestUtils.beforeEachCompiler([ItemPage]).then(compiled => {
     fixture = compiled.fixture;
     instance = compiled.instance;
   })));

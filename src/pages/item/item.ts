@@ -14,10 +14,10 @@ import { ItemCustomField } from '../../models/items';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'page-edit-item',
-  templateUrl: 'edit-item.html'
+  selector: 'page-item',
+  templateUrl: 'item.html'
 })
-export class EditItemPage {
+export class ItemPage {
   actions = Actions;
   itemProperties = ItemProperties;
   action: Actions = '';

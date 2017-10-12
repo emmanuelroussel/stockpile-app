@@ -12,16 +12,16 @@ import { CustomFieldCategoriesActions } from '../../store/custom-field-categorie
 import { LayoutActions } from '../../store/layout/layout.actions';
 import { CategoriesActions } from '../../store/categories/categories.actions';
 import { CategoriesService } from '../../services/categories.service';
-import { EditFieldPage } from '../../pages/edit-field/edit-field';
+import { FieldPage } from '../../pages/field/field';
 
 import { Actions, LoadingMessages, ItemProperties } from '../../constants';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'page-edit-custom-field',
-  templateUrl: 'edit-custom-field.html'
+  selector: 'page-custom-field',
+  templateUrl: 'custom-field.html'
 })
-export class EditCustomFieldPage {
+export class CustomFieldPage {
   customFieldForm: FormGroup;
   blur = { name: false };
   actions = Actions;
@@ -182,7 +182,7 @@ export class EditCustomFieldPage {
           },
           {
             text: 'Create a category',
-            handler: () => this.navCtrl.push(EditFieldPage, {
+            handler: () => this.navCtrl.push(FieldPage, {
               action: Actions.add,
               type: ItemProperties.category
             })
