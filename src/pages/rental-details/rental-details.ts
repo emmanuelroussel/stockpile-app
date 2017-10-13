@@ -61,23 +61,21 @@ export class RentalDetailsPage {
    */
   onRent() {
     if (this.rentalForm.valid) {
-      // We need to offset the date by the difference between the user's timezone
-      // and UTC 0 to have an accurate date
-      let today = new Date();
-      today.setDate(today.getDate() - this.timezoneOffset);
-
       let externalRenterID = null;
-
       if (this.externalRenter) {
         externalRenterID = this.externalRenter.externalRenterID;
       }
+
+      // Set end date to UTC time
+      let endDate = new Date(this.rentalForm.value.endDate);
+      endDate.setDate(endDate.getDate() + this.timezoneOffset);
 
       // Transform dates from ISO 8601 to MySQL date format
       const details = {
         ...this.rentalForm.value,
         externalRenterID,
-        startDate: today.toISOString().substring(0, 10), // today
-        endDate: this.rentalForm.value.endDate.substring(0, 10)
+        startDate: (new Date()).toISOString().substring(0, 10), // today
+        endDate: endDate.toISOString().substring(0, 10)
       };
 
       this.layoutActions.showLoadingMessage(LoadingMessages.rentingItems);
