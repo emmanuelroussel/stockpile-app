@@ -4,7 +4,7 @@ import { TestData } from '../../test-data';
 import { ItemProperties, Actions } from '../../constants';
 
 import { FieldsPage } from './fields';
-import { EditFieldPage } from '../edit-field/edit-field';
+import { FieldPage } from '../field/field';
 import { Observable } from 'rxjs/Observable';
 
 let fixture: ComponentFixture<FieldsPage> = null;
@@ -48,7 +48,7 @@ describe('Fields Page', () => {
     instance.type = ItemProperties.brand;
     spyOn(instance.navCtrl, 'push');
     instance.onViewField(TestData.brand);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditFieldPage, {
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(FieldPage, {
       action: Actions.edit,
       type: ItemProperties.brand,
       field: TestData.brand,
@@ -59,7 +59,7 @@ describe('Fields Page', () => {
     instance.type = ItemProperties.brand;
     spyOn(instance.navCtrl, 'push');
     instance.onAdd(TestData.brand);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditFieldPage, {
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(FieldPage, {
       action: Actions.add,
       type: ItemProperties.brand,
     });

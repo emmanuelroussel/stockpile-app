@@ -4,7 +4,7 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
 
 import { ItemsActions } from '../../store/items/items.actions';
 import { ItemsService } from '../../services/items.service';
-import { Items } from '../../models/items';
+import { Items } from '../../models';
 import { ExternalRenter } from '../../models/external-renters';
 import { Observable } from 'rxjs/Observable';
 import { LoadingMessages, ItemProperties } from '../../constants';

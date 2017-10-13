@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import { AppState } from '../../models/app-state';
+import { AppState } from '../../models';
 // Importing constants with alias to avoid naming conflict with ngrx's Actions
 import * as constants from '../../constants';
 import { RentalPage } from '../../pages/rental/rental';
@@ -14,7 +14,7 @@ import { AppActions } from '../app/app.actions';
 import { ItemData } from '../../providers/item-data';
 import { Messages } from '../../constants';
 import { LayoutActions } from '../layout/layout.actions';
-import { EditItemPage } from '../../pages/edit-item/edit-item';
+import { ItemPage } from '../../pages/item/item';
 
 @Injectable()
 export class ItemsEffects {
@@ -292,7 +292,7 @@ export class ItemsEffects {
       .catch(err => Observable.of(
         createAction(ItemsActions.FETCH_ITEM_CUSTOM_FIELDS_BY_CATEGORY_FAIL, err),
         createAction(AppActions.SHOW_MESSAGE, err.message)
-      ))       
+      ))
     );
 
   /**
@@ -309,7 +309,7 @@ export class ItemsEffects {
         if (err.code === 'NotFoundError') {
           return Observable.of(
             createAction(AppActions.PUSH_PAGE, {
-              page: EditItemPage,
+              page: ItemPage,
               navParams: {
                 barcode: action.payload,
                 action: constants.Actions.add

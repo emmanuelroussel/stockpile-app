@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { AppState } from '../models/app-state';
-import { Kits, Kit } from '../models/kits';
+import { AppState, Kits, Kit } from '../models';
 
 @Injectable()
 export class KitsService {

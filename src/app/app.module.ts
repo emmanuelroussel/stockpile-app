@@ -56,19 +56,19 @@ import { CustomFieldCategoriesService } from '../services/custom-field-categorie
 
 import { AddKitModelPage } from '../pages/add-kit-model/add-kit-model';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
+import { CustomFieldPage } from '../pages/custom-field/custom-field';
 import { CustomFieldsPage } from '../pages/custom-fields/custom-fields';
 import { EditAccountPage } from '../pages/edit-account/edit-account';
-import { EditExternalRenterPage } from '../pages/edit-external-renter/edit-external-renter';
-import { EditCustomFieldPage } from '../pages/edit-custom-field/edit-custom-field';
-import { EditItemPage } from '../pages/edit-item/edit-item';
-import { EditFieldPage } from '../pages/edit-field/edit-field';
-import { EditKitPage } from '../pages/edit-kit/edit-kit';
+import { ExternalRenterPage } from '../pages/external-renter/external-renter';
 import { ExternalRentersPage } from '../pages/external-renters/external-renters';
+import { FieldPage } from '../pages/field/field';
 import { FieldsPage } from '../pages/fields/fields';
 import { HomePage } from '../pages/home/home';
 import { InventoryFilterPage } from '../pages/inventory-filter/inventory-filter';
 import { InventoryPage } from '../pages/inventory/inventory';
 import { ItemFilterPage } from '../pages/item-filter/item-filter';
+import { ItemPage } from '../pages/item/item';
+import { KitPage } from '../pages/kit/kit';
 import { KitRentalPage } from '../pages/kit-rental/kit-rental';
 import { KitsPage } from '../pages/kits/kits';
 import { LoginPage } from '../pages/login/login';
@@ -97,19 +97,19 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     StockpileApp,
     AddKitModelPage,
     ChangePasswordPage,
+    CustomFieldPage,
     CustomFieldsPage,
     EditAccountPage,
-    EditExternalRenterPage,
-    EditCustomFieldPage,
-    EditItemPage,
-    EditFieldPage,
-    EditKitPage,
+    ExternalRenterPage,
     ExternalRentersPage,
+    FieldPage,
     FieldsPage,
     HomePage,
     InventoryFilterPage,
     InventoryPage,
+    ItemPage,
     ItemFilterPage,
+    KitPage,
     KitRentalPage,
     KitsPage,
     LoginPage,
@@ -147,19 +147,19 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     StockpileApp,
     AddKitModelPage,
     ChangePasswordPage,
+    CustomFieldPage,
     CustomFieldsPage,
     EditAccountPage,
-    EditExternalRenterPage,
-    EditCustomFieldPage,
-    EditItemPage,
-    EditFieldPage,
-    EditKitPage,
+    ExternalRenterPage,
     ExternalRentersPage,
+    FieldPage,
     FieldsPage,
     HomePage,
     InventoryFilterPage,
     InventoryPage,
     ItemFilterPage,
+    ItemPage,
+    KitPage,
     KitRentalPage,
     KitsPage,
     LoginPage,

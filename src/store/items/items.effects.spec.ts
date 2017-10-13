@@ -7,7 +7,7 @@ import { ItemDataMock, StoreMock } from '../../mocks';
 import { Store } from '@ngrx/store';
 import { Messages, Actions } from '../../constants';
 import { RentalPage } from '../../pages/rental/rental';
-import { EditItemPage } from '../../pages/edit-item/edit-item';
+import { ItemPage } from '../../pages/item/item';
 
 import { ItemsEffects } from './items.effects';
 import { ItemsActions } from './items.actions';
@@ -382,7 +382,7 @@ describe('Items Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(AppActions.PUSH_PAGE, {
-        page: EditItemPage,
+        page: ItemPage,
         navParams: {
           barcode: TestData.barcode,
           action: Actions.add

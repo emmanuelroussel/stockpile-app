@@ -10,7 +10,6 @@ import { ModelsActions } from '../../store/models/models.actions';
 import { CategoriesActions } from '../../store/categories/categories.actions';
 import { ExternalRentersActions } from '../../store/external-renters/external-renters.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';
-import { EditExternalRenterPage } from '../../pages/edit-external-renter/edit-external-renter';
 import { Observable } from 'rxjs/Observable';
 
 @Component({

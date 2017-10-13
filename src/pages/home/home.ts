@@ -10,8 +10,8 @@ import { ItemsService } from '../../services/items.service';
 import { KitsService } from '../../services/kits.service';
 import { KitsActions } from '../../store/kits/kits.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';
-import { Kits } from '../../models/kits';
-import { EditKitPage } from '../edit-kit/edit-kit';
+import { Kits } from '../../models';
+import { KitPage } from '../kit/kit';
 import { KitRentalPage } from '../kit-rental/kit-rental';
 import { Observable } from 'rxjs/Observable';
 
@@ -141,7 +141,7 @@ export class HomePage {
           },
           {
             text: 'Create a kit',
-            handler: () => this.navCtrl.push(EditKitPage, { action: Actions.add })
+            handler: () => this.navCtrl.push(KitPage, { action: Actions.add })
           }
         ]
       };

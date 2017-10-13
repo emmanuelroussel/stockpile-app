@@ -6,9 +6,9 @@ import { ItemData } from '../../providers/item-data';
 import { ItemPropertyData } from '../../providers/item-property-data';
 import { Notifications } from '../../providers/notifications';
 import { Actions } from '../../constants';
-import { EditItemPage } from '../edit-item/edit-item';
+import { ItemPage } from '../item/item';
 import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
-import { Items } from '../../models/items';
+import { Items } from '../../models';
 import { ItemsActions } from '../../store/items/items.actions';
 import { ItemsService } from '../../services/items.service';
 import { BrandsActions } from '../../store/brands/brands.actions';
@@ -86,7 +86,7 @@ export class InventoryPage {
    * Pushes page with the item to view.
    */
   onViewItem(barcode: string) {
-    this.navCtrl.push(EditItemPage, { action: Actions.edit, barcode });
+    this.navCtrl.push(ItemPage, { action: Actions.edit, barcode });
   }
 
   /**

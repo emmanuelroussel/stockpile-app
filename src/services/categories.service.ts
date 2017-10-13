@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { AppState } from '../models/app-state';
-import { Categories } from '../models/categories';
+import { AppState, Categories } from '../models';
 
 @Injectable()
 export class CategoriesService {

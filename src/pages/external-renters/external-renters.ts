@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 
 import { Actions } from '../../constants';
-import { EditExternalRenterPage } from '../edit-external-renter/edit-external-renter';
-import { ExternalRenters } from '../../models/external-renters';
+import { ExternalRenterPage } from '../external-renter/external-renter';
+import { ExternalRenters } from '../../models';
 import { ExternalRentersService } from '../../services/external-renters.service';
 import { ExternalRentersActions } from '../../store/external-renters/external-renters.actions';
 
@@ -35,13 +35,13 @@ export class ExternalRentersPage {
    * Pushes page on nav to allow user to view the external renter.
    */
   onViewExternalRenter(externalRenterID: number) {
-    this.navCtrl.push(EditExternalRenterPage, { action: Actions.edit, externalRenterID });
+    this.navCtrl.push(ExternalRenterPage, { action: Actions.edit, externalRenterID });
   }
 
   /**
    * Pushes page on nav to allow user to add a new external renter.
    */
   onAdd() {
-    this.navCtrl.push(EditExternalRenterPage, { action: Actions.add });
+    this.navCtrl.push(ExternalRenterPage, { action: Actions.add });
   }
 }

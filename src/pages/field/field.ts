@@ -10,10 +10,10 @@ import { CategoriesActions } from '../../store/categories/categories.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';
 
 @Component({
-  selector: 'page-edit-field',
-  templateUrl: 'edit-field.html'
+  selector: 'page-field',
+  templateUrl: 'field.html'
 })
-export class EditFieldPage {
+export class FieldPage {
   actions = Actions;
   itemProperties = ItemProperties;
   action: Actions = '';

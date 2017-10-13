@@ -10,14 +10,14 @@ import { BrandsActions } from '../../store/brands/brands.actions';
 import { ModelsActions } from '../../store/models/models.actions';
 import { CategoriesActions } from '../../store/categories/categories.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';
-import { ItemCustomField } from '../../models/items';
+import { ItemCustomField } from '../../models';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'page-edit-item',
-  templateUrl: 'edit-item.html'
+  selector: 'page-item',
+  templateUrl: 'item.html'
 })
-export class EditItemPage {
+export class ItemPage {
   actions = Actions;
   itemProperties = ItemProperties;
   action: Actions = '';

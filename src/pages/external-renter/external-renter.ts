@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 
-import { ExternalRenter } from '../../models/external-renters';
+import { ExternalRenter } from '../../models';
 import { ExternalRentersService } from '../../services/external-renters.service';
 import { ExternalRentersActions } from '../../store/external-renters/external-renters.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';
@@ -11,10 +11,10 @@ import { Actions, LoadingMessages } from '../../constants';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
-  selector: 'page-edit-external-renter',
-  templateUrl: 'edit-external-renter.html'
+  selector: 'page-external-renter',
+  templateUrl: 'external-renter.html'
 })
-export class EditExternalRenterPage {
+export class ExternalRenterPage {
   externalRenterForm: FormGroup;
   blur = {
     name: false,

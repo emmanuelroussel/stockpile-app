@@ -4,7 +4,7 @@ import { Nav, MenuController, LoadingController } from 'ionic-angular';
 import { ViewAccountPage } from '../pages/view-account/view-account';
 import { Organization } from '../models/organization';
 import { OrganizationService } from '../services/organization.service';
-import { User } from '../models/user';
+import { User } from '../models';
 import { UserService } from '../services/user.service';
 import { UserActions } from '../store/user/user.actions';
 import { LayoutService } from '../services/layout.service';

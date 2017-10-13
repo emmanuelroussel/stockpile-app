@@ -4,7 +4,7 @@ import { TestData } from '../../test-data';
 import { Actions } from '../../constants';
 
 import { CustomFieldsPage } from './custom-fields';
-import { EditCustomFieldPage } from '../edit-custom-field/edit-custom-field';
+import { CustomFieldPage } from '../custom-field/custom-field';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
@@ -35,7 +35,7 @@ describe('Custom Fields Page', () => {
   it('pushes EditCustomFieldPage on nav on viewCustomField()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.onViewCustomField(TestData.customField.customFieldID);
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditCustomFieldPage, {
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(CustomFieldPage, {
       action: Actions.edit,
       customFieldID: TestData.customField.customFieldID
     });
@@ -44,6 +44,6 @@ describe('Custom Fields Page', () => {
   it('pushes EditCustomFieldPage on nav on onAdd()', () => {
     spyOn(instance.navCtrl, 'push');
     instance.onAdd();
-    expect(instance.navCtrl.push).toHaveBeenCalledWith(EditCustomFieldPage, { action: Actions.add });
+    expect(instance.navCtrl.push).toHaveBeenCalledWith(CustomFieldPage, { action: Actions.add });
   });
 });

@@ -3,17 +3,17 @@ import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { Actions, LoadingMessages } from '../../constants';
 
-import { EditKitPage } from './edit-kit';
+import { KitPage } from './kit';
 import { AddKitModelPage } from '../add-kit-model/add-kit-model';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-let fixture: ComponentFixture<EditKitPage> = null;
+let fixture: ComponentFixture<KitPage> = null;
 let instance: any = null;
 
-describe('EditKit Page', () => {
+describe('Kit Page', () => {
 
-  beforeEach(async(() => TestUtils.beforeEachCompiler([EditKitPage]).then(compiled => {
+  beforeEach(async(() => TestUtils.beforeEachCompiler([KitPage]).then(compiled => {
     fixture = compiled.fixture;
     instance = compiled.instance;
   })));

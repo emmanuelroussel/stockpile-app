@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { Actions } from '../../constants';
-import { EditKitPage } from '../edit-kit/edit-kit';
-import { Kits } from '../../models/kits';
+import { KitPage } from '../kit/kit';
+import { Kits } from '../../models';
 import { KitsService } from '../../services/kits.service';
 
 import { MapToIterablePipe, SortPipe } from '../../pipes';
@@ -33,13 +33,13 @@ export class KitsPage {
    * Pushes page on nav with the kit to allow user to view it.
    */
   onViewKit(kitID: number) {
-    this.navCtrl.push(EditKitPage, { action: Actions.edit, kitID });
+    this.navCtrl.push(KitPage, { action: Actions.edit, kitID });
   }
 
   /**
    * Pushes page on nav to allow user to add a new kit.
    */
   onAdd() {
-    this.navCtrl.push(EditKitPage, { action: Actions.add });
+    this.navCtrl.push(KitPage, { action: Actions.add });
   }
 }
