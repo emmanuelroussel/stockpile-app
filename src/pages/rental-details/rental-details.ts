@@ -66,10 +66,16 @@ export class RentalDetailsPage {
       let today = new Date();
       today.setDate(today.getDate() - this.timezoneOffset);
 
+      let externalRenterID = null;
+
+      if (this.externalRenter) {
+        externalRenterID = this.externalRenter.externalRenterID;
+      }
+
       // Transform dates from ISO 8601 to MySQL date format
       const details = {
         ...this.rentalForm.value,
-        externalRenterID: this.externalRenter.externalRenterID,
+        externalRenterID,
         startDate: today.toISOString().substring(0, 10), // today
         endDate: this.rentalForm.value.endDate.substring(0, 10)
       };

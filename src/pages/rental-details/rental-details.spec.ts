@@ -79,6 +79,24 @@ describe('RentalDetails Page', () => {
     });
   });
 
+  it('rents items without external renter', () => {
+    instance.rentalForm = {
+      value: TestData.details,
+      valid: true
+    };
+    let today = new Date();
+    today.setDate(today.getDate() - instance.timezoneOffset);
+    spyOn(instance.layoutActions, 'showLoadingMessage');
+    spyOn(instance.itemsActions, 'rentItems');
+    instance.onRent();
+    expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.rentingItems);
+    expect(instance.itemsActions.rentItems).toHaveBeenCalledWith({
+      ...TestData.details,
+      externalRenterID: null,
+      startDate: today.toISOString().substring(0, 10)
+    });
+  });
+
   it('does not rent items if form is invalid', () => {
     instance.rentalForm = { valid: false };
     spyOn(instance.layoutActions, 'showLoadingMessage');
