@@ -11,6 +11,7 @@ import { LoadingMessages, ItemProperties } from '../../constants';
 import { LayoutActions } from '../../store/layout/layout.actions';
 import { ItemFilterPage } from '../item-filter/item-filter';
 import { ExternalRentersActions } from '../../store/external-renters/external-renters.actions';
+import { dateToMySQLFormat } from '../../utils';
 
 import { MapToIterablePipe } from '../../pipes';
 
@@ -61,17 +62,20 @@ export class RentalDetailsPage {
    */
   onRent() {
     if (this.rentalForm.valid) {
-      // We need to offset the date by the difference between the user's timezone
-      // and UTC 0 to have an accurate date
-      let today = new Date();
-      today.setDate(today.getDate() - this.timezoneOffset);
+      let externalRenterID = null;
+      if (this.externalRenter) {
+        externalRenterID = this.externalRenter.externalRenterID;
+      }
 
-      // Transform dates from ISO 8601 to MySQL date format
+      // Set end date to UTC time
+      let endDate = new Date(this.rentalForm.value.endDate);
+      endDate.setDate(endDate.getDate() + this.timezoneOffset);
+
       const details = {
         ...this.rentalForm.value,
-        externalRenterID: this.externalRenter.externalRenterID,
-        startDate: today.toISOString().substring(0, 10), // today
-        endDate: this.rentalForm.value.endDate.substring(0, 10)
+        externalRenterID,
+        startDate: dateToMySQLFormat(new Date()), // now
+        endDate: dateToMySQLFormat(endDate)
       };
 
       this.layoutActions.showLoadingMessage(LoadingMessages.rentingItems);
