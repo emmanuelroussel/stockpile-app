@@ -11,6 +11,7 @@ import { LoadingMessages, ItemProperties } from '../../constants';
 import { LayoutActions } from '../../store/layout/layout.actions';
 import { ItemFilterPage } from '../item-filter/item-filter';
 import { ExternalRentersActions } from '../../store/external-renters/external-renters.actions';
+import { dateToMySQLFormat } from '../../utils';
 
 import { MapToIterablePipe } from '../../pipes';
 
@@ -70,12 +71,11 @@ export class RentalDetailsPage {
       let endDate = new Date(this.rentalForm.value.endDate);
       endDate.setDate(endDate.getDate() + this.timezoneOffset);
 
-      // Transform dates from ISO 8601 to MySQL date format
       const details = {
         ...this.rentalForm.value,
         externalRenterID,
-        startDate: (new Date()).toISOString().substring(0, 10), // today
-        endDate: endDate.toISOString().substring(0, 10)
+        startDate: dateToMySQLFormat(new Date()), // now
+        endDate: dateToMySQLFormat(endDate)
       };
 
       this.layoutActions.showLoadingMessage(LoadingMessages.rentingItems);

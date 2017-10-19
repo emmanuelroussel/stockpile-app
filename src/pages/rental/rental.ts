@@ -11,6 +11,7 @@ import { ItemsService } from '../../services/items.service';
 import { Items } from '../../models/items';
 import { Observable } from 'rxjs/Observable';
 import { LayoutActions } from '../../store/layout/layout.actions';
+import { dateToMySQLFormat } from '../../utils';
 
 import { MapToIterablePipe } from '../../pipes';
 
@@ -85,8 +86,8 @@ export class RentalPage {
     if (!Object.keys(items).length) {
       this.alertEmptyRental();
     } else {
-      // Set return date to today in MySQL date format
-      const returnDate = new Date().toISOString().substring(0, 10);
+      // Set return to now
+      const returnDate = dateToMySQLFormat(new Date());
       this.layoutActions.showLoadingMessage(LoadingMessages.returningItems);
       this.itemsActions.returnItems(returnDate);
     }

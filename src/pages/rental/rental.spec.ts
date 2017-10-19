@@ -2,6 +2,7 @@ import { ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing'
 import { TestUtils } from '../../test';
 import { Actions, Messages, LoadingMessages } from '../../constants';
 import { TestData } from '../../test-data';
+import { dateToMySQLFormat } from '../../utils';
 
 import { RentalPage } from './rental';
 import { RentalDetailsPage } from '../rental-details/rental-details';
@@ -66,12 +67,13 @@ describe('Rental Page', () => {
 
   it('returns item with today\'s date onReturn if items are added', () => {
     instance.items = Observable.of({ rentals: TestData.itemsMap });
-    const today = new Date().toISOString().substring(0, 10);
+    const today = new Date();
+    jasmine.clock().mockDate(today);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'returnItems');
     instance.onReturn();
     expect(instance.layoutActions.showLoadingMessage).toHaveBeenCalledWith(LoadingMessages.returningItems);
-    expect(instance.itemsActions.returnItems).toHaveBeenCalledWith(today);
+    expect(instance.itemsActions.returnItems).toHaveBeenCalledWith(dateToMySQLFormat(today));
   });
 
   it('shows alert onReturn() if rental is empty', () => {

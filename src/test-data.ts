@@ -166,8 +166,8 @@ export class TestData {
   };
 
   public static details = {
-    startDate: '2017-01-01',
-    endDate: '2017-01-02',
+    startDate: '2017-01-01 00:00:00',
+    endDate: '2017-01-02 00:00:00',
     notes: 'This is a note'
   };
 

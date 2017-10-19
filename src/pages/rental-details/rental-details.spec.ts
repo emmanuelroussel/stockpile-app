@@ -2,6 +2,7 @@ import { ComponentFixture, async } from '@angular/core/testing';
 import { TestUtils } from '../../test';
 import { TestData } from '../../test-data';
 import { LoadingMessages, ItemProperties } from '../../constants';
+import { dateToMySQLFormat } from '../../utils';
 
 import { ItemFilterPage } from '../item-filter/item-filter';
 import { RentalDetailsPage } from './rental-details';
@@ -66,8 +67,10 @@ describe('RentalDetails Page', () => {
       valid: true
     };
     instance.externalRenter = TestData.externalRenter;
-    let today = new Date();
-    today.setDate(today.getDate() - instance.timezoneOffset);
+    const today = new Date();
+    jasmine.clock().mockDate(today);
+    let endDate = new Date(TestData.details.endDate);
+    endDate.setDate(endDate.getDate() + instance.timezoneOffset);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'rentItems');
     instance.onRent();
@@ -75,7 +78,8 @@ describe('RentalDetails Page', () => {
     expect(instance.itemsActions.rentItems).toHaveBeenCalledWith({
       ...TestData.details,
       externalRenterID: TestData.externalRenter.externalRenterID,
-      startDate: today.toISOString().substring(0, 10)
+      startDate: dateToMySQLFormat(today),
+      endDate: dateToMySQLFormat(endDate)
     });
   });
 
@@ -84,8 +88,10 @@ describe('RentalDetails Page', () => {
       value: TestData.details,
       valid: true
     };
-    let today = new Date();
-    today.setDate(today.getDate() - instance.timezoneOffset);
+    const today = new Date();
+    jasmine.clock().mockDate(today);
+    let endDate = new Date(TestData.details.endDate);
+    endDate.setDate(endDate.getDate() + instance.timezoneOffset);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'rentItems');
     instance.onRent();
@@ -93,7 +99,8 @@ describe('RentalDetails Page', () => {
     expect(instance.itemsActions.rentItems).toHaveBeenCalledWith({
       ...TestData.details,
       externalRenterID: null,
-      startDate: today.toISOString().substring(0, 10)
+      startDate: dateToMySQLFormat(today),
+      endDate: dateToMySQLFormat(endDate)
     });
   });
 
