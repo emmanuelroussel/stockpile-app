@@ -95,10 +95,10 @@ export class ItemPage {
 
       // Transform the values from the form to an array
       let itemCustomFieldsList = [];
-      Object.entries(form.value).map(input => {
+      Object.keys(form.value).map(key => {
         itemCustomFieldsList.push({
-          customFieldID: input[0],
-          value: input[1]
+          customFieldID: key,
+          value: form.value[key]
         });
       });
 
