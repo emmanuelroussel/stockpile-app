@@ -14,6 +14,7 @@ import { Kits } from '../../models';
 import { KitPage } from '../kit/kit';
 import { KitRentalPage } from '../kit-rental/kit-rental';
 import { Observable } from 'rxjs/Observable';
+import { sort } from '../../utils';
 
 @Component({
   selector: 'page-home',
@@ -105,6 +106,8 @@ export class HomePage {
     this.kits.take(1).subscribe(k => {
       currentKits = Object.keys(k.results).map((key) => k.results[key]);
     });
+
+    currentKits.sort(sort);
 
     if (currentKits.length) {
       let inputs = [];

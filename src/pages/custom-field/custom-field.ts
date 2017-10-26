@@ -11,6 +11,7 @@ import { LayoutActions } from '../../store/layout/layout.actions';
 import { CategoriesActions } from '../../store/categories/categories.actions';
 import { CategoriesService } from '../../services/categories.service';
 import { FieldPage } from '../../pages/field/field';
+import { sort } from '../../utils';
 
 import { Actions, LoadingMessages, ItemProperties } from '../../constants';
 import { Observable } from 'rxjs/Observable';
@@ -135,6 +136,8 @@ export class CustomFieldPage {
     this.categories.take(1).subscribe(categories => {
       currentCategories = Object.keys(categories.results).map((key) => categories.results[key]);
     });
+
+    currentCategories.sort(sort);
 
     if (currentCategories.length) {
       let selectedCategories;
