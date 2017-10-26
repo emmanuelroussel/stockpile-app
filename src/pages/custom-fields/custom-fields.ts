@@ -7,8 +7,6 @@ import { CustomFields } from '../../models';
 import { CustomFieldsService } from '../../services/custom-fields.service';
 import { CustomFieldsActions } from '../../store/custom-fields/custom-fields.actions';
 
-import { MapToIterablePipe } from '../../pipes';
-
 import { Observable } from 'rxjs/Observable';
 
 @Component({

@@ -4,7 +4,6 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Actions, ItemProperties } from '../../constants';
 import { FieldPage } from '../field/field';
 
-import { MapToIterablePipe, SortPipe } from '../../pipes';
 import { Observable } from 'rxjs/Observable';
 
 @Component({

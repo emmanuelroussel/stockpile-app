@@ -13,8 +13,6 @@ import { ItemFilterPage } from '../item-filter/item-filter';
 import { ExternalRentersActions } from '../../store/external-renters/external-renters.actions';
 import { dateToMySQLFormat } from '../../utils';
 
-import { MapToIterablePipe } from '../../pipes';
-
 @Component({
   selector: 'page-rental-details',
   templateUrl: 'rental-details.html'

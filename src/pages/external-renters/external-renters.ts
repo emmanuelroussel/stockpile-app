@@ -7,7 +7,6 @@ import { ExternalRenters } from '../../models';
 import { ExternalRentersService } from '../../services/external-renters.service';
 import { ExternalRentersActions } from '../../store/external-renters/external-renters.actions';
 
-import { MapToIterablePipe, SortPipe } from '../../pipes';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
