@@ -35,6 +35,7 @@ export class ItemsEffects {
         action.payload.modelID,
         action.payload.categoryID,
         action.payload.available,
+        action.payload.search
       )
       .map(res => createAction(ItemsActions.FETCH_SUCCESS, res))
       .catch(err => Observable.of(

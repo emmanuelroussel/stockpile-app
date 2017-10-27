@@ -23,13 +23,15 @@ describe('Items Actions', () => {
       TestData.apiItem.brandID,
       TestData.apiItem.modelID,
       TestData.apiItem.categoryID,
-      TestData.apiItem.available
+      TestData.apiItem.available,
+      TestData.queryText
     );
     expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.FETCH, {
       brandID: TestData.apiItem.brandID,
       modelID: TestData.apiItem.modelID,
       categoryID: TestData.apiItem.categoryID,
-      available: TestData.apiItem.available
+      available: TestData.apiItem.available,
+      search: TestData.queryText
     }));
   });
 

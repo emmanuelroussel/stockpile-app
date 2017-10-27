@@ -48,7 +48,8 @@ describe('Items Effects', () => {
       brandID: TestData.item.brandID,
       modelID: TestData.item.modelID,
       categoryID: TestData.item.categoryID,
-      available: true
+      available: true,
+      search: TestData.queryText
     }));
 
     instance.fetch$.subscribe(
@@ -64,7 +65,8 @@ describe('Items Effects', () => {
       brandID: TestData.item.brandID,
       modelID: TestData.item.modelID,
       categoryID: TestData.item.categoryID,
-      available: true
+      available: true,
+      search: TestData.queryText
     }));
 
     let performedActions = [];

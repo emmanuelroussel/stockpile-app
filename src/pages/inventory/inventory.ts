@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, Platform, AlertController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { FormControl } from '@angular/forms';
 
 import { ItemData } from '../../providers/item-data';
 import { ItemPropertyData } from '../../providers/item-property-data';
@@ -26,7 +27,9 @@ export class InventoryPage {
   selectedBrandID = -1;
   selectedModelID = -1;
   selectedCategoryID = -1;
+  queryText: string = '';
   items: Observable<Items>;
+  searchControl: FormControl;
 
   constructor(
     public navCtrl: NavController,
@@ -48,6 +51,8 @@ export class InventoryPage {
    * Gets brands, models, categories and items.
    */
   ngOnInit() {
+    this.searchControl = new FormControl();
+
     this.items = this.itemsService.getItems();
 
     this.brandsActions.fetchBrands();
@@ -56,6 +61,15 @@ export class InventoryPage {
 
     // No filters set, so gets all items
     this.itemsActions.fetchItems();
+  }
+
+  /**
+   * Set Observable to search after a short period of time.
+   */
+  ionViewDidLoad() {
+    this.searchControl.valueChanges.debounceTime(100).subscribe(search => {
+      this.loadItems();
+    });
   }
 
   /**
@@ -78,7 +92,8 @@ export class InventoryPage {
       this.selectedBrandID,
       this.selectedModelID,
       this.selectedCategoryID,
-      this.segment
+      this.segment,
+      this.queryText
     );
   }
 

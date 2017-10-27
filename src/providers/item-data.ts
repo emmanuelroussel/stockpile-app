@@ -24,7 +24,13 @@ export class ItemData {
     return this.api.delete(`${Links.item}/${barcode}`);
   }
 
-  filterItems(brandID?: number, modelID?: number, categoryID?: number, available?: number, limit?: number, offset?: number) {
+  filterItems(
+    brandID?: number,
+    modelID?: number,
+    categoryID?: number,
+    available?: number,
+    search?: string
+  ) {
     let params: URLSearchParams = new URLSearchParams();
 
     if (Math.sign(brandID) > 0) {
@@ -43,12 +49,8 @@ export class ItemData {
       params.set('available', available.toString());
     }
 
-    if (limit) {
-      params.set('limit', limit.toString());
-    }
-
-    if (offset) {
-      params.set('offset', offset.toString());
+    if (search) {
+      params.set('search', search);
     }
 
     return this.api.get(Links.item, {
