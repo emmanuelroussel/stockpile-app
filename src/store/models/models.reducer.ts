@@ -23,7 +23,7 @@ export function modelsReducer(models: Models = initialState, action: Action): Mo
             return obj;
           }, {})
         ),
-        filtered: action.payload.results,
+        filtered: [],
         showAddNew: false,
         showLoadingSpinner: false
       };

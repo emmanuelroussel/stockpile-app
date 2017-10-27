@@ -6,8 +6,6 @@ import { KitPage } from '../kit/kit';
 import { Kits } from '../../models';
 import { KitsService } from '../../services/kits.service';
 
-import { MapToIterablePipe, SortPipe } from '../../pipes';
-
 import { Observable } from 'rxjs/Observable';
 
 @Component({

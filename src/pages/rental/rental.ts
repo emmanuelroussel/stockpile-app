@@ -13,8 +13,6 @@ import { Observable } from 'rxjs/Observable';
 import { LayoutActions } from '../../store/layout/layout.actions';
 import { dateToMySQLFormat } from '../../utils';
 
-import { MapToIterablePipe } from '../../pipes';
-
 @Component({
   selector: 'page-rental',
   templateUrl: 'rental.html'

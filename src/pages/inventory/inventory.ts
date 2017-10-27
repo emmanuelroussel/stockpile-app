@@ -16,7 +16,6 @@ import { BrandsActions } from '../../store/brands/brands.actions';
 import { ModelsActions } from '../../store/models/models.actions';
 import { CategoriesActions } from '../../store/categories/categories.actions';
 import { Observable } from 'rxjs/Observable';
-import { MapToIterablePipe, SortPipe } from '../../pipes';
 
 @Component({
   selector: 'page-inventory',
