@@ -10,6 +10,13 @@
       </button>
     </ion-buttons>
   </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="queryText"
+                   [formControl]="searchControl"
+                   placeholder="Search"
+                   showCancelButton="true">
+    </ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>

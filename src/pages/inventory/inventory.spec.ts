@@ -49,18 +49,29 @@ describe('Inventory Page', () => {
     expect(instance.itemsActions.resetItems).toHaveBeenCalled();
   });
 
+  it('searches items', fakeAsync(() => {
+    instance.ngOnInit();
+    instance.ionViewDidLoad();
+    spyOn(instance, 'loadItems');
+    instance.searchControl.setValue(TestData.queryText);
+    tick(150);
+    expect(instance.loadItems).toHaveBeenCalled();
+  }));
+
   it('fetches items on loadItems()', () => {
     instance.selectedBrandID = TestData.apiItem.brandID;
     instance.selectedModelID = TestData.apiItem.modelID;
     instance.selectedCategoryID = TestData.apiItem.categoryID;
     instance.segment = 0;
+    instance.queryText = TestData.queryText;
     spyOn(instance.itemsActions, 'fetchItems');
     instance.loadItems();
     expect(instance.itemsActions.fetchItems).toHaveBeenCalledWith(
       TestData.apiItem.brandID,
       TestData.apiItem.modelID,
       TestData.apiItem.categoryID,
-      0
+      0,
+      TestData.queryText
     );
   });
 

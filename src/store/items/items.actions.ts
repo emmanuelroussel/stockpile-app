@@ -68,8 +68,20 @@ export class ItemsActions {
     private store: Store<AppState>
   ) {}
 
-  fetchItems(brandID?: number, modelID?: number, categoryID?: number, available?: number) {
-    this.store.dispatch(createAction(ItemsActions.FETCH, { brandID, modelID, categoryID, available }));
+  fetchItems(
+    brandID?: number,
+    modelID?: number,
+    categoryID?: number,
+    available?: number,
+    search: string = ''
+  ) {
+    this.store.dispatch(createAction(ItemsActions.FETCH, {
+      brandID,
+      modelID,
+      categoryID,
+      available,
+      search
+    }));
   }
 
   createItem(item: any, itemCustomFields: Array<any>) {

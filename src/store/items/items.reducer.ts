@@ -19,7 +19,6 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
       return {
         ...items,
         results: Object.assign({},
-          items.results,
           action.payload.results.reduce((obj, item) => {
             obj[item.barcode] = item;
             return obj;
