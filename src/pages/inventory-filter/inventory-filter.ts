@@ -6,7 +6,7 @@ import { CategoriesService } from '../../services/categories.service';
 import { BrandsActions } from '../../store/brands/brands.actions';
 import { ModelsActions } from '../../store/models/models.actions';
 import { CategoriesActions } from '../../store/categories/categories.actions';
-import { Brands, Models, Categories } from '../../models';
+import { Brands, Categories, Models } from '../../models';
 import { Observable } from 'rxjs/Observable';
 
 @Component({

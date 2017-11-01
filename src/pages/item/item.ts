@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NavParams, ModalController, AlertController } from 'ionic-angular';
+import { AlertController, ModalController, NavParams } from 'ionic-angular';
 
 import { Actions, ItemProperties, LoadingMessages } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';

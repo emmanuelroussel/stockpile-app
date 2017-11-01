@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import * as Raven from 'raven-js';
-import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
-import { Links, apiVersion } from '../constants';
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
+import { Links } from '../constants';
 import { Api } from './api';
 
 @Injectable()

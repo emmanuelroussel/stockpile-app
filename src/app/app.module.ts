@@ -1,8 +1,8 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { CloudSettings } from '@ionic/cloud-angular';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { IonicStorageModule, Storage } from '@ionic/storage';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { CloudModule } from '@ionic/cloud-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';

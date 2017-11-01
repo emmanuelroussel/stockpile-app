@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, NavParams } from 'ionic-angular';
+import { ModalController, NavController, NavParams } from 'ionic-angular';
 
 import { BrandsActions } from '../../store/brands/brands.actions';
 import { ModelsActions } from '../../store/models/models.actions';
 import { KitModelsActions } from '../../store/kit-models/kit-models.actions';
 
-import { ItemProperties, Actions } from '../../constants';
+import { Actions, ItemProperties } from '../../constants';
 import { ItemFilterPage } from '../item-filter/item-filter';
 
 @Component({

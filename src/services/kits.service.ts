@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { AppState, Kits, Kit } from '../models';
+import { AppState, Kit, Kits } from '../models';
 
 @Injectable()
 export class KitsService {

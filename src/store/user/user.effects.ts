@@ -4,7 +4,7 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import { Storage } from '@ionic/storage';
-import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import { AppState } from '../../models';
 
 import { createAction } from '../create-action';

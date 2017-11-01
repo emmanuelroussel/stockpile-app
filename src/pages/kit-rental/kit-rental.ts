@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, Platform, NavParams } from 'ionic-angular';
+import { AlertController, NavController, NavParams, Platform } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { RentalDetailsPage } from '../rental-details/rental-details';

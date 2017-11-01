@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { NavController, NavParams, ModalController, Events, AlertController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertController, Events, ModalController, NavController, NavParams } from 'ionic-angular';
 
 import { AddKitModelPage } from '../add-kit-model/add-kit-model';
 import { Kit, KitModel } from '../../models';

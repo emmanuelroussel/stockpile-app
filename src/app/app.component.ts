@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, MenuController, LoadingController } from 'ionic-angular';
+import { LoadingController, MenuController, Nav } from 'ionic-angular';
 
 import { ViewAccountPage } from '../pages/view-account/view-account';
 import { Organization } from '../models/organization';

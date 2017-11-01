@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
-import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { ModalController, NavController } from 'ionic-angular';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ItemsActions } from '../../store/items/items.actions';
 import { ItemsService } from '../../services/items.service';
 import { Items } from '../../models';
 import { ExternalRenter } from '../../models/external-renters';
 import { Observable } from 'rxjs/Observable';
-import { LoadingMessages, ItemProperties } from '../../constants';
+import { ItemProperties, LoadingMessages } from '../../constants';
 import { LayoutActions } from '../../store/layout/layout.actions';
 import { ItemFilterPage } from '../item-filter/item-filter';
 import { ExternalRentersActions } from '../../store/external-renters/external-renters.actions';

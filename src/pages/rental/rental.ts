@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { AlertController, NavController, NavParams, Platform } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { RentalDetailsPage } from '../rental-details/rental-details';
-import { Actions, Messages, LoadingMessages } from '../../constants';
+import { Actions, LoadingMessages, Messages } from '../../constants';
 import { Notifications } from '../../providers/notifications';
 
 import { ItemsActions } from '../../store/items/items.actions';

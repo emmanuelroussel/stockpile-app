@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertController, NavController, NavParams } from 'ionic-angular';
 
-import { CustomField, CustomFieldCategory, Categories } from '../../models';
+import { Categories, CustomField, CustomFieldCategory } from '../../models';
 import { CustomFieldsService } from '../../services/custom-fields.service';
 import { CustomFieldsActions } from '../../store/custom-fields/custom-fields.actions';
 import { CustomFieldCategoriesService } from '../../services/custom-field-categories.service';
@@ -13,7 +13,7 @@ import { CategoriesService } from '../../services/categories.service';
 import { FieldPage } from '../../pages/field/field';
 import { sort } from '../../utils';
 
-import { Actions, LoadingMessages, ItemProperties } from '../../constants';
+import { Actions, ItemProperties, LoadingMessages } from '../../constants';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
