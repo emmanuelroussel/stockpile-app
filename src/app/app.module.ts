@@ -1,10 +1,10 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { CloudSettings } from '@ionic/cloud-angular';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IonicStorageModule, Storage } from '@ionic/storage';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { CloudModule } from '@ionic/cloud-angular';
-import { Http } from '@angular/http';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
@@ -12,7 +12,6 @@ import { Toast } from '@ionic-native/toast';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthHttp } from 'angular2-jwt';
 import { StockpileApp } from './app.component';
 
 import { AppActions } from '../store/app/app.actions';
@@ -89,8 +88,15 @@ import { KitData } from '../providers/kit-data';
 import { Notifications } from '../providers/notifications';
 import { UserData } from '../providers/user-data';
 
-import { RavenErrorHandler } from '../utils/raven-error-handler';
-import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
+import { RavenErrorHandler } from '../raven-error-handler';
+import { HeadersInterceptor } from '../interceptors';
+import { ErrorInterceptor } from '../interceptors';
+
+export const cloudSettings: CloudSettings = {
+  'core': {
+    'app_id': '1437b8f0'
+  }
+};
 
 @NgModule({
   declarations: [
@@ -122,7 +128,7 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     IonicModule.forRoot(StockpileApp, {
       tabsHideOnSubPages: true
     }),
@@ -170,6 +176,8 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
   ],
   providers: [
     { provide: ErrorHandler, useClass: RavenErrorHandler },
+    { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     Api,
     ApiUrl,
     AppActions,
@@ -221,8 +229,7 @@ import { getAuthHttp, cloudSettings } from '../utils/auth-http-helpers';
     UserEffects,
     UserData,
     UserService,
-    Toast,
-    { provide: AuthHttp, useFactory: getAuthHttp, deps: [Http, Storage] }
+    Toast
   ]
 })
 export class AppModule {}

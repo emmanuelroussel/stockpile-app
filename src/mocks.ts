@@ -488,6 +488,10 @@ export class ApiMock {
     return Observable.of(this.value);
   }
 
+  public post(): any {
+    return Observable.of(this.value);
+  }
+
   public delete(): any {
     return Observable.of(this.value);
   }

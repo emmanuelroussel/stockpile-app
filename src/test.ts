@@ -104,6 +104,16 @@ import { ItemPropertyData } from './providers/item-property-data';
 import { UserData } from './providers/user-data';
 import { Notifications } from './providers/notifications';
 import { MapToIterablePipe, SortPipe } from './pipes';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/withLatestFrom';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/ignoreElements';
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare var __karma__: any;
