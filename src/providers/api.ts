@@ -14,27 +14,27 @@ export class Api {
    * Does a GET request to the Stockpile API with authentication header.
    */
   get(endpoint: string, params?: Object) {
-    return this.http.get(`${this.apiUrl.getUrl()}${endpoint}`, params);
+    return this.http.get<any>(`${this.apiUrl.getUrl()}${endpoint}`, params);
   }
 
   /**
    * Does a PUT request to the Stockpile API with authentication header.
    */
   put(endpoint: string, body: Object) {
-    return this.http.put(`${this.apiUrl.getUrl()}${endpoint}`, body);
+    return this.http.put<any>(`${this.apiUrl.getUrl()}${endpoint}`, body);
   }
 
   /**
    * Does a POST request to the Stockpile API with authentication header.
    */
   post(endpoint: string, body: Object) {
-    return this.http.post(`${this.apiUrl.getUrl()}${endpoint}`, body);
+    return this.http.post<any>(`${this.apiUrl.getUrl()}${endpoint}`, body);
   }
 
   /**
    * Does a DELETE request to the Stockpile API with authentication header.
    */
   delete(endpoint: string) {
-    return this.http.delete(`${this.apiUrl.getUrl()}${endpoint}`);
+    return this.http.delete<any>(`${this.apiUrl.getUrl()}${endpoint}`);
   }
 }

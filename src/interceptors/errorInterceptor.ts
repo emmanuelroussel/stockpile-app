@@ -19,7 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       if (error instanceof HttpErrorResponse) {
         // Don't report 404s and 401s because they are a normal behavior of the api most of
         // the time. Ex: user scans item not present in the database or wrong password
-        if (error.status !== 404 || error.status !== 401) {
+        if (error.status !== <number>404 || error.status !== <number>401) {
           errorReport.reportError(error);
         }
       }
