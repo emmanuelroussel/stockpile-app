@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Platform, AlertController } from 'ionic-angular';
+import { AlertController, NavController, Platform } from 'ionic-angular';
 
 import { EditAccountPage } from '../edit-account/edit-account';
 import { ChangePasswordPage } from '../change-password/change-password';

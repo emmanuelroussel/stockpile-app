@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AuthHttp } from 'angular2-jwt';
+import { HttpClient } from '@angular/common/http';
 import { ApiUrl } from './api-url';
-import { extractData, handleError } from '../utils/auth-http-helpers';
 
 @Injectable()
 export class Api {
 
   constructor(
-    public authHttp: AuthHttp,
+    public http: HttpClient,
     public apiUrl: ApiUrl
   ) {}
 
@@ -15,26 +14,27 @@ export class Api {
    * Does a GET request to the Stockpile API with authentication header.
    */
   get(endpoint: string, params?: Object) {
-    return this.authHttp.get(`${this.apiUrl.getUrl()}${endpoint}`, params)
-      .map(extractData)
-      .catch(handleError);
+    return this.http.get<any>(`${this.apiUrl.getUrl()}${endpoint}`, params);
   }
 
   /**
    * Does a PUT request to the Stockpile API with authentication header.
    */
   put(endpoint: string, body: Object) {
-    return this.authHttp.put(`${this.apiUrl.getUrl()}${endpoint}`, body)
-      .map(extractData)
-      .catch(handleError);
+    return this.http.put<any>(`${this.apiUrl.getUrl()}${endpoint}`, body);
+  }
+
+  /**
+   * Does a POST request to the Stockpile API with authentication header.
+   */
+  post(endpoint: string, body: Object) {
+    return this.http.post<any>(`${this.apiUrl.getUrl()}${endpoint}`, body);
   }
 
   /**
    * Does a DELETE request to the Stockpile API with authentication header.
    */
   delete(endpoint: string) {
-    return this.authHttp.delete(`${this.apiUrl.getUrl()}${endpoint}`)
-      .map(extractData)
-      .catch(handleError);
+    return this.http.delete<any>(`${this.apiUrl.getUrl()}${endpoint}`);
   }
 }

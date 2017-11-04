@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Notifications } from '../../providers/notifications';
-import { Messages, LoadingMessages } from '../../constants';
+import { LoadingMessages, Messages } from '../../constants';
 import { UserActions } from '../../store/user/user.actions';
 import { LayoutActions } from '../../store/layout/layout.actions';
 

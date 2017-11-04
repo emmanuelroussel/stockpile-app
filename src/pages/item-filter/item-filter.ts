@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, ViewController, AlertController } from 'ionic-angular';
+import { AlertController, NavParams, ViewController } from 'ionic-angular';
 import { ItemProperties, LoadingMessages } from '../../constants';
 import { BrandsService } from '../../services/brands.service';
 import { ModelsService } from '../../services/models.service';

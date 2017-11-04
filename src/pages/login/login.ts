@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { UserActions } from '../../store/user/user.actions';

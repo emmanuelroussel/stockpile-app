@@ -1,7 +1,6 @@
-import { TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
-import { BaseRequestOptions, Http, HttpModule, Response, ResponseOptions } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
-import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { TestBed, inject, async } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { ApiUrl } from './api-url';
 import { TestData } from '../test-data';
@@ -15,65 +14,55 @@ describe('Api Provider', () => {
       providers: [
         { provide: ApiUrl, useClass: ApiUrlMock },
         Api,
-        MockBackend,
-        BaseRequestOptions,
-        {
-          provide: Http,
-          useFactory: (backendInstance: MockBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backendInstance, defaultOptions);
-          },
-          deps: [MockBackend, BaseRequestOptions]
-        },
-        {
-          provide: AuthHttp,
-          useFactory: (http) => {
-            return new AuthHttp(new AuthConfig({
-              noJwtError: true
-            }), http);
-          },
-          deps: [Http]
-        }
       ],
       imports: [
-        HttpModule
+        HttpClientModule,
+        HttpClientTestingModule
       ]
     });
   });
 
-  it('is created', inject([Api], (instance: Api) => {
-    expect(instance).toBeTruthy();
+  afterEach(inject([HttpTestingController], (backend: HttpTestingController) => {
+    backend.verify();
   }));
 
-  it('returns a response on get()', fakeAsync(inject([Api, MockBackend], (instance: Api, mockBackend: MockBackend) => {
-    mockBackend.connections.subscribe(
-      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
-    );
-    tick();
-    instance.get(TestData.endpoint).subscribe(
-      res => expect(res).toEqual(TestData.response),
-      err => fail(err)
-    );
+  it('is created', async(inject([Api], (instance: Api) => {
+    expect(instance).toBeTruthy();
+  });
+
+  it('gets data', async(inject([Api, HttpTestingController],
+  (instance: Api, backend: HttpTestingController) => {
+    instance.get(TestData.endpoint).subscribe(res => {
+      expect(res).toEqual(TestData.response);
+    });
+
+    backend.expectOne(`${instance.apiUrl.getUrl()}${TestData.endpoint}`).flush(TestData.response);
   })));
 
-  it('returns a response on put()', fakeAsync(inject([Api, MockBackend], (instance: Api, mockBackend: MockBackend) => {
-    mockBackend.connections.subscribe(
-      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
-    );
-    tick();
-    instance.put(TestData.endpoint, TestData.body).subscribe(
-      res => expect(res).toEqual(TestData.response),
-      err => fail(err)
-    );
+  it('puts data', async(inject([Api, HttpTestingController],
+  (instance: Api, backend: HttpTestingController) => {
+    instance.put(TestData.endpoint, TestData.body).subscribe(res => {
+      expect(res).toEqual(TestData.response);
+    });
+
+    backend.expectOne(`${instance.apiUrl.getUrl()}${TestData.endpoint}`).flush(TestData.response);
   })));
 
-  it('returns a response on delete()', fakeAsync(inject([Api, MockBackend], (instance: Api, mockBackend: MockBackend) => {
-    mockBackend.connections.subscribe(
-      conn => conn.mockRespond(new Response(new ResponseOptions({ body: JSON.stringify(TestData.response) })))
-    );
-    tick();
-    instance.delete(TestData.endpoint).subscribe(
-      res => expect(res).toEqual(TestData.response),
-      err => fail(err)
-    );
+  it('posts data', async(inject([Api, HttpTestingController],
+  (instance: Api, backend: HttpTestingController) => {
+    instance.post(TestData.endpoint, TestData.body).subscribe(res => {
+      expect(res).toEqual(TestData.response);
+    });
+
+    backend.expectOne(`${instance.apiUrl.getUrl()}${TestData.endpoint}`).flush(TestData.response);
+  })));
+
+  it('deletes data', async(inject([Api, HttpTestingController],
+  (instance: Api, backend: HttpTestingController) => {
+    instance.delete(TestData.endpoint).subscribe(res => {
+      expect(res).toEqual(TestData.response);
+    });
+
+    backend.expectOne(`${instance.apiUrl.getUrl()}${TestData.endpoint}`).flush(TestData.response);
   })));
 });
