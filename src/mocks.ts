@@ -153,18 +153,20 @@ export class NavParamsMock {
 }
 
 export class StorageMock {
-  stored = TestData.token;
+  stored = {};
   resolve: boolean = true;
 
   public get(): any {
     return returnPromise(this.resolve, this.stored);
   }
 
-  public set(): any {
+  public set(key: string, value: any): any {
+    this.stored[key] = value;
     return returnPromise(this.resolve);
   }
 
-  public remove(): any {
+  public remove(key: string): any {
+    delete this.stored[key];
     return returnPromise(this.resolve);
   }
 }

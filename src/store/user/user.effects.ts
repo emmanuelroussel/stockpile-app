@@ -49,7 +49,10 @@ export class UserEffects {
   @Effect()
   saveToken$ = this.actions$
     .ofType(UserActions.SAVE_TOKEN)
-    .mergeMap(action => Observable.of(this.storage.set('id_token', action.payload.token))
+    .mergeMap(action => Observable.of([
+      this.storage.set('id_token', action.payload.token),
+      this.storage.set('refresh_token', action.payload.refreshToken)
+    ])
       .concatMap(() => [
         createAction(UserActions.LOGIN_SUCCESS, this.getIDsFromToken(action.payload.token)),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE)
@@ -82,18 +85,23 @@ export class UserEffects {
     .ofType(UserActions.CHECK_LOGGED_IN)
     .mergeMap(() => Observable.fromPromise(this.storage.get('id_token'))
       .concatMap(token => {
+        const success = [
+          createAction(UserActions.CHECK_LOGGED_IN_SUCCESS),
+          createAction(AppActions.INITIALIZE),
+          createAction(UserActions.LOGIN_SUCCESS, this.getIDsFromToken(token))
+        ];
+        const fail = [
+          createAction(UserActions.CHECK_LOGGED_IN_FAIL),
+          createAction(AppActions.INITIALIZE),
+          createAction(AppActions.SET_ROOT_TO, LoginPage)
+        ];
+
         if (tokenNotExpired(null, token)) {
-          return [
-            createAction(UserActions.CHECK_LOGGED_IN_SUCCESS),
-            createAction(AppActions.INITIALIZE),
-            createAction(UserActions.LOGIN_SUCCESS, this.getIDsFromToken(token))
-          ];
+          return success;
         } else {
-          return [
-            createAction(UserActions.CHECK_LOGGED_IN_FAIL),
-            createAction(AppActions.INITIALIZE),
-            createAction(AppActions.SET_ROOT_TO, LoginPage)
-          ];
+          // TODO: If token is expired, try to refresh it
+          // return createAction(UserActions.REFRESH_ACCESS_TOKEN, { success, fail });
+          return fail;
         }
       })
     );
@@ -104,7 +112,10 @@ export class UserEffects {
   @Effect()
   logout$ = this.actions$
     .ofType(UserActions.LOGOUT)
-    .mergeMap(action => Observable.of(this.storage.remove('id_token'))
+    .mergeMap(action => Observable.of([
+      this.storage.remove('id_token'),
+      this.storage.remove('refresh_token')
+    ])
       .concatMap(res => [
         createAction(UserActions.LOGOUT_SUCCESS),
         createAction(AppActions.SET_ROOT_TO, LoginPage)
@@ -198,6 +209,42 @@ export class UserEffects {
         createAction(UserActions.CHANGE_PASSWORD_FAIL, err),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, err.message)
+      ))
+    );
+
+  /**
+   * Get a new access token.
+   */
+  @Effect()
+  refreshAccessToken$ = this.actions$
+    .ofType(UserActions.REFRESH_ACCESS_TOKEN)
+    .withLatestFrom(this.store$)
+    .mergeMap(([action, store]) => Observable.fromPromise(this.storage.get('refresh_token'))
+      .concatMap(token => this.userData.refreshAccessToken({
+          userID: store.user.userID,
+          refreshToken: token
+        })
+        .concatMap(res => Observable.fromPromise(this.storage.set('id_token', res.token))
+          .concatMap(() => [
+            createAction(UserActions.REFRESH_ACCESS_TOKEN_SUCCESS),
+            ...action.payload.success,
+          ])
+          .catch(err => Observable.of(
+            createAction(UserActions.REFRESH_ACCESS_TOKEN_FAIL, err),
+            createAction(AppActions.SHOW_MESSAGE, err.message),
+            ...action.payload.fail
+          ))
+        )
+        .catch(err => Observable.of(
+          createAction(UserActions.REFRESH_ACCESS_TOKEN_FAIL, err),
+          createAction(AppActions.SHOW_MESSAGE, err.message),
+          ...action.payload.fail
+        ))
+      )
+      .catch(err => Observable.of(
+        createAction(UserActions.REFRESH_ACCESS_TOKEN_FAIL, err),
+        createAction(AppActions.SHOW_MESSAGE, err.message),
+        ...action.payload.fail
       ))
     );
 

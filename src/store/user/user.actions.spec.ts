@@ -57,4 +57,13 @@ describe('User Actions', () => {
     instance.changeUserPassword(TestData.passwords);
     expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(UserActions.CHANGE_PASSWORD, TestData.passwords));
   });
+
+  it('dispatches action REFRESH_ACCESS_TOKEN', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.refreshAccessToken(TestData.brands.results, TestData.models.results);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(UserActions.REFRESH_ACCESS_TOKEN, {
+      success: TestData.brands.results,
+      fail: TestData.models.results
+    }));
+  });
 });
