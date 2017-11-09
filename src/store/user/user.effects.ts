@@ -85,23 +85,19 @@ export class UserEffects {
     .ofType(UserActions.CHECK_LOGGED_IN)
     .mergeMap(() => Observable.fromPromise(this.storage.get('id_token'))
       .concatMap(token => {
-        const success = [
-          createAction(UserActions.CHECK_LOGGED_IN_SUCCESS),
-          createAction(AppActions.INITIALIZE),
-          createAction(UserActions.LOGIN_SUCCESS, this.getIDsFromToken(token))
-        ];
-        const fail = [
-          createAction(UserActions.CHECK_LOGGED_IN_FAIL),
-          createAction(AppActions.INITIALIZE),
-          createAction(AppActions.SET_ROOT_TO, LoginPage)
-        ];
-
         if (tokenNotExpired(null, token)) {
-          return success;
+          return [
+            createAction(UserActions.CHECK_LOGGED_IN_SUCCESS),
+            createAction(AppActions.INITIALIZE),
+            createAction(UserActions.LOGIN_SUCCESS, this.getIDsFromToken(token))
+          ];
         } else {
           // TODO: If token is expired, try to refresh it
-          // return createAction(UserActions.REFRESH_ACCESS_TOKEN, { success, fail });
-          return fail;
+          return [
+            createAction(UserActions.CHECK_LOGGED_IN_FAIL),
+            createAction(AppActions.INITIALIZE),
+            createAction(AppActions.SET_ROOT_TO, LoginPage)
+          ];
         }
       })
     );
@@ -219,34 +215,29 @@ export class UserEffects {
   refreshAccessToken$ = this.actions$
     .ofType(UserActions.REFRESH_ACCESS_TOKEN)
     .withLatestFrom(this.store$)
-    .mergeMap(([action, store]) => Observable.fromPromise(this.storage.get('refresh_token'))
-      .concatMap(token => this.userData.refreshAccessToken({
-          userID: store.user.userID,
-          refreshToken: token
-        })
-        .concatMap(res => Observable.fromPromise(this.storage.set('id_token', res.token))
-          .concatMap(() => [
-            createAction(UserActions.REFRESH_ACCESS_TOKEN_SUCCESS),
-            ...action.payload.success,
-          ])
-          .catch(err => Observable.of(
-            createAction(UserActions.REFRESH_ACCESS_TOKEN_FAIL, err),
-            createAction(AppActions.SHOW_MESSAGE, err.message),
-            ...action.payload.fail
-          ))
-        )
-        .catch(err => Observable.of(
-          createAction(UserActions.REFRESH_ACCESS_TOKEN_FAIL, err),
-          createAction(AppActions.SHOW_MESSAGE, err.message),
-          ...action.payload.fail
-        ))
-      )
-      .catch(err => Observable.of(
+    .mergeMap(([action, store]) => {
+      const errorActions = (err) => Observable.of(
         createAction(UserActions.REFRESH_ACCESS_TOKEN_FAIL, err),
         createAction(AppActions.SHOW_MESSAGE, err.message),
         ...action.payload.fail
-      ))
-    );
+      );
+
+      return Observable.fromPromise(this.storage.get('refresh_token'))
+        .concatMap(token => this.userData.refreshAccessToken({
+            userID: store.user.userID,
+            refreshToken: token
+          })
+          .concatMap(res => Observable.fromPromise(this.storage.set('id_token', res.token))
+            .concatMap(() => [
+              createAction(UserActions.REFRESH_ACCESS_TOKEN_SUCCESS),
+              ...action.payload.success,
+            ])
+            .catch(err => errorActions(err))
+          )
+          .catch(err => errorActions(err))
+        )
+      .catch(err => errorActions(err));
+    });
 
   private getIDsFromToken(token: string) {
     const decodedToken = this.jwtHelper.decodeToken(token);
