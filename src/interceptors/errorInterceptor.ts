@@ -23,9 +23,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error.status === <number>401) {
           // TODO: Refresh access token and retry request
         }
-        // Don't report 404s and 401s because they are a normal behavior of the api most of
-        // the time. Ex: user scans item not present in the database or wrong password
         else if (error.status !== <number>404) {
+          // Don't report 404s and 401s because they are a normal behavior of the api most of
+          // the time. Ex: user scans item not present in the database or wrong password
           errorReport.reportError(error);
         }
       }
