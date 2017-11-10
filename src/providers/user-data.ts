@@ -1,20 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import * as Raven from 'raven-js';
-import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import { Links } from '../constants';
 import { Api } from './api';
 
 @Injectable()
 export class UserData {
-  jwtHelper: JwtHelper = new JwtHelper();
-  userID;
-  organizationID;
 
-  constructor(
-    public api: Api,
-    public storage: Storage
-  ) {}
+  constructor(public api: Api) {}
 
   /**
    * Calls api with credentials to log in and saves auth token.
@@ -24,18 +15,16 @@ export class UserData {
   }
 
   /**
-   * Clears all stored user data.
+   * Calls api to get a new refresh token.
    */
-  logout() {
-    this.storage.remove('id_token');
-    this.userID = '';
-    this.organizationID = '';
+  refreshAccessToken(body: any) {
+    return this.api.post(`${Links.authenticate}${Links.refresh}`, body);
   }
 
   /**
    * Calls api to edit user.
    */
-  updateUser(userID, user?) {
+  updateUser(userID: number, user?: any) {
     return this.api.put(`${Links.user}/${userID}`, user);
   }
 
@@ -47,54 +36,16 @@ export class UserData {
   }
 
   /**
-   * Checks whether or not the auth token is expired.
-   */
-  isLoggedIn() {
-    return new Promise((resolve, reject) => {
-      this.storage.get('id_token').then(token => {
-        resolve(tokenNotExpired(null, token));
-      });
-    });
-  }
-
-  /**
-   * Sets local user from auth token.
-   */
-  setUser() {
-    return new Promise((resolve, reject) => {
-      this.storage.get('id_token').then(
-        token => {
-          this.userID = this.jwtHelper.decodeToken(token).userID;
-          this.organizationID = this.jwtHelper.decodeToken(token).organizationID;
-
-          Raven.setUserContext({
-            id: this.userID
-          });
-
-          resolve();
-        }
-      );
-    });
-  }
-
-  /**
    * Calls api to get user info.
    */
   getUser(userID: number) {
-    return this.getInfo(Links.user, userID);
+    return this.api.get(`${Links.user}/${userID}`);
   }
 
   /**
    * Calls api to get organization info.
    */
   getOrganization(organizationID: number) {
-    return this.getInfo(Links.organization, organizationID);
-  }
-
-  /**
-   * Calls api to get info with the specified endpoint and id.
-   */
-  private getInfo(endpoint, id) {
-    return this.api.get(`${endpoint}/${id}`);
+    return this.api.get(`${Links.organization}/${organizationID}`);
   }
 }

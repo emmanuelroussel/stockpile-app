@@ -71,6 +71,9 @@ describe('User Effects', () => {
   });
 
   it('logs out user', () => {
+    instance.storage.set('id_token', TestData.token);
+    instance.storage.set('refresh_token', TestData.token);
+
     runner.queue(createAction(UserActions.LOGOUT));
 
     let performedActions = [];
@@ -82,7 +85,11 @@ describe('User Effects', () => {
     instance.logout$.take(expectedResult.length).subscribe(
       res => performedActions.push(res),
       err => fail(err),
-      () => expect(performedActions).toEqual(expectedResult)
+      () => {
+        expect(performedActions).toEqual(expectedResult);
+        instance.storage.get('id_token').then(token => expect(token).toEqual({}));
+        instance.storage.get('refresh_token').then(token => expect(token).toEqual({}));
+      }
     );
   });
 });

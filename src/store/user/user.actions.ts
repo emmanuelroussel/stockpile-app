@@ -37,6 +37,10 @@ export class UserActions {
   static CHANGE_PASSWORD_SUCCESS = type('[User] Change Password Success');
   static CHANGE_PASSWORD_FAIL = type('[User] Change Password Fail');
 
+  static REFRESH_ACCESS_TOKEN = type('[User] Refresh Access Token');
+  static REFRESH_ACCESS_TOKEN_SUCCESS = type('[User] Refresh Access Token Success');
+  static REFRESH_ACCESS_TOKEN_FAIL = type('[User] Refresh Access Token Fail');
+
   constructor(private store: Store<AppState>) {}
 
   loginUser(credentials: any) {
@@ -65,5 +69,9 @@ export class UserActions {
 
   changeUserPassword(passwords: any) {
     this.store.dispatch(createAction(UserActions.CHANGE_PASSWORD, passwords));
+  }
+
+  refreshAccessToken(success: Array<any> = [], fail: Array<any> = []) {
+    this.store.dispatch(createAction(UserActions.REFRESH_ACCESS_TOKEN, { success, fail }));
   }
 }

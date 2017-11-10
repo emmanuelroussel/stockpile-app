@@ -7,6 +7,7 @@ export class Actions {
 
 export class Links {
   public static authenticate = '/auth';
+  public static refresh = '/refresh';
   public static item = '/item';
   public static rental = '/rental';
   public static brand = '/brand';
