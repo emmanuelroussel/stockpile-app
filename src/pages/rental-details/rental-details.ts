@@ -46,9 +46,9 @@ export class RentalDetailsPage {
     tomorrow.setDate(tomorrow.getDate() - this.timezoneOffset + 1);
 
     this.rentalForm = this.formBuilder.group({
-      endDate: [
+      end: [
         tomorrow.toISOString(),
-        Validators.compose([Validators.required, this.dateInFuture('endDate')])
+        Validators.compose([Validators.required, this.dateInFuture('end')])
       ],
       notes: ['']
     });
@@ -66,14 +66,14 @@ export class RentalDetailsPage {
       }
 
       // Set end date to UTC time
-      let endDate = new Date(this.rentalForm.value.endDate);
-      endDate.setDate(endDate.getDate() + this.timezoneOffset);
+      let end = new Date(this.rentalForm.value.end);
+      end.setDate(end.getDate() + this.timezoneOffset);
 
       const details = {
         ...this.rentalForm.value,
         externalRenterID,
-        startDate: dateToMySQLFormat(new Date()), // now
-        endDate: dateToMySQLFormat(endDate)
+        start: dateToMySQLFormat(new Date()), // now
+        end: dateToMySQLFormat(end)
       };
 
       this.layoutActions.showLoadingMessage(LoadingMessages.rentingItems);
@@ -113,5 +113,5 @@ export class RentalDetailsPage {
    modal.present();
   }
 
-  get endDate() { return this.rentalForm.get('endDate'); }
+  get end() { return this.rentalForm.get('end'); }
 }

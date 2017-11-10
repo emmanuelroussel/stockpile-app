@@ -62,12 +62,12 @@ export class ItemData {
     return this.api.put(Links.rental, rental);
   }
 
-  return(rentalID: number, returnDate: string) {
+  return(rentalID: number, barcode: string, returned: string) {
     const body = {
-      returnDate
+      returned
     };
 
-    return this.api.put(`${Links.rental}/${rentalID}`, body);
+    return this.api.put(`${Links.rental}/${rentalID}${Links.item}/${barcode}`, body);
   }
 
   getActiveRental(barcode: string) {

@@ -100,8 +100,8 @@ describe('Items Actions', () => {
 
   it('dispatches action RETURN', () => {
     spyOn(instance.store, 'dispatch');
-    instance.returnItems(TestData.details.endDate);
-    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.RETURN, TestData.details.endDate));
+    instance.returnItems(TestData.details.end);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.RETURN, TestData.details.end));
   });
 
   it('dispatches action RENT', () => {
