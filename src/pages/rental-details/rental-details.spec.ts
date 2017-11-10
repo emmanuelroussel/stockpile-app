@@ -21,8 +21,8 @@ describe('RentalDetails Page', () => {
     fixture.destroy();
   });
 
-  const updateForm = (endDate: string, notes: string = '') => {
-    instance.rentalForm.controls['endDate'].setValue(endDate);
+  const updateForm = (end: string, notes: string = '') => {
+    instance.rentalForm.controls['end'].setValue(end);
     instance.rentalForm.controls['notes'].setValue(notes);
   }
 
@@ -35,14 +35,14 @@ describe('RentalDetails Page', () => {
     let tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() - instance.timezoneOffset + 1);
     instance.ngOnInit();
-    expect(instance.rentalForm.value.endDate.substring(0, 10)).toEqual(tomorrow.toISOString().substring(0, 10));
+    expect(instance.rentalForm.value.end.substring(0, 10)).toEqual(tomorrow.toISOString().substring(0, 10));
   });
 
   it('updates form with values', () => {
     instance.ngOnInit();
-    updateForm(TestData.details.endDate, TestData.details.notes);
+    updateForm(TestData.details.end, TestData.details.notes);
     expect(instance.rentalForm.value).toEqual({
-      endDate: TestData.details.endDate,
+      end: TestData.details.end,
       notes: TestData.details.notes
     });
   });
@@ -50,15 +50,15 @@ describe('RentalDetails Page', () => {
   it('validates endDate', () => {
     instance.ngOnInit();
     updateForm('');
-    expect(instance.rentalForm.controls.endDate.valid).toEqual(false);
+    expect(instance.rentalForm.controls.end.valid).toEqual(false);
     let yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     updateForm(yesterday.toISOString());
-    expect(instance.rentalForm.controls.endDate.valid).toEqual(false);
+    expect(instance.rentalForm.controls.end.valid).toEqual(false);
     let tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     updateForm(tomorrow.toISOString());
-    expect(instance.rentalForm.controls.endDate.valid).toEqual(true);
+    expect(instance.rentalForm.controls.end.valid).toEqual(true);
   });
 
   it('rents items', () => {
@@ -69,7 +69,7 @@ describe('RentalDetails Page', () => {
     instance.externalRenter = TestData.externalRenter;
     const today = new Date();
     jasmine.clock().mockDate(today);
-    let endDate = new Date(TestData.details.endDate);
+    let endDate = new Date(TestData.details.end);
     endDate.setDate(endDate.getDate() + instance.timezoneOffset);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'rentItems');
@@ -78,8 +78,8 @@ describe('RentalDetails Page', () => {
     expect(instance.itemsActions.rentItems).toHaveBeenCalledWith({
       ...TestData.details,
       externalRenterID: TestData.externalRenter.externalRenterID,
-      startDate: dateToMySQLFormat(today),
-      endDate: dateToMySQLFormat(endDate)
+      start: dateToMySQLFormat(today),
+      end: dateToMySQLFormat(endDate)
     });
   });
 
@@ -90,7 +90,7 @@ describe('RentalDetails Page', () => {
     };
     const today = new Date();
     jasmine.clock().mockDate(today);
-    let endDate = new Date(TestData.details.endDate);
+    let endDate = new Date(TestData.details.end);
     endDate.setDate(endDate.getDate() + instance.timezoneOffset);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'rentItems');
@@ -99,8 +99,8 @@ describe('RentalDetails Page', () => {
     expect(instance.itemsActions.rentItems).toHaveBeenCalledWith({
       ...TestData.details,
       externalRenterID: null,
-      startDate: dateToMySQLFormat(today),
-      endDate: dateToMySQLFormat(endDate)
+      start: dateToMySQLFormat(today),
+      end: dateToMySQLFormat(endDate)
     });
   });
 
@@ -121,10 +121,10 @@ describe('RentalDetails Page', () => {
     });
   });
 
-  it('gets endDate', () => {
+  it('gets end', () => {
     instance.rentalForm = {
       get: (key: string) => TestData.details[key]
     };
-    expect(instance.endDate).toEqual(TestData.details.endDate);
+    expect(instance.end).toEqual(TestData.details.end);
   });
 });

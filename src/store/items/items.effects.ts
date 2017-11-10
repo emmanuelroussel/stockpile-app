@@ -210,7 +210,7 @@ export class ItemsEffects {
           new Promise((resolve, reject) => {
             this.itemData.getActiveRental(item.barcode).subscribe(
               rental => {
-                this.itemData.return(rental.rentalID, action.payload).subscribe(
+                this.itemData.return(rental.rentalID, item.barcode, action.payload).subscribe(
                   res => resolve(),
                   err => reject(err)
                 );
