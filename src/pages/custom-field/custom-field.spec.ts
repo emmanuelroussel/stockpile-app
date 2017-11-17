@@ -21,8 +21,9 @@ describe('CustomField Page', () => {
     fixture.destroy();
   });
 
-  const updateForm = (name: string) => {
+  const updateForm = (name: string, showTimestamp: boolean) => {
     instance.customFieldForm.controls['name'].setValue(name);
+    instance.customFieldForm.controls['showTimestamp'].setValue(showTimestamp);
   }
 
   it('is created', () => {
@@ -45,8 +46,11 @@ describe('CustomField Page', () => {
 
   it('updates form with values', () => {
     instance.ngOnInit();
-    updateForm(TestData.customField.name);
-    expect(instance.customFieldForm.value).toEqual({ name: TestData.customField.name });
+    updateForm(TestData.customField.name, TestData.customField.showTimestamp);
+    expect(instance.customFieldForm.value).toEqual({
+      name: TestData.customField.name,
+      showTimestamp: TestData.customField.showTimestamp
+    });
   });
 
   it('validates name', () => {

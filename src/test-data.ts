@@ -648,17 +648,20 @@ export class TestData {
         {
           name: 'Cost',
           customFieldID: 1,
-          organizationID: 1
+          organizationID: 1,
+          showTimestamp: true
         },
         {
           name: 'Serial number',
           customFieldID: 2,
-          organizationID: 1
+          organizationID: 1,
+          showTimestamp: true
         },
         {
           name: 'Notes',
           customFieldID: 3,
-          organizationID: 1
+          organizationID: 1,
+          showTimestamp: false
         }
       ],
       showLoadingSpinner: false
@@ -700,7 +703,8 @@ export class TestData {
   public static customField = {
     name: 'Cost',
     customFieldID: 1,
-    organizationID: 1
+    organizationID: 1,
+    showTimestamp: true
   };
 
   public static customFields = {
@@ -708,17 +712,20 @@ export class TestData {
       {
         name: 'Cost',
         customFieldID: 1,
-        organizationID: 1
+        organizationID: 1,
+        showTimestamp: true
       },
       {
         name: 'Serial number',
         customFieldID: 2,
-        organizationID: 1
+        organizationID: 1,
+        showTimestamp: true
       },
       {
         name: 'Notes',
         customFieldID: 3,
-        organizationID: 1
+        organizationID: 1,
+        showTimestamp: false
       }
     ]
   };

@@ -3,6 +3,7 @@ export interface CustomField {
   readonly name: string;
   readonly organizationID: number;
   readonly sortIndex: number;
+  readonly showTimestamp: boolean;
 }
 
 export interface CustomFields {

@@ -24,6 +24,10 @@ export class AppMock {
   }
 }
 
+export class HapticMock {
+
+}
+
 export class ConfigMock {
 
   public get(): any {
