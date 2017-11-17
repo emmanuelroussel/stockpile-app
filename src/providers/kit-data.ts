@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Links } from '../constants';
 import { Api } from '../providers/api';
 
@@ -9,19 +9,17 @@ export class KitData {
   constructor(public api: Api) {}
 
   getKits(limit?: number, offset?: number) {
-    let params: URLSearchParams = new URLSearchParams();
+    let params: HttpParams = new HttpParams();
 
     if (limit) {
-      params.set('limit', limit.toString());
+      params = params.append('limit', limit.toString());
     }
 
     if (offset) {
-      params.set('offset', offset.toString());
+      params = params.append('offset', offset.toString());
     }
 
-    return this.api.get(Links.kit, {
-      search: params
-    });
+    return this.api.get(Links.kit, { params });
   }
 
   getKit(kitID: number) {

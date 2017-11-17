@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Links } from '../constants';
 import { Api } from '../providers/api';
 
@@ -31,31 +31,29 @@ export class ItemData {
     available?: number,
     search?: string
   ) {
-    let params: URLSearchParams = new URLSearchParams();
+    let params: HttpParams = new HttpParams();
 
     if (Math.sign(brandID) > 0) {
-      params.set('brandID', brandID.toString());
+      params = params.append('brandID', brandID.toString());
     }
 
     if (Math.sign(modelID) > 0) {
-      params.set('modelID', modelID.toString());
+      params = params.append('modelID', modelID.toString());
     }
 
     if (Math.sign(categoryID) > 0) {
-      params.set('categoryID', categoryID.toString());
+      params = params.append('categoryID', categoryID.toString());
     }
 
     if (Math.sign(available) > -1) {
-      params.set('available', available.toString());
+      params = params.append('available', available.toString());
     }
 
     if (search) {
-      params.set('search', search);
+      params = params.append('search', search);
     }
 
-    return this.api.get(Links.item, {
-      search: params
-    });
+    return this.api.get(Links.item, { params });
   }
 
   rent(rental: any) {
