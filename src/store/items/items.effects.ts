@@ -307,7 +307,7 @@ export class ItemsEffects {
       .map(() => createAction(AppActions.SHOW_MESSAGE, constants.Messages.itemAlreadyExists))
       .catch(err => {
         // Push the page if we receive a 404 (barcode doesn't exist)
-        if (err.code === 'NotFoundError') {
+        if (err.code === 'NotFound') {
           return Observable.of(
             createAction(AppActions.PUSH_PAGE, {
               page: ItemPage,
