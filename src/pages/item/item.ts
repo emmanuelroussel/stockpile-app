@@ -93,12 +93,23 @@ export class ItemPage {
         barcode: i.barcode
       });
 
-      // Transform the values from the form to an array
       let itemCustomFieldsList = [];
+      const shouldUpdate = (key, value) => {
+        let field;
+        // Using == below to compare instead of === because the key from the
+        // form comes back as a string instead of a number
+        this.itemCustomFields.subscribe(
+          fields => field = fields.find(itemField => itemField.customFieldID == key)
+        );
+        return field.value !== value;
+      };
+
+      // Transform the values from the form to an array
       Object.keys(form.value).map(key => {
         itemCustomFieldsList.push({
           customFieldID: key,
-          value: form.value[key]
+          value: form.value[key],
+          shouldUpdate: shouldUpdate(key, form.value[key])
         });
       });
 

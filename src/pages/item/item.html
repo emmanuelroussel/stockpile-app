@@ -41,10 +41,15 @@
       Category is required
     </p>
 
-    <ion-item *ngFor="let customField of (itemCustomFields | async)">
-      <ion-label floating color="primary">{{ customField.customFieldName }}</ion-label>
-      <ion-input [ngModel]="customField?.value" type="text" [name]="customField.customFieldID"></ion-input>
-    </ion-item>
+    <ng-container *ngFor="let customField of (itemCustomFields | async)">
+      <ion-item>
+        <ion-label floating color="primary">{{ customField.customFieldName }}</ion-label>
+        <ion-input [ngModel]="customField?.value" type="text" [name]="customField.customFieldID"></ion-input>
+      </ion-item>
+      <p ion-text *ngIf="customField.showTimestamp && customField.value" color="primary" padding-left>
+        Last updated: {{ customField.updated | date }}
+      </p>
+    </ng-container>
 
     <ion-spinner class="center-spinner" *ngIf="showLoadingSpinner | async"></ion-spinner>
 

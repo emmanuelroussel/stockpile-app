@@ -94,11 +94,13 @@ export class ItemsEffects {
         let requests = [];
 
         action.payload.itemCustomFields.map(itemCustomField => {
-          requests.push(this.itemData.updateItemCustomField(
-            action.payload.item.barcode,
-            itemCustomField.customFieldID,
-            { value: itemCustomField.value }
-          ).toPromise());
+          if (itemCustomField.shouldUpdate) {
+            requests.push(this.itemData.updateItemCustomField(
+              action.payload.item.barcode,
+              itemCustomField.customFieldID,
+              { value: itemCustomField.value }
+            ).toPromise());
+          }
         });
 
         return Observable.from(Promise.all(requests))

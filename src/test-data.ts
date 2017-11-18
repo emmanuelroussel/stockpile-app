@@ -244,7 +244,7 @@ export class TestData {
   };
 
   public static error = {
-    code: 'NotFoundError',
+    code: 'NotFound',
     message: 'Error message'
   };
 
@@ -825,14 +825,17 @@ export class TestData {
     {
       customFieldID: '1',
       value: '350',
+      shouldUpdate: false
     },
     {
       customFieldID: '2',
       value: '1234567890',
+      shouldUpdate: false
     },
     {
       customFieldID: '3',
       value: 'This is a note',
+      shouldUpdate: false
     }
   ];
 }

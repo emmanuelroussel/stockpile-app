@@ -59,6 +59,7 @@ describe('Item Page', () => {
   it('creates item onSave() if action is add', () => {
     instance.action = Actions.add;
     instance.tempItem = Observable.of(TestData.apiItem);
+    instance.itemCustomFields = Observable.of(TestData.itemCustomFields.results);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'createItem');
     instance.onSave(TestData.itemCustomFieldsForm);
@@ -69,6 +70,7 @@ describe('Item Page', () => {
   it('updates item onSave() if action is edit', () => {
     instance.action = Actions.edit;
     instance.tempItem = Observable.of(TestData.apiItem);
+    instance.itemCustomFields = Observable.of(TestData.itemCustomFields.results);
     spyOn(instance.layoutActions, 'showLoadingMessage');
     spyOn(instance.itemsActions, 'updateItem');
     instance.onSave(TestData.itemCustomFieldsForm);

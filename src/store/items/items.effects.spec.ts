@@ -428,6 +428,7 @@ describe('Items Effects', () => {
   });
 
   it('does not push page to add item if item exists', () => {
+    instance.itemData.resolve = true;
     runner.queue(createAction(ItemsActions.START_CREATE, TestData.barcode));
 
     let performedActions = [];
