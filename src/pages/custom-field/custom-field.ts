@@ -58,6 +58,7 @@ export class CustomFieldPage {
 
     this.customFieldForm = this.formBuilder.group({
       name: ['', Validators.required],
+      showTimestamp: [false]
     });
 
     if (this.action === Actions.edit) {
@@ -82,7 +83,7 @@ export class CustomFieldPage {
         this.customField.take(1).subscribe(customField => customFieldID = customField.customFieldID);
 
         this.layoutActions.showLoadingMessage(LoadingMessages.updatingCustomField);
-        this.customFieldsActions.updateCustomField({ name: this.customFieldForm.value.name, customFieldID });
+        this.customFieldsActions.updateCustomField({ ...this.customFieldForm.value, customFieldID });
       }
     }
   }

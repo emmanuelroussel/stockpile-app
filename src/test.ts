@@ -28,7 +28,8 @@ import {
   AlertController,
   Events,
   LoadingController,
-  DeepLinker
+  DeepLinker,
+  Haptic
 } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
 import {
@@ -71,7 +72,8 @@ import {
   OrganizationServiceMock,
   UserServiceMock,
   InAppBrowserMock,
-  DeepLinkerMock
+  DeepLinkerMock,
+  HapticMock
 } from './mocks';
 import { BrandsActions } from './store/brands/brands.actions';
 import { CustomFieldCategoriesActions } from './store/custom-field-categories/custom-field-categories.actions';
@@ -199,6 +201,7 @@ export class TestUtils {
         { provide: UserService, useClass: UserServiceMock },
         { provide: InAppBrowser, useClass: InAppBrowserMock },
         { provide: DeepLinker, useClass: DeepLinkerMock }
+        { provide: Haptic, useClass: HapticMock }
       ],
       imports: [
         FormsModule,

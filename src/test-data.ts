@@ -244,7 +244,7 @@ export class TestData {
   };
 
   public static error = {
-    code: 'NotFoundError',
+    code: 'NotFound',
     message: 'Error message'
   };
 
@@ -648,17 +648,20 @@ export class TestData {
         {
           name: 'Cost',
           customFieldID: 1,
-          organizationID: 1
+          organizationID: 1,
+          showTimestamp: true
         },
         {
           name: 'Serial number',
           customFieldID: 2,
-          organizationID: 1
+          organizationID: 1,
+          showTimestamp: true
         },
         {
           name: 'Notes',
           customFieldID: 3,
-          organizationID: 1
+          organizationID: 1,
+          showTimestamp: false
         }
       ],
       showLoadingSpinner: false
@@ -700,7 +703,8 @@ export class TestData {
   public static customField = {
     name: 'Cost',
     customFieldID: 1,
-    organizationID: 1
+    organizationID: 1,
+    showTimestamp: true
   };
 
   public static customFields = {
@@ -708,17 +712,20 @@ export class TestData {
       {
         name: 'Cost',
         customFieldID: 1,
-        organizationID: 1
+        organizationID: 1,
+        showTimestamp: true
       },
       {
         name: 'Serial number',
         customFieldID: 2,
-        organizationID: 1
+        organizationID: 1,
+        showTimestamp: true
       },
       {
         name: 'Notes',
         customFieldID: 3,
-        organizationID: 1
+        organizationID: 1,
+        showTimestamp: false
       }
     ]
   };
@@ -818,14 +825,17 @@ export class TestData {
     {
       customFieldID: '1',
       value: '350',
+      shouldUpdate: false
     },
     {
       customFieldID: '2',
       value: '1234567890',
+      shouldUpdate: false
     },
     {
       customFieldID: '3',
       value: 'This is a note',
+      shouldUpdate: false
     }
   ];
 }

@@ -5,6 +5,8 @@ export interface ItemCustomField {
   readonly organizationID: number;
   readonly value: string;
   readonly sortIndex: number;
+  readonly showTimestamp: boolean;
+  readonly updated: string;
 }
 
 export interface Item {
