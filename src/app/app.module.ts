@@ -89,8 +89,7 @@ import { Notifications } from '../providers/notifications';
 import { UserData } from '../providers/user-data';
 
 import { RavenErrorHandler } from '../raven-error-handler';
-import { HeadersInterceptor } from '../interceptors';
-import { ErrorInterceptor } from '../interceptors';
+import { ErrorInterceptor, HeadersInterceptor, TimeoutInterceptor } from '../interceptors';
 
 export const cloudSettings: CloudSettings = {
   'core': {
@@ -178,6 +177,7 @@ export const cloudSettings: CloudSettings = {
     { provide: ErrorHandler, useClass: RavenErrorHandler },
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true },
     Api,
     ApiUrl,
     AppActions,
