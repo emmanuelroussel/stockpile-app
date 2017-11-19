@@ -9,8 +9,9 @@ const errorMessage = `{"message": "Request timeout. Check your internet connecti
 @Injectable()
 export class TimeoutInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Timeout all requests after 7 seconds
     return next.handle(req).timeoutWith(
-      70,
+      7000,
       Observable.throw({ error: errorMessage })
     );
   }
