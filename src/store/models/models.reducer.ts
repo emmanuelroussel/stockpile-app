@@ -29,22 +29,6 @@ export function modelsReducer(models: Models = initialState, action: Action): Mo
       };
     case ModelsActions.FETCH_FAIL:
       return { ...models, showLoadingSpinner: false };
-    case ModelsActions.CREATE_SUCCESS:
-    case ModelsActions.UPDATE_SUCCESS:
-      return {
-        ...models,
-        results: {
-          ...models.results,
-          [action.payload.modelID]: action.payload
-        }
-      };
-    case ModelsActions.DELETE_SUCCESS:
-      const results = Object.assign({}, models.results);
-      delete results[action.payload.id];
-      return {
-        ...models,
-        results
-      };
     case ModelsActions.FILTER:
       return Object.assign({}, models, {
         filtered: Object.keys(models.results)

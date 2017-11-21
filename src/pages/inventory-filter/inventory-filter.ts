@@ -3,9 +3,11 @@ import { NavParams, ViewController } from 'ionic-angular';
 import { BrandsService } from '../../services/brands.service';
 import { ModelsService } from '../../services/models.service';
 import { CategoriesService } from '../../services/categories.service';
+import { ItemsService } from '../../services/items.service';
 import { BrandsActions } from '../../store/brands/brands.actions';
 import { ModelsActions } from '../../store/models/models.actions';
 import { CategoriesActions } from '../../store/categories/categories.actions';
+import { ItemsActions } from '../../store/items/items.actions';
 import { Brands, Categories, Models } from '../../models';
 import { Observable } from 'rxjs/Observable';
 
@@ -29,7 +31,9 @@ export class InventoryFilterPage {
     public modelsService: ModelsService,
     public modelsActions: ModelsActions,
     public categoriesService: CategoriesService,
-    public categoriesActions: CategoriesActions
+    public categoriesActions: CategoriesActions,
+    public itemsService: ItemsService,
+    public itemsActions: ItemsActions
   ) {}
 
   /**
@@ -40,9 +44,13 @@ export class InventoryFilterPage {
     this.brands = this.brandsService.getBrands();
     this.models = this.modelsService.getModels();
     this.categories = this.categoriesService.getCategories();
-    this.selectedBrandID = this.navParams.get('selectedBrandID');
-    this.selectedModelID = this.navParams.get('selectedModelID');
-    this.selectedCategoryID = this.navParams.get('selectedCategoryID');
+    let filters;
+    this.itemsService.getItems().take(1).subscribe(items => {
+      filters = items.filters;
+    });
+    this.selectedBrandID = filters.brandID;
+    this.selectedModelID = filters.modelID;
+    this.selectedCategoryID = filters.categoryID;
 
     if (this.selectedModelID !== -1) {
       this.onFilterModels();
@@ -74,15 +82,14 @@ export class InventoryFilterPage {
   }
 
   /**
-   * Closes the modal and passes the selected filters.
+   * Closes the modal and saves the selected filters.
    */
   onApplyFilters() {
-    const ids = {
-      selectedBrandID: this.selectedBrandID,
-      selectedModelID: this.selectedModelID,
-      selectedCategoryID: this.selectedCategoryID
-    };
-
-    this.viewCtrl.dismiss(ids);
+    this.itemsActions.updateFilters({
+      brandID: this.selectedBrandID,
+      modelID: this.selectedModelID,
+      categoryID: this.selectedCategoryID
+    });
+    this.viewCtrl.dismiss();
   }
 }

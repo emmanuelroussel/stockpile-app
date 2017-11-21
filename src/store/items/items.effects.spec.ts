@@ -43,44 +43,6 @@ describe('Items Effects', () => {
     expect(instance).toBeTruthy();
   });
 
-  it('fetches items', () => {
-    runner.queue(createAction(ItemsActions.FETCH, {
-      brandID: TestData.item.brandID,
-      modelID: TestData.item.modelID,
-      categoryID: TestData.item.categoryID,
-      available: true,
-      search: TestData.queryText
-    }));
-
-    instance.fetch$.subscribe(
-      res => expect(res).toEqual(createAction(ItemsActions.FETCH_SUCCESS, TestData.items)),
-      err => fail(err)
-    );
-  });
-
-  it('returns error if fetch fails', () => {
-    instance.itemData.resolve = false;
-
-    runner.queue(createAction(ItemsActions.FETCH, {
-      brandID: TestData.item.brandID,
-      modelID: TestData.item.modelID,
-      categoryID: TestData.item.categoryID,
-      available: true,
-      search: TestData.queryText
-    }));
-
-    let performedActions = [];
-    const expectedResult = [
-      createAction(ItemsActions.FETCH_FAIL, TestData.error),
-      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
-    ];
-    instance.fetch$.take(expectedResult.length).subscribe(
-      res => performedActions.push(res),
-      err => fail(err),
-      () => expect(performedActions).toEqual(expectedResult)
-    );
-  });
-
   it('creates an item', () => {
     runner.queue(createAction(ItemsActions.CREATE, {
       item: TestData.apiItem,
@@ -175,6 +137,7 @@ describe('Items Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(ItemsActions.DELETE_SUCCESS, TestData.response),
+      createAction(ItemsActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.itemDeleted),
       createAction(AppActions.POP_NAV)

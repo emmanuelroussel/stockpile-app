@@ -62,6 +62,8 @@ export class ItemsActions {
   static UPDATE_ITEM_CUSTOM_FIELDS_SUCCESS = type('[Items] Update Item Custom Fields Success');
   static UPDATE_ITEM_CUSTOM_FIELDS_FAIL = type('[Items] Update Item Custom Fields Fail');
 
+  static UPDATE_FILTERS = type('[Items] Update Item Filters');
+
   static START_CREATE = type('[Items] Start Create');
 
   constructor(
@@ -146,5 +148,9 @@ export class ItemsActions {
 
   startCreate(barcode: string) {
     this.store.dispatch(createAction(ItemsActions.START_CREATE, barcode));
+  }
+
+  updateFilters(filters: any) {
+    this.store.dispatch(createAction(ItemsActions.UPDATE_FILTERS, filters));
   }
 }

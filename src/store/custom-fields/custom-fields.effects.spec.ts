@@ -74,6 +74,7 @@ describe('Custom Fields Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(CustomFieldsActions.DELETE_SUCCESS, TestData.response),
+      createAction(CustomFieldsActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.customFieldDeleted),
       createAction(AppActions.POP_NAV)
@@ -110,6 +111,7 @@ describe('Custom Fields Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(CustomFieldsActions.CREATE_SUCCESS, TestData.customField),
+      createAction(CustomFieldsActions.FETCH),
       createAction(CustomFieldCategoriesActions.UPDATE, {
         customFieldID: TestData.customField.customFieldID,
         message: Messages.customFieldAdded
@@ -151,6 +153,7 @@ describe('Custom Fields Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(CustomFieldsActions.UPDATE_SUCCESS, TestData.customField),
+      createAction(CustomFieldsActions.FETCH),
       createAction(CustomFieldCategoriesActions.UPDATE, {
         customFieldID: TestData.customField.customFieldID,
         message: Messages.customFieldEdited

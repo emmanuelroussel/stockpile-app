@@ -76,6 +76,7 @@ describe('ExternalRenters Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(ExternalRentersActions.CREATE_SUCCESS, TestData.response),
+      createAction(ExternalRentersActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.externalRenterAdded),
     ];
@@ -96,6 +97,7 @@ describe('ExternalRenters Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(ExternalRentersActions.CREATE_SUCCESS, TestData.response),
+      createAction(ExternalRentersActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.externalRenterAdded),
       createAction(AppActions.POP_NAV)
@@ -135,6 +137,7 @@ describe('ExternalRenters Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(ExternalRentersActions.UPDATE_SUCCESS, TestData.response),
+      createAction(ExternalRentersActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.externalRenterEdited),
       createAction(AppActions.POP_NAV)
@@ -171,6 +174,7 @@ describe('ExternalRenters Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(ExternalRentersActions.DELETE_SUCCESS, TestData.response),
+      createAction(ExternalRentersActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.externalRenterDeleted),
       createAction(AppActions.POP_NAV)

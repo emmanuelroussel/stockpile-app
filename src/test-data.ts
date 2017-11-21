@@ -583,7 +583,14 @@ export class TestData {
           available: 0
         }
       ],
-      showLoadingSpinner: false
+      showLoadingSpinner: false,
+      filters: {
+        brandID: 1,
+        modelID: 2,
+        categoryID: 3,
+        available: true,
+        search: 'ca'
+      }
     },
     layout: {
       loadingMessage: 'Please wait...'
@@ -838,4 +845,12 @@ export class TestData {
       shouldUpdate: false
     }
   ];
+
+  public static itemFilters = {
+    brandID: 1,
+    modelID: 2,
+    categoryID: 3,
+    available: true,
+    search: 'ca'
+  };
 }

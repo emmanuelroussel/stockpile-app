@@ -41,6 +41,7 @@ export class ModelsEffects {
       .concatMap(res => {
         let success = [
           createAction(ModelsActions.CREATE_SUCCESS, res),
+          createAction(ModelsActions.FETCH),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, Messages.modelAdded),
         ];
@@ -67,6 +68,7 @@ export class ModelsEffects {
     .mergeMap(action => this.itemPropertyData.updateModel(action.payload, action.payload.modelID)
       .concatMap(res => [
         createAction(ModelsActions.UPDATE_SUCCESS, res),
+        createAction(ModelsActions.FETCH),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, Messages.modelEdited),
         createAction(AppActions.POP_NAV)
@@ -87,6 +89,7 @@ export class ModelsEffects {
     .mergeMap(action => this.itemPropertyData.deleteModel(action.payload)
       .concatMap(res => [
         createAction(ModelsActions.DELETE_SUCCESS, res),
+        createAction(ModelsActions.FETCH),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, Messages.modelDeleted),
         createAction(AppActions.POP_NAV)

@@ -16,7 +16,6 @@ export function kitsReducer(kits: Kits = initialState, action: Action): Kits {
       return {
         ...kits,
         results: Object.assign({},
-          kits.results,
           action.payload.results.reduce((obj, kit) => {
             obj[kit.kitID] = kit;
             return obj;
@@ -26,19 +25,6 @@ export function kitsReducer(kits: Kits = initialState, action: Action): Kits {
       };
     case KitsActions.FETCH_FAIL:
       return { ...kits, showLoadingSpinner: false };
-    case KitsActions.DELETE_SUCCESS:
-      const results = Object.assign({}, kits.results);
-      delete results[action.payload.id];
-      return { ...kits, results };
-    case KitsActions.CREATE_SUCCESS:
-    case KitsActions.UPDATE_SUCCESS:
-      return {
-        ...kits,
-        results: {
-          ...kits.results,
-          [action.payload.kitID]: action.payload
-        }
-      };
     default:
       return kits;
   }

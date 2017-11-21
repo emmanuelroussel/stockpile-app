@@ -76,6 +76,7 @@ describe('Categories Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(CategoriesActions.CREATE_SUCCESS, TestData.response),
+      createAction(CategoriesActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.categoryAdded),
     ];
@@ -96,6 +97,7 @@ describe('Categories Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(CategoriesActions.CREATE_SUCCESS, TestData.response),
+      createAction(CategoriesActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.categoryAdded),
       createAction(AppActions.POP_NAV)
@@ -135,6 +137,7 @@ describe('Categories Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(CategoriesActions.UPDATE_SUCCESS, TestData.response),
+      createAction(CategoriesActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.categoryEdited),
       createAction(AppActions.POP_NAV)
@@ -171,6 +174,7 @@ describe('Categories Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(CategoriesActions.DELETE_SUCCESS, TestData.response),
+      createAction(CategoriesActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.categoryDeleted),
       createAction(AppActions.POP_NAV)

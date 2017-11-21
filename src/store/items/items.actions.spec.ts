@@ -133,4 +133,10 @@ describe('Items Actions', () => {
     instance.startCreate(TestData.barcode);
     expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.START_CREATE, TestData.barcode));
   });
+
+  it('dispatches action UPDATE_FILTERS', () => {
+    spyOn(instance.store, 'dispatch');
+    instance.updateFilters(TestData.ItemFilters);
+    expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.UPDATE_FILTERS, TestData.ItemFilters));
+  });
 });

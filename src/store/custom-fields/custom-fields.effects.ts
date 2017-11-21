@@ -41,6 +41,7 @@ export class CustomFieldsEffects {
     .mergeMap(action => this.customFieldData.deleteCustomField(action.payload)
       .concatMap(res => [
         createAction(CustomFieldsActions.DELETE_SUCCESS, res),
+        createAction(CustomFieldsActions.FETCH),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, Messages.customFieldDeleted),
         createAction(AppActions.POP_NAV)
@@ -61,6 +62,7 @@ export class CustomFieldsEffects {
     .mergeMap(action => this.customFieldData.createCustomField(action.payload)
       .concatMap(res => [
         createAction(CustomFieldsActions.CREATE_SUCCESS, res),
+        createAction(CustomFieldsActions.FETCH),
         createAction(CustomFieldCategoriesActions.UPDATE, {
           customFieldID: res.customFieldID,
           message: Messages.customFieldAdded
@@ -82,6 +84,7 @@ export class CustomFieldsEffects {
     .mergeMap(action => this.customFieldData.updateCustomField(action.payload)
       .concatMap(res => [
         createAction(CustomFieldsActions.UPDATE_SUCCESS, res),
+        createAction(CustomFieldsActions.FETCH),
         createAction(CustomFieldCategoriesActions.UPDATE, {
           customFieldID: res.customFieldID,
           message: Messages.customFieldEdited

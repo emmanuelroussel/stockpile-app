@@ -5,9 +5,11 @@ import {
   BrandsActionsMock,
   CategoriesActionsMock,
   ModelsActionsMock,
+  ItemsActionsMock
   BrandsServiceMock,
   CategoriesServiceMock,
   ModelsServiceMock,
+  ItemsServiceMock,
 } from '../../mocks';
 
 import { InventoryFilterPage } from './inventory-filter';
@@ -26,6 +28,8 @@ describe('InventoryFilter Page', () => {
       <any> new ModelsActionsMock,
       <any> new CategoriesServiceMock,
       <any> new CategoriesActionsMock,
+      <any> new ItemsServiceMock,
+      <any> new ItemsActionsMock
     );
   });
 
@@ -33,22 +37,11 @@ describe('InventoryFilter Page', () => {
     expect(instance).toBeTruthy();
   });
 
-  it('gets navParam selectedBrandID', () => {
-    instance.navParams.param = TestData.apiItem.brandID;
+  it('gets ids from store', () => {
     instance.ngOnInit();
-    expect(instance.selectedBrandID).toEqual(TestData.apiItem.brandID);
-  });
-
-  it('gets navParam selectedModelID', () => {
-    instance.navParams.param = TestData.apiItem.modelID;
-    instance.ngOnInit();
-    expect(instance.selectedModelID).toEqual(TestData.apiItem.modelID);
-  });
-
-  it('gets navParam selectedCategoryID', () => {
-    instance.navParams.param = TestData.apiItem.categoryID;
-    instance.ngOnInit();
-    expect(instance.selectedCategoryID).toEqual(TestData.apiItem.categoryID);
+    expect(instance.selectedBrandID).toEqual(TestData.itemFilters.brandID);
+    expect(instance.selectedModelID).toEqual(TestData.itemFilters.modelID);
+    expect(instance.selectedCategoryID).toEqual(TestData.itemFilters.categoryID);
   });
 
   it('calls filterModels if selectedBrandID is not -1', () => {
@@ -56,13 +49,6 @@ describe('InventoryFilter Page', () => {
     spyOn(instance, 'onFilterModels');
     instance.ngOnInit();
     expect(instance.onFilterModels).toHaveBeenCalled();
-  });
-
-  it('does not call onFilterModels if selectedBrandID is -1', () => {
-    instance.navParams.param = -1;
-    spyOn(instance, 'onFilterModels');
-    instance.ngOnInit();
-    expect(instance.onFilterModels).not.toHaveBeenCalled();
   });
 
   it('filters models on filterModels()', () => {
@@ -87,18 +73,20 @@ describe('InventoryFilter Page', () => {
   });
 
   it('dismisses modal on applyFilters', () => {
-    instance.selectedBrandID = TestData.apiItem.brandID;
-    instance.selectedModelID = TestData.apiItem.modelID;
-    instance.selectedCategoryID = TestData.apiItem.categoryID;
+    instance.selectedBrandID = TestData.itemFilters.brandID;
+    instance.selectedModelID = TestData.itemFilters.modelID;
+    instance.selectedCategoryID = TestData.itemFilters.categoryID;
 
     const ids = {
-      selectedBrandID: TestData.apiItem.brandID,
-      selectedModelID: TestData.apiItem.modelID,
-      selectedCategoryID: TestData.apiItem.categoryID
+      brandID: TestData.itemFilters.brandID,
+      modelID: TestData.itemFilters.modelID,
+      categoryID: TestData.itemFilters.categoryID
     };
 
     spyOn(instance.viewCtrl, 'dismiss');
+    spyOn(instance.itemsActions, 'updateFilters');
     instance.onApplyFilters();
-    expect(instance.viewCtrl.dismiss).toHaveBeenCalledWith(ids);
+    expect(instance.viewCtrl.dismiss).toHaveBeenCalled();
+    expect(instance.itemsActions.updateFilters).toHaveBeenCalledWith(ids);
   });
 });
