@@ -75,6 +75,7 @@ describe('Kits Effects', () => {
     const expectedResult = [
       createAction(KitsActions.DELETE_SUCCESS, TestData.response),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+      createAction(KitsActions.FETCH),
       createAction(AppActions.SHOW_MESSAGE, Messages.kitDeleted),
       createAction(AppActions.POP_NAV)
     ];
@@ -110,6 +111,7 @@ describe('Kits Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(KitsActions.CREATE_SUCCESS, TestData.kit),
+      createAction(KitsActions.FETCH),
       createAction(KitModelsActions.UPDATE, {
         kitID: TestData.kit.kitID,
         message: Messages.kitAdded
@@ -148,6 +150,7 @@ describe('Kits Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(KitsActions.UPDATE_SUCCESS, TestData.kit),
+      createAction(KitsActions.FETCH),
       createAction(KitModelsActions.UPDATE, {
         kitID: TestData.kit.kitID,
         message: Messages.kitEdited

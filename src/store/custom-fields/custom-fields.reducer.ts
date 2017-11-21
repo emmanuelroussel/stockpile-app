@@ -16,7 +16,6 @@ export function customFieldsReducer(customFields: CustomFields = initialState, a
       return {
         ...customFields,
         results: Object.assign({},
-          customFields.results,
           action.payload.results.reduce((obj, customField) => {
             obj[customField.customFieldID] = customField;
             return obj;
@@ -26,19 +25,6 @@ export function customFieldsReducer(customFields: CustomFields = initialState, a
       };
     case CustomFieldsActions.FETCH_FAIL:
       return { ...customFields, showLoadingSpinner: false };
-    case CustomFieldsActions.DELETE_SUCCESS:
-      const results = Object.assign({}, customFields.results);
-      delete results[action.payload.id];
-      return { ...customFields, results };
-    case CustomFieldsActions.CREATE_SUCCESS:
-    case CustomFieldsActions.UPDATE_SUCCESS:
-      return {
-        ...customFields,
-        results: {
-          ...customFields.results,
-          [action.payload.customFieldID]: action.payload
-        }
-      };
     default:
       return customFields;
   }

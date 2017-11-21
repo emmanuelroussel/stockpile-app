@@ -18,7 +18,6 @@ export function externalRentersReducer(externalRenters: ExternalRenters = initia
       return {
         ...externalRenters,
         results: Object.assign({},
-          externalRenters.results,
           action.payload.results.reduce((obj, externalRenter) => {
             obj[externalRenter.externalRenterID] = externalRenter;
             return obj;
@@ -27,22 +26,6 @@ export function externalRentersReducer(externalRenters: ExternalRenters = initia
         filtered: action.payload.results,
         showAddNew: false,
         showLoadingSpinner: false
-      };
-    case ExternalRentersActions.CREATE_SUCCESS:
-    case ExternalRentersActions.UPDATE_SUCCESS:
-      return {
-        ...externalRenters,
-        results: {
-          ...externalRenters.results,
-          [action.payload.externalRenterID]: action.payload
-        }
-      };
-    case ExternalRentersActions.DELETE_SUCCESS:
-      const results = Object.assign({}, externalRenters.results);
-      delete results[action.payload.id];
-      return {
-        ...externalRenters,
-        results
       };
     case ExternalRentersActions.FILTER:
       const filtered = Object.keys(externalRenters.results)

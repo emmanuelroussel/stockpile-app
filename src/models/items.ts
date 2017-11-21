@@ -29,4 +29,5 @@ export interface Items {
   readonly tempItemCustomFields: Array<ItemCustomField>;
   readonly rentals: { [barcode: string]: Item };
   readonly showLoadingSpinner: boolean;
+  readonly filters: any;
 }

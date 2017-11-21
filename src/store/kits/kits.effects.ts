@@ -42,6 +42,7 @@ export class KitsEffects {
       .concatMap(res => [
         createAction(KitsActions.DELETE_SUCCESS, res),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
+        createAction(KitsActions.FETCH),
         createAction(AppActions.SHOW_MESSAGE, Messages.kitDeleted),
         createAction(AppActions.POP_NAV)
       ])
@@ -61,6 +62,7 @@ export class KitsEffects {
     .mergeMap(action => this.kitData.createKit(action.payload)
       .concatMap(res => [
         createAction(KitsActions.CREATE_SUCCESS, res),
+        createAction(KitsActions.FETCH),
         createAction(KitModelsActions.UPDATE, {
           kitID: res.kitID,
           message: Messages.kitAdded
@@ -82,6 +84,7 @@ export class KitsEffects {
     .mergeMap(action => this.kitData.updateKit(action.payload)
       .concatMap(res => [
         createAction(KitsActions.UPDATE_SUCCESS, res),
+        createAction(KitsActions.FETCH),
         createAction(KitModelsActions.UPDATE, {
           kitID: res.kitID,
           message: Messages.kitEdited

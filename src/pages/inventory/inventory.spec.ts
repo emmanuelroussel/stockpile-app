@@ -7,6 +7,7 @@ import { Actions } from '../../constants';
 import { ItemPage } from '../item/item';
 import { InventoryFilterPage } from '../inventory-filter/inventory-filter';
 import { PlatformMockIsCore, PlatformMockIsCordova } from '../../mocks';
+import { Observable } from 'rxjs/Observable';
 
 let fixture: ComponentFixture<InventoryPage> = null;
 let instance: any = null;
@@ -42,6 +43,7 @@ describe('Inventory Page', () => {
   });
 
   it('loads items on filterItems()', () => {
+    instance.items = Observable.of({ filters: TestData.itemFilters });
     spyOn(instance, 'loadItems');
     spyOn(instance.itemsActions, 'resetItems');
     instance.onFilterItems();
@@ -59,20 +61,9 @@ describe('Inventory Page', () => {
   }));
 
   it('fetches items on loadItems()', () => {
-    instance.selectedBrandID = TestData.apiItem.brandID;
-    instance.selectedModelID = TestData.apiItem.modelID;
-    instance.selectedCategoryID = TestData.apiItem.categoryID;
-    instance.segment = 0;
-    instance.queryText = TestData.queryText;
     spyOn(instance.itemsActions, 'fetchItems');
     instance.loadItems();
-    expect(instance.itemsActions.fetchItems).toHaveBeenCalledWith(
-      TestData.apiItem.brandID,
-      TestData.apiItem.modelID,
-      TestData.apiItem.categoryID,
-      0,
-      TestData.queryText
-    );
+    expect(instance.itemsActions.fetchItems).toHaveBeenCalled();
   });
 
   it('pushes ItemPage on nav on viewItem()', () => {
@@ -124,15 +115,8 @@ describe('Inventory Page', () => {
   }));
 
   it('creates a modal onOpenFilters()', () => {
-    instance.selectedBrandID = TestData.apiItem.brandID;
-    instance.selectedModelID = TestData.apiItem.modelID;
-    instance.selectedCategoryID = TestData.apiItem.categoryID;
     spyOn(instance.modalCtrl, 'create').and.callThrough();
     instance.onOpenFilters();
-    expect(instance.modalCtrl.create).toHaveBeenCalledWith(InventoryFilterPage, {
-      selectedBrandID: TestData.apiItem.brandID,
-      selectedModelID: TestData.apiItem.modelID,
-      selectedCategoryID: TestData.apiItem.categoryID
-    });
+    expect(instance.modalCtrl.create).toHaveBeenCalledWith(InventoryFilterPage);
   });
 });

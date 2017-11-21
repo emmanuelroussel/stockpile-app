@@ -560,6 +560,7 @@ export class ItemsActionsMock {
   public fetchItemCustomFields() {}
   public fetchItemCustomFieldsByCategory() {}
   public startCreate() {}
+  public updateFilters() {}
 }
 
 export class KitModelsActionsMock {
@@ -664,7 +665,7 @@ export class CustomFieldsServiceMock {
 
 export class ItemsServiceMock {
   public getItems() {
-    return Observable.of(TestData.items);
+    return Observable.of(TestData.state.items);
   }
 
   public getShouldLoadMoreItems() {

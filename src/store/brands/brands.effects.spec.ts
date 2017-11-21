@@ -76,6 +76,7 @@ describe('Brands Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(BrandsActions.CREATE_SUCCESS, TestData.response),
+      createAction(BrandsActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.brandAdded),
     ];
@@ -96,6 +97,7 @@ describe('Brands Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(BrandsActions.CREATE_SUCCESS, TestData.response),
+      createAction(BrandsActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.brandAdded),
       createAction(AppActions.POP_NAV)
@@ -135,6 +137,7 @@ describe('Brands Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(BrandsActions.UPDATE_SUCCESS, TestData.response),
+      createAction(BrandsActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.brandEdited),
       createAction(AppActions.POP_NAV)
@@ -171,6 +174,7 @@ describe('Brands Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(BrandsActions.DELETE_SUCCESS, TestData.response),
+      createAction(BrandsActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.brandDeleted),
       createAction(AppActions.POP_NAV)

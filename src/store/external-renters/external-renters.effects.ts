@@ -41,6 +41,7 @@ export class ExternalRentersEffects {
       .concatMap(res => {
         let success = [
           createAction(ExternalRentersActions.CREATE_SUCCESS, res),
+          createAction(ExternalRentersActions.FETCH),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, Messages.externalRenterAdded),
         ];
@@ -67,6 +68,7 @@ export class ExternalRentersEffects {
     .mergeMap(action => this.externalRenterData.updateExternalRenter(action.payload, action.payload.externalRenterID)
       .concatMap(res => [
         createAction(ExternalRentersActions.UPDATE_SUCCESS, res),
+        createAction(ExternalRentersActions.FETCH),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, Messages.externalRenterEdited),
         createAction(AppActions.POP_NAV)
@@ -87,6 +89,7 @@ export class ExternalRentersEffects {
     .mergeMap(action => this.externalRenterData.deleteExternalRenter(action.payload)
       .concatMap(res => [
         createAction(ExternalRentersActions.DELETE_SUCCESS, res),
+        createAction(ExternalRentersActions.FETCH),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, Messages.externalRenterDeleted),
         createAction(AppActions.POP_NAV)

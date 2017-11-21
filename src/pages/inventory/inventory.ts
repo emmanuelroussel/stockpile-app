@@ -23,10 +23,6 @@ import { Observable } from 'rxjs/Observable';
 })
 export class InventoryPage {
   segment = -1;
-  selectedBrandID = -1;
-  selectedModelID = -1;
-  selectedCategoryID = -1;
-  queryText: string = '';
   items: Observable<Items>;
   searchControl: FormControl;
 
@@ -67,6 +63,7 @@ export class InventoryPage {
    */
   ionViewDidLoad() {
     this.searchControl.valueChanges.debounceTime(100).subscribe(search => {
+      this.itemsActions.updateFilters({ search });
       this.loadItems();
     });
   }
@@ -75,8 +72,12 @@ export class InventoryPage {
    * Apply current filters and load items.
    */
   onFilterItems() {
-    if (Math.sign(this.selectedBrandID) < 0) {
-      this.selectedModelID = -1;
+    this.itemsActions.updateFilters({ available: this.segment });
+    let selectedBrandID;
+    this.items.take(1).subscribe(items => selectedBrandID = items.filters.brandID);
+
+    if (Math.sign(selectedBrandID) < 0) {
+      this.itemsActions.updateFilters({ modelID: -1 });
     }
 
     this.itemsActions.resetItems();
@@ -87,13 +88,7 @@ export class InventoryPage {
   * Gets all items that match the filters.
   */
   loadItems() {
-    this.itemsActions.fetchItems(
-      this.selectedBrandID,
-      this.selectedModelID,
-      this.selectedCategoryID,
-      this.segment,
-      this.queryText
-    );
+    this.itemsActions.fetchItems();
   }
 
   /**
@@ -149,20 +144,9 @@ export class InventoryPage {
    * the filters and filters the items.
    */
   onOpenFilters(event) {
-    let modal = this.modalCtrl.create(InventoryFilterPage, {
-      selectedBrandID: this.selectedBrandID,
-      selectedModelID: this.selectedModelID,
-      selectedCategoryID: this.selectedCategoryID
-    });
+    let modal = this.modalCtrl.create(InventoryFilterPage);
 
-    modal.onDidDismiss((ids) => {
-      if (ids) {
-        this.selectedBrandID = ids.selectedBrandID;
-        this.selectedModelID = ids.selectedModelID;
-        this.selectedCategoryID = ids.selectedCategoryID;
-        this.onFilterItems();
-      }
-   });
+    modal.onDidDismiss(() => this.onFilterItems());
 
     modal.present({
       ev: event

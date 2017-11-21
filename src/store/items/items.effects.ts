@@ -30,12 +30,13 @@ export class ItemsEffects {
   @Effect()
   fetch$ = this.actions$
     .ofType(ItemsActions.FETCH)
-    .mergeMap(action => this.itemData.filterItems(
-        action.payload.brandID,
-        action.payload.modelID,
-        action.payload.categoryID,
-        action.payload.available,
-        action.payload.search
+    .withLatestFrom(this.store$)
+    .mergeMap(([action, store]) => this.itemData.filterItems(
+        store.items.filters.brandID,
+        store.items.filters.modelID,
+        store.items.filters.categoryID,
+        store.items.filters.available,
+        store.items.filters.search
       )
       .map(res => createAction(ItemsActions.FETCH_SUCCESS, res))
       .catch(err => Observable.of(
@@ -106,6 +107,7 @@ export class ItemsEffects {
         return Observable.from(Promise.all(requests))
           .concatMap(res => [
             createAction(action.payload.success, action.payload.item),
+            createAction(ItemsActions.FETCH),
             createAction(LayoutActions.HIDE_LOADING_MESSAGE),
             createAction(AppActions.SHOW_MESSAGE, Messages.itemEdited),
             createAction(AppActions.POP_NAV)
@@ -126,6 +128,7 @@ export class ItemsEffects {
     .mergeMap(action => this.itemData.deleteItem(action.payload)
       .concatMap(res => [
         createAction(ItemsActions.DELETE_SUCCESS, res),
+        createAction(ItemsActions.FETCH),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, Messages.itemDeleted),
         createAction(AppActions.POP_NAV)
@@ -226,6 +229,7 @@ export class ItemsEffects {
       return Observable.from(Promise.all(returns))
         .concatMap(() => [
           createAction(ItemsActions.RETURN_SUCCESS),
+          createAction(ItemsActions.FETCH),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, Messages.itemsReturned),
           createAction(AppActions.POP_NAV)
@@ -252,6 +256,7 @@ export class ItemsEffects {
       return this.itemData.rent({ ...action.payload, items })
         .concatMap(() => [
           createAction(ItemsActions.RENT_SUCCESS),
+          createAction(ItemsActions.FETCH),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, Messages.itemsRented),
           createAction(AppActions.POP_NAV_TO_ROOT)

@@ -41,6 +41,7 @@ export class BrandsEffects {
       .concatMap(res => {
         let success = [
           createAction(BrandsActions.CREATE_SUCCESS, res),
+          createAction(BrandsActions.FETCH),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, Messages.brandAdded),
         ];
@@ -67,6 +68,7 @@ export class BrandsEffects {
     .mergeMap(action => this.itemPropertyData.updateBrand(action.payload, action.payload.brandID)
       .concatMap(res => [
         createAction(BrandsActions.UPDATE_SUCCESS, res),
+        createAction(BrandsActions.FETCH),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, Messages.brandEdited),
         createAction(AppActions.POP_NAV)
@@ -87,6 +89,7 @@ export class BrandsEffects {
     .mergeMap(action => this.itemPropertyData.deleteBrand(action.payload)
       .concatMap(res => [
         createAction(BrandsActions.DELETE_SUCCESS, res),
+        createAction(BrandsActions.FETCH),
         createAction(LayoutActions.HIDE_LOADING_MESSAGE),
         createAction(AppActions.SHOW_MESSAGE, Messages.brandDeleted),
         createAction(AppActions.POP_NAV)

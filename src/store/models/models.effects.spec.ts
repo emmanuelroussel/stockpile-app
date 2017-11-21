@@ -76,6 +76,7 @@ describe('Models Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(ModelsActions.CREATE_SUCCESS, TestData.response),
+      createAction(ModelsActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.modelAdded),
     ];
@@ -96,6 +97,7 @@ describe('Models Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(ModelsActions.CREATE_SUCCESS, TestData.response),
+      createAction(ModelsActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.modelAdded),
       createAction(AppActions.POP_NAV)
@@ -135,6 +137,7 @@ describe('Models Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(ModelsActions.UPDATE_SUCCESS, TestData.response),
+      createAction(ModelsActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.modelEdited),
       createAction(AppActions.POP_NAV)
@@ -171,6 +174,7 @@ describe('Models Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(ModelsActions.DELETE_SUCCESS, TestData.response),
+      createAction(ModelsActions.FETCH),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE),
       createAction(AppActions.SHOW_MESSAGE, Messages.modelDeleted),
       createAction(AppActions.POP_NAV)

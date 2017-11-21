@@ -41,6 +41,7 @@ export class CategoriesEffects {
       .concatMap(res => {
         let success = [
           createAction(CategoriesActions.CREATE_SUCCESS, res),
+          createAction(CategoriesActions.FETCH),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, Messages.categoryAdded),
         ];
@@ -67,6 +68,7 @@ export class CategoriesEffects {
       .mergeMap(action => this.itemPropertyData.updateCategory(action.payload, action.payload.categoryID)
         .concatMap(res => [
           createAction(CategoriesActions.UPDATE_SUCCESS, res),
+          createAction(CategoriesActions.FETCH),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, Messages.categoryEdited),
           createAction(AppActions.POP_NAV)
@@ -87,6 +89,7 @@ export class CategoriesEffects {
       .mergeMap(action => this.itemPropertyData.deleteCategory(action.payload)
         .concatMap(res => [
           createAction(CategoriesActions.DELETE_SUCCESS, res),
+          createAction(CategoriesActions.FETCH),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, Messages.categoryDeleted),
           createAction(AppActions.POP_NAV)

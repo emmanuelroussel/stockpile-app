@@ -18,7 +18,6 @@ export function brandsReducer(brands: Brands = initialState, action: Action): Br
       return {
         ...brands,
         results: Object.assign({},
-          brands.results,
           action.payload.results.reduce((obj, brand) => {
             obj[brand.brandID] = brand;
             return obj;
@@ -30,22 +29,6 @@ export function brandsReducer(brands: Brands = initialState, action: Action): Br
       };
     case BrandsActions.FETCH_FAIL:
       return { ...brands, showLoadingSpinner: false };
-    case BrandsActions.CREATE_SUCCESS:
-    case BrandsActions.UPDATE_SUCCESS:
-      return {
-        ...brands,
-        results: {
-          ...brands.results,
-          [action.payload.brandID]: action.payload
-        }
-      };
-    case BrandsActions.DELETE_SUCCESS:
-      const results = Object.assign({}, brands.results);
-      delete results[action.payload.id];
-      return {
-        ...brands,
-        results
-      };
     case BrandsActions.FILTER:
       const filtered = Object.keys(brands.results)
         .map((key) => brands.results[key])

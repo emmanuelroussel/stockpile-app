@@ -8,7 +8,8 @@ const initialState = {
   tempItem: {},
   tempItemCustomFields: [],
   rentals: {},
-  showLoadingSpinner: false
+  showLoadingSpinner: false,
+  filters: {}
 };
 
 export function itemsReducer(items: Items = initialState, action: Action): Items {
@@ -28,27 +29,11 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
       };
     case ItemsActions.FETCH_FAIL:
       return { ...items, showLoadingSpinner: false };
-    case ItemsActions.CREATE_SUCCESS:
-    case ItemsActions.UPDATE_SUCCESS:
-      return {
-        ...items,
-        results: {
-          ...items.results,
-          [action.payload.barcode]: action.payload
-        },
-        tempItemCustomFields: [],
-        tempItem: {}
-      };
-    case ItemsActions.DELETE_SUCCESS:
-      const results = Object.assign({}, items.results);
-      delete results[action.payload.id];
-      return {
-        ...items,
-        results,
-        tempItem: {}
-      };
     case ItemsActions.RESET:
-      return initialState;
+      return {
+        ...initialState,
+        filters: items.filters
+      };
     case ItemsActions.UPDATE_TEMP:
       return {
         ...items,
@@ -97,6 +82,14 @@ export function itemsReducer(items: Items = initialState, action: Action): Items
         ...items,
         tempItemCustomFields: action.payload.results,
         showLoadingSpinner: false
+      };
+    case ItemsActions.UPDATE_FILTERS:
+      return {
+        ...items,
+        filters: {
+          ...items.filters,
+          ...action.payload
+        }
       };
     default:
       return items;

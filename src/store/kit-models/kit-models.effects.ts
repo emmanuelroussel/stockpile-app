@@ -94,6 +94,7 @@ export class KitModelsEffects {
             results: store.kitModels.tempKitModels,
             kitID: action.payload.kitID
           }),
+          createAction(KitModelsActions.FETCH),
           createAction(LayoutActions.HIDE_LOADING_MESSAGE),
           createAction(AppActions.SHOW_MESSAGE, action.payload.message),
           createAction(AppActions.POP_NAV)
