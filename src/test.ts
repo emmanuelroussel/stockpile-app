@@ -200,7 +200,7 @@ export class TestUtils {
         { provide: OrganizationService, useClass: OrganizationServiceMock },
         { provide: UserService, useClass: UserServiceMock },
         { provide: InAppBrowser, useClass: InAppBrowserMock },
-        { provide: DeepLinker, useClass: DeepLinkerMock }
+        { provide: DeepLinker, useClass: DeepLinkerMock },
         { provide: Haptic, useClass: HapticMock }
       ],
       imports: [

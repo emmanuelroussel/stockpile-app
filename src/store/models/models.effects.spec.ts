@@ -45,7 +45,7 @@ describe('Models Effects', () => {
     runner.queue(createAction(ModelsActions.FETCH));
 
     instance.fetch$.subscribe(
-      res => expect(res).toEqual(createAction(ModelsActions.FETCH_SUCCESS, TestData.models))
+      res => expect(res).toEqual(createAction(ModelsActions.FETCH_SUCCESS, TestData.models)),
       err => fail(err)
     );
   });

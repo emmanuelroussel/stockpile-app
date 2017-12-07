@@ -46,7 +46,7 @@ describe('Kits Effects', () => {
     runner.queue(createAction(KitsActions.FETCH));
 
     instance.fetch$.subscribe(
-      res => expect(res).toEqual(createAction(KitsActions.FETCH_SUCCESS, TestData.kits.results))
+      res => expect(res).toEqual(createAction(KitsActions.FETCH_SUCCESS, TestData.kits.results)),
       err => fail(err)
     );
   });
@@ -176,7 +176,7 @@ describe('Kits Effects', () => {
     let performedActions = [];
     const expectedResult = [
       createAction(KitsActions.UPDATE_FAIL, TestData.error),
-      createAction(AppActions.SHOW_MESSAGE, TestData.error.message)
+      createAction(AppActions.SHOW_MESSAGE, TestData.error.message),
       createAction(LayoutActions.HIDE_LOADING_MESSAGE)
     ];
     instance.update$.take(expectedResult.length).subscribe(

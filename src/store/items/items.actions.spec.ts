@@ -41,7 +41,7 @@ describe('Items Actions', () => {
     expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.CREATE, {
       item: TestData.item,
       itemCustomFields: TestData.itemCustomFields.results
-    ));
+    }));
   });
 
   it('dispatches action UPDATE', () => {
@@ -50,7 +50,7 @@ describe('Items Actions', () => {
     expect(instance.store.dispatch).toHaveBeenCalledWith(createAction(ItemsActions.UPDATE, {
       item: TestData.item,
       itemCustomFields: TestData.itemCustomFields.results
-    ));
+    }));
   });
 
   it('dispatches action DELETE', () => {
