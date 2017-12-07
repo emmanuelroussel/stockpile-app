@@ -43,7 +43,7 @@ describe('Organization Effects', () => {
     runner.queue(createAction(OrganizationActions.FETCH));
 
     instance.fetch$.subscribe(
-      res => expect(res).toEqual(createAction(OrganizationActions.FETCH_SUCCESS, TestData.organization))
+      res => expect(res).toEqual(createAction(OrganizationActions.FETCH_SUCCESS, TestData.organization)),
       err => fail(err)
     );
   });

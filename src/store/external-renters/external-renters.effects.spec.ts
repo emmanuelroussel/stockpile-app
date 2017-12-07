@@ -45,7 +45,7 @@ describe('ExternalRenters Effects', () => {
     runner.queue(createAction(ExternalRentersActions.FETCH));
 
     instance.fetch$.subscribe(
-      res => expect(res).toEqual(createAction(ExternalRentersActions.FETCH_SUCCESS, TestData.externalRenters))
+      res => expect(res).toEqual(createAction(ExternalRentersActions.FETCH_SUCCESS, TestData.externalRenters)),
       err => fail(err)
     );
   });

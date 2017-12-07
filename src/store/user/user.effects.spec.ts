@@ -3,7 +3,7 @@ import { EffectsRunner, EffectsTestingModule } from '@ngrx/effects/testing';
 import { TestData } from '../../test-data';
 import { createAction } from '../create-action';
 import { UserData } from '../../providers/user-data';
-import { UserDataMock StorageMock, StoreMock } from '../../mocks';
+import { UserDataMock, StorageMock, StoreMock } from '../../mocks';
 import { Storage } from '@ionic/storage';
 import { Store } from '@ngrx/store';
 import { LoginPage } from '../../pages/login/login';
@@ -47,7 +47,7 @@ describe('User Effects', () => {
     runner.queue(createAction(UserActions.LOGIN));
 
     instance.login$.subscribe(
-      res => expect(res).toEqual(createAction(UserActions.SAVE_TOKEN, TestData.loginResponse))
+      res => expect(res).toEqual(createAction(UserActions.SAVE_TOKEN, TestData.loginResponse)),
       err => fail(err)
     );
   });

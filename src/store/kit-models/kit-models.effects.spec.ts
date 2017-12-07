@@ -45,7 +45,7 @@ describe('KitModels Effects', () => {
     runner.queue(createAction(KitModelsActions.FETCH));
 
     instance.fetch$.subscribe(
-      res => expect(res).toEqual(createAction(KitModelsActions.FETCH_SUCCESS, TestData.kitModels.results))
+      res => expect(res).toEqual(createAction(KitModelsActions.FETCH_SUCCESS, TestData.kitModels.results)),
       err => fail(err)
     );
   });

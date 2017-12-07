@@ -45,7 +45,7 @@ describe('Brands Effects', () => {
     runner.queue(createAction(BrandsActions.FETCH));
 
     instance.fetch$.subscribe(
-      res => expect(res).toEqual(createAction(BrandsActions.FETCH_SUCCESS, TestData.brands))
+      res => expect(res).toEqual(createAction(BrandsActions.FETCH_SUCCESS, TestData.brands)),
       err => fail(err)
     );
   });

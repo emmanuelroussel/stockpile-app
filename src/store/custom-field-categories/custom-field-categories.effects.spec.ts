@@ -45,7 +45,7 @@ describe('CustomFieldCategories Effects', () => {
     runner.queue(createAction(CustomFieldCategoriesActions.FETCH));
 
     instance.fetch$.subscribe(
-      res => expect(res).toEqual(createAction(CustomFieldCategoriesActions.FETCH_SUCCESS, TestData.customFieldCategories.results))
+      res => expect(res).toEqual(createAction(CustomFieldCategoriesActions.FETCH_SUCCESS, TestData.customFieldCategories.results)),
       err => fail(err)
     );
   });

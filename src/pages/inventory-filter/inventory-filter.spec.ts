@@ -5,7 +5,7 @@ import {
   BrandsActionsMock,
   CategoriesActionsMock,
   ModelsActionsMock,
-  ItemsActionsMock
+  ItemsActionsMock,
   BrandsServiceMock,
   CategoriesServiceMock,
   ModelsServiceMock,

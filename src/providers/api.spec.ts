@@ -28,7 +28,7 @@ describe('Api Provider', () => {
 
   it('is created', async(inject([Api], (instance: Api) => {
     expect(instance).toBeTruthy();
-  });
+  })));
 
   it('gets data', async(inject([Api, HttpTestingController],
   (instance: Api, backend: HttpTestingController) => {

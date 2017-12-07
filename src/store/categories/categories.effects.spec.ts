@@ -45,7 +45,7 @@ describe('Categories Effects', () => {
     runner.queue(createAction(CategoriesActions.FETCH));
 
     instance.fetch$.subscribe(
-      res => expect(res).toEqual(createAction(CategoriesActions.FETCH_SUCCESS, TestData.categories))
+      res => expect(res).toEqual(createAction(CategoriesActions.FETCH_SUCCESS, TestData.categories)),
       err => fail(err)
     );
   });
